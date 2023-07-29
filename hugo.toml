@@ -1,0 +1,60 @@
+baseURL = 'https://shubhxms.github.io/'
+languageCode = 'en-us'
+title = 'shubham shah'
+theme = "archie"
+pygmentsstyle = "monokai"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+paginate = 4
+
+[params]
+google_fonts = [["Fira Mono", "400, 500, 700"]]
+fontFamily = "Fira Mono"
+favicon = "https://img.icons8.com/officel/16/000000/chevron-right.png"
+og_image = "https://raw.githubusercontent.com/athul/archie/master/images/archie-dark.png"
+# mode = "auto"
+mode = "toggle"
+useCDN = true
+subtitle = ""
+description = "personal website of shubham shah"
+
+[[params.social]]
+name = "GitHub"
+icon = "github"
+url = "https://github.com/shubhxms"
+
+[[params.social]]
+name = "Twitter"
+icon = "twitter"
+url = "https://twitter.com/shubhxms/"
+
+# [[params.social]]
+# name = "instagram"
+# icon = "gitlab"
+# url = "https://gitlab.com/athul/"
+
+[[menu.main]]
+name = "about"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "blog"
+url = "/blog"
+weight = 2
+
+[[menu.main]]
+name = "craft"
+url = "/craft"
+weight = 3
+
+# [[menu.main]]
+# name = "tags"
+# url = "/tags"
+# weight = 4
+
+[permalinks]
+  pages = '/:title'
+
+[markup.goldmark.renderer]
+unsafe= true
