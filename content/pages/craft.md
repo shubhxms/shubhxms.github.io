@@ -4,7 +4,6 @@ url: /craft
 description: "craft"
 tldr: "history of my work"
 draft: false
-date: 2023-07-30T14:15:59-06:00
 ---
 
 ## work

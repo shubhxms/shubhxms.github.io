@@ -10,13 +10,14 @@ paginate = 4
 [params]
 google_fonts = [["Fira Mono", "400, 500, 700"]]
 fontFamily = "Fira Mono"
-favicon = "https://img.icons8.com/officel/16/000000/chevron-right.png"
-og_image = "https://raw.githubusercontent.com/athul/archie/master/images/archie-dark.png"
+# favicon = "https://img.icons8.com/officel/16/000000/chevron-right.png"
+# og_image = "https://raw.githubusercontent.com/athul/archie/master/images/archie-dark.png"
 # mode = "auto"
 mode = "toggle"
 useCDN = true
 subtitle = ""
 description = "personal website of shubham shah"
+enableGitInfo = false
 
 [[params.social]]
 name = "GitHub"
@@ -48,13 +49,26 @@ name = "craft"
 url = "/craft"
 weight = 3
 
-# [[menu.main]]
-# name = "tags"
-# url = "/tags"
-# weight = 4
+[[menu.main]]
+name = "stream"
+url = "/stream"
+weight = 4
+
+[[menu.main]]
+name = "shelf"
+url = "/shelf"
+weight = 1
 
 [permalinks]
   pages = '/:title'
 
 [markup.goldmark.renderer]
 unsafe= true
+
+[outputFormats]
+[outputFormats.data]
+  mediaType = "text/html"
+  isHTML = true
+
+[outputs]
+home = ["HTML", "data"]

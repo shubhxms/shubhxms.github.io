@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>names on shubham shah</title>
+    <link>https://shubhxms.github.io/tags/names/</link>
+    <description>Recent content in names on shubham shah</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Mar 2017 14:15:59 -0600</lastBuildDate><atom:link href="https://shubhxms.github.io/tags/names/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>https://shubhxms.github.io/test/</link>
+      <pubDate>Fri, 03 Mar 2017 14:15:59 -0600</pubDate>
+      
+      <guid>https://shubhxms.github.io/test/</guid>
+      <description>test!!</description>
+    </item>
+    
+  </channel>
+</rss>
