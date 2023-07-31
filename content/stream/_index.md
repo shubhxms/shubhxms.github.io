@@ -13,7 +13,7 @@ outputs = ["HTML", "data"]
 
 <div style="max-width: 70%; padding-left: 15%;">
     <h5>
-        a complete archive can be found at [streams.place/shubhxms](https://streams.place/shubhxms)
+        a complete archive can be found at <a href="https://streams.place/shubhxms">streams.place/shubhxms</a>
     </h5>
 </div>
 
