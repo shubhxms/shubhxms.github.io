@@ -8,9 +8,16 @@ max-height: 25%;">
 </div>
 
 - computer craftsman. prefers staying on the backend.
-- code + internet biz + art
+- code + internet biz + art. dilettante.
 - cs + math undergrad at [ahmedabad uni](https://ahduni.edu.in)
 - 20yo, he/him
+- can work with typescript, golang, python
+
+## now
+
+- working on [REDACTED]
+- reading zero to one
+- watching ao ashi
 
 ## best work
 
@@ -23,10 +30,6 @@ also
 - participated in [Buildspace Nights and Weekends](https://buildspace.so/) S3 and [S2](https://polygonscan.com/tx/0xb78eeb255a386d49f7d00859568370da52566184400727c4baa4fdf8c7dd6210).
 - [github](https://github.com/shubhxms) & [/craft](/craft).
 
-## tools
-
-- typescript, golang, python
-- worked with various libraries
 <!-- <div class="block inline project-block"> -->
 
 ## contact
