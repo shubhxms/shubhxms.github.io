@@ -35,6 +35,7 @@ see [book list](https://literal.club/shubhxms) for a more happening list; my fav
 - The Da Vinci Code by Dan Brown
 - The Song of Achilles by Madeline Miller
 - The Picture of Dorian Gray by Oscar Wilde
+- Jonathon Livingston Seagull by Richard Bach
 
 ---
 
@@ -46,6 +47,7 @@ see [book list](https://literal.club/shubhxms) for a more happening list; my fav
 - Call Me By Your Name (movie, 2017)
 - Wednesday (show, 2022)
 - aanand (movie, 1971) [^aanand]
+- ao ashi (anime, 2022)
 
 [^aot]: shinzou wo sasageyo
 [^aanand]: available on youtube
