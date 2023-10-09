@@ -4,7 +4,7 @@
 <div style="float: right; max-width: 25%;
 max-height: 25%;">
 <!-- {{< figure style="border-radius:50%;" src="/images/twt-pfp.png" title="me deciding what song to play at a hackathon" >}} -->
-<img src="/images/twt-pfp.png" style="border-radius:50%;" alt="me deciding what song to play at a hackathon">
+<img src="/images/twt-pfp.png" id="home-img" style="border-radius:50%;" alt="me deciding what song to play at a hackathon">
 </div>
 
 - computer craftsman. prefers staying on the backend.
