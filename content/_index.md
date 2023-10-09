@@ -15,9 +15,16 @@ max-height: 25%;">
 
 ## now
 
-- working on [REDACTED]
-- reading zero to one
-- watching ao ashi
+- learning
+  - about a lot of things
+- reading
+  - The Information: A History, a Theory, a Flood by James Gleick
+  - Siddhartha by Hermann Hesse
+  - Zero to One
+- listening to random podcasts
+- check [/stream](/stream) for link-drops {{% sidenote %}}blogs, videos, music{{% /sidenote %}}
+
+
 
 ## best work
 
@@ -27,7 +34,7 @@ max-height: 25%;">
 
 also
 
-- participated in [Buildspace Nights and Weekends](https://buildspace.so/) S3 and [S2](https://polygonscan.com/tx/0xb78eeb255a386d49f7d00859568370da52566184400727c4baa4fdf8c7dd6210).
+- participated in [Buildspace Nights and Weekends](https://buildspace.so/) S4, S3 and [S2](https://polygonscan.com/tx/0xb78eeb255a386d49f7d00859568370da52566184400727c4baa4fdf8c7dd6210).
 - [github](https://github.com/shubhxms) & [/craft](/craft).
 
 <!-- <div class="block inline project-block"> -->

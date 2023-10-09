@@ -18,7 +18,7 @@ Below is an incomplete list, in no particular order, of stuff i (have) enjoy(ed)
 - mental outlaw ([youtube](https://www.youtube.com/@MentalOutlaw))
 - But What For? ([blog](https://www.butwhatfor.com/))
 - The Linux Experiment ([youtube](https://www.youtube.com/@TheLinuxEXP))
-- Yes Theory ([youtube](https://www.youtube.com/@YesTheory))
+- The Marginalian ([blog](https://www.themarginalian.org))
 
 ---
 
@@ -48,6 +48,8 @@ see [book list](https://literal.club/shubhxms) for a more happening list; my fav
 - Wednesday (show, 2022)
 - aanand (movie, 1971) [^aanand]
 - ao ashi (anime, 2022)
+- Air (movie, 2023)
+
 
 [^aot]: shinzou wo sasageyo
 [^aanand]: available on youtube
