@@ -12,8 +12,9 @@ outputs = ["HTML", "data"]
 {{< fetchdata >}}
 
 <div class="stream">
-    <h5>
+    <h4>
+        this is temporarily down. <br/>
         a complete archive can be found at <a href="https://streams.place/shubhxms">streams.place/shubhxms</a>
-    </h5>
+    </h4>
 </div>
 

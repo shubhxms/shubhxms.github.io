@@ -17,7 +17,7 @@ draft: false
 - [lyfmemo](https://lyfmemo.vercel.app/)
   - a webapp that classifies quick jots (memos) on the basis of keywords
   - built using react js and chakra ui - [github repo](https://github.com/shubhxms/lyfmemo)
-- [no cap (webapp)](https://no-cap.vercel.app/) & [no cap (cli)](https://no-cap.netlify.app/)
+- [no cap (webapp)](https://no-cap.netlify.app/) & [no cap (cli)](https://github.com/shubhxms/nocap)
   - a quick ship to allow you to play with letter casing
   - the webapp is built using reactjs - [github repo](https://github.com/shubhxms/no-cap)
   - the CLI is built in rust - [github repo](https://github.com/shubhxms/nocap)
