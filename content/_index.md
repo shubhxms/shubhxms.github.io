@@ -33,7 +33,7 @@ I am open to work across domains and can work on web-apps, biz logic.
   - Blockchains (in Jan. '24)
 - Trying out
   - Functional Programming
-  - ~~building wrappers~~ learning about Neural Networks (buzz-maxx)
+  - ~~building wrappers~~ Learning about Deep Learning (buzz-maxx)
   - Ultimate Frisbee (learned about this recently, hmu if you're in Ahmedabad and wish to play)
 - Reading
   - The Information: A History, a Theory, a Flood by James Gleick
