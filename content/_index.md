@@ -7,10 +7,7 @@
 
 I first wrote code at 16 and proceeded to make that my whole personality (I am a _computer craftsman_). I enjoy making computers do my bidding and shipping something from scratch/iterating on prototypes.
 
-
-I am a 20yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in) and interested in a variety of things, including computer science, math (no way you saw these two coming), internet businesses, running and listening to Indian clasical music.
-
-I am an indefinite optimist, a solarpunk adjacent (conservationist + techno-optimist) and a moloch disrespector.
+I am a 20yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in) and interested in a variety of things, including computer science, math (no way you saw these two coming), internet businesses, running, tennis and fleetingly in a thousand different things.
 
 I am open to work across domains and can work on web-apps, biz logic.
 
@@ -28,16 +25,14 @@ I am open to work across domains and can work on web-apps, biz logic.
 ## now
 - Learning core CS stuff 
   - Operating Systems
-  - Graph theory
-  - Networking (in Jan. '24)
-  - Blockchains (in Jan. '24)
+  - Networking
 - Trying out
   - Functional Programming
   - ~~building wrappers~~ Learning about Deep Learning (buzz-maxx)
   - Ultimate Frisbee (learned about this recently, hmu if you're in Ahmedabad and wish to play)
 - Reading
   - The Information: A History, a Theory, a Flood by James Gleick
-  - Siddhartha by Hermann Hesse
+  - The Man Who Bent Light: Father of Fiber Optics by Narinder Singh Kapany
 - Watching Sapolskys' lectures on [Human Behavioral Biology](https://youtube.com/playlist?list=PL848F2368C90DDC3D)
 - Check [/stream](/stream) for link-drops and pictures
 
