@@ -25,7 +25,7 @@ see [book list](https://literal.club/shubhxms) for a more happening list; my fav
 - Chaos by James Gleick
 - Suheldev and the Battle of Bahraich by Amish Tripathi
 - Incerto Series by Nassim Taleb
-- Zero to One by Peter Thiel
+- Zero to One by Peter Thiel and Blake Masters
 - The Song of Achilles by Madeline Miller
 - The Picture of Dorian Gray by Oscar Wilde
 - Jonathon Livingston Seagull by Richard Bach
