@@ -2,7 +2,7 @@
 ## about
 
 <div style="float: right; max-width: 25%; max-height: 25%;">
-<img src="/images/for_distinguished_patron.png" id="home-img" style="border-radius:50%;" alt="aoi ashito">
+<img src="/images/for_distinguished_patron.png" id="home-img" style="border-radius:3%;" alt="aoi ashito">
 </div>
 
 I first wrote code at 16 and proceeded to make that my whole personality (I am a _computer craftsman_). I enjoy making computers do my bidding and shipping something from scratch/iterating on prototypes.
