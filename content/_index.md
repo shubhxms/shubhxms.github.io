@@ -7,7 +7,7 @@
 
 I first wrote code at 16 and proceeded to make that my whole personality (I am a _computer craftsman_). I enjoy making computers do my bidding and shipping something from scratch/iterating on prototypes.
 
-I am a 20yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in) and interested in a variety of things, including computer science, math, internet businesses, running, tennis and fleetingly in a thousand different things.
+I am a 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in) and interested in a variety of things, including computer science, math, internet businesses, running and fleetingly in a thousand different things.
 
 I am open to work across domains and can work on web-apps, biz logic or anything I set my mind on.
 
@@ -30,7 +30,8 @@ I am open to work across domains and can work on web-apps, biz logic or anything
   - [TO BE UPDATED]
 - Reading
   - The Information: A History, a Theory, a Flood by James Gleick
-  - The Man Who Bent Light: Father of Fiber Optics by Narinder Singh Kapany
+  - Shoe Dog by Phil Knight
+  <!-- - The Man Who Bent Light: Father of Fiber Optics by Narinder Singh Kapany -->
 - Check [/stream](/stream) for link-drops and pictures
 
 ## contact

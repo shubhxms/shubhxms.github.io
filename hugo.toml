@@ -42,22 +42,22 @@ weight = 1
 [[menu.main]]
 name = "notes"
 url = "/notes"
-weight = 2
+weight = 3
 
 [[menu.main]]
 name = "craft"
 url = "/craft"
-weight = 3
+weight = 4
 
 [[menu.main]]
 name = "stream"
 url = "/stream"
-weight = 4
+weight = 5
 
 [[menu.main]]
 name = "shelf"
 url = "/shelf"
-weight = 1
+weight = 2
 
 [permalinks]
   pages = '/:title'
