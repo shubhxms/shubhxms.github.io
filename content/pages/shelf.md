@@ -3,18 +3,7 @@ title: "shelf"
 url: /shelf
 ---
 
-Below is an *incomplete* list, in no particular order, of stuff I appreciate.
-
----
-
-## **On Internet**
-
-- exurb1a ([youtube](https://www.youtube.com/@exurb1a)) (and his second channel exurb2a ([youtube](https://www.youtube.com/@exurb2a114)))
-- Dynomight ([blog](https://dynomight.substack.com/))
-- Be Wrong ([blog](https://bewrong.substack.com/))
-- But What For? ([blog](https://www.butwhatfor.com/))
-- WTF is ([podcast](https://www.youtube.com/@nikhil.kamath))
-
+Below is an _incomplete_ list, in no particular order, of stuff I appreciate.
 
 ---
 
@@ -23,13 +12,25 @@ Below is an *incomplete* list, in no particular order, of stuff I appreciate.
 see [book list](https://literal.club/shubhxms) for a more happening list; my favorites listed below
 
 - Chaos by James Gleick
-- Suheldev and the Battle of Bahraich by Amish Tripathi
 - Incerto Series by Nassim Taleb
 - Zero to One by Peter Thiel and Blake Masters
-- The Song of Achilles by Madeline Miller
+- Shoe Dog by Phil Knight
+- Richard Feynamn: A Life in Science by John Gribbin and Mary Gribbin
+- The Man Who Bent Light: Father of Fibre Optics by Narinder Singh Kapany
 - The Picture of Dorian Gray by Oscar Wilde
+- The Song of Achilles by Madeline Miller
+- Suheldev and the Battle of Bahraich by Amish Tripathi
 - Jonathon Livingston Seagull by Richard Bach
-- Fictional works by Amish Tripathi, Ashwin Sanghi, Dan Brown and many others
+
+---
+
+## **On Internet**
+
+- exurb1a ([youtube](https://www.youtube.com/@exurb1a))
+- Dynomight ([blog](https://dynomight.substack.com/))
+- Be Wrong ([blog](https://bewrong.substack.com/))
+- But What For? ([blog](https://www.butwhatfor.com/))
+- WTF is ([podcast](https://www.youtube.com/@nikhil.kamath))
 
 ---
 
@@ -37,17 +38,13 @@ see [book list](https://literal.club/shubhxms) for a more happening list; my fav
 
 - Dead Poets Society (film, 1989)
 - Call Me By Your Name (film, 2017)
-- Aanand (film, 1971) [^aanand]
+- Aanand (film, 1971)
 - The Wind Rises (anime film, 2013)
-
----
-
-## **Anime**
+- Fault in Our Stars (film, 2014)
 - Death Note (anime, 2006)
-- Attack On Titan (anime, 2013) [^aot]
+- Attack On Titan (anime, 2013)
 - Ao Ashi (anime, 2022)
 - Your Name (anime film, 2016)
 - Suzume (anime film, 2022)
 
-[^aot]: shinzou wo sasageyo
-[^aanand]: available on youtube
+---

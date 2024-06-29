@@ -8,8 +8,6 @@ pygmentscodefencesguesssyntax = true
 paginate = 4
 
 [params]
-google_fonts = [["Fira Mono", "400, 500, 700"]]
-fontFamily = "Fira Mono"
 # favicon = "https://img.icons8.com/officel/16/000000/chevron-right.png"
 # og_image = "https://raw.githubusercontent.com/athul/archie/master/images/archie-dark.png"
 # mode = "auto"
@@ -17,7 +15,7 @@ mode = "toggle"
 useCDN = true
 subtitle = ""
 description = "personal website of shubham shah"
-enableGitInfo = false
+enableGitInfo = true
 
 [[params.social]]
 name = "GitHub"
@@ -28,11 +26,6 @@ url = "https://github.com/shubhxms"
 name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/shubhxms/"
-
-# [[params.social]]
-# name = "instagram"
-# icon = "gitlab"
-# url = "https://gitlab.com/athul/"
 
 [[menu.main]]
 name = "about"

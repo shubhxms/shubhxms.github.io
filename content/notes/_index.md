@@ -1,8 +1,8 @@
 
 # blog
 
-- this is an archive of my posts.
-- subscribe via [substack](https://shubhxms.substack.com/)
+- this is an archive of all my posts.
+- you can subscribe via [substack](https://shubhxms.substack.com/)
 
 <iframe
     src="https://shubhxms.substack.com/embed"

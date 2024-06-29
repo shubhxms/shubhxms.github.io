@@ -2,41 +2,35 @@
 ## about
 
 <div style="float: right; max-width: 25%; max-height: 25%;">
-<img src="/images/for_distinguished_patron.png" id="home-img" style="border-radius:3%;" alt="aoi ashito">
+<img src="/images/clock-child.jpeg" id="home-img" style="border-radius:3%;" alt="big clock shill">
 </div>
 
-I first wrote code at 16 and proceeded to make that my whole personality (I am a _computer craftsman_). I enjoy making computers do my bidding and shipping something from scratch/iterating on prototypes.
 
-I am a 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in) and interested in a variety of things, including computer science, math, internet businesses, running and fleetingly in a thousand different things.
+I enjoy making computers do my bidding and shipping something from scratch/iterating on prototypes.
 
-I am open to work across domains and can work on web-apps, biz logic or anything I set my mind on.
+- 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in)
+- Interests include computers, maths, internet businesses, running, books, cinema, tennis.
+- Open to work across domains and can work on anything I set my mind on.
 
-
+## now
+- Learning more about databases and compilers.
+- Reading
+  <!-- - The Information: A History, a Theory, a Flood by James Gleick -->
+  - Bonobo and the Atheist by Frans de Waal
+  - Elon Musk by Walter Isaacson
+- Check [/stream](/stream) for link-drops and pictures
 
 ## best work
 - [Graffio](https://graffio.xyz) - I built the [CLI](https://github.com/shubhxms/graffio) for posting
-- [No Cap](https://gtihub.com/shubhxms/nocap) case converter CLI (webapp - [no cap](https://no-cap.netlify.app/) )
 - participated in [Buildspace Nights and Weekends](https://buildspace.so/)
   <!-- S4, S3 and [S2](https://polygonscan.com/tx/0xb78eeb255a386d49f7d00859568370da52566184400727c4baa4fdf8c7dd6210). -->
-- [github](https://github.com/shubhxms) & [/craft](/craft).
+- see [github](https://github.com/shubhxms) & [/craft](/craft).
 
 <!-- {{% sidenote %}} will update later {{% /sidenote %}} -->
 
-## now
-- Learning core CS stuff 
-  - Operating Systems
-  - Computer Networking
-- Trying out
-  - [TO BE UPDATED]
-- Reading
-  - The Information: A History, a Theory, a Flood by James Gleick
-  - Shoe Dog by Phil Knight
-  <!-- - The Man Who Bent Light: Father of Fiber Optics by Narinder Singh Kapany -->
-- Check [/stream](/stream) for link-drops and pictures
 
 ## contact
 
-- Feel free to reach out. I would love to receive correspondence about most things or just an introduction.
-- E-mail - [03[dot]shubhamshah[at]gmail[dot]com](mailto:03.shubhamshah@gmail.com)
-- Twitter - [twitter.com/shubhxms](https://twitter.com/shubhxms)
-- Telegram - [telegram.me/shubhxms](https://telegram.me/shubhxms)
+- I love to receive correspondence, feel free to reach out.
+- Your best bet is [twitter.com/shubhxms](https://twitter.com/shubhxms) or [telegram.me/shubhxms](https://telegram.me/shubhxms)
+- E-mail, if that's your thing - [03[dot]shubhamshah[at]gmail[dot]com](mailto:03.shubhamshah@gmail.com)

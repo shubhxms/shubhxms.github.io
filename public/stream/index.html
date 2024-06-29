@@ -1,48 +1,56 @@
 <!DOCTYPE html>
-<html><head lang="en">
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Homepage - shubham shah</title><link rel="icon" type="image/png" href=https://img.icons8.com/officel/16/000000/chevron-right.png /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="personal website of shubham shah" />
-	<meta property="og:image" content="https://raw.githubusercontent.com/athul/archie/master/images/archie-dark.png"/>
-	<meta property="og:title" content="Homepage" />
-<meta property="og:description" content="personal website of shubham shah" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://shubhxms.github.io/stream/" />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Homepage"/>
-<meta name="twitter:description" content="personal website of shubham shah"/>
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>stream - shubham shah</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="personal website of shubham shah"
+  />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="http://localhost:1313/stream/">
+  <meta property="og:site_name" content="shubham shah">
+  <meta property="og:title" content="stream">
+  <meta property="og:description" content=" stream of consciousness ">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="stream">
+  <meta name="twitter:description" content=" stream of consciousness ">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script> 
 
 
   
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+ 
+  <link
+    rel="stylesheet"
+    type="text/css"
+    media="screen"
+    href="http://localhost:1313/css/main.508607848f496dfea02b3e2019ff8fce3291b9e3e0b99b4848df0b9e9c7a6fd0.css"
+  /> <link id="darkModeStyle" rel="stylesheet" type="text/css"
+  href="http://localhost:1313/css/dark.ed48cbbcad805db7ae804d58c9c041272caac3b7e1588a94c08ca3af035a25f1.css"  disabled /> 
+
   
-    
-    
-    
-    
+  
+
   
   
-  <link href="//fonts.googleapis.com/css?family=Fira+Mono:400,500,700" rel="stylesheet">
 
+  
 
-	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://shubhxms.github.io/css/main.53f50af6e20d463e3ca4c4909fa6af41b5f5507d6990ce5e16fd95bbfe828f5c.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://shubhxms.github.io/css/dark.ccb73467e7027b9e2f0eb6d1fa99b318fe1dc0541ba1564f1e41183a8973d0a4.css"  disabled />
-	
-
-	
-	
-
-	
-	
-	
-	
 </head>
 <body>
         <div class="content"><header>
 	<div class="main">
-		<a href="https://shubhxms.github.io/">shubham shah</a>
+		<a id="main-anchor" href="http://localhost:1313/">shubham shah</a>
+		<div class="lines">
+			<div class="line"></div>
+			<div class="line"></div>
+			<div class="line"></div>
+		</div>
 	</div>
 	<nav>
 		
@@ -50,63 +58,59 @@
 		
 		<a href="/shelf">shelf</a>
 		
-		<a href="/blog">blog</a>
+		<a href="/notes">notes</a>
 		
 		<a href="/craft">craft</a>
 		
 		<a href="/stream">stream</a>
 		
 		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-		<script src="https://shubhxms.github.io/js/themetoggle.js"></script>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
 		
 	</nav>
 </header>
 
+<div class="stream">
+    <h1>
+        stream of consciousness
+    </h1>
+    
+    <div id="data-container" class="stream"><div></div></div>
+    <script>
+      fetch("https:\/\/streams.place\/shubhxms\/json")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          let html = "";
+          data.forEach((item) => {
+            let timestamp = new Date(item.timestamp).toLocaleString();
+            html += `<div class="data-item"><h4>${timestamp} - <a href="https://streams.place/shubhxms/drops/${item.id}">permalink</a></h4>${item.html}`;
+            if (item.media && item.media.length > 0) {
+              item.media.forEach((mediaItem) => {
+                if (mediaItem.type === "photo") {
+                  html += `<img src="${mediaItem.urlToFile}" alt="Image">`;
+                }
+              });
+            }
+            html += `</div>`;
+          });
+          document.getElementById("data-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching data:", error));
+    </script>
 
+</div>
+<!-- <div class="stream">
+    <h4>
+        this is temporarily down. <br/>
+        a complete archive can be found at <a href="https://streams.place/shubhxms">streams.place/shubhxms</a>
+    </h4>
+</div> -->
 
-
-  
-  
-  
-  <div class="data-item">
-    <h2>55212-02-29 06:03:20</h2>
-    <p>“the sixth virtue is empiricism”</p>
-<p>there is nobody whose arguments are as unempirical as Yudkowsky’s. if he valued empiricism, he’d have at least a sliver of material work done in deep learning, showed some math and hypotheses testable by running code experiments</p>
-<p>23 years since founding, MIRI has done much less empirical work than Reddit user walkerspider prompt injecting ChatGPT (DAN) and giving feedback to OAI</p>
-<p>his and EM’s involvement in helping OAI get started is irrelevant to the fundamental argument at hand</p>
-<p><a target="_blank" rel="nofollow" href="https://www.lesswrong.com/posts/7ZqGiPHTpiDMwqMN2/twelve-virtues-of-rationality">https://www.lesswrong.com/posts/7ZqGiPHTpiDMwqMN2/twelve-virtues-of-rationality</a></p>
-
-  </div>
-
-  
-  
-  
-  <div class="data-item">
-    <h2>55141-08-21 19:40:45</h2>
-    <p>test 🙏</p>
-
-  </div>
-
-
-
-
-
-<h1 class="page-title">All articles</h1>
 
 
 <ul class="posts"></ul>
-<footer>
-  <div style="display:flex"><a class="soc" href="https://github.com/shubhxms" rel="me" title="GitHub"><i data-feather="github"></i></a>
-    <a class="border"></a><a class="soc" href="https://twitter.com/shubhxms/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
-    <a class="border"></a></div>
-  <div class="footer-info">
-    built by a house plant with god complex
-  </div>
-</footer>
 
-
-<script>
-  feather.replace()
-</script></div>
+        </div>
     </body>
 </html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on shubham shah</title>
+    <link>http://localhost:1313/pages/</link>
+    <description>Recent content in Pages on shubham shah</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/pages/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>craft</title>
+      <link>http://localhost:1313/craft/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/craft/</guid>
+      <description>work Graffio // CLI I built the CLI for posting to the wall built in golang Go Peek CLI to peek at a CSV file in the terminal made in golang lyfmemo a webapp that classifies quick jots (memos) on the basis of keywords built using react js and chakra ui - github repo no cap (webapp) &amp;amp; no cap (cli) a quick ship to allow you to play with letter casing the webapp is built using reactjs - github repo the CLI is built in rust - github repo rubiks cube timer an application to track and visualize your rubiks cube solves built using nextjs and chakra ui - github repo cydekyk a store on solana built using react, following a tutorial - github repo </description>
+    </item>
+    <item>
+      <title>shelf</title>
+      <link>http://localhost:1313/shelf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/shelf/</guid>
+      <description>Below is an incomplete list, in no particular order, of stuff I appreciate.&#xA;Books see book list for a more happening list; my favorites listed below&#xA;Chaos by James Gleick Incerto Series by Nassim Taleb Zero to One by Peter Thiel and Blake Masters Shoe Dog by Phil Knight Richard Feynamn: A Life in Science by John Gribbin and Mary Gribbin The Man Who Bent Light: Father of Fibre Optics by Narinder Singh Kapany The Picture of Dorian Gray by Oscar Wilde The Song of Achilles by Madeline Miller Suheldev and the Battle of Bahraich by Amish Tripathi Jonathon Livingston Seagull by Richard Bach On Internet exurb1a (youtube) Dynomight (blog) Be Wrong (blog) But What For?</description>
+    </item>
+    <item>
+      <title>story</title>
+      <link>http://localhost:1313/story/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/story/</guid>
+      <description>so this is about me.</description>
+    </item>
+  </channel>
+</rss>
