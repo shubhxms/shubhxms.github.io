@@ -45,7 +45,7 @@ I enjoy making computers do my bidding and shipping something from scratch & ite
 
 - I love to receive correspondence, feel free to reach out.
 - Your best bet is [twitter.com/shubhxms](https://twitter.com/shubhxms) or [telegram.me/shubhxms](https://telegram.me/shubhxms)
-- E-mail, if that's your thing - [03[dot]shubhamshah[at]gmail[dot]com](mailto:03.shubhamshah@gmail.com)
+- E-mail, if that's your thing - [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
 
 <!-- {{% sidenote %}} getting back to things {{% /sidenote %}} -->
 <!-- {{% sidenote %}} -->
