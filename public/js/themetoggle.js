@@ -21,6 +21,7 @@ function toggleTheme() {
         newTheme = "light";
     }
     document.documentElement.setAttribute('data-theme', newTheme);
+
 }
 
 var savedTheme = localStorage.getItem("theme-storage") || "light";
