@@ -27,19 +27,17 @@ Chaos by James Gleick Incerto Series by Nassim Taleb Zero to One by Peter Thiel 
   <meta name="twitter:description" content="Below is an incomplete list, in no particular order, of stuff I appreciate.
 Books see book list for a more happening list; my favorites listed below
 Chaos by James Gleick Incerto Series by Nassim Taleb Zero to One by Peter Thiel and Blake Masters Shoe Dog by Phil Knight Richard Feynamn: A Life in Science by John Gribbin and Mary Gribbin The Man Who Bent Light: Father of Fibre Optics by Narinder Singh Kapany The Picture of Dorian Gray by Oscar Wilde The Song of Achilles by Madeline Miller Suheldev and the Battle of Bahraich by Amish Tripathi Jonathon Livingston Seagull by Richard Bach On Internet exurb1a (youtube) Dynomight (blog) Be Wrong (blog) But What For?">
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script> 
-
-
-  
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
- 
+<script src="http://localhost:1313/js/feather.min.js"></script>
+   
+  <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet" />
+   
   <link
     rel="stylesheet"
     type="text/css"
     media="screen"
-    href="http://localhost:1313/css/main.5c9b012f4934ff7a08a9bf8cb20cf1911469363f858126f85aa36b248cc21541.css"
+    href="http://localhost:1313/css/main.7d9ab0d39c20c99ce1cb8a364e53368a46d51f65b0c5e9120688a3661eb31677.css"
   /> <link id="darkModeStyle" rel="stylesheet" type="text/css"
-  href="http://localhost:1313/css/dark.59384045ab3ca533b81be9e0d72df720a64dcdd13f7695ca455f7c79416eed84.css"  disabled /> 
+  href="http://localhost:1313/css/dark.4f7b07c26ed03d1cb382c808e4fe486e7f9f7bd1b0940a7228b6c58e7089dc52.css"  disabled /> 
 
   
   
@@ -124,8 +122,6 @@ Chaos by James Gleick Incerto Series by Nassim Taleb Zero to One by Peter Thiel 
 	</nav>
 </header>
 
-
-
 <main>
 	<article>
 		<div class="title">
@@ -133,7 +129,6 @@ Chaos by James Gleick Incerto Series by Nassim Taleb Zero to One by Peter Thiel 
 			
 		</div>
 		
-
 		<section class="body">
 			<p>Below is an <em>incomplete</em> list, in no particular order, of stuff I appreciate.</p>
 <hr>
@@ -177,33 +172,75 @@ Chaos by James Gleick Incerto Series by Nassim Taleb Zero to One by Peter Thiel 
 <hr>
 
 		</section>
-
 		<div class="post-tags">
 			
 			
 			
 		</div>
-
-		<script src="https://giscus.app/client.js"
-        data-repo="shubhxms/shubhxms.github.io"
-        data-repo-id="R_kgDOKBNhuA"
-        data-category="Comments"
-        data-category-id="DIC_kwDOKBNhuM4CgfKH"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="transparent_dark"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
-</script>
+		<div id="giscus-container"></div>
 	</article>
-
 </main>
 
+
+
+<script>
+function loadGiscus() {
+  const theme = localStorage.getItem("theme-storage") === "light" ? "light" : "transparent_dark";
+  const script = document.createElement('script');
+  script.src = "https://giscus.app/client.js";
+  script.setAttribute('data-repo', "shubhxms/shubhxms.github.io");
+  script.setAttribute('data-repo-id', "R_kgDOKBNhuA");
+  script.setAttribute('data-category', "Comments");
+  script.setAttribute('data-category-id', "DIC_kwDOKBNhuM4CgfKH");
+  script.setAttribute('data-mapping', "url");
+  script.setAttribute('data-strict', "0");
+  script.setAttribute('data-reactions-enabled', "1");
+  script.setAttribute('data-emit-metadata', "0");
+  script.setAttribute('data-input-position', "top");
+  script.setAttribute('data-theme', theme);
+  script.setAttribute('data-lang', "en");
+  script.setAttribute('data-loading', "lazy");
+  script.setAttribute('crossorigin', "anonymous");
+  script.async = true;
+
+  const container = document.getElementById('giscus-container');
+  container.innerHTML = ''; // Clear existing content
+  container.appendChild(script);
+}
+
+function updateGiscusTheme() {
+  const iframe = document.querySelector('iframe.giscus-frame');
+  if (!iframe) return;
+
+  const theme = localStorage.getItem("theme-storage") === "light" ? "light" : "transparent_dark";
+  iframe.contentWindow.postMessage(
+    { giscus: { setConfig: { theme } } },
+    'https://giscus.app'
+  );
+}
+
+// Load Giscus initially
+document.addEventListener('DOMContentLoaded', loadGiscus);
+
+// Setup a MutationObserver to watch for theme changes
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+      updateGiscusTheme();
+    }
+  });
+});
+
+// Start observing the document with the configured parameters
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+// Also update theme when localStorage changes
+window.addEventListener('storage', (event) => {
+  if (event.key === 'theme-storage') {
+    updateGiscusTheme();
+  }
+});
+</script>
 <footer>
     
   <div class="footer-info">

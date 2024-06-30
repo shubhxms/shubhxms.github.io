@@ -12,11 +12,15 @@ function setTheme(mode) {
 }
 
 function toggleTheme() {
+    let newTheme;
     if (localStorage.getItem("theme-storage") === "light") {
         setTheme("dark");
+        newTheme = "dark";
     } else if (localStorage.getItem("theme-storage") === "dark") {
         setTheme("light");
+        newTheme = "light";
     }
+    document.documentElement.setAttribute('data-theme', newTheme);
 }
 
 var savedTheme = localStorage.getItem("theme-storage") || "light";

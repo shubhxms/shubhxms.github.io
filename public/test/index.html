@@ -24,17 +24,15 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Test">
   <meta name="twitter:description" content="test">
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script> 
-
-
-  
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
- 
+<script src="http://localhost:1313/js/feather.min.js"></script>
+   
+  <link href="http://localhost:1313/css/fonts.2c2227b81b1970a03e760aa2e6121cd01f87c88586803cbb282aa224720a765f.css" rel="stylesheet" />
+   
   <link
     rel="stylesheet"
     type="text/css"
     media="screen"
-    href="http://localhost:1313/css/main.5c9b012f4934ff7a08a9bf8cb20cf1911469363f858126f85aa36b248cc21541.css"
+    href="http://localhost:1313/css/main.071e8857a6c908e6a4e222fe814a86f92b1559a3592493cb3092de2f669e0111.css"
   /> <link id="darkModeStyle" rel="stylesheet" type="text/css"
   href="http://localhost:1313/css/dark.59384045ab3ca533b81be9e0d72df720a64dcdd13f7695ca455f7c79416eed84.css"  disabled /> 
 
@@ -121,8 +119,6 @@
 	</nav>
 </header>
 
-
-
 <main>
 	<article>
 		<div class="title">
@@ -135,7 +131,6 @@
 			<strong>tl;dr:</strong>
 			panchat
 		</div>
-
 		<section class="body">
 			<p>i really love the (hipster) internet
 They say the internet didn’t show up in productivity numbers, but have you tried measuring the leisure ones?</p>
@@ -183,7 +178,6 @@ I’m doubt that this is how Dylan ever imagined his song being played. And I’
 <p>Thanks for reading Oft Mistaken! Subscribe to make me feel good.</p>
 
 		</section>
-
 		<div class="post-tags">
 			
 			
@@ -199,27 +193,36 @@ I’m doubt that this is how Dylan ever imagined his song being played. And I’
 			
 			
 		</div>
-
-		<script src="https://giscus.app/client.js"
-        data-repo="shubhxms/shubhxms.github.io"
-        data-repo-id="R_kgDOKBNhuA"
-        data-category="Comments"
-        data-category-id="DIC_kwDOKBNhuM4CgfKH"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="transparent_dark"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
-</script>
+		<div id="giscus-container"></div>
 	</article>
-
 </main>
 
+
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  const theme = localStorage.getItem("theme-storage") === "light" ? "light" : "transparent_dark";
+  const giscusScript = document.createElement('script');
+  giscusScript.src = "https://giscus.app/client.js";
+  giscusScript.setAttribute('data-repo', "shubhxms/shubhxms.github.io");
+  giscusScript.setAttribute('data-repo-id', "R_kgDOKBNhuA");
+  giscusScript.setAttribute('data-category', "Comments");
+  giscusScript.setAttribute('data-category-id', "DIC_kwDOKBNhuM4CgfKH");
+  giscusScript.setAttribute('data-mapping', "url");
+  giscusScript.setAttribute('data-strict', "0");
+  giscusScript.setAttribute('data-reactions-enabled', "1");
+  giscusScript.setAttribute('data-emit-metadata', "0");
+  giscusScript.setAttribute('data-input-position', "top");
+  giscusScript.setAttribute('data-theme', theme);
+  giscusScript.setAttribute('data-lang', "en");
+  giscusScript.setAttribute('data-loading', "lazy");
+  giscusScript.setAttribute('crossorigin', "anonymous");
+  giscusScript.async = true;
+
+  const giscusContainer = document.getElementById('giscus-container');
+  giscusContainer.appendChild(giscusScript);
+});
+</script>
 <footer>
     
   <div class="footer-info">
