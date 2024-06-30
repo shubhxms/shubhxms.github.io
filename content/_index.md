@@ -11,7 +11,7 @@ ________________________________________________
 |___________________________________________|/|
 </pre> -->
 
-<img src="/images/header2.png"/>
+<img src="/images/header7.png"/>
 
 <div style="float: right; max-width: 25%; max-height: 25%;">
 <img src="/images/clock-child.jpeg" id="home-img" alt="big clock shill">
@@ -22,7 +22,8 @@ I enjoy making computers do my bidding and shipping something from scratch & ite
 
 - 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in)
 - Interests include computers, maths, internet businesses, running, books, cinema, tennis.
-- Open to work across domains and can work on anything I set my mind on.
+- Open to work across domains
+- Can work on anything I set my mind on.
 
 ## now
 
