@@ -17,17 +17,20 @@ ________________________________________________
 <img src="/images/clock-child.jpeg" id="home-img" alt="big clock shill">
 </div>
 
-I enjoy making computers do my bidding and shipping something from scratch & iterating on prototypes.
+I enjoy making computers do my bidding.
+<!-- and shipping something from scratch & iterating on prototypes. -->
 
 
 - 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in)
-- Interests include computers, maths, internet businesses, running, books, cinema, tennis.
+- Interests include computers, maths, internet businesses, running, books, cinema, sports.
 - Open to work across domains
 - Can work on anything I set my mind on.
 
 ## now
 
-- Learning more about databases and compilers.
+- Learning more about operating systems and databases.
+  - Going thorugh OS: Three Easy Peices
+  - Implementing a KV store.
 - Reading
   <!-- - The Information: A History, a Theory, a Flood by James Gleick -->
   - Bonobo and the Atheist by Frans de Waal
