@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shubham shah</title>
+    <link>http://localhost:1313/essays/</link>
+    <description>Recent content on shubham shah</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Mar 2017 14:15:59 -0600</lastBuildDate>
+    <atom:link href="http://localhost:1313/essays/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>http://localhost:1313/test/</link>
+      <pubDate>Fri, 03 Mar 2017 14:15:59 -0600</pubDate>
+      <guid>http://localhost:1313/test/</guid>
+      <description>i really love the (hipster) internet They say the internet didn’t show up in productivity numbers, but have you tried measuring the leisure ones?&#xA;The web is not what it once was.&#xA;What started out as a way to put text documents on the web, an effort based upon a marvellously simple maxim: all you need is links, has long outgrown that particular paradigm. Now full-blown apps run in your browser.</description>
+    </item>
+  </channel>
+</rss>

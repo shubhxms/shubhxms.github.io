@@ -29,10 +29,16 @@ name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/shubhxms/"
 
+
 [[menu.main]]
 name = "about"
 url = "/"
 weight = 1
+
+[[menu.main]]
+name = "shelf"
+url = "/shelf"
+weight = 2
 
 [[menu.main]]
 name = "notes"
@@ -49,10 +55,6 @@ name = "stream"
 url = "/stream"
 weight = 5
 
-[[menu.main]]
-name = "shelf"
-url = "/shelf"
-weight = 2
 
 [permalinks]
   pages = '/:title'
