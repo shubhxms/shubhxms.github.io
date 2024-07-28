@@ -17,7 +17,7 @@ ________________________________________________
 <img src="/images/clock-child.jpeg" id="home-img" alt="big clock shill">
 </div>
 
-- I enjoy making computers do my bidding.
+I enjoy making computers do my bidding.
 <!-- and shipping something from scratch & iterating on prototypes. -->
 
 
@@ -27,7 +27,7 @@ ________________________________________________
 - Can work on anything I set my mind on.
 
 ## now
-- To Be Updated.
+- Working on a dev-util application.
 - Reading
   <!-- - The Information: A History, a Theory, a Flood by James Gleick -->
   - Bonobo and the Atheist by Frans de Waal
