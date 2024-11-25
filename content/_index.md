@@ -27,10 +27,11 @@ I enjoy making computers do my bidding.
 - Can work on anything I set my mind on.
 
 ## now
-- Working on a dev-util application.
+- Working on an application of embeddings.
 - Reading
-  <!-- - The Information: A History, a Theory, a Flood by James Gleick -->
-  - Bonobo and the Atheist by Frans de Waal
+  - The Information: A History, a Theory, a Flood by James Gleick
+  - American Gods by Neil Gaiman
+  <!-- - Bonobo and the Atheist by Frans de Waal -->
   - Elon Musk by Walter Isaacson
 - Check [/stream](/stream) for link-drops and pictures
 
@@ -44,7 +45,7 @@ I enjoy making computers do my bidding.
 ## contact
 
 - I love to receive correspondence, feel free to reach out.
-- Your best bet is [twitter.com/shubhxms](https://twitter.com/shubhxms) or [telegram.me/shubhxms](https://telegram.me/shubhxms)
+- Your best bet is [twitter.com/shubhxms](https://twitter.com/shubhxms) or [telegram.me/shubhxms](https://telegram.me/shubhxms) or [bsky.app/shubhxms](https://bsky.app/profile/shubhxms.bsky.social) 
 - E-mail, if that's your thing - [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
 
 <!-- {{% sidenote %}} getting back to things {{% /sidenote %}} -->
