@@ -14,7 +14,7 @@ ________________________________________________
 <img src="/images/header7.png"/>
 
 <div style="float: right; max-width: 25%; max-height: 25%;">
-<img src="/images/clock-child.jpeg" id="home-img" alt="big clock shill">
+<img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
 </div>
 
 I enjoy making computers do my bidding.
@@ -24,15 +24,14 @@ I enjoy making computers do my bidding.
 - 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in)
 - Interests include computers, maths, internet businesses, running, books, cinema, sports.
 - Open to work across domains
-- Can work on anything I set my mind on.
+- I Can work on anything I set my mind on.
 
 ## now
 - Working on an application of embeddings.
 - Reading
   - The Information: A History, a Theory, a Flood by James Gleick
-  - American Gods by Neil Gaiman
   <!-- - Bonobo and the Atheist by Frans de Waal -->
-  - Elon Musk by Walter Isaacson
+  <!-- - Elon Musk by Walter Isaacson -->
 - Check [/stream](/stream) for link-drops and pictures
 
 ## best work
