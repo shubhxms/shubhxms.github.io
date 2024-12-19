@@ -36,15 +36,15 @@ I enjoy making computers do my bidding.
 
 ## best work
 
-- [Graffio](https://graffio.xyz) - I built the [CLI](https://github.com/shubhxms/graffio) for posting
+- [Graffio](https://graffio.xyz) - I built the [CLI](https://github.com/shubhamalloc/graffio) for posting
 - participated in [Buildspace Nights and Weekends](https://buildspace.so/)
   <!-- S4, S3 and [S2](https://polygonscan.com/tx/0xb78eeb255a386d49f7d00859568370da52566184400727c4baa4fdf8c7dd6210). -->
-- see [github](https://github.com/shubhxms) & [/craft](/craft).
+- see [github](https://github.com/shubhamalloc) & [/craft](/craft).
 
 ## contact
 
 - I love to receive correspondence, feel free to reach out.
-- Your best bet is [twitter.com/shubhxms](https://twitter.com/shubhxms) or [telegram.me/shubhxms](https://telegram.me/shubhxms) or [bsky.app/shubhxms](https://bsky.app/profile/shubhxms.bsky.social) 
+- Your best bet is [twitter.com/shubhamalloc](https://twitter.com/shubhamalloc) or [telegram.me/shubhamalloc](https://telegram.me/shubhamalloc) or [bsky.app/shubhamalloc](https://bsky.app/profile/shubhamalloc.bsky.social) 
 - E-mail, if that's your thing - [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
 
 <!-- {{% sidenote %}} getting back to things {{% /sidenote %}} -->
