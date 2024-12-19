@@ -22,12 +22,12 @@ katex = true # enable KaTeX support
 [[params.social]]
 name = "GitHub"
 icon = "github"
-url = "https://github.com/shubhxms"
+url = "https://github.com/shubhamalloc/"
 
 [[params.social]]
 name = "Twitter"
 icon = "twitter"
-url = "https://twitter.com/shubhxms/"
+url = "https://twitter.com/shubhamalloc/"
 
 
 [[menu.main]]
