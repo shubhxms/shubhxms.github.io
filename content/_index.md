@@ -44,7 +44,7 @@ I enjoy making computers do my bidding.
 ## contact
 
 - I love to receive correspondence, feel free to reach out.
-- Your best bet is [twitter/shubhxms](https://twitter.com/shubhxms) or [telegram/shubhxms](https://telegram.me/shubhxms) or [bsky/shubhxms](https://bsky.app/profile/shubhxms.bsky.social) 
+- Your best bet is [twitter/shubhxms](https://twitter.com/shubhxms) or [telegram/shubhxms](https://telegram.me/shubhxms) or [bsky/shubhxms.github.io](https://bsky.app/profile/shubhxms.github.io) 
 - E-mail, if that's your thing - [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
 
 <!-- {{% sidenote %}} getting back to things {{% /sidenote %}} -->
