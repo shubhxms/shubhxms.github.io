@@ -1,7 +1,7 @@
 ---
-title: "craft"
-url: /craft
-description: "craft"
+title: "projects"
+url: /projects
+description: "projects"
 tldr: "history of my work"
 draft: false
 ---

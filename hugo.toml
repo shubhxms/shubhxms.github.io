@@ -22,38 +22,34 @@ katex = true # enable KaTeX support
 [[params.social]]
 name = "GitHub"
 icon = "github"
-url = "https://github.com/shubhamalloc/"
+url = "https://github.com/shubhxms/"
 
 [[params.social]]
 name = "Twitter"
 icon = "twitter"
-url = "https://twitter.com/shubhamalloc/"
-
+url = "https://twitter.com/shubhxms/"
 
 [[menu.main]]
-name = "about"
-url = "/"
+name = "now"
+url = "/#now"
 weight = 1
 
 [[menu.main]]
 name = "shelf"
 url = "/shelf"
-weight = 2
+weight = 3
 
 [[menu.main]]
 name = "notes"
 url = "/notes"
-weight = 3
+weight = 5
 
 [[menu.main]]
-name = "craft"
-url = "/craft"
+name = "projects"
+url = "/projects"
 weight = 4
 
-[[menu.main]]
-name = "stream"
-url = "/stream"
-weight = 5
+
 
 
 [permalinks]
