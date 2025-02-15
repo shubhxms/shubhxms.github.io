@@ -1,4 +1,4 @@
-baseURL = 'https://shubhamalloc.github.io/'
+baseURL = 'https://shubhxms.github.io/'
 languageCode = 'en-us'
 title = 'shubham shah'
 theme = "archie"
@@ -49,8 +49,15 @@ name = "projects"
 url = "/projects"
 weight = 4
 
-
-
+[build]
+  writeStats = true
+  noChmod = false
+  useResourceCacheWhen = "fallback"
+  enableMissingTranslationPlaceholders = false
+  disableAliases = false
+  disableHugoGeneratorInject = false
+  noBuildLock = false
+  cleanDestinationDir = true
 
 [permalinks]
   pages = '/:title'
