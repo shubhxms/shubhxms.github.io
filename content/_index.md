@@ -1,21 +1,21 @@
 ## about
 <!-- <img src="/images/header7.png" /> -->
-<div style="float: right; max-width: 25%; max-height: 25%;">
+<div style="float: right; max-width: 25%; max-height: 25%;" id="home-img">
 <img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
 </div>
 
 **I enjoy making computers do my bidding, shipping something from scratch & iterating on prototypes.**
 
-- Interests include computers, maths, internet businesses, running, books, cinema, sports.
+- Interests include **computers, maths, internet businesses, running, books, cinema, sports**.
 - I am open to and actively **looking for work** across domains. **I love *all* things systems.**
 - 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in)
 
 ## now
 _(as of feb. '25)_
 - Learning
-  - Speedrun **core CS**: [From the Transistor to the Web Browser](https://github.com/geohot/fromthetransistor)
-  - Figuring out **AutoDiff**
-  - Reading Alice’s Adventures in a differentiable wonderland ([link](https://www.sscardapane.it/alice-book/))
+  - Speedrunning **core CS**: [From the Transistor to the Web Browser](https://github.com/shubhxms/fromthetransistor)
+  - Toying with **Automatic Differentiation**
+  - Reading "Alice’s Adventures in a differentiable wonderland" ([link](https://www.sscardapane.it/alice-book/))
 - Reading
   - The Information: A History, a Theory, a Flood by James Gleick
   - Circe by Madeline Miller
