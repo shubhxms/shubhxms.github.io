@@ -35,8 +35,8 @@ url = "/#now"
 weight = 1
 
 [[menu.main]]
-name = "shelf"
-url = "/shelf"
+name = "core"
+url = "/core"
 weight = 3
 
 [[menu.main]]
