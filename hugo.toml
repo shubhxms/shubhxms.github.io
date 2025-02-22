@@ -12,7 +12,7 @@ paginate = 4
 # og_image = "https://raw.githubusercontent.com/athul/archie/master/images/archie-dark.png"
 #mode = "auto"
 mode = "toggle"
-useCDN = true
+useCDN = false
 subtitle = ""
 description = "personal website of shubham shah"
 enableGitInfo = true
@@ -48,16 +48,6 @@ weight = 5
 name = "projects"
 url = "/projects"
 weight = 4
-
-[build]
-  writeStats = true
-  noChmod = false
-  useResourceCacheWhen = "fallback"
-  enableMissingTranslationPlaceholders = false
-  disableAliases = false
-  disableHugoGeneratorInject = false
-  noBuildLock = false
-  cleanDestinationDir = true
 
 [permalinks]
   pages = '/:title'

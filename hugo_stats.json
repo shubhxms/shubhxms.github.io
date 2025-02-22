@@ -55,7 +55,6 @@
     "ids": [
       "about",
       "archive",
-      "best-work",
       "blog",
       "books",
       "contact",
@@ -66,8 +65,9 @@
       "giscus-container",
       "home-img",
       "main-anchor",
-      "now",
+      "now-_feb-25_",
       "on-internet",
+      "projects",
       "work"
     ]
   }

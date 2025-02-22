@@ -6,7 +6,7 @@ aliases: [/shelf, /shubhamcore]
 
 Below is an _incomplete & unordered_ list of stuff I appreciate.
 
-The one true list of everything *avant-garde* (read: everything I happen to like).
+The one true list of everything extraordinaire (read: everything I happen to like).
 
 ---
 
@@ -50,7 +50,7 @@ The one true list of everything *avant-garde* (read: everything I happen to like
 
 
 ## **On Internet**
-(*this section will soon be replaced with specific suggestions instead of pointing at an entire channel.*)
+(*this section will soon be replaced with specific suggestions instead of pointing at an entire channel - as soon as i can make time for it.*)
 - exurb1a ([youtube](https://www.youtube.com/@exurb1a))
 - Dynomight ([blog](https://dynomight.substack.com/))
 - Be Wrong ([blog](https://bewrong.substack.com/))

@@ -1,32 +1,42 @@
+
+
 ## about
-<!-- <img src="/images/header7.png" /> -->
+
 <div style="float: right; max-width: 25%; max-height: 25%;" id="home-img">
-<img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
+  <img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
 </div>
 
-**I enjoy making computers do my bidding, shipping something from scratch & iterating on prototypes.**
+**[i like making computers do my bidding.](/images/i-love-computers-it.gif)**
 
-- Interests include **computers, maths, internet businesses, running, books, cinema, sports**.
-- I am open to and actively **looking for work** across domains. **I love *all* things systems.**
-- 21yo, CS + Math undergrad at [Ahmedabad Uni](https://ahduni.edu.in)
+* love all things **systems**.
+* curious about **computers, maths and the internet**.
+* into **running, books, cinema, sports**.
 
-## now
-_(as of feb. '25)_
-- Learning
-  - Speedrunning **core CS**: [From the Transistor to the Web Browser](https://github.com/shubhxms/fromthetransistor)
-  - Toying with **Automatic Differentiation**
-  - Reading "Alice’s Adventures in a differentiable wonderland" ([link](https://www.sscardapane.it/alice-book/))
-- Reading
-  - The Information: A History, a Theory, a Flood by James Gleick
-  - Circe by Madeline Miller
+i'm currently **looking for work** that lets me dive into these worlds.
 
-## best work
-- [Graffio](https://graffio.xyz) - I built the [CLI](https://github.com/shubhxms/graffio) for posting
-- participated in [Buildspace Nights and Weekends](https://buildspace.so/)
-  <!-- S4, S3 and [S2](https://polygonscan.com/tx/0xb78eeb255a386d49f7d00859568370da52566184400727c4baa4fdf8c7dd6210). -->
+
+
+
+## now _(feb ‘25)_
+
+**learning:**  
+- speedrunning core cs with [from the transistor to the browser](https://github.com/shubhxms/fromthetransistor)  
+- exploring automatic differentiation  
+- reading *alice’s adventures in a differentiable wonderland* ([link](https://www.sscardapane.it/alice-book/))
+
+**reading:**  
+- *the information: a history, a theory, a flood* — james gleick  
+- *circe* — madeline miller
+
+
+## projects
+
+- built [graffio](https://graffio.xyz) along with its [cli for posting](https://github.com/shubhxms/graffio)  
+- contributed at [buildspace nights and weekends](https://buildspace.so/)
+
 
 ## contact
-- Always down to chat, feel free to reach out.
-- Your best bet is [twitter/shubhxms](https://twitter.com/shubhxms) or [telegram/shubhxms](https://telegram.me/shubhxms) or [bsky/shubhxms.github.io](https://bsky.app/profile/shubhxms.github.io) 
-- E-mail, if that's your thing - [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
+
+- always up for a chat. reach out on [twitter](https://twitter.com/shubhxms), [telegram](https://telegram.me/shubhxms), or [bsky](https://bsky.app/profile/shubhxms.github.io)
+- or drop an email at [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
 
