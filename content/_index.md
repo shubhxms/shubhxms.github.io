@@ -23,7 +23,7 @@ i'm currently **looking for work** that lets me dive into these worlds.
 
 **reading:**  
 - *the information: a history, a theory, a flood* — james gleick  
-- *circe* — madeline miller
+- *Behave* - Robert Sapolsky
 
 
 ## projects
