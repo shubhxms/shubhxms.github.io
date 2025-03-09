@@ -30,10 +30,12 @@ The one true list of everything extraordinaire (read: everything I happen to lik
   - Jonathan Livingston Seagull – Richard Bach
 ---
 
-## **Films & Anime**
+## **Films, Shows & Anime**
 
 - The Grand Budapest Hotel (2014, dir. Wes Anderson)  
-- Boyhood (2014, dir. Richard Linklater)  
+- Boyhood (2014, dir. Richard Linklater)
+- Silicon Valley (2014-2019, cr. Mike Judge, John Altschuler, and Dave Krinsky)
+- A Rainy Day in New York (2019, dir. Woody Allen)
 - Manchester by the Sea (2016, dir. Kenneth Lonergan)  
 - Dead Poets Society (1989, dir. Peter Weir)  
 - Call Me By Your Name (2017, dir. Luca Guadagnino)  
