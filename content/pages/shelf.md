@@ -36,7 +36,7 @@ The one true list of everything extraordinaire (read: everything I happen to lik
 - Boyhood (2014, dir. Richard Linklater)
 - The Wonderful Story of Henry Sugar (2023, dir. Wes Anderson)
 - The Swan (2023, dir. Wes Anderson)
-- Silicon Valley (2014-2019, cr. Mike Judge, John Altschuler, and Dave Krinsky)
+- Silicon Valley (2014, cr. Mike Judge, John Altschuler, and Dave Krinsky)
 - A Rainy Day in New York (2019, dir. Woody Allen)
 - Manchester by the Sea (2016, dir. Kenneth Lonergan)  
 - Dead Poets Society (1989, dir. Peter Weir)  
