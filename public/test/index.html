@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>Test - shubham shah</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>Test - shubham shah</title><meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
     content="test"
@@ -49,7 +47,7 @@
     MathJax.Hub.Config({
     	tex2jax: {
     		inlineMath: [['$','$'], ['\\(','\\)']],
-    		displayMath: [['$$','$$'], ['\[','\]']],
+    		displayMath: [['$$','$$'], ['\\[','\\]']],
     		processEscapes: true,
     		processEnvironments: true,
     		skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
@@ -90,39 +88,39 @@
   
 
   
+  <script src="http://localhost:1313/js/sticky-header.js"></script>
 </head>
-<body>
-    <div class="content"><header>
-  <div class="main">
-    <a id="main-anchor" href="http://localhost:1313/">shubham shah</a>
-    <div class="lines">
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
+<header id="header" class="header">
+  <div class="main-nav">
+    <div class="main">
+      <a id="main-anchor" href="http://localhost:1313/">shubham shah</a>
     </div>
+    <nav>
+      
+      <a href="/#now">now</a>
+      
+      <a href="/core">core</a>
+      
+      <a href="/projects">projects</a>
+      
+      <a href="/notes">notes</a>
+       |
+      <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+      <script src="http://localhost:1313/js/themetoggle.js"></script>
+      
+    </nav>
   </div>
-  <nav>
-    
-    <a href="/#now">now</a>
-    
-    <a href="/core">core</a>
-    
-    <a href="/projects">projects</a>
-    
-    <a href="/notes">notes</a>
-     |
-    <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-    <script src="http://localhost:1313/js/themetoggle.js"></script>
-    
-  </nav>
-</header>
-
+  <div class="lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+</header><body>
+    <div class="content">
 <main>
 	<article>
 		<div class="title">
 			<h1 class="title serif-font-block"><a href>Test </a></h1>
-			
-			<div class="meta">Posted on Mar 3, 2017</div>
 		</div>
 		
 		<div class="tldr">
@@ -176,97 +174,16 @@ I’m doubt that this is how Dylan ever imagined his song being played. And I’
 <p>Thanks for reading Oft Mistaken! Subscribe to make me feel good.</p>
 
 		</section>
-		<div class="post-tags">
-			
-			
-			<nav class="nav tags">
-				<ul class="tags">
-					
-					<li><a href="/tags/tag">tag</a></li>
-					
-					<li><a href="/tags/names">names</a></li>
-					
-				</ul>
-			</nav>
-			
-			
-		</div>
-		<div id="giscus-container"></div>
 	</article>
 </main>
-
-
-
-<script>
-function loadGiscus() {
-  const theme = localStorage.getItem("theme-storage") === "light" ? "light" : "transparent_dark";
-  const script = document.createElement('script');
-  script.src = "https://giscus.app/client.js";
-  script.setAttribute('data-repo', "shubhxms/shubhxms.github.io");
-  script.setAttribute('data-repo-id', "R_kgDOKBNhuA");
-  script.setAttribute('data-category', "Comments");
-  script.setAttribute('data-category-id', "DIC_kwDOKBNhuM4CgfKH");
-  script.setAttribute('data-mapping', "url");
-  script.setAttribute('data-strict', "0");
-  script.setAttribute('data-reactions-enabled', "1");
-  script.setAttribute('data-emit-metadata', "0");
-  script.setAttribute('data-input-position', "top");
-  script.setAttribute('data-theme', theme);
-  script.setAttribute('data-lang', "en");
-  script.setAttribute('data-loading', "lazy");
-  script.setAttribute('crossorigin', "anonymous");
-  script.async = true;
-
-  const container = document.getElementById('giscus-container');
-  container.innerHTML = ''; // Clear existing content
-  container.appendChild(script);
-}
-
-function updateGiscusTheme() {
-  const iframe = document.querySelector('iframe.giscus-frame');
-  if (!iframe) return;
-
-  const theme = localStorage.getItem("theme-storage") === "light" ? "light" : "transparent_dark";
-  iframe.contentWindow.postMessage(
-    { giscus: { setConfig: { theme } } },
-    'https://giscus.app'
-  );
-}
-
-// Load Giscus initially
-document.addEventListener('DOMContentLoaded', loadGiscus);
-
-// Setup a MutationObserver to watch for theme changes
-const observer = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-      updateGiscusTheme();
-    }
-  });
-});
-
-// Start observing the document with the configured parameters
-observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-// Also update theme when localStorage changes
-window.addEventListener('storage', (event) => {
-  if (event.key === 'theme-storage') {
-    updateGiscusTheme();
-  }
-});
-</script>
 <footer>
-    
-  <div class="footer-info">
+  <div class="footer-info" style="display: flex; justify-content: space-between; width: 100%;">
     
     <span>latest commit - dc0bb61, periodic update</span>
-    <br/>
     <span>sometime in 2025/02 </span>
     
   </div>
 </footer>
-
-
 </div>
   </body>
 </html>

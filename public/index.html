@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html>
-  <head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>shubham shah | Home</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /><title>shubham shah | Home</title><meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
     content="personal website of shubham shah"
@@ -51,7 +48,7 @@ speedrunning core cs with from the transistor to the browser exploring automatic
     MathJax.Hub.Config({
     	tex2jax: {
     		inlineMath: [['$','$'], ['\\(','\\)']],
-    		displayMath: [['$$','$$'], ['\[','\]']],
+    		displayMath: [['$$','$$'], ['\\[','\\]']],
     		processEscapes: true,
     		processEnvironments: true,
     		skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
@@ -92,35 +89,36 @@ speedrunning core cs with from the transistor to the browser exploring automatic
   
 
   
+  <script src="http://localhost:1313/js/sticky-header.js"></script>
 </head>
-
-  <body>
-    <div class="content">
-      <header>
-  <div class="main">
-    <a id="main-anchor" href="http://localhost:1313/">shubham shah</a>
-    <div class="lines">
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
+<header id="header" class="header">
+  <div class="main-nav">
+    <div class="main">
+      <a id="main-anchor" href="http://localhost:1313/">shubham shah</a>
     </div>
+    <nav>
+      
+      <a href="/#now">now</a>
+      
+      <a href="/core">core</a>
+      
+      <a href="/projects">projects</a>
+      
+      <a href="/notes">notes</a>
+       |
+      <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+      <script src="http://localhost:1313/js/themetoggle.js"></script>
+      
+    </nav>
   </div>
-  <nav>
-    
-    <a href="/#now">now</a>
-    
-    <a href="/core">core</a>
-    
-    <a href="/projects">projects</a>
-    
-    <a href="/notes">notes</a>
-     |
-    <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-    <script src="http://localhost:1313/js/themetoggle.js"></script>
-    
-  </nav>
-</header>
- <h2 id="about">about</h2>
+  <div class="lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+</header><body>
+    <div class="content">
+  <h2 id="about">about</h2>
 <div style="float: right; max-width: 25%; max-height: 25%;" id="home-img">
   <img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
 </div>
@@ -157,18 +155,15 @@ speedrunning core cs with from the transistor to the browser exploring automatic
 <!-- ## principles
 
 _inspired by [nat friedman](https://nat.org)_
--  --><footer>
-    
-  <div class="footer-info">
+-  -->
+<footer>
+  <div class="footer-info" style="display: flex; justify-content: space-between; width: 100%;">
     
     <span>latest commit - 3d10656, now</span>
-    <br/>
     <span>sometime in 2025/03 </span>
     
   </div>
 </footer>
-
-
 </div>
   </body>
 </html>
