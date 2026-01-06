@@ -1,17 +1,12 @@
 ---
-title: "core"
+title: "Core"
 url: /core
 aliases: [/shelf, /shubhamcore]
+tldr: Things that matter to me. Incomplete, unordered.
 ---
 
-Below is an _incomplete & unordered_ list of stuff I appreciate.
-
-The one true list of everything extraordinaire (read: everything I happen to like).
-
----
 
 ## **Books**
-
 <!-- see [book list](https://literal.club/shubhxms) for a more happening list; my favorites listed below -->
 - Science & Math
   - Chaos – James Gleick
@@ -28,10 +23,9 @@ The one true list of everything extraordinaire (read: everything I happen to lik
   - Circe – Madeline Miller
   - The Picture of Dorian Gray – Oscar Wilde
   - Jonathan Livingston Seagull – Richard Bach
----
+
 
 ## **Films, Shows & Anime**
-
 - The Grand Budapest Hotel (2014, dir. Wes Anderson)  
 - Boyhood (2014, dir. Richard Linklater)
 - The Wonderful Story of Henry Sugar (2023, dir. Wes Anderson)
@@ -50,16 +44,13 @@ The one true list of everything extraordinaire (read: everything I happen to lik
 - Attack on Titan (2013, dir. Tetsurō Araki)  
 - Ao Ashi (2022, dir. Akira Satō)
 
----
+<!-- ## **People**
+-  -->
 
-
-## **On Internet**
-(*this section will soon be replaced with specific suggestions instead of pointing at an entire channel - as soon as i can make time for it.*)
+## **Internet**
 - exurb1a ([youtube](https://www.youtube.com/@exurb1a))
 - Dynomight ([blog](https://dynomight.substack.com/))
 - Be Wrong ([blog](https://bewrong.substack.com/))
 - But What For? ([blog](https://www.butwhatfor.com/))
 - WTF is ([podcast](https://www.youtube.com/@nikhil.kamath))
 - Dwarkesh's Podcast ([podcast](https://www.dwarkeshpatel.com/))
-
----

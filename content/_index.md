@@ -1,42 +1,36 @@
-## about
+---
+tldr: yay
+---
 
-<div style="float: right; max-width: 25%; max-height: 25%;" id="home-img">
+## **About**
+
+<!-- <div style="float: right; max-width: 25%; max-height: 25%;" id="home-img">
   <img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
-</div>
+</div> -->
 
-**[i like making computers do my bidding.](/images/i-love-computers-it.gif)**
+<!-- [i like making computers do my bidding.] -->
 
-* love all things **systems**.
-* curious about **computers, maths and the internet**.
-* into **running, books, cinema, sports**.
+I like [computers]((/images/i-love-computers-it.gif)), good stories and science.
 
-i'm currently **looking for work** that lets me dive into these worlds.
+I'm currently **looking for work** that lets me dive into these worlds.
 
-
+When not working on these, I usually spend my time reading, running, watching sports or movies.
 
 
-## now _(feb ‘25)_
-**learning:**  
-- speedrunning core cs with [from the transistor to the browser](https://github.com/shubhxms/fromthetransistor)  
-- exploring automatic differentiation  
-<!-- - reading *alice’s adventures in a differentiable wonderland* ([link](https://www.sscardapane.it/alice-book/)) -->
+## **Now** _(jan ‘26)_
+- Currently, I am working on a service that abstracts away the logic of locks and provides a simple interface for distributed locking. More soon!
 
-**reading:**  
-- *the information: a history, a theory, a flood* — james gleick  
-- *Behave* - Robert Sapolsky
+- I'm reading:
+  - Vikram Sarabhai: A Life by Amrita Shah
+  - The Martian by Andy Weir
+  - The Chola Tigers by Amish Tripathi
 
+- I intend to run a 3K under 10 minutes this month. ([strava](https://www.strava.com/athletes/shoebum))
 
-## projects
-
-- co-built [graffio](https://graffio.xyz) - [cli for posting](https://github.com/shubhxms/graffio)  
-- f-ed around in [buildspace nights and weekends](https://buildspace.so/)
-
-
-## contact
-
-- always up for a chat. reach out on [twitter](https://twitter.com/shubhxms), [telegram](https://telegram.me/shubhxms), or [bsky](https://bsky.app/profile/shubhxms.github.io)
-- or drop an email at [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
-- picture dump @ [instagram](https://instagram.com/shubhxms)
+## **Contact**
+- I love receiving correspondence. 
+- Reach out on [twitter](https://twitter.com/shubhxms), [telegram](https://telegram.me/shubhxms), or [bsky](https://bsky.app/profile/shubhxms.github.io)
+- Email me: [03.shubhamshah@gmail.com](mailto:03.shubhamshah@gmail.com)
 
 <!-- ## principles
 

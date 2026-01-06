@@ -1,13 +1,26 @@
 ---
-title: "projects"
+title: "Projects"
 url: /projects
+aliases: [/craft]
 description: "projects"
-tldr: "history of my work"
+tldr: "My adventures."
 draft: false
 ---
+## Academic
+- Autonomous Grid Exploration Vehicle
+  - Integrated Boolean Satisfiability solvers to navigate in uncharted grid-based environments in a self-driving vehicle using computer vision
+- Gesture-Controlled Vehicular System
+  - Developed an IoT-based vehicular prototype capable of responding to manual gestures recognized using IMU sensors
+- Vision Based Mugger Identification System 
+  - Assisted a professor in refining a computer vision-based mugger identification system
+- Rainfall Prediction System // Probabilistic Graphical Models
+  - Worked on a rainfall prediction system leveraging probabilistic graphical model techniques
+- Street Vendor-Consumer Marketplace 
+  - Designing a digital marketplace platform to connect itinerant vendors with potential customers
+- Semantic Content Filtration System (In progress)
+  - Developing a browser extension to analyze and filter web content based on semantics
 
-## work
-
+## Side Projects
 - [Graffio](https://graffio.xyz) // [CLI](https://github.com/shubhxms/graffio)
   - I built the CLI for posting to the wall
   - built in golang
@@ -27,15 +40,3 @@ draft: false
 - [cydekyk](https://cydekyk.vercel.app/)
   - a store on solana
   - built using react, following a tutorial - [github repo](https://github.com/shubhxms/cydekyk)
-- Autonomous Grid Exploration Vehicle
-  - Integrated Boolean Satisfiability solvers to navigate in uncharted grid-based environments in a self-driving vehicle using computer vision
-- Gesture-Controlled Vehicular System
-  - Developed an IoT-based vehicular prototype capable of responding to manual gestures recognized using IMU sensors
-- Vision Based Mugger Identification System 
-  - Assisted a professor in refining a computer vision-based mugger identification system
-- Rainfall Prediction System // Probabilistic Graphical Models
-  - Worked on a rainfall prediction system leveraging probabilistic graphical model techniques
-- Street Vendor-Consumer Marketplace 
-  - Designing a digital marketplace platform to connect itinerant vendors with potential customers
-- Semantic Content Filtration System (In progress)
-  - Developing a browser extension to analyze and filter web content based on semantics

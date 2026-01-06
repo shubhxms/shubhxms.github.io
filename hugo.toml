@@ -1,6 +1,6 @@
 baseURL = 'https://shubhxms.github.io/'
 languageCode = 'en-us'
-title = 'shubham shah'
+title = 'Shubham Shah'
 theme = "archie"
 pygmentsstyle = "monokai"
 pygmentscodefences = true
@@ -27,22 +27,22 @@ icon = "twitter"
 url = "https://twitter.com/shubhxms/"
 
 [[menu.main]]
-name = "now"
+name = "Now"
 url = "/#now"
 weight = 1
 
 [[menu.main]]
-name = "core"
+name = "Core"
 url = "/core"
 weight = 3
 
 [[menu.main]]
-name = "notes"
+name = "Notes"
 url = "/notes"
 weight = 5
 
 [[menu.main]]
-name = "projects"
+name = "Projects"
 url = "/projects"
 weight = 4
 
