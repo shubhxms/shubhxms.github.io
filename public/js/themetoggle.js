@@ -1,28 +1,35 @@
-function setTheme(mode) {
-    localStorage.setItem("theme-storage", mode);
+// Get system preference
+function getSystemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+// Apply theme to the document
+function applyTheme(mode) {
     if (mode === "dark") {
-        document.getElementById("darkModeStyle").disabled=false;
+        document.getElementById("darkModeStyle").disabled = false;
         document.getElementById("dark-mode-toggle").innerHTML = "<i data-feather=\"sun\"></i>";
-        feather.replace()
-    } else if (mode === "light") {
-        document.getElementById("darkModeStyle").disabled=true;
+    } else {
+        document.getElementById("darkModeStyle").disabled = true;
         document.getElementById("dark-mode-toggle").innerHTML = "<i data-feather=\"moon\"></i>";
-        feather.replace()
     }
+    feather.replace();
+    document.documentElement.setAttribute('data-theme', mode);
 }
 
+// Get current theme (user preference or system default)
+function getCurrentTheme() {
+    const saved = localStorage.getItem("theme-storage");
+    return saved || getSystemTheme();
+}
+
+// Toggle between light and dark
 function toggleTheme() {
-    let newTheme;
-    if (localStorage.getItem("theme-storage") === "light") {
-        setTheme("dark");
-        newTheme = "dark";
-    } else if (localStorage.getItem("theme-storage") === "dark") {
-        setTheme("light");
-        newTheme = "light";
-    }
-    document.documentElement.setAttribute('data-theme', newTheme);
-
+    const currentTheme = getCurrentTheme();
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem("theme-storage", newTheme);
+    applyTheme(newTheme);
 }
 
-var savedTheme = localStorage.getItem("theme-storage") || "light";
-setTheme(savedTheme);
+// Initialize theme on page load
+const initialTheme = getCurrentTheme();
+applyTheme(initialTheme);
