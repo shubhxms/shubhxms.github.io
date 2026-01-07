@@ -6,7 +6,7 @@ description: "projects"
 tldr: "My adventures."
 draft: false
 ---
-## Academic
+## I. Academic
 - Autonomous Grid Exploration Vehicle
   - Integrated Boolean Satisfiability solvers to navigate in uncharted grid-based environments in a self-driving vehicle using computer vision
 - Gesture-Controlled Vehicular System
@@ -20,7 +20,7 @@ draft: false
 - Semantic Content Filtration System (In progress)
   - Developing a browser extension to analyze and filter web content based on semantics
 
-## Side Projects
+## II. Side Projects
 - [Graffio](https://graffio.xyz) // [CLI](https://github.com/shubhxms/graffio)
   - I built the CLI for posting to the wall
   - built in golang

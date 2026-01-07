@@ -6,7 +6,7 @@ tldr: Things that matter to me. Incomplete, unordered.
 ---
 
 
-## **Books**
+## I. **Books**
 <!-- see [book list](https://literal.club/shubhxms) for a more happening list; my favorites listed below -->
 - Science & Math
   - Chaos – James Gleick
@@ -25,7 +25,7 @@ tldr: Things that matter to me. Incomplete, unordered.
   - Jonathan Livingston Seagull – Richard Bach
 
 
-## **Films, Shows & Anime**
+## II. **Films, Shows & Anime**
 - The Grand Budapest Hotel (2014, dir. Wes Anderson)  
 - Boyhood (2014, dir. Richard Linklater)
 - The Wonderful Story of Henry Sugar (2023, dir. Wes Anderson)
@@ -47,7 +47,7 @@ tldr: Things that matter to me. Incomplete, unordered.
 <!-- ## **People**
 -  -->
 
-## **Internet**
+## III. **Internet**
 - exurb1a ([youtube](https://www.youtube.com/@exurb1a))
 - Dynomight ([blog](https://dynomight.substack.com/))
 - Be Wrong ([blog](https://bewrong.substack.com/))

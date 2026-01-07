@@ -1,5 +1,5 @@
 
-# blog
+# I. Blog
 
 - this is an archive of all my posts.
 - you can subscribe via [substack](https://shubhxms.substack.com/)
@@ -13,4 +13,4 @@
 >
 </iframe>
 
-# archive
+# II. Archive

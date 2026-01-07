@@ -6,7 +6,7 @@ tldr: Films and books that shaped me. A visual collection.
 
 <div class="media-grid">
   <div class="grid-item">
-    <img src="/images/grid/book1.webp" alt="Book 1">
+    <img src="/images/grid/book1.png" alt="Book 1">
     <div class="grid-caption">Chaos – James Gleick</div>
   </div>
   <div class="grid-item">
