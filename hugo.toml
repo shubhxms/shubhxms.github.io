@@ -47,9 +47,14 @@ url = "/projects"
 weight = 4
 
 [[menu.main]]
+name = "Shelf"
+url = "/shelf"
+weight = 6
+
+[[menu.main]]
 name = "Uses"
 url = "/uses"
-weight = 6
+weight = 7
 
 [permalinks]
   pages = '/:title'

@@ -2,17 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/names/</loc>
-    <lastmod>2025-02-15T18:50:31+05:30</lastmod>
+    <loc>http://localhost:1313/tags/biography/</loc>
+    <lastmod>2026-02-13T00:21:05+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/tag/</loc>
-    <lastmod>2025-02-15T18:50:31+05:30</lastmod>
+    <loc>http://localhost:1313/tags/book-review/</loc>
+    <lastmod>2026-02-13T00:21:05+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/india/</loc>
+    <lastmod>2026-02-13T00:21:05+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/sarabhai/</loc>
+    <lastmod>2026-02-13T00:21:05+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-02-15T18:50:31+05:30</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/test/</loc>
-    <lastmod>2025-02-15T18:50:31+05:30</lastmod>
+    <lastmod>2026-02-13T00:21:05+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
     <lastmod>2026-01-07T23:53:43+05:30</lastmod>
@@ -23,7 +26,6 @@
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/core/</loc>
-    <lastmod>2026-01-07T23:53:43+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/grid/</loc>
     <lastmod>2026-01-07T23:53:43+05:30</lastmod>
@@ -32,6 +34,9 @@
     <lastmod>2026-01-07T23:53:43+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/projects/</loc>
+    <lastmod>2026-01-07T23:53:43+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/shelf/</loc>
     <lastmod>2026-01-07T23:53:43+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/story/</loc>
