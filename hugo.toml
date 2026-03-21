@@ -13,8 +13,8 @@ useCDN = false
 subtitle = ""
 description = "personal website of shubham shah"
 enableGitInfo = true
-mathjax = true # enable MathJax support
 katex = true # enable KaTeX support
+tickerMessages = ["welcome to the lab", "built with hugo", "work in progress"]
 
 [[params.social]]
 name = "GitHub"

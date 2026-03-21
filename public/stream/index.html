@@ -23,7 +23,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Space+Grotesk:wght@500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   
 
@@ -36,26 +36,6 @@
   rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.min.css"  disabled /> 
 
   
-  
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-  ></script>
-
-  
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    	tex2jax: {
-    		inlineMath: [['$','$'], ['\\(','\\)']],
-    		displayMath: [['$$','$$'], ['\\[','\\]']],
-    		processEscapes: true,
-    		processEnvironments: true,
-    		skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-    		TeX: { equationNumbers: { autoNumber: "AMS" },
-    				extensions: ["AMSmath.js", "AMSsymbols.js"] }
-    	}
-    });
-  </script>
   
 
   
@@ -92,7 +72,32 @@
   
   <script src="http://localhost:1313/js/roman-numerals.js"></script>
 </head><body>
-    <div class="page-wrapper">
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+<div class="ticker">
+  <div class="ticker-content">
+    <span class="ticker-item">Recently edited:</span><span class="ticker-item"><a href="/sarabhai/">On Vikram Sarabhai</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/core/">Core</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/shelf/">Shelf</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/projects/">Projects</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/uses/">Uses</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/grid/">grid</a></span><span class="ticker-sep">*</span>
+    <span class="ticker-item">Recently edited:</span><span class="ticker-item"><a href="/sarabhai/">On Vikram Sarabhai</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/core/">Core</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/shelf/">Shelf</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/projects/">Projects</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/uses/">Uses</a></span><span class="ticker-sep">*</span><span class="ticker-item"><a href="/grid/">grid</a></span><span class="ticker-sep">*</span>
+  </div>
+</div>
+
+<div class="page-wrapper">
       <main class="main-content">
         <div class="content">
 <div class="stream">
@@ -193,5 +198,8 @@
         </nav>
       </aside>
     </div>
+    <nav class="heading-index" id="heading-index"></nav>
+    <script src="/js/heading-index.js"></script>
+    <script src="/js/ticker-scroll.js"></script>
   </body>
 </html>
