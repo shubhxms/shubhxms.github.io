@@ -2,25 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shubham Shah</title>
-    <link>http://localhost:1313/notes/</link>
+    <link>http://localhost:54471/notes/</link>
     <description>Recent content on Shubham Shah</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Feb 2026 00:21:05 +0530</lastBuildDate>
-    <atom:link href="http://localhost:1313/notes/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:54471/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>On Vikram Sarabhai</title>
-      <link>http://localhost:1313/sarabhai/</link>
+      <link>http://localhost:54471/sarabhai/</link>
       <pubDate>Fri, 13 Feb 2026 00:21:05 +0530</pubDate>
-      <guid>http://localhost:1313/sarabhai/</guid>
-      <description>&lt;figure&gt;&lt;img src=&#34;http://localhost:1313/images/notes/sarabhai_crater.jpg&#34;&#xA;    alt=&#34;Sarabhai Crater - Lunar and Planetary Institute, Apollo Image Atlas Mapping Camera Image Catalog, Apollo 15, AS15-M-0980, CC0&#34;&gt;&lt;figcaption&gt;&#xA;      &lt;p&gt;Sarabhai Crater - Lunar and Planetary Institute, Apollo Image Atlas Mapping Camera Image Catalog, Apollo 15, AS15-M-0980, CC0&lt;/p&gt;&#xA;    &lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&#xA;&lt;p&gt;Aristocrat. That is how I will describe Vikram Sarabhai. And, I do not refer to his privilege but rather his behaviour and actions. What has been most inspiring about him is how he was serious (not solemn! he was princely and munificent) and rather exemplary in his conduct – (no, I didn&amp;rsquo;t ChatGPT this, I swear, ignore the em dash) high-integrity and honest.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Test</title>
-      <link>http://localhost:1313/test/</link>
-      <pubDate>Fri, 03 Mar 2017 14:15:59 -0600</pubDate>
-      <guid>http://localhost:1313/test/</guid>
-      <description>&lt;p&gt;i really love the (hipster) internet&#xA;They say the internet didn’t show up in productivity numbers, but have you tried measuring the leisure ones?&lt;/p&gt;&#xA;&lt;p&gt;The web is not what it once was.&lt;/p&gt;&#xA;&lt;p&gt;What started out as a way to put text documents on the web, an effort based upon a marvellously simple maxim: all you need is links, has long outgrown that particular paradigm. Now full-blown apps run in your browser. Despite being sandboxed by it’s APIs and limited by the DOM, they’ve somehow become the dominant way to build applications in the 21st century. And how.&lt;/p&gt;</description>
+      <guid>http://localhost:54471/sarabhai/</guid>
+      <description>&lt;figure&gt;&lt;img src=&#34;http://localhost:54471/images/notes/sarabhai_crater.jpg&#34;&#xA;    alt=&#34;Sarabhai Crater - Lunar and Planetary Institute, Apollo Image Atlas Mapping Camera Image Catalog, Apollo 15, AS15-M-0980, CC0&#34;&gt;&lt;figcaption&gt;&#xA;      &lt;p&gt;Sarabhai Crater - Lunar and Planetary Institute, Apollo Image Atlas Mapping Camera Image Catalog, Apollo 15, AS15-M-0980, CC0&lt;/p&gt;&#xA;    &lt;/figcaption&gt;&#xA;&lt;/figure&gt;&#xA;&#xA;&lt;p&gt;Aristocrat. That is how I will describe Vikram Sarabhai. And, I do not refer to his privilege but rather his behaviour and actions. What has been most inspiring about him is how he was serious (not solemn! he was princely and munificent) and rather exemplary in his conduct – (no, I didn&amp;rsquo;t ChatGPT this, I swear, ignore the em dash) high-integrity and honest.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
