@@ -2,48 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:54471/tags/biography/</loc>
+    <loc>http://localhost:49453/tags/biography/</loc>
     <lastmod>2026-02-13T00:36:24+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/tags/book-review/</loc>
+    <loc>http://localhost:49453/tags/book-review/</loc>
     <lastmod>2026-02-13T00:36:24+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/tags/india/</loc>
+    <loc>http://localhost:49453/tags/india/</loc>
     <lastmod>2026-02-13T00:36:24+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/sarabhai/</loc>
+    <loc>http://localhost:49453/sarabhai/</loc>
     <lastmod>2026-02-13T00:36:24+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/tags/</loc>
+    <loc>http://localhost:49453/tags/</loc>
     <lastmod>2026-02-13T00:36:24+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/</loc>
+    <loc>http://localhost:49453/</loc>
     <lastmod>2026-02-13T00:34:44+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/notes/</loc>
+    <loc>http://localhost:49453/notes/</loc>
     <lastmod>2026-02-13T00:34:44+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/categories/</loc>
+    <loc>http://localhost:49453/categories/</loc>
   </url><url>
-    <loc>http://localhost:54471/core/</loc>
+    <loc>http://localhost:49453/core/</loc>
     <lastmod>2026-02-13T00:35:50+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/grid/</loc>
+    <loc>http://localhost:49453/grid/</loc>
     <lastmod>2026-01-07T23:53:43+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/pages/</loc>
+    <loc>http://localhost:49453/pages/</loc>
     <lastmod>2026-02-13T00:35:50+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/projects/</loc>
+    <loc>http://localhost:49453/projects/</loc>
     <lastmod>2026-02-13T00:34:44+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/shelf/</loc>
+    <loc>http://localhost:49453/shelf/</loc>
     <lastmod>2026-02-13T00:35:50+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/stream/</loc>
+    <loc>http://localhost:49453/stream/</loc>
     <lastmod>2024-04-15T00:13:08+05:30</lastmod>
   </url><url>
-    <loc>http://localhost:54471/uses/</loc>
+    <loc>http://localhost:49453/uses/</loc>
     <lastmod>2026-02-13T00:34:44+05:30</lastmod>
   </url>
 </urlset>
