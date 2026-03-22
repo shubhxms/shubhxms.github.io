@@ -8,7 +8,7 @@
 
 <!-- [i like making computers do my bidding.] -->
 
-I like [computers]((/images/i-love-computers-it.gif)), good stories and science.
+I like [computers](images/i-love-computers-it.gif), good stories and science.
 
 I'm currently **looking for work** that lets me dive into these worlds.
 
