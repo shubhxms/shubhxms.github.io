@@ -16,7 +16,7 @@ I talk as if I knew him personally. I don't (didn't?). I just finished reading *
 
 Man of science, institution builder, munificent, honest, open-minded, rich-yet-rooted. How many people can you say this about?
 
-Something that really gets to me about him is how he put his privilege to a good use, helping shape a newly-independent nation at a critical time. He was associated with many big-name institutes including ISRO and IIM-A and played a key-man-esque role in many of them (as I understand it, I'm not a historian dude).
+Something that really gets to me about him is how he put his privilege to a good use, helping shape a newly-independent nation at a critical time.{{< sidenote >}}This is something I think about a lot — the responsibility of privilege, not the guilt of it.{{< /sidenote >}} He was associated with many big-name institutes including ISRO and IIM-A and played a key-man-esque role in many of them (as I understand it, I'm not a historian dude).
 
 I cannot tell if I am romanticising him but he comes off as someone who was serious (I know, I'm a broken tape about this) and almost had a higher calling. His conduct really comes off as regal. Composed, willing to help, open-minded, hard-working, well-educated (and lavish). All qualities I appreciate. Perhaps that is why he speaks so much to me. :)
 
