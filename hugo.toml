@@ -14,7 +14,7 @@ subtitle = ""
 description = "personal website of shubham shah"
 enableGitInfo = true
 katex = true # enable KaTeX support
-tickerMessages = ["welcome to the lab", "built with hugo", "work in progress"]
+showTicker = false
 
 [[params.social]]
 name = "GitHub"
