@@ -2,6 +2,7 @@
 import xml.etree.ElementTree as ET
 import json
 import re
+import html
 import urllib.request
 import sys
 
@@ -33,6 +34,7 @@ def extract_poster_and_review(description_html):
     for p in paragraphs:
         clean = re.sub(r'<br\s*/?>', '\n', p)
         clean = re.sub(r'<[^>]+>', '', clean)
+        clean = html.unescape(clean)
         clean = clean.strip()
         if clean:
             parts.append(clean)
