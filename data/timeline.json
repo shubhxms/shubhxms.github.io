@@ -1,0 +1,303 @@
+[
+  {
+    "year": "2026",
+    "featured": [
+      {
+        "title": "Dip (ByteCitadel)",
+        "desc": "Backend for a college social app — Flask API, Razorpay payments, TigerBeetle ledger, real-time chat, admin dashboard.",
+        "tech": "Python",
+        "cat": "work",
+        "url": "https://dipapp.in"
+      },
+      {
+        "title": "Jinkushal (JKDB)",
+        "desc": "Custom ERP for a manufacturing company — inventory, sales, purchase orders, HR, RBAC. FastAPI + Next.js.",
+        "tech": "Python",
+        "cat": "work"
+      },
+      {
+        "title": "ERW CDR Explorer",
+        "desc": "Exploring enhanced rock weathering as a carbon removal strategy — built a data explorer for it.",
+        "month": "May",
+        "tech": "TypeScript",
+        "cat": "project",
+        "url": "https://erw-cdr-explorer.vercel.app",
+        "gh": "shubhxms/erw-cdr-explorer"
+      },
+      {
+        "title": "Date Naturalizer",
+        "desc": "Parsing natural language into dates.",
+        "month": "May",
+        "tech": "JavaScript",
+        "cat": "project",
+        "gh": "shubhxms/date-naturalizer"
+      }
+    ]
+  },
+  {
+    "year": "2025",
+    "featured": [
+      {
+        "title": "Jinkushal (JKDB)",
+        "desc": "Custom ERP for a manufacturing company — inventory, sales, purchase orders, HR, RBAC. FastAPI + Next.js.",
+        "month": "May",
+        "tech": "Python",
+        "cat": "work"
+      },
+      {
+        "title": "Dip (ByteCitadel)",
+        "desc": "Backend for a college social app — Flask API, Razorpay payments, TigerBeetle ledger, real-time chat, admin dashboard.",
+        "tech": "Python",
+        "cat": "work",
+        "url": "https://dipapp.in"
+      },
+      {
+        "title": "Jinkushal (JKDB)",
+        "desc": "Custom ERP for a manufacturing company — inventory, sales, purchase orders, HR, RBAC. FastAPI + Next.js.",
+        "month": "May",
+        "tech": "Python",
+        "cat": "work"
+      },
+      {
+        "title": "Binks (Forge)",
+        "desc": "Django backend for a fashion e-commerce brand — inventory, production, Shopify sync, AI tools.",
+        "tech": "Python",
+        "cat": "work"
+      },
+      {
+        "title": "teditx",
+        "desc": "A text editor for the terminal, built from scratch.",
+        "month": "May",
+        "tech": "C",
+        "cat": "project",
+        "gh": "shubhxms/teditx"
+      },
+      {
+        "title": "Binks (Forge)",
+        "desc": "Django backend for a fashion e-commerce brand — inventory, production, Shopify sync, AI tools.",
+        "tech": "Python",
+        "cat": "work"
+      }
+    ],
+    "tutorials": [
+      { "title": "SICP" }
+    ]
+  },
+  {
+    "year": "2024",
+    "featured": [
+      {
+        "title": "Gesture-Controlled Vehicle",
+        "desc": "An IoT prototype that reads hand gestures through IMU sensors and drives a vehicle.",
+        "month": "Dec",
+        "tech": "Python",
+        "cat": "academic",
+        "gh": "shubhxms/gesture-car"
+      },
+      {
+        "title": "Autonomous Grid Explorer",
+        "desc": "Self-driving grid navigation using Boolean SAT solvers and computer vision.",
+        "cat": "academic"
+      },
+      {
+        "title": "Write Yourself a Git",
+        "desc": "Building Git from scratch, following wyag.",
+        "month": "Sep",
+        "tech": "Python",
+        "cat": "project",
+        "gh": "shubhxms/wyag"
+      }
+    ],
+    "tutorials": [
+      { "title": "CS229: Machine Learning" },
+      { "title": "OSTEP", "tech": "C" }
+    ]
+  },
+  {
+    "year": "2023",
+    "featured": [
+      {
+        "title": "Rainfall Prediction System",
+        "desc": "Predicting rainfall using probabilistic graphical models.",
+        "month": "Nov",
+        "tech": "Python",
+        "cat": "academic",
+        "gh": "shubhxms/rainfall-pgm-code-dataset"
+      },
+      {
+        "title": "Personal Website",
+        "desc": "This site.",
+        "month": "Jul",
+        "tech": "Hugo",
+        "cat": "project",
+        "url": "https://shubhxms.github.io",
+        "gh": "shubhxms/shubhxms.github.io"
+      },
+      {
+        "title": "Graffio",
+        "desc": "A CLI for posting to a shared graffiti wall on the internet.",
+        "month": "Jun",
+        "tech": "Go",
+        "cat": "project",
+        "url": "https://graffio.xyz",
+        "gh": "shubhxms/graffio"
+      },
+      {
+        "title": "Go Peek",
+        "desc": "A CLI to quickly peek at CSV files in the terminal.",
+        "month": "Jun",
+        "tech": "Go",
+        "cat": "project",
+        "gh": "shubhxms/gopeek"
+      },
+      {
+        "title": "TED Rec Sys",
+        "desc": "A recommendation engine for TED talks.",
+        "month": "Mar",
+        "tech": "Python",
+        "cat": "project",
+        "gh": "shubhxms/ted-recc-sys"
+      },
+      {
+        "title": "No Cap",
+        "desc": "A letter casing tool — Rust CLI + React webapp.",
+        "month": "Jan",
+        "tech": "Rust",
+        "cat": "project",
+        "url": "https://no-cap.netlify.app",
+        "gh": "shubhxms/nocap"
+      },
+      {
+        "title": "Semantic Content Filtration",
+        "desc": "A browser extension that filters web content based on semantics. In progress.",
+        "cat": "academic"
+      },
+      {
+        "title": "Street Vendor Marketplace",
+        "desc": "A digital marketplace for connecting itinerant vendors with customers.",
+        "cat": "academic"
+      }
+    ],
+    "minor": [
+      { "title": "dm-me-on", "tech": "Svelte", "gh": "shubhxms/dm-me-on" },
+      { "title": "homebrew-tools", "tech": "Ruby", "gh": "shubhxms/homebrew-tools" },
+      { "title": "go-cli-quiz", "tech": "Go", "gh": "shubhxms/go-cli-quiz" },
+      { "title": "fermi-estimate", "tech": "TypeScript", "gh": "shubhxms/fermi-estimate" },
+      { "title": "kwests", "tech": "JavaScript", "gh": "shubhxms/kwests" },
+      { "title": "linkarton", "tech": "TypeScript", "gh": "shubhxms/linkarton" },
+      { "title": "svelte-todo", "tech": "JavaScript", "gh": "shubhxms/svelte-todo" },
+      { "title": "dpapi", "tech": "JavaScript", "gh": "shubhxms/dpapi-frontend" }
+    ]
+  },
+  {
+    "year": "2022",
+    "featured": [
+      {
+        "title": "Imperma",
+        "desc": "An ephemeral social platform built on Lens Protocol.",
+        "month": "Nov",
+        "tech": "JavaScript",
+        "cat": "project",
+        "gh": "shubhxms/imperma"
+      },
+      {
+        "title": "KV Store",
+        "desc": "A key-value store built in Rust.",
+        "month": "Nov",
+        "tech": "Rust",
+        "cat": "project",
+        "gh": "shubhxms/kvstore"
+      },
+      {
+        "title": "CubeTimer",
+        "desc": "Tracking and visualizing Rubik's cube solves.",
+        "month": "Aug",
+        "tech": "Next.js",
+        "cat": "project",
+        "url": "https://cubetimer.vercel.app",
+        "gh": "shubhxms/cubeTimer"
+      },
+      {
+        "title": "Cydekyk",
+        "desc": "An online store with Solana Pay. Followed a tutorial.",
+        "month": "Aug",
+        "tech": "JavaScript",
+        "cat": "project",
+        "url": "https://cydekyk.vercel.app",
+        "gh": "shubhxms/cydekyk"
+      },
+      {
+        "title": "lyfmemo",
+        "desc": "A webapp that classifies quick jots on the basis of keywords.",
+        "month": "Jul",
+        "tech": "React",
+        "cat": "project",
+        "gh": "shubhxms/lyfmemo"
+      },
+      {
+        "title": "Wutsume",
+        "month": "May",
+        "tech": "JavaScript",
+        "cat": "project",
+        "gh": "shubhxms/wutsume"
+      },
+      {
+        "title": "Browser Rich Presence",
+        "desc": "Discord Rich Presence, but for websites.",
+        "month": "May",
+        "tech": "CSS",
+        "cat": "project",
+        "gh": "shubhxms/browser-rich-presence"
+      },
+      {
+        "title": "No Cap",
+        "desc": "A letter casing webapp.",
+        "month": "Mar",
+        "tech": "JavaScript",
+        "cat": "project",
+        "url": "https://no-cap.netlify.app",
+        "gh": "shubhxms/no-cap"
+      }
+    ],
+    "tutorials": [
+      { "title": "Nand to Tetris", "tech": "Assembly", "gh": "shubhxms/nand2tetris" },
+      { "title": "Nature of Code", "tech": "JavaScript", "gh": "shubhxms/nature-of-code" }
+    ]
+  },
+  {
+    "year": "2021",
+    "featured": [
+      {
+        "title": "Vision-Based Mugger Identification",
+        "desc": "Assisted a professor refining a computer vision-based mugger identification system.",
+        "cat": "academic"
+      }
+    ],
+    "minor": [
+      { "title": "multility", "gh": "shubhxms/multility" },
+      { "title": "neog", "tech": "HTML", "gh": "shubhxms/neog" }
+    ]
+  },
+  {
+    "year": "2020",
+    "featured": [
+      {
+        "title": "Fin.Tra",
+        "desc": "A finance tracker.",
+        "month": "Aug",
+        "tech": "Python",
+        "cat": "project",
+        "gh": "shubhxms/Fin.Tra"
+      }
+    ],
+    "minor": [
+      { "title": "parjanya", "gh": "shubhxms/parjanya" },
+      { "title": "TouCri", "tech": "Python", "gh": "shubhxms/TouCri" },
+      { "title": "stoman", "tech": "Python", "gh": "shubhxms/stoman" },
+      { "title": "fintra", "tech": "Python", "gh": "shubhxms/fintra" }
+    ],
+    "tutorials": [
+      { "title": "100 Days of CS & Code", "gh": "shubhxms/100daysof.cs.and.code" }
+    ]
+  }
+]
