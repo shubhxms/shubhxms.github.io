@@ -8,35 +8,24 @@ draft: false
 ---
 ## Academic
 - Autonomous Grid Exploration Vehicle
-  - Integrated Boolean Satisfiability solvers to navigate in uncharted grid-based environments in a self-driving vehicle using computer vision
+  - Self-driving grid navigation using Boolean SAT solvers and computer vision
 - Gesture-Controlled Vehicular System
-  - Developed an IoT-based vehicular prototype capable of responding to manual gestures recognized using IMU sensors
-- Vision Based Mugger Identification System 
-  - Assisted a professor in refining a computer vision-based mugger identification system
-- Rainfall Prediction System // Probabilistic Graphical Models
-  - Worked on a rainfall prediction system leveraging probabilistic graphical model techniques
-- Street Vendor-Consumer Marketplace 
-  - Designing a digital marketplace platform to connect itinerant vendors with potential customers
+  - An IoT prototype that reads hand gestures through IMU sensors and drives a vehicle
+- Vision Based Mugger Identification System
+  - Assisted a professor refining a computer vision-based identification system
+- Rainfall Prediction System
+  - Predicting rainfall using probabilistic graphical models
+- Street Vendor-Consumer Marketplace
+  - A digital marketplace for connecting itinerant vendors with customers
 - Semantic Content Filtration System (In progress)
-  - Developing a browser extension to analyze and filter web content based on semantics
+  - A browser extension that filters web content based on semantics
 
 ## Side Projects
 - [Graffio](https://graffio.xyz) // [CLI](https://github.com/shubhxms/graffio)
-  - I built the CLI for posting to the wall
-  - built in golang
+  - A CLI for posting to a shared graffiti wall on the internet. Built in Go.
 - [Go Peek](https://github.com/shubhxms/gopeek)
-  - CLI to peek at a CSV file in the terminal
-  - made in golang
-<!-- - [lyfmemo](https://lyfmemo.vercel.app/)
-  - a webapp that classifies quick jots (memos) on the basis of keywords
-  - built using react js and chakra ui - [github repo](https://github.com/shubhxms/lyfmemo) -->
-- [no cap (webapp)](https://no-cap.netlify.app/) & [no cap (cli)](https://github.com/shubhxms/nocap)
-  - a quick ship to allow you to play with letter casing
-  - the webapp is built using reactjs - [github repo](https://github.com/shubhxms/no-cap)
-  - the CLI is built in rust - [github repo](https://github.com/shubhxms/nocap)
-- [rubiks cube timer](https://cubetimer.vercel.app/)
-  - an application to track and visualize your rubiks cube solves
-  - built using nextjs and chakra ui - [github repo](https://github.com/shubhxms/cubetimer)
-- [cydekyk](https://cydekyk.vercel.app/)
-  - a store on solana
-  - built using react, following a tutorial - [github repo](https://github.com/shubhxms/cydekyk)
+  - A CLI to quickly peek at CSV files in the terminal. Built in Go.
+- [No Cap](https://no-cap.netlify.app/) // [CLI](https://github.com/shubhxms/nocap)
+  - A letter casing tool — Rust CLI + React webapp.
+- [CubeTimer](https://cubetimer.vercel.app/)
+  - Tracking and visualizing Rubik's cube solves. Built with Next.js.
