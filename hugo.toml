@@ -1,6 +1,6 @@
 baseURL = 'https://shubhxms.github.io/'
 locale = 'en-us'
-title = 'Shubham Shah'
+title = '✪ Shubham Shah'
 theme = "archie"
 pygmentsstyle = "monokai"
 pygmentscodefences = true
@@ -28,38 +28,43 @@ url = "https://twitter.com/shubhxms/"
 
 [[menu.main]]
 name = "Now"
-url = "/#now"
+url = "/now"
 weight = 1
-
-[[menu.main]]
-name = "Feed"
-url = "/feed"
-weight = 2
-
-[[menu.main]]
-name = "Core"
-url = "/core"
-weight = 3
-
-[[menu.main]]
-name = "Notes"
-url = "/notes"
-weight = 5
 
 [[menu.main]]
 name = "Projects"
 url = "/projects"
+weight = 3
+
+[[menu.main]]
+name = "Timeline"
+url = "/timeline"
+weight = 2
+
+[[menu.main]]
+name = "Notes"
+url = "/notes"
 weight = 4
 
 [[menu.main]]
 name = "Shelf"
 url = "/shelf"
+weight = 5
+
+[[menu.main]]
+name = "Core"
+url = "/core"
 weight = 6
+
+[[menu.main]]
+name = "Feed"
+url = "/feed"
+weight = 7
 
 [[menu.main]]
 name = "Uses"
 url = "/uses"
-weight = 7
+weight = 8
 
 [permalinks]
   pages = '/:title'
