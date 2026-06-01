@@ -62,10 +62,14 @@ url = "/feed"
 weight = 7
 
 [[menu.main]]
-name = "Uses"
-url = "/uses"
+name = "Stream"
+url = "/stream"
 weight = 8
 
+[[menu.main]]
+name = "Uses"
+url = "/uses"
+weight = 9
 [permalinks]
   pages = '/:title'
 
