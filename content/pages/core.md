@@ -5,7 +5,7 @@ tldr: Things that matter to me. Incomplete, unordered.
 ---
 
 <!-- see [book list](https://literal.club/shubhxms) for a more happening list; my favorites listed below -->
-## **Books**
+## Books
 - Science & Math
   - Chaos – James Gleick
   - The Man Who Bent Light: Father of Fibre Optics – Narinder Singh Kapany
@@ -22,7 +22,7 @@ tldr: Things that matter to me. Incomplete, unordered.
   - The Picture of Dorian Gray – Oscar Wilde
   - Jonathan Livingston Seagull – Richard Bach
 
-## **Films, Shows & Anime**
+## Films, Shows & Anime
 - The Grand Budapest Hotel (2014, dir. Wes Anderson)
 - Boyhood (2014, dir. Richard Linklater)
 - The Wonderful Story of Henry Sugar (2023, dir. Wes Anderson)
@@ -44,7 +44,7 @@ tldr: Things that matter to me. Incomplete, unordered.
 <!-- ## **People**
 -  -->
 
-## **Internet**
+## Internet
 - exurb1a ([youtube](https://www.youtube.com/@exurb1a))
 - Dynomight ([blog](https://dynomight.substack.com/))
 - Be Wrong ([blog](https://bewrong.substack.com/))
