@@ -2,8 +2,8 @@
   <img src="/images/home-header.jpg" alt="adalaj ni vav" style="object-position: center 85%;">
 </div> 
     
-# Shubham Shah
-<!--# ✪ Shubham Shah-->
+<!--# Shubham-->
+# ✪ Shubham Shah
 
 <hr class="divider-main">
 
