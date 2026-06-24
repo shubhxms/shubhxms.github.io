@@ -40,19 +40,15 @@ I've shipped early-stage software at two places (recent-first):
 </div> -->
 State-Machines, Science, Stories, Story-Telling, Photography, Open Source, Public Transport, Institutions, Being Early To Institutions, Serif, Sans-Serif, Ampersand, Contractions, Spiral-Binding, Attention To Detail, Ornamental Flourish, Brutalism, Intricate Designs, Coffee, Chai, Oranges, Apples, Capsicums, Mountains, Beaches, Forests, Nature, Religion, Mythology, Cricket, Tennis, Badminton, Pickle-Ball, [Passion-Projects](https://twitter.com/collision/status/1529452415346302976), Solarpunk, Climate, Conservation
 
-## Now _(Jun. '26)_
+## Now _(July '26)_
 
 _Read the full thing at [/now](/now)._
 
-I'm currently **looking for work**.
+I'm currently spending my time learning math, I remain open to interesting  work/collaboration opportunities.
 
 * I'm reading:
-  * Infinite Powers by Steven Strogatz
   * Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter
 
-* Fitness
-  * I intend to run a 3K under 10 minutes this month. ([strava](https://www.strava.com/athletes/shoebum))
-  * I will exercise for 15 days this month. ([hevy](https://hevy.com/user/shoebum))
 
 ## Contact
 
