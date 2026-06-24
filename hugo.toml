@@ -13,7 +13,7 @@ useCDN = false
 subtitle = ""
 description = "personal website of shubham shah"
 enableGitInfo = true
-katex = true # enable KaTeX support
+katex = true                                     # enable KaTeX support
 showTicker = false
 
 [[params.social]]
@@ -71,15 +71,15 @@ name = "Uses"
 url = "/uses"
 weight = 9
 [permalinks]
-  pages = '/:title'
+pages = '/:title'
 
 [markup.goldmark.renderer]
-unsafe= true
+unsafe = true
 
 [outputFormats]
 [outputFormats.data]
-  mediaType = "text/html"
-  isHTML = true
+mediaType = "text/html"
+isHTML = true
 
 [outputs]
 home = ["HTML", "data"]
