@@ -6,7 +6,7 @@ tldr: What am I upto?
 
 You have the rare chance to hire me while I am on the market and **looking for work**.
 
-I have aranged for a period of [unstructured](https://twitter.com/shubhxms/status/2037957507810009374) [time](https://twitter.com/shubhxms/status/1873488602375872953) for myself..
+I have arranged for a period of [unstructured](https://twitter.com/shubhxms/status/2037957507810009374) [time](https://twitter.com/shubhxms/status/1873488602375872953) for myself..
 
 - I'm reading:
   - Infinite Powers by Steven Strogatz
