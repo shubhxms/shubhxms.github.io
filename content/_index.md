@@ -20,12 +20,12 @@ I have varied interests but usually spend my time on [computers](images/i-love-c
 
 I graduated with a bachelors degree (with honors) in Computer Science with a minor in Mathematics from [Ahmedabad University](https://ahduni.edu.in) in 2025.
 
-So far I have worked at two places helping ship early stage software (recent-first):
+I've shipped early-stage software at two places (recent-first):
 
 * Custom ERP for a dealer of earth-mover spare parts
-  * Responsible for on-site critical bug-fixing and shipping from-scratch a task-management system.
+  * Fixed critical bugs on-site and shipped a task-management system from scratch.
 * [Dip](https://dipapp.in) (a social media startup)
-  * Responsible for RESTful backend, payments gateway and ledger ([tigerbeetle](https://tigerbeetle.com/)) integration, custom locks based booking system.
+  * Built the RESTful backend, integrated a payments gateway and the [tigerbeetle](https://tigerbeetle.com/) ledger, and shipped a custom-locks-based booking system.
 
 ## Listicles
 
@@ -55,6 +55,7 @@ I'm currently **looking for work**.
   * I will exercise for 15 days this month. ([hevy](https://hevy.com/user/shoebum))
 
 ## Contact
+
 * I love receiving correspondence & will try my best to reply in a reasonable frame of time.
 * Please reach out on [twitter](https://twitter.com/shubhxms), [telegram](https://telegram.me/shubhxms), or [bsky](https://bsky.app/profile/shubhamshah.net)
 * Email me: [hey@shubhamshah.net](mailto:hey@shubhamshah.net)
