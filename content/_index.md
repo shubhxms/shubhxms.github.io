@@ -16,7 +16,7 @@
  <!--[i like making computers do my bidding.] -->
 I'm **Shubham**. I am 23. I live and work out of [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
 
-I have varied interests but usually spend my time on [computers](images/i-love-computers-it.gif) trying to make sense of the world through **state-machines, stories and science**.
+I have varied interests but usually spend my time on [computers](images/i-love-computers-it.gif) playing with state-machines, stories and science.
 
 I graduated with a bachelors degree (with honors) in Computer Science with a minor in Mathematics from [Ahmedabad University](https://ahduni.edu.in) in 2025.
 
@@ -27,27 +27,19 @@ I've shipped early-stage software at two places (recent-first):
 * [Dip](https://dipapp.in) (a social media startup)
   * Built the RESTful backend, integrated a payments gateway and the [tigerbeetle](https://tigerbeetle.com/) ledger, and shipped a custom-locks-based booking system.
 
-## Listicles
-
-* Labels
-  * Scientist, Computer Programmer, Photographer, [microblog-junkie](https://twitter.com/shubhxms).
-* Most common activites
-  * Making software, Taking pictures, Reading, Running, Watching sports and movies.
-
 ## Some things I like
  <!--<div id="home-img" style="float: right; max-width: 25%; max-height: 20%;">
   <img src="/images/home_header.jpeg" id="home-img" alt="vintage market">
 </div> -->
-State-Machines, Science, Stories, Story-Telling, Photography, Open Source, Public Transport, Institutions, Being Early To Institutions, Serif, Sans-Serif, Ampersand, Contractions, Spiral-Binding, Attention To Detail, Ornamental Flourish, Brutalism, Intricate Designs, Coffee, Chai, Oranges, Apples, Capsicums, Mountains, Beaches, Forests, Nature, Religion, Mythology, Cricket, Tennis, Badminton, Pickle-Ball, [Passion-Projects](https://twitter.com/collision/status/1529452415346302976), Solarpunk, Climate, Conservation
+State-Machines, Science, Stories, Story-Telling, Photography, Open Source, Public Transport, Institutions, Being Early To Institutions, Serif, Sans-Serif, Ampersand, Contractions, Spiral-Binding, Attention To Detail, Ornamental Flourish, Brutalism, Intricate Designs, Coffee, Chai, Mountains, Beaches, Forests, Nature, Religion, Mythology, Cricket, Tennis, Badminton, Pickle-Ball, [Passion-Projects](https://twitter.com/collision/status/1529452415346302976), Solarpunk, Climate, Conservation, Sudokus, Nonograms
 
 ## Now _(July '26)_
 
 _Read the full thing at [/now](/now)._
 
-I'm currently spending my time learning math, I remain open to interesting  work/collaboration opportunities.
+I'm currently spending my time playing with different domains. I remain open to interesting work/collaboration opportunities.
 
-* I'm reading:
-  * Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter
+Other than that I'm reading Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter. 
 
 
 ## Contact

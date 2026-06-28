@@ -9,8 +9,7 @@ I have arranged for a period of [unstructured](https://twitter.com/shubhxms/stat
 
 You have the rare chance to hire me while I am off the market. I remain open to interesting work/collaboration opportunities.
 
-- I'm reading:
-  - Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter
+I'm reading Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter
 
 - Fitness
   - I intend to run a 3K under 10 minutes this month. ([strava](https://www.strava.com/athletes/shoebum))
