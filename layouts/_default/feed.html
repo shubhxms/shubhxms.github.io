@@ -1,0 +1,20 @@
+{{ define "main" }}
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">{{ .Title }}</h1>
+		</div>
+		{{ if isset .Params "tldr" }}
+		<div class="tldr">
+			{{ .Params.tldr | markdownify }}
+		</div>{{ end }}
+		<hr class="divider-main">
+		<section class="body feed-body">
+			<div id="feed-root"></div>
+		</section>
+	</article>
+	<link rel="stylesheet" href="{{ "css/feed.css" | relURL }}">
+	<script>window.FEED_API = {{ .Site.Params.feedApi | jsonify }};</script>
+	<script src="{{ "js/feed.js" | relURL }}"></script>
+</main>
+{{ end }}

@@ -15,6 +15,7 @@ description = "personal website of shubham shah"
 enableGitInfo = true
 katex = true                                     # enable KaTeX support
 showTicker = false
+feedApi = "https://feed.shubhxms.workers.dev"
 
 [[params.social]]
 name = "GitHub"
@@ -60,11 +61,6 @@ weight = 6
 name = "Feed"
 url = "/feed"
 weight = 7
-
-[[menu.main]]
-name = "Stream"
-url = "/stream"
-weight = 8
 
 [[menu.main]]
 name = "Uses"
