@@ -240,8 +240,10 @@
 
   function panelHTML(it) {
     var pv = it.meta && it.meta.preview;
+    var openUrl = it.url || (pv && pv.url) || "";
+    var ob = openUrl ? '<a class="fd-open-top" href="' + esc(openUrl) + '" target="_blank" rel="noopener" title="open in new tab">open ↗</a>' : '';
     if (it.source === "letterboxd") {
-      return '<span class="fd-src">watched</span>' +
+      return ob + '<span class="fd-src">watched</span>' +
         '<div class="fd-filmhead">' +
           (it.poster ? '<img class="fd-poster" src="' + esc(it.poster) + '" alt="' + esc(it.title) + '">' : '') +
           '<div class="fd-ph">' +
@@ -256,7 +258,7 @@
         (it.url ? '<a class="fd-out" href="' + esc(it.url) + '" target="_blank" rel="noopener">Letterboxd ↗</a>' : '');
     }
     if (it.source === "telegram") {
-      return '<span class="fd-src">drop</span>' +
+      return ob + '<span class="fd-src">drop</span>' +
         '<div class="fd-dropbody">' + sanitize(it.html || ("<p>" + esc(it.body) + "</p>")) + '</div>' +
         (pv && pv.url ? '<a class="fd-pog" href="' + esc(pv.url) + '" target="_blank" rel="noopener">' +
           (pv.image ? '<img src="' + esc(pv.image) + '" alt="">' : '') +
@@ -266,7 +268,7 @@
         '<span class="fd-when">' + esc(stampFor(it)) + '</span>';
     }
     /* curius */
-    return '<span class="fd-src">saved' + (it.meta && it.meta.favorite ? ' · favorite' : '') + (it.meta && it.meta.toRead ? ' · to read' : '') + '</span>' +
+    return ob + '<span class="fd-src">saved' + (it.meta && it.meta.favorite ? ' · favorite' : '') + (it.meta && it.meta.toRead ? ' · to read' : '') + '</span>' +
       '<div class="fd-pt">' + esc(it.title) + '</div>' +
       (it.url ? '<div class="fd-sub">' + esc(hostOf(it.url)) + '</div>' : '') +
       (it.body ? '<p class="fd-snip">' + esc(it.body) + '</p>' : '') +
@@ -311,7 +313,7 @@
   /* ------------------------------------------------------------------ *
    * Masonry — fixed columns, place each tile in the shortest column
    * ------------------------------------------------------------------ */
-  var COL_GAP = 14;
+  var COL_GAP = 18;
   var COL_TARGET = 235;
 
   function layout() {

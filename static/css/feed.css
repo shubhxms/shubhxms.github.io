@@ -6,8 +6,10 @@
 :root{
   --fd-panel: color-mix(in srgb, var(--text) 5%, var(--bg));
   --fd-edge:  color-mix(in srgb, var(--text) 13%, var(--bg));
+  --fd-line:  color-mix(in srgb, var(--text) 9%, var(--bg));
   --fd-scrub: color-mix(in srgb, #000 62%, transparent);
 }
+#feed-root,#fd-panel,#feed-root *,#fd-panel *{box-sizing:border-box}
 
 #feed-root{margin-top:.5em}
 
@@ -24,6 +26,7 @@
 /* ---- masonry container ---- */
 .fd-grid{position:relative}
 .fd-t{position:absolute;border-radius:6px;overflow:hidden;cursor:pointer;background:var(--fd-panel);
+  border:1px solid var(--fd-line);
   animation:fd-rise .45s cubic-bezier(.2,.7,.2,1) both}
 @keyframes fd-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .fd-t:hover{box-shadow:0 6px 22px -8px rgba(0,0,0,.22)}
@@ -95,6 +98,8 @@
 #fd-panel .fd-src{font-family:"Space Mono",monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary)}
 #fd-panel .fd-x{position:absolute;top:10px;right:12px;background:none;border:0;font-size:1.15rem;color:var(--text-secondary);cursor:pointer;line-height:1}
 #fd-panel .fd-x:hover{color:var(--accent)}
+#fd-panel .fd-open-top{position:absolute;top:11px;right:36px;font-family:"Space Mono",monospace;font-size:.66rem;color:var(--text-secondary);text-decoration:none}
+#fd-panel .fd-open-top:hover{color:var(--accent)}
 #fd-panel .fd-pt{font-family:et-book,Palatino,Georgia,serif;font-size:1.5rem;margin:.15em 0 0;line-height:1.1;font-weight:600}
 #fd-panel .fd-sub{font-family:"Space Mono",monospace;font-size:.72rem;color:var(--text-secondary);margin-top:.2em}
 #fd-panel .fd-stars{color:var(--accent);letter-spacing:2px;font-size:1rem;margin:.5em 0}
