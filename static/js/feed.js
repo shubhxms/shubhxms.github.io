@@ -245,7 +245,7 @@
     if (it.source === "letterboxd") {
       return ob + '<span class="fd-src">watched</span>' +
         '<div class="fd-filmhead">' +
-          (it.poster ? '<img class="fd-poster" src="' + esc(it.poster) + '" alt="' + esc(it.title) + '">' : '') +
+          (it.poster ? '<img class="fd-pposter" src="' + esc(it.poster) + '" alt="' + esc(it.title) + '">' : '') +
           '<div class="fd-ph">' +
             '<div class="fd-pt">' + esc(it.title) + '</div>' +
             (it.meta && it.meta.year ? '<div class="fd-sub">' + esc(it.meta.year) + '</div>' : '') +
@@ -254,8 +254,7 @@
           '</div>' +
         '</div>' +
         (it.body && String(it.body).trim() ? '<p class="fd-review">' + esc(it.body) + '</p>' : '') +
-        '<span class="fd-when">Watched ' + esc(stampFor(it)) + '</span>' +
-        (it.url ? '<a class="fd-out" href="' + esc(it.url) + '" target="_blank" rel="noopener">Letterboxd ↗</a>' : '');
+        '<span class="fd-when">Watched ' + esc(stampFor(it)) + '</span>';
     }
     if (it.source === "telegram") {
       return ob + '<span class="fd-src">drop</span>' +
@@ -272,8 +271,7 @@
       '<div class="fd-pt">' + esc(it.title) + '</div>' +
       (it.url ? '<div class="fd-sub">' + esc(hostOf(it.url)) + '</div>' : '') +
       (it.body ? '<p class="fd-snip">' + esc(it.body) + '</p>' : '') +
-      '<span class="fd-when">Saved ' + esc(fmtDate(it.occurred_at)) + '</span>' +
-      (it.url ? '<a class="fd-out" href="' + esc(it.url) + '" target="_blank" rel="noopener">Open ↗</a>' : '');
+      '<span class="fd-when">Saved ' + esc(fmtDate(it.occurred_at)) + '</span>';
   }
 
   function openPanel(it, tile) {
