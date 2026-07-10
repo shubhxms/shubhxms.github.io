@@ -14,7 +14,7 @@
 		</section>
 	</article>
 	<link rel="stylesheet" href="{{ "css/feed.css" | relURL }}">
-	<script>window.FEED_API = {{ .Site.Params.feedApi | jsonify }};</script>
+	<script>window.FEED_API = {{ .Site.Params.feedApi | jsonify | safeJS }};</script>
 	<script src="{{ "js/feed.js" | relURL }}"></script>
 </main>
 {{ end }}
