@@ -1,9 +1,12 @@
 /**
- * Unified feed — bento/masonry activity wall.
+ * Unified feed — masonry activity wall.
  *
- * Pulls everything from a single Cloudflare Worker, caches to localStorage
- * for instant repeat visits, and incrementally syncs deltas on each load.
- * Filter chips are a pure client-side operation over the cached set.
+ * Pulls everything from a single Cloudflare Worker (FEED_API), caches to
+ * localStorage for instant repeat visits, and incrementally syncs deltas
+ * (keyed on updated_at). Filters are a pure client-side operation over the
+ * cached set. Tiles are absolutely positioned by a shortest-column masonry
+ * pass so there are never any gaps. Long content (reviews, full drops,
+ * snippets) opens in a fixed central detail panel.
  */
 (function () {
   "use strict";
@@ -16,11 +19,11 @@
   var cache = null;
   var activeFilter = "all";
   var hasRendered = false;
+  var gridEl = null;
 
   /* ------------------------------------------------------------------ *
    * Cache
    * ------------------------------------------------------------------ */
-
   function loadCache() {
     try {
       var raw = localStorage.getItem(CACHE_KEY);
@@ -47,11 +50,8 @@
     if (data && data.items) {
       data.items.forEach(function (item) {
         if (!item || item.id == null) return;
-        if (item.deleted) {
-          delete cache.items[item.id];
-        } else {
-          cache.items[item.id] = item;
-        }
+        if (item.deleted) delete cache.items[item.id];
+        else cache.items[item.id] = item;
       });
     }
     if (data && data.ts) cache.ts = data.ts;
@@ -60,7 +60,6 @@
   /* ------------------------------------------------------------------ *
    * Helpers
    * ------------------------------------------------------------------ */
-
   var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
   function fmtDate(ts) {
@@ -72,9 +71,14 @@
     if (diff < day) return Math.round(diff / 3600000) + "h";
     if (diff < 7 * day) return Math.round(diff / day) + "d";
     var s = MONTHS[d.getMonth()] + " " + d.getDate();
-    if (d.getFullYear() !== new Date().getFullYear())
-      s += " '" + String(d.getFullYear()).slice(2);
+    if (d.getFullYear() !== new Date().getFullYear()) s += " '" + String(d.getFullYear()).slice(2);
     return s;
+  }
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function timeOf(ts) { var d = new Date(ts); return pad(d.getHours()) + ":" + pad(d.getMinutes()); }
+  function stampFor(it) {
+    var d = fmtDate(it.occurred_at);
+    return it.source === "telegram" ? d + " · " + timeOf(it.occurred_at) : d;
   }
 
   function ratingDots(rating) {
@@ -82,9 +86,8 @@
     var full = Math.floor(rating);
     var half = rating - full >= 0.5;
     var out = "";
-    for (var i = 0; i < full && i < 5; i++) out += "\u25CF";      /* ● */
-    if (half && full < 5) out += "\u25D0";                         /* ◐ */
-    for (var j = full + (half ? 1 : 0); j < 5; j++) out += "\u25CB"; /* ○ */
+    for (var i = 0; i < full && i < 5; i++) out += "\u25CF";        /* ● */
+    if (half && full < 5) out += "\u25D0";                           /* ◐ */
     return out;
   }
 
@@ -93,8 +96,8 @@
     catch (e) { return ""; }
   }
 
-  /** Defensive sanitisation — worker output is pre-cleaned, but strip
-   *  <script> and inline event handlers as belt-and-suspenders. */
+  /** Belt-and-suspenders: worker output is pre-cleaned, but strip scripts
+   *  and inline event handlers regardless. */
   function sanitize(html) {
     return String(html)
       .replace(/<script[\s\S]*?<\/script>/gi, "")
@@ -111,176 +114,237 @@
     if (text != null) node.textContent = text;
     return node;
   }
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  /* masonry column span — wide quotes / long drops take 2 columns */
+  function spanOf(it) {
+    if (it.source === "telegram") {
+      var h = it.html || "";
+      if (h.length > 320 || /<blockquote/i.test(h)) return 2;
+    }
+    return 1;
+  }
 
   /* ------------------------------------------------------------------ *
    * Tile builders
    * ------------------------------------------------------------------ */
-
-  function buildWatched(item) {
-    var tile = el("article", "tile tile-watched");
-
-    var link = el("a", "tile-link");
-    if (item.url) { link.href = item.url; link.target = "_blank"; link.rel = "noopener"; }
-
-    if (item.poster) {
-      var poster = el("div", "tile-poster");
-      var img = el("img");
-      img.src = item.poster;
-      img.alt = item.title || "";
-      img.loading = "lazy";
-      poster.appendChild(img);
-      link.appendChild(poster);
-    }
-
-    var meta = el("div", "tile-meta");
-    meta.appendChild(el("h3", "tile-title", item.title || "Untitled"));
-
-    var bits = [];
-    var year = item.meta && item.meta.year;
-    if (year) bits.push(year);
-    var dateStr = fmtDate(item.occurred_at);
-    if (dateStr) bits.push(dateStr);
-    if (bits.length) meta.appendChild(el("div", "tile-sub", bits.join(" · ")));
-
-    if (item.rating) {
-      var r = el("div", "tile-rating");
-      r.textContent = ratingDots(item.rating);
-      meta.appendChild(r);
-    }
-
-    if (item.meta && item.meta.rewatch) {
-      meta.appendChild(el("span", "tile-tag", "rewatch"));
-    }
-
-    link.appendChild(meta);
-    tile.appendChild(link);
-
-    if (item.body && item.body.trim()) {
-      var wrap = el("div", "tile-review-wrap");
-      var btn = el("button", "tile-chevron", "\u25B8 review");
-      var review = el("p", "tile-review", item.body);
-      review.hidden = true;
-      btn.setAttribute("aria-expanded", "false");
-      btn.addEventListener("click", function () {
-        var open = !review.hidden;
-        review.hidden = open;
-        btn.textContent = open ? "\u25B8 review" : "\u25BE review";
-        btn.setAttribute("aria-expanded", String(!open));
-      });
-      wrap.appendChild(btn);
-      wrap.appendChild(review);
-      tile.appendChild(wrap);
-    }
-
+  function buildTile(it) {
+    var tile = el("article", "fd-t");
+    tile.dataset.span = String(spanOf(it));
+    tile.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      openPanel(it, tile);
+    });
+    if (it.source === "letterboxd") fillFilm(it, tile);
+    else if (it.source === "telegram") fillDrop(it, tile);
+    else if (it.source === "curius") fillLink(it, tile);
+    else return null;
     return tile;
   }
 
-  function buildSaved(item) {
-    var tile = el("article", "tile tile-saved");
-    var fav = item.meta && item.meta.favorite;
-    if (fav) tile.classList.add("tile-favorite");
-
-    var link = el("a", "tile-link");
-    if (item.url) { link.href = item.url; link.target = "_blank"; link.rel = "noopener"; }
-
-    var head = el("div", "tile-bookmark-head");
-    var host = hostOf(item.url);
-    if (host) {
-      var favIcon = el("img", "tile-favicon");
-      favIcon.src = "https://www.google.com/s2/favicons?domain=" + encodeURIComponent(host) + "&sz=64";
-      favIcon.alt = "";
-      favIcon.loading = "lazy";
-      favIcon.width = 16;
-      favIcon.height = 16;
-      head.appendChild(favIcon);
-    }
-    head.appendChild(el("h3", "tile-title", item.title || "Untitled"));
-    if (fav) head.appendChild(el("span", "tile-star", "\u2605"));
-    link.appendChild(head);
-
-    if (item.body && item.body.trim()) {
-      link.appendChild(el("p", "tile-snippet", item.body));
-    }
-
-    var foot = el("div", "tile-domain");
-    foot.textContent = [host, fmtDate(item.occurred_at)].filter(Boolean).join(" · ");
-    link.appendChild(foot);
-
-    tile.appendChild(link);
-    return tile;
+  function fillFilm(it, tile) {
+    tile.className += " fd-film";
+    if (it.body && String(it.body).trim()) tile.className += " has-review";
+    var p = el("div", "fd-poster");
+    var img = el("img");
+    img.src = it.poster || "";
+    img.alt = it.title || "";
+    img.loading = "lazy";
+    p.appendChild(img);
+    tile.appendChild(p);
+    tile.appendChild(el("span", "fd-fts", fmtDate(it.occurred_at)));
+    var cap = el("div", "fd-cap");
+    cap.appendChild(el("span", "fd-ti", it.title || "Untitled"));
+    if (it.meta && it.meta.year) cap.appendChild(el("span", "fd-yr", String(it.meta.year)));
+    if (it.rating) cap.appendChild(el("span", "fd-dots", ratingDots(it.rating)));
+    tile.appendChild(cap);
   }
 
-  function buildDrop(item) {
-    var tile = el("article", "tile tile-drop");
+  function fillDrop(it, tile) {
+    tile.className += " fd-drop";
+    var html = it.html;
+    var bodyOnly = !html && it.body;
+    if (/<blockquote/i.test(html || "")) tile.className += " fd-quote";
+    if (spanOf(it) === 2) tile.className += " fd-wide";
 
-    if (item.html) {
-      var content = el("div", "tile-drop-text");
-      content.innerHTML = sanitize(item.html);
-      tile.appendChild(content);
-    } else if (item.body) {
-      tile.appendChild(el("p", "tile-drop-text", item.body));
-    }
+    var dh = el("div", "fd-dh");
+    dh.appendChild(el("span", "fd-ts", stampFor(it)));
+    tile.appendChild(dh);
 
-    if (item.media && item.media.length) {
-      item.media.forEach(function (m) {
+    var body = el("div", "fd-body");
+    if (html) body.innerHTML = sanitize(html);
+    else if (it.body) body.textContent = it.body;
+    tile.appendChild(body);
+
+    if (it.media && it.media.length) {
+      it.media.forEach(function (m) {
         if (m.type === "photo" && m.url) {
-          var img = el("img", "tile-drop-img");
-          img.src = m.url;
-          img.loading = "lazy";
-          img.alt = "";
-          if (m.width) img.width = m.width;
-          if (m.height) img.height = m.height;
-          tile.appendChild(img);
+          var pi = el("img", "fd-photo");
+          pi.src = m.url; pi.loading = "lazy"; pi.alt = "";
+          pi.style.aspectRatio = (m.width && m.height) ? (m.width + "/" + m.height) : "4/3";
+          body.appendChild(pi);
         }
       });
     }
 
-    if (item.meta && item.meta.preview && item.meta.preview.url) {
-      var pv = item.meta.preview;
-      var card = el("a", "tile-preview");
-      card.href = pv.url;
-      card.target = "_blank";
-      card.rel = "noopener";
-
+    var pv = it.meta && it.meta.preview;
+    if (pv && pv.url) {
+      var og = el("a", "fd-og");
+      og.href = pv.url; og.target = "_blank"; og.rel = "noopener";
       if (pv.image) {
-        var pi = el("img", "tile-preview-img");
-        pi.src = pv.image;
-        pi.loading = "lazy";
-        pi.alt = "";
-        card.appendChild(pi);
+        var i = el("img"); i.src = pv.image; i.loading = "lazy"; i.alt = "";
+        og.appendChild(i);
       }
-
-      var text = el("div", "tile-preview-text");
-      if (pv.title) text.appendChild(el("span", "tile-preview-title", pv.title));
-      if (pv.description) text.appendChild(el("span", "tile-preview-desc", pv.description));
-      if (pv.site) text.appendChild(el("span", "tile-preview-domain", pv.site));
-      card.appendChild(text);
-      tile.appendChild(card);
+      var t = el("span");
+      t.appendChild(el("span", "fd-ot", pv.title || hostOf(pv.url)));
+      t.appendChild(el("span", "fd-od", pv.site || hostOf(pv.url)));
+      og.appendChild(t);
+      tile.appendChild(og);
     }
-
-    var date = el("div", "tile-date", fmtDate(item.occurred_at));
-    tile.appendChild(date);
-
-    return tile;
   }
 
-  function buildTile(item) {
-    if (item.source === "letterboxd") return buildWatched(item);
-    if (item.source === "curius") return buildSaved(item);
-    if (item.source === "telegram") return buildDrop(item);
-    return null;
+  function fillLink(it, tile) {
+    tile.className += " fd-link";
+    var fav = it.meta && it.meta.favorite;
+    if (fav) tile.className += " fd-fav-tile";
+    var host = hostOf(it.url);
+
+    var favi = el("img", "fd-fav");
+    favi.src = "https://www.google.com/s2/favicons?domain=" + encodeURIComponent(host) + "&sz=64";
+    favi.alt = ""; favi.loading = "lazy";
+    tile.appendChild(favi);
+
+    var lx = el("div", "fd-lx");
+    lx.appendChild(el("div", "fd-lt", it.title || "Untitled"));
+    var bits = [host];
+    if (it.meta && it.meta.toRead) bits.push("to read");
+    bits.push(fmtDate(it.occurred_at));
+    lx.appendChild(el("div", "fd-ld", bits.filter(Boolean).join(" · ")));
+    tile.appendChild(lx);
+
+    if (fav) tile.appendChild(el("span", "fd-star", "\u2605"));
   }
 
   /* ------------------------------------------------------------------ *
-   * Render
+   * Central detail panel
    * ------------------------------------------------------------------ */
+  var panel = document.getElementById("fd-panel");
+  var pin = panel ? panel.querySelector(".fd-pin") : null;
+  var activeTile = null;
+  var openY = null;
 
-  var FILTER_MAP = {
-    all: null,
-    watched: "letterboxd",
-    reading: "curius",
-    drops: "telegram",
-  };
+  function panelHTML(it) {
+    var pv = it.meta && it.meta.preview;
+    if (it.source === "letterboxd") {
+      return '<span class="fd-src">watched</span>' +
+        '<div class="fd-filmhead">' +
+          (it.poster ? '<img class="fd-poster" src="' + esc(it.poster) + '" alt="' + esc(it.title) + '">' : '') +
+          '<div class="fd-ph">' +
+            '<div class="fd-pt">' + esc(it.title) + '</div>' +
+            (it.meta && it.meta.year ? '<div class="fd-sub">' + esc(it.meta.year) + '</div>' : '') +
+            (it.rating ? '<div class="fd-stars">' + ratingDots(it.rating) + ' <span style="color:var(--text-secondary);font-family:Space Mono,monospace;font-size:.7rem;margin-left:.4em">' + Number(it.rating).toFixed(1) + '/5</span></div>' : '') +
+            (it.meta && it.meta.rewatch ? '<div class="fd-sub">rewatch</div>' : '') +
+          '</div>' +
+        '</div>' +
+        (it.body && String(it.body).trim() ? '<p class="fd-review">' + esc(it.body) + '</p>' : '') +
+        '<span class="fd-when">Watched ' + esc(stampFor(it)) + '</span>' +
+        (it.url ? '<a class="fd-out" href="' + esc(it.url) + '" target="_blank" rel="noopener">Letterboxd ↗</a>' : '');
+    }
+    if (it.source === "telegram") {
+      return '<span class="fd-src">drop</span>' +
+        '<div class="fd-dropbody">' + sanitize(it.html || ("<p>" + esc(it.body) + "</p>")) + '</div>' +
+        (pv && pv.url ? '<a class="fd-pog" href="' + esc(pv.url) + '" target="_blank" rel="noopener">' +
+          (pv.image ? '<img src="' + esc(pv.image) + '" alt="">' : '') +
+          '<span><span style="font-family:et-book,serif;font-weight:600;display:block">' + esc(pv.title || hostOf(pv.url)) + '</span>' +
+          (pv.description ? '<span class="fd-sub">' + esc(pv.description) + '</span>' : '') +
+          '<span class="fd-sub">' + esc(pv.site || hostOf(pv.url)) + '</span></span></a>' : '') +
+        '<span class="fd-when">' + esc(stampFor(it)) + '</span>';
+    }
+    /* curius */
+    return '<span class="fd-src">saved' + (it.meta && it.meta.favorite ? ' · favorite' : '') + (it.meta && it.meta.toRead ? ' · to read' : '') + '</span>' +
+      '<div class="fd-pt">' + esc(it.title) + '</div>' +
+      (it.url ? '<div class="fd-sub">' + esc(hostOf(it.url)) + '</div>' : '') +
+      (it.body ? '<p class="fd-snip">' + esc(it.body) + '</p>' : '') +
+      '<span class="fd-when">Saved ' + esc(fmtDate(it.occurred_at)) + '</span>' +
+      (it.url ? '<a class="fd-out" href="' + esc(it.url) + '" target="_blank" rel="noopener">Open ↗</a>' : '');
+  }
+
+  function openPanel(it, tile) {
+    if (!panel || !pin) return;
+    if (activeTile === tile) { closePanel(); return; }
+    if (activeTile) activeTile.classList.remove("fd-open");
+    pin.innerHTML = panelHTML(it);
+    panel.classList.add("fd-show");
+    panel.setAttribute("aria-hidden", "false");
+    activeTile = tile;
+    tile.classList.add("fd-open");
+    openY = window.scrollY;
+  }
+
+  function closePanel() {
+    if (!panel) return;
+    panel.classList.remove("fd-show");
+    panel.setAttribute("aria-hidden", "true");
+    if (activeTile) { activeTile.classList.remove("fd-open"); activeTile = null; }
+    openY = null;
+  }
+
+  if (panel) {
+    var xb = panel.querySelector(".fd-x");
+    if (xb) xb.addEventListener("click", closePanel);
+    document.addEventListener("click", function (e) {
+      if (panel.contains(e.target)) return;
+      if (e.target.closest(".fd-t")) return;
+      closePanel();
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePanel(); });
+    window.addEventListener("scroll", function () {
+      if (openY != null && Math.abs(window.scrollY - openY) > window.innerHeight * 0.6) closePanel();
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Masonry — fixed columns, place each tile in the shortest column
+   * ------------------------------------------------------------------ */
+  var COL_GAP = 14;
+  var COL_TARGET = 235;
+
+  function layout() {
+    if (!gridEl) return;
+    var W = gridEl.clientWidth;
+    if (!W) return;
+    var cols = W < 520 ? 1 : Math.max(2, Math.min(5, Math.round((W + COL_GAP) / (COL_TARGET + COL_GAP))));
+    var cw = (W - (cols - 1) * COL_GAP) / cols;
+    var bottoms = new Array(cols).fill(0);
+    var kids = gridEl.children;
+    for (var i = 0; i < kids.length; i++) {
+      var t = kids[i];
+      if (!t.dataset || !t.dataset.span) continue; /* skip the empty-state node */
+      var span = Math.min(+t.dataset.span || 1, cols);
+      var w = span * cw + (span - 1) * COL_GAP;
+      t.style.width = w + "px";
+      var bestX = 0, bestTop = Infinity;
+      for (var x = 0; x <= cols - span; x++) {
+        var top = Math.max.apply(null, bottoms.slice(x, x + span));
+        if (top < bestTop) { bestTop = top; bestX = x; }
+      }
+      t.style.left = (bestX * (cw + COL_GAP)) + "px";
+      t.style.top = bestTop + "px";
+      var h = t.offsetHeight; /* films: aspect-ratio 2/3; photos: set aspect */
+      for (var k = bestX; k < bestX + span; k++) bottoms[k] = bestTop + h + COL_GAP;
+    }
+    gridEl.style.height = Math.max.apply(null, bottoms) + "px";
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Render + filters
+   * ------------------------------------------------------------------ */
+  var FILTER_MAP = { all: null, watched: "letterboxd", reading: "curius", drops: "telegram" };
 
   function allItems() {
     if (!cache || !cache.items) return [];
@@ -293,43 +357,33 @@
   function filteredItems() {
     var items = allItems();
     var want = FILTER_MAP[activeFilter];
-    if (!want) return items;
-    return items.filter(function (item) { return item.source === want; });
+    return want ? items.filter(function (i) { return i.source === want; }) : items;
   }
 
-  function buildFilters(total) {
+  function buildFilters() {
     var items = allItems();
     var counts = {
       all: items.length,
       watched: items.filter(function (i) { return i.source === "letterboxd"; }).length,
       reading: items.filter(function (i) { return i.source === "curius"; }).length,
-      drops: items.filter(function (i) { return i.source === "telegram"; }).length,
+      drops: items.filter(function (i) { return i.source === "telegram"; }).length
     };
-    var bar = el("div", "feed-filters");
-    bar.setAttribute("role", "tablist");
+    var bar = el("div", "fd-filters");
     [["all","All"],["watched","Watched"],["reading","Reading"],["drops","Drops"]].forEach(function (f) {
-      var key = f[0], label = f[1];
-      var btn = el("button", "feed-filter");
+      var btn = el("button", "fd-filter" + (activeFilter === f[0] ? " on" : ""));
       btn.type = "button";
-      btn.setAttribute("role", "tab");
-      btn.setAttribute("aria-selected", String(activeFilter === key));
-      if (activeFilter === key) btn.classList.add("active");
-      btn.appendChild(document.createTextNode(label + " "));
-      var c = el("span", "feed-filter-count", String(counts[key]));
-      btn.appendChild(c);
-      btn.addEventListener("click", function () {
-        activeFilter = key;
-        render();
-      });
+      btn.appendChild(document.createTextNode(f[1] + " "));
+      btn.appendChild(el("span", "fd-filter-count", String(counts[f[0]])));
+      btn.addEventListener("click", function () { activeFilter = f[0]; render(); });
       bar.appendChild(btn);
     });
     return bar;
   }
 
   function buildFooter(count) {
-    var foot = el("div", "feed-footer");
-    foot.appendChild(el("span", "feed-count", "\u2014 " + count + " item" + (count === 1 ? "" : "s")));
-    var btn = el("button", "feed-refresh", "resync");
+    var foot = el("div", "fd-footer");
+    foot.appendChild(el("span", "fd-count", "\u2014 " + count + " item" + (count === 1 ? "" : "s")));
+    var btn = el("button", "fd-refresh", "resync");
     btn.type = "button";
     btn.title = "Clear cache and re-fetch everything";
     btn.addEventListener("click", function () {
@@ -349,84 +403,63 @@
     root.innerHTML = "";
     root.appendChild(buildFilters());
 
-    var grid = el("div");
-    grid.className = "feed-grid";
-    grid.id = "feed-grid";
-
+    gridEl = el("div", "fd-grid");
     if (items.length === 0) {
-      grid.appendChild(el("div", "feed-empty", "Nothing here yet."));
+      gridEl.appendChild(el("div", "fd-empty", "Nothing here yet."));
     } else {
       var frag = document.createDocumentFragment();
-      items.forEach(function (item) {
-        var tile = buildTile(item);
+      items.forEach(function (it) {
+        var tile = buildTile(it);
         if (tile) frag.appendChild(tile);
       });
-      grid.appendChild(frag);
+      gridEl.appendChild(frag);
     }
-
-    root.appendChild(grid);
+    root.appendChild(gridEl);
     root.appendChild(buildFooter(items.length));
+
+    requestAnimationFrame(layout);
+    setTimeout(layout, 250); /* re-measure after fonts/images settle */
   }
 
   /* ------------------------------------------------------------------ *
-   * States
+   * States + fetch
    * ------------------------------------------------------------------ */
-
-  function showLoading() {
-    root.innerHTML = "";
-    root.appendChild(el("div", "feed-loading", "loading\u2026"));
-  }
+  function showLoading() { root.innerHTML = ""; root.appendChild(el("div", "fd-loading", "loading\u2026")); }
 
   function showError() {
     root.innerHTML = "";
-    var box = el("div", "feed-error");
+    var box = el("div", "fd-error");
     box.appendChild(document.createTextNode("Could not load the feed. "));
-    var btn = el("button", "feed-retry", "retry");
+    var btn = el("button", "fd-retry", "retry");
     btn.type = "button";
-    btn.addEventListener("click", function () {
-      showLoading();
-      doFetch(!cache);
-    });
+    btn.addEventListener("click", function () { showLoading(); doFetch(!cache); });
     box.appendChild(btn);
     root.appendChild(box);
   }
 
-  /* ------------------------------------------------------------------ *
-   * Fetch
-   * ------------------------------------------------------------------ */
-
   function doFetch(forceFull) {
     var url = API + "/feed";
     if (!forceFull && cache && cache.ts) url += "?ts=" + cache.ts;
-
     fetch(url)
-      .then(function (r) {
-        if (!r.ok) throw new Error(r.status);
-        return r.json();
-      })
-      .then(function (data) {
-        mergeDelta(data);
-        saveCache();
-        render();
-      })
-      .catch(function () {
-        /* Never wipe the page on fetch failure — keep the cached render.
-           If nothing has rendered yet, show the error state. */
-        if (!hasRendered) showError();
-      });
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) { mergeDelta(data); saveCache(); render(); })
+      .catch(function () { if (!hasRendered) showError(); });
   }
 
   /* ------------------------------------------------------------------ *
    * Boot
    * ------------------------------------------------------------------ */
-
   cache = loadCache();
 
+  var rt;
+  window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(layout, 120); });
+  window.addEventListener("load", function () { requestAnimationFrame(layout); });
+
   if (cache && Object.keys(cache.items).length) {
-    render();                 /* instant first paint from cache */
-    doFetch(false);           /* delta sync in background */
+    render();        /* instant first paint from cache */
+    doFetch(false);  /* delta sync in background */
   } else {
     showLoading();
-    doFetch(true);            /* no cache — full fetch */
+    doFetch(true);   /* no cache — full fetch */
   }
 })();
