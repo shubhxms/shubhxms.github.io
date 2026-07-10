@@ -338,7 +338,8 @@
       var h = t.offsetHeight; /* films: aspect-ratio 2/3; photos: set aspect */
       for (var k = bestX; k < bestX + span; k++) bottoms[k] = bestTop + h + COL_GAP;
     }
-    gridEl.style.height = Math.max.apply(null, bottoms) + "px";
+    var maxB = Math.max.apply(null, bottoms);
+    gridEl.style.height = maxB > 0 ? maxB + "px" : "auto";
   }
 
   /* ------------------------------------------------------------------ *
