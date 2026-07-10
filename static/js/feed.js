@@ -138,6 +138,12 @@
     tile.addEventListener("click", function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
+      /* no room for the side panel on small screens — just open the link */
+      if (window.innerWidth < 900) {
+        var u = it.url || (it.meta && it.meta.preview && it.meta.preview.url);
+        if (u) window.open(u, "_blank", "noopener");
+        return;
+      }
       openPanel(it, tile);
     });
     if (it.source === "letterboxd") fillFilm(it, tile);
