@@ -86,8 +86,8 @@
     var full = Math.floor(rating);
     var half = rating - full >= 0.5;
     var out = "";
-    for (var i = 0; i < full && i < 5; i++) out += "\u25CF";        /* ● */
-    if (half && full < 5) out += "\u25D0";                           /* ◐ */
+    for (var i = 0; i < full && i < 5; i++) out += "\u2605";        /* ★ */
+    if (half && full < 5) out += "\u00BD";                           /* ½ */
     return out;
   }
 
