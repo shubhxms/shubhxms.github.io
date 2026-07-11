@@ -10,6 +10,7 @@
   --fd-scrub: color-mix(in srgb, #000 62%, transparent);
 }
 #feed-root,#fd-panel,#feed-root *,#fd-panel *{box-sizing:border-box}
+html{scrollbar-gutter:stable}
 
 #feed-root{margin-top:.5em}
 
