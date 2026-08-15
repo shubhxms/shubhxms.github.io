@@ -13,12 +13,15 @@
 			<div id="feed-root"></div>
 		</section>
 	</article>
-	<aside id="fd-panel" aria-hidden="true">
-		<button class="fd-x" type="button" aria-label="close detail">×</button>
-		<div class="fd-pin"></div>
-	</aside>
-	<link rel="stylesheet" href="{{ "css/feed.css" | relURL }}">
+	<link rel="stylesheet" href="{{ "css/feed.css" | relURL }}?v=18">
 	<script>window.FEED_API = {{ .Site.Params.feedApi | jsonify | safeJS }};</script>
-	<script src="{{ "js/feed.js" | relURL }}"></script>
+	<script src="{{ "js/feed.js" | relURL }}?v=13" defer></script>
 </main>
+{{ end }}
+
+{{ define "rail" }}
+<aside id="fd-panel" aria-hidden="true">
+	<button class="fd-x" type="button" aria-label="close detail">×</button>
+	<div class="fd-pin"></div>
+</aside>
 {{ end }}

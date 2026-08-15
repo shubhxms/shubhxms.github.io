@@ -15,6 +15,12 @@
 #fd-panel * {
 	box-sizing: border-box;
 }
+#feed-root,
+#fd-panel {
+	hyphens: none;
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+}
 html {
 	scrollbar-gutter: stable;
 }
@@ -129,7 +135,7 @@ html {
 	color: #fff;
 }
 .fd-cap .fd-ti {
-	font-family: et-book, Palatino, Georgia, serif;
+	font-family: "Urbanist", sans-serif;
 	font-weight: 600;
 	font-size: 1.02rem;
 	line-height: 1.15;
@@ -194,7 +200,7 @@ html {
 	word-break: break-word;
 }
 .fd-drop.fd-quote .fd-body {
-	font-family: et-book, Palatino, Georgia, serif;
+	font-family: "Crimson Text", Georgia, serif;
 	font-style: italic;
 	font-size: 1.12rem;
 	line-height: 1.38;
@@ -244,7 +250,7 @@ html {
 	background: var(--fd-edge);
 }
 .fd-og .fd-ot {
-	font-family: et-book, Palatino, Georgia, serif;
+	font-family: "Urbanist", sans-serif;
 	font-weight: 600;
 	font-size: 0.8rem;
 	line-height: 1.2;
@@ -282,7 +288,7 @@ html {
 	flex: 1;
 }
 .fd-lt {
-	font-family: et-book, Palatino, Georgia, serif;
+	font-family: "Urbanist", sans-serif;
 	font-weight: 600;
 	font-size: 0.92rem;
 	line-height: 1.2;
@@ -354,13 +360,14 @@ html {
 	border-color: var(--accent);
 }
 
-/* ---- central detail panel (fixed, left of the sidebar) ---- */
+/* ---- detail pane: fixed beside the feed, following the viewport ---- */
 #fd-panel {
 	position: fixed;
 	top: 50%;
-	right: 235px;
+	right: auto;
 	width: 380px;
-	max-width: calc(100vw - 260px);
+	max-width: calc(100vw - var(--sidebar-width, 10rem) - 7rem);
+	margin-left: 0;
 	max-height: 82vh;
 	overflow-y: auto;
 	transform: translateY(-50%) translateX(8px);
@@ -414,7 +421,7 @@ html {
 	text-decoration: underline;
 }
 #fd-panel .fd-pt {
-	font-family: et-book, Palatino, Georgia, serif;
+	font-family: "Urbanist", sans-serif;
 	font-size: 1.5rem;
 	margin: 0.15em 0 0;
 	line-height: 1.1;
@@ -440,6 +447,34 @@ html {
 	border-radius: 5px;
 	border: 1px solid var(--border);
 	margin: 0.3em auto 0.7em;
+}
+#fd-panel .fd-link-preview {
+	display: block;
+	margin: 0.8em 0;
+	overflow: hidden;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	background: var(--fd-edge);
+}
+#fd-panel .fd-link-preview:hover {
+	border-color: var(--accent);
+	background: var(--fd-edge);
+}
+#fd-panel .fd-video-preview {
+	aspect-ratio: 16 / 9;
+}
+#fd-panel .fd-video-preview iframe,
+#fd-panel .fd-image-preview img {
+	display: block;
+	width: 100%;
+	border: 0;
+}
+#fd-panel .fd-video-preview iframe {
+	height: 100%;
+}
+#fd-panel .fd-image-preview img {
+	max-height: 260px;
+	object-fit: cover;
 }
 #fd-panel .fd-review {
 	font-style: italic;
@@ -504,12 +539,76 @@ html {
 	margin: 0.3em 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1199px) {
 	#fd-panel {
+		position: fixed;
+		top: 50%;
+		left: auto;
 		right: 50%;
+		width: min(380px, calc(100vw - 2rem));
+		margin-left: 0;
 		transform: translate(50%, -50%) translateX(8px);
 	}
 	#fd-panel.fd-show {
 		transform: translate(50%, -50%);
 	}
+}
+
+/* Feed UI follows the site's single-face typography policy. */
+#feed-root,
+#fd-panel {
+	font-family: "Crimson Text", Georgia, serif;
+}
+
+.fd-filters,
+.fd-ts,
+.fd-cap .fd-yr,
+.fd-film.has-review::after,
+.fd-og .fd-od,
+.fd-ld,
+.fd-count,
+.fd-refresh,
+.fd-empty,
+.fd-error,
+#fd-panel .fd-src,
+#fd-panel .fd-open-top,
+#fd-panel .fd-sub,
+#fd-panel .fd-when,
+#fd-panel .fd-out {
+	font-family: "Urbanist", sans-serif;
+}
+
+#feed-root,
+#fd-panel {
+	font-size: 15px;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+.fd-filters {
+	gap: 1rem;
+	margin-bottom: 1rem;
+	font-size: 0.75rem;
+}
+
+.fd-body,
+#fd-panel .fd-dropbody {
+	font-size: 0.92rem;
+	line-height: 1.4;
+}
+
+.fd-cap .fd-ti {
+	font-size: 1rem;
+	line-height: 1.12;
+}
+
+#fd-panel .fd-pt {
+	font-size: 1.35rem;
+	line-height: 1.08;
+}
+
+#fd-panel .fd-review,
+#fd-panel .fd-snip {
+	font-size: 0.95rem;
+	line-height: 1.4;
 }

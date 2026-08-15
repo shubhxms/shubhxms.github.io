@@ -96,6 +96,41 @@
     catch (e) { return ""; }
   }
 
+  function youtubeId(url) {
+    if (!url) return "";
+    try {
+      var parsed = new URL(url);
+      var host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+      var id = "";
+      if (host === "youtu.be") {
+        id = parsed.pathname.split("/")[1] || "";
+      } else if (host === "youtube.com" || host.endsWith(".youtube.com") || host === "youtube-nocookie.com") {
+        if (parsed.pathname === "/watch") id = parsed.searchParams.get("v") || "";
+        else if (/^\/(?:shorts|embed)\//.test(parsed.pathname)) id = parsed.pathname.split("/")[2] || "";
+      }
+      return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function linkPreviewHTML(it, openUrl) {
+    var pv = it.meta && it.meta.preview;
+    var target = (pv && pv.url) || openUrl || it.url || "";
+    var videoId = youtubeId(target);
+    if (videoId) {
+      return '<div class="fd-link-preview fd-video-preview"><iframe src="https://www.youtube-nocookie.com/embed/' +
+        esc(videoId) + '" title="YouTube preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" ' +
+        'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+    }
+
+    var image = (pv && pv.image) || it.image || it.thumbnail || "";
+    if (!image && /\.(?:avif|gif|jpe?g|png|webp)(?:[?#].*)?$/i.test(target)) image = target;
+    if (!image) return "";
+    return '<a class="fd-link-preview fd-image-preview" href="' + esc(target || image) +
+      '" target="_blank" rel="noopener"><img src="' + esc(image) + '" loading="lazy" alt=""></a>';
+  }
+
   /** Belt-and-suspenders: worker output is pre-cleaned, but strip scripts
    *  and inline event handlers regardless. */
   function sanitize(html) {
@@ -174,7 +209,6 @@
   function fillDrop(it, tile) {
     tile.className += " fd-drop";
     var html = it.html;
-    var bodyOnly = !html && it.body;
     if (/<blockquote/i.test(html || "")) tile.className += " fd-quote";
     if (spanOf(it) === 2) tile.className += " fd-wide";
 
@@ -244,10 +278,21 @@
   var activeTile = null;
   var openY = null;
 
+  function centerPanelInRail() {
+    if (!panel) return;
+    panel.style.removeProperty("left");
+    if (window.innerWidth < 1200) return;
+    var rail = document.querySelector(".layout-side-rail");
+    if (!rail) return;
+    var railRect = rail.getBoundingClientRect();
+    var panelWidth = panel.offsetWidth || 380;
+    panel.style.left = Math.round(railRect.left + ((railRect.width - panelWidth) / 2)) + "px";
+  }
   function panelHTML(it) {
     var pv = it.meta && it.meta.preview;
     var openUrl = it.url || (pv && pv.url) || "";
     var ob = openUrl ? '<a class="fd-open-top" href="' + esc(openUrl) + '" target="_blank" rel="noopener" title="open in new tab">open ↗</a>' : '';
+    var preview = linkPreviewHTML(it, openUrl);
     if (it.source === "letterboxd") {
       return ob + '<span class="fd-src">watched</span>' +
         '<div class="fd-filmhead">' +
@@ -255,7 +300,7 @@
           '<div class="fd-ph">' +
             '<div class="fd-pt">' + esc(it.title) + '</div>' +
             (it.meta && it.meta.year ? '<div class="fd-sub">' + esc(it.meta.year) + '</div>' : '') +
-            (it.rating ? '<div class="fd-stars">' + ratingDots(it.rating) + ' <span style="color:var(--text-secondary);font-family:Space Mono,monospace;font-size:.7rem;margin-left:.4em">' + Number(it.rating).toFixed(1) + '/5</span></div>' : '') +
+            (it.rating ? '<div class="fd-stars">' + ratingDots(it.rating) + ' <span style="color:var(--text-secondary);font-size:.7rem;margin-left:.4em">' + Number(it.rating).toFixed(1) + '/5</span></div>' : '') +
             (it.meta && it.meta.rewatch ? '<div class="fd-sub">rewatch</div>' : '') +
           '</div>' +
         '</div>' +
@@ -263,11 +308,20 @@
         '<span class="fd-when">Watched ' + esc(stampFor(it)) + '</span>';
     }
     if (it.source === "telegram") {
-      return ob + '<span class="fd-src">drop</span>' +
-        '<div class="fd-dropbody">' + sanitize(it.html || ("<p>" + esc(it.body) + "</p>")) + '</div>' +
+      var dropMedia = "";
+      if (it.media && it.media.length) {
+        it.media.forEach(function (m) {
+          if (m.type === "photo" && m.url) {
+            dropMedia += '<img class="fd-photo" src="' + esc(m.url) + '" loading="lazy" alt=""' +
+              (m.width && m.height ? ' style="aspect-ratio:' + m.width + '/' + m.height + '"' : "") + ">";
+          }
+        });
+      }
+      return ob + '<span class="fd-src">drop</span>' + preview +
+        '<div class="fd-dropbody">' + sanitize(it.html || ("<p>" + esc(it.body) + "</p>")) + dropMedia + '</div>' +
         (pv && pv.url ? '<a class="fd-pog" href="' + esc(pv.url) + '" target="_blank" rel="noopener">' +
-          (pv.image ? '<img src="' + esc(pv.image) + '" alt="">' : '') +
-          '<span><span style="font-family:et-book,serif;font-weight:600;display:block">' + esc(pv.title || hostOf(pv.url)) + '</span>' +
+          (!preview && pv.image ? '<img src="' + esc(pv.image) + '" alt="">' : '') +
+          '<span><span style="font-weight:600;display:block">' + esc(pv.title || hostOf(pv.url)) + '</span>' +
           (pv.description ? '<span class="fd-sub">' + esc(pv.description) + '</span>' : '') +
           '<span class="fd-sub">' + esc(pv.site || hostOf(pv.url)) + '</span></span></a>' : '') +
         '<span class="fd-when">' + esc(stampFor(it)) + '</span>';
@@ -275,7 +329,7 @@
     /* curius */
     return ob + '<span class="fd-src">saved' + (it.meta && it.meta.favorite ? ' · favorite' : '') + (it.meta && it.meta.toRead ? ' · to read' : '') + '</span>' +
       '<div class="fd-pt">' + esc(it.title) + '</div>' +
-      (it.url ? '<div class="fd-sub">' + esc(hostOf(it.url)) + '</div>' : '') +
+      (it.url ? '<div class="fd-sub">' + esc(hostOf(it.url)) + '</div>' : '') + preview +
       (it.body ? '<p class="fd-snip">' + esc(it.body) + '</p>' : '') +
       '<span class="fd-when">Saved ' + esc(fmtDate(it.occurred_at)) + '</span>';
   }
@@ -285,6 +339,7 @@
     if (activeTile === tile) { closePanel(); return; }
     if (activeTile) activeTile.classList.remove("fd-open");
     pin.innerHTML = panelHTML(it);
+    centerPanelInRail();
     panel.classList.add("fd-show");
     panel.setAttribute("aria-hidden", "false");
     activeTile = tile;
@@ -318,13 +373,17 @@
    * Masonry — fixed columns, place each tile in the shortest column
    * ------------------------------------------------------------------ */
   var COL_GAP = 18;
-  var COL_TARGET = 235;
 
+  function columnCount(width) {
+    if (window.innerWidth <= 500 || width < 400) return 1;
+    if (window.innerWidth <= 800) return 2;
+    return 3;
+  }
   function layout() {
     if (!gridEl) return;
     var W = gridEl.clientWidth;
     if (!W) return;
-    var cols = W < 520 ? 1 : Math.max(2, Math.min(5, Math.round((W + COL_GAP) / (COL_TARGET + COL_GAP))));
+    var cols = columnCount(W);
     var cw = (W - (cols - 1) * COL_GAP) / cols;
     var bottoms = new Array(cols).fill(0);
     var kids = gridEl.children;
@@ -459,7 +518,13 @@
   cache = loadCache();
 
   var rt;
-  window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(layout, 120); });
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      layout();
+      if (activeTile) centerPanelInRail();
+    }, 120);
+  });
   window.addEventListener("load", function () { requestAnimationFrame(layout); });
 
   if (cache && Object.keys(cache.items).length) {
