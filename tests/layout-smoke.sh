@@ -27,6 +27,19 @@ assert_not_contains() {
 	fi
 }
 
+assert_before() {
+	local file="$1"
+	local first="$2"
+	local second="$3"
+	local first_line second_line
+	first_line="$(grep -nFm1 -- "$first" "$file" | cut -d: -f1)"
+	second_line="$(grep -nFm1 -- "$second" "$file" | cut -d: -f1)"
+	if (( first_line >= second_line )); then
+		printf 'Expected %s before %s in %s\n' "$first" "$second" "$file" >&2
+		exit 1
+	fi
+}
+
 assert_contains "$OUT/notes/index.html" '<body class="layout-reading">'
 assert_contains "$OUT/projects/index.html" '<body class="layout-reading page-single">'
 assert_not_contains "$OUT/notes/index.html" 'layout-columns-2'
@@ -108,6 +121,9 @@ assert_contains "$OUT/index.html" 'class="sidenote"'
 assert_contains "$OUT/index.html" 'class="page-footnotes"'
 assert_contains "$OUT/index.html" 'class="footnote-backref"'
 assert_contains "$OUT/index.html" 'href="#sn-1-footnote"'
+assert_before "$OUT/index.html" 'class="layout-side-rail"' 'class="page-footnotes"'
+assert_before "$OUT/index.html" 'class="page-footnotes"' 'class="shell-footer home-shell-footer"'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '.page-shell:has(.side-rail) .page-content-header {'
 assert_contains "$OUT/index.html" 'class="home-site-header"'
 assert_contains "$OUT/index.html" 'COMPUTERS, STORIES &amp; SCIENCE · AHMEDABAD'
 assert_contains "$OUT/index.html" '/images/shelf/dorian-gray.jpg'
@@ -140,7 +156,7 @@ assert_contains "$ROOT/themes/archie/static/js/roman-numerals.js" "document.body
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'flex-direction: column'
 assert_contains "$OUT/index.html" 'class="shell-footer home-shell-footer"'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '.shell-footer {'
-assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* Footer follows the taller of the content and side columns. */'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* Footnotes and footer follow the taller content column. */'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* The rail is no longer a separate column here. */'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'position: fixed'
 assert_contains "$ROOT/themes/archie/static/js/heading-index.js" 'function slugifyHeading'
