@@ -23,8 +23,6 @@
 
 <div class="home-masthead">
   <div class="home-masthead-copy">
-    <p class="home-kicker">ENGINEER · AHMEDABAD, INDIA</p>
-    <h1 id="shubham-shah">Shubham Shah</h1>
     <p class="home-deck">I'm <strong>Shubham</strong>. I am 23. I live and work out of <a href="https://en.wikipedia.org/wiki/Ahmedabad">Ahmedabad</a>.</p>
   </div>
   <figure class="home-portrait">
