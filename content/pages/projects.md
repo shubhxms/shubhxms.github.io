@@ -7,7 +7,7 @@ tldr: "My adventures."
 draft: false
 ---
 
-{{<callout text="NOTE: This page is severly outdated and will be updated soon.">}}
+{{<callout text="NOTE: This page is severely outdated. An update is coming soon.">}}
 
 ## Academic
 - Autonomous Grid Exploration Vehicle
