@@ -23,7 +23,7 @@
 
 <div class="home-masthead">
   <div class="home-masthead-copy">
-    <p class="home-deck">I'm <strong>Shubham</strong>, a 23-year-old engineer living and working in <a href="https://en.wikipedia.org/wiki/Ahmedabad">Ahmedabad</a>.</p>
+    <p class="home-deck">I'm <strong>Shubham</strong>, a 23-year-old engineer living and working in <a href="https://en.wikipedia.org/wiki/Ahmedabad">Ahmedabad</a>{{< sidenote >}}Ahmedabad is home—for now.{{< /sidenote >}}.</p>
   </div>
   <figure class="home-portrait">
     <img src="/images/me_bw.jpg" alt="Shubham Shah">
