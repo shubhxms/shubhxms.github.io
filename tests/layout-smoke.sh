@@ -6,6 +6,12 @@ OUT="$(mktemp -d)"
 trap 'rm -rf "$OUT"' EXIT
 
 hugo --quiet --source "$ROOT" --destination "$OUT"
+python3 - "$ROOT/themes/archie/assets/css/main.css" <<'PY'
+import pathlib, sys
+css = pathlib.Path(sys.argv[1]).read_text()
+if css.count('{') != css.count('}'):
+    raise SystemExit(f"Unbalanced CSS braces: {css.count('{')} opening, {css.count('}')} closing")
+PY
 
 assert_contains() {
 	local file="$1"
