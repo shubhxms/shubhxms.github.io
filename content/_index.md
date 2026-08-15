@@ -1,42 +1,24 @@
 <!-- Editorial homepage -->
 {{< side-rail >}}
-<div class="home-starter-pack">
+## Some things I like
 
-## Starter pack
-
-<ul class="home-link-list home-starter-links">
-  <li><a href="#some-things-i-like"><strong>Some things I like</strong></a></li>
-  <li><a href="/notes"><strong>Notes</strong></a></li>
-  <li><a href="/shelf"><strong>Shelf</strong></a></li>
-  <li><a href="/feed"><strong>Feed</strong></a></li>
-  <li><a href="/now"><strong>Now</strong></a></li>
-</ul>
-</div>
+<p class="home-index">State-Machines, Science, Stories, Story-Telling, Photography, Open Source, Public Transport, Institutions, Being Early To Institutions, Serif, Sans-Serif, Ampersand, Contractions, Spiral-Binding, Attention To Detail, Ornamental Flourish, Brutalism, Intricate Designs, Coffee, Chai, Mountains, Beaches, Forests, Nature, Religion, Mythology, Cricket, Tennis, Badminton, Pickle-Ball, <a href="https://twitter.com/collision/status/1529452415346302976">Passion-Projects</a>, Solarpunk, Climate, Conservation, Sudokus, Nonograms</p>
 
 <div class="home-rail-feature">
   <img src="/images/home-header.jpg" alt="Adalaj ni Vav">
   <p class="home-caption">Adalaj ni Vav, photographed in Gujarat.</p>
 </div>
 
-## Some things I like
 
-<p class="home-index">State-Machines, Science, Stories, Story-Telling, Photography, Open Source, Public Transport, Institutions, Being Early To Institutions, Serif, Sans-Serif, Ampersand, Contractions, Spiral-Binding, Attention To Detail, Ornamental Flourish, Brutalism, Intricate Designs, Coffee, Chai, Mountains, Beaches, Forests, Nature, Religion, Mythology, Cricket, Tennis, Badminton, Pickle-Ball, <a href="https://twitter.com/collision/status/1529452415346302976">Passion-Projects</a>, Solarpunk, Climate, Conservation, Sudokus, Nonograms</p>
-
-## Now <em>(July '26)</em>
-
-<p><em>Read the full thing at <a href="/now">/now</a>.</em></p>
-<p>I'm currently spending my time playing with different domains. I remain open to interesting work/collaboration opportunities.</p>
-<p>Other than that I'm reading Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter.</p>
-
-## A small shelf
-
-<div class="home-shelf-grid">
-  <a href="/shelf"><img src="/images/shelf/antifragile.jpg" alt="Antifragile"></a>
-  <a href="/shelf"><img src="/images/shelf/vikram-sarabhai.jpg" alt="Vikram Sarabhai"></a>
-  <a href="/shelf"><img src="/images/shelf/feynman.jpg" alt="Surely You're Joking, Mr. Feynman!"></a>
+<div class="home-rail-shelf">
+  <h2>A small shelf</h2>
+  <div class="home-shelf-grid">
+    <a href="/shelf"><img src="/images/shelf/antifragile.jpg" alt="Antifragile"></a>
+    <a href="/shelf"><img src="/images/shelf/vikram-sarabhai.jpg" alt="Vikram Sarabhai"></a>
+    <a href="/shelf"><img src="/images/shelf/feynman.jpg" alt="Surely You're Joking, Mr. Feynman!"></a>
+  </div>
+  <p><a href="/shelf">See the whole shelf →</a></p>
 </div>
-
-<p><a href="/shelf">See the whole shelf →</a></p>
 {{< /side-rail >}}
 
 <div class="home-masthead">
@@ -66,15 +48,11 @@
   </ul>
 </section>
 
-<section class="home-section">
-  <h2>Permanent</h2>
-  <ul class="home-link-list home-permanent-links">
-    <li><a href="/projects"><strong>Projects</strong></a></li>
-    <li><a href="/sarabhai"><strong>On Vikram Sarabhai</strong></a></li>
-    <li><a href="/timeline"><strong>Timeline</strong></a></li>
-    <li><a href="/core"><strong>Core</strong></a></li>
-    <li><a href="/uses"><strong>Uses</strong></a></li>
-  </ul>
+<section class="home-section home-now">
+  <h2>Now <em>(July '26)</em></h2>
+  <p><em>Read the full thing at <a href="/now">/now</a>.</em></p>
+  <p>I'm currently spending my time playing with different domains. I remain open to interesting work/collaboration opportunities.</p>
+  <p>Other than that I'm reading Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter.</p>
 </section>
 
 <section class="home-section home-contact">
