@@ -125,6 +125,8 @@ assert_contains "$ROOT/themes/archie/static/js/roman-numerals.js" "document.body
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'flex-direction: column'
 assert_contains "$OUT/index.html" 'class="home-shell-footer"'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '.home-shell-footer {'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* Stack the homepage footer after both editorial columns. */'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* The rail is no longer a separate column here. */'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'position: fixed'
 assert_contains "$ROOT/themes/archie/static/js/heading-index.js" 'function slugifyHeading'
 assert_not_contains "$ROOT/themes/archie/static/js/heading-index.js" "'heading-' + i"
