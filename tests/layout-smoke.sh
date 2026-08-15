@@ -51,6 +51,8 @@ assert_contains "$OUT/projects/index.html" '<body class="layout-reading page-sin
 assert_not_contains "$OUT/notes/index.html" 'layout-columns-2'
 assert_not_contains "$OUT/projects/index.html" 'layout-columns-2'
 assert_contains "$OUT/notes/index.html" 'shubhxms.substack.com/embed'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '.hero-img:has(+ iframe) {'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '.hero-img + iframe {'
 assert_not_contains "$OUT/notes/index.html" 'class="substack-card"'
 
 assert_contains "$OUT/projects/index.html" 'class="page-shell"'
