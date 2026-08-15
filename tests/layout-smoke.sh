@@ -107,13 +107,15 @@ assert_contains "$OUT/index.html" 'class="home-shelf-grid"'
 assert_not_contains "$ROOT/themes/archie/assets/css/main.css" 'margin-top: auto'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'left: 0.65rem'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '.heading-index.is-open {'
-assert_contains "$OUT/index.html" '/js/heading-index.js?v=3'
+assert_contains "$OUT/index.html" '/js/heading-index.js?v=4'
 assert_contains "$ROOT/themes/archie/static/js/heading-index.js" "classList.add('is-open')"
 assert_contains "$ROOT/themes/archie/static/js/roman-numerals.js" "document.body.classList.contains('page-home')"
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'flex-direction: column'
 assert_contains "$OUT/index.html" 'class="home-shell-footer"'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '.home-shell-footer {'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'position: fixed'
-assert_contains "$ROOT/themes/archie/static/js/heading-index.js" 'link.title = h.textContent'
+assert_contains "$ROOT/themes/archie/static/js/heading-index.js" 'function slugifyHeading'
+assert_not_contains "$ROOT/themes/archie/static/js/heading-index.js" "'heading-' + i"
+assert_contains "$ROOT/themes/archie/assets/css/main.css" 'overflow-x: clip'
 assert_contains "$OUT/index.html" '/js/roman-numerals.js?v=2'
 printf 'layout smoke tests passed\n'
