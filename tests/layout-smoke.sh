@@ -181,6 +181,7 @@ assert_contains "$ROOT/themes/archie/static/js/roman-numerals.js" "document.body
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'flex-direction: column'
 assert_contains "$OUT/index.html" 'class="shell-footer home-shell-footer"'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '.shell-footer {'
+assert_contains "$ROOT/themes/archie/assets/css/main.css" '.page-shell:has(.side-rail) .shell-footer {'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* Footnotes and footer follow the taller content column. */'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" '/* The rail is no longer a separate column here. */'
 assert_contains "$ROOT/themes/archie/assets/css/main.css" 'position: fixed'
