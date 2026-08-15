@@ -2,6 +2,7 @@
 title: "Shelf"
 url: /shelf
 tldr: A visual collection of books and films that shaped me.
+wide: true
 ---
 
 <div class="media-grid">
