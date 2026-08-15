@@ -8,8 +8,6 @@ draft: false
 tags: [book-review, biography, india]
 ---
 
-{{< figure src="/images/notes/sarabhai_crater.jpg" caption="Sarabhai Crater - Lunar and Planetary Institute, Apollo Image Atlas Mapping Camera Image Catalog, Apollo 15, AS15-M-0980, CC0" >}}
-
 Aristocrat. Vikram Sarabhai was an aristocrat of the soul.
 
 I just finished reading *Vikram Sarabhai - A life by Amrita Shah*. I will not attempt a poor reconstruction of his life story here when Amrita has done such a good job but recommend you check out her work.
@@ -23,3 +21,8 @@ But what matters is he put his privilege to a good use, helping shape a newly-in
 Not to romanticize him but he comes off as someone who was serious(!) and almost had a higher calling. He comes off as regal, composed, willing to help, open-minded, hard-working, well-educated (and lavish). All qualities I appreciate. Perhaps that is why he speaks so much to me. :)
 
 Oh, also, as someone from Ahmedabad, the references to different parts of the city, which I know personally was quite fun. History but near roads you walk by.
+
+
+{{< side-rail >}}
+{{< figure src="/images/notes/sarabhai_crater.jpg" caption="Sarabhai Crater - Lunar and Planetary Institute, Apollo Image Atlas Mapping Camera Image Catalog, Apollo 15, AS15-M-0980, CC0" >}}
+{{< /side-rail >}}

@@ -7,6 +7,8 @@ tldr: "My adventures."
 draft: false
 ---
 
+{{<callout text="NOTE: This page is severly outdated and will be updated soon.">}}
+
 ## Academic
 - Autonomous Grid Exploration Vehicle
   - Self-driving grid navigation using Boolean SAT solvers and computer vision.
