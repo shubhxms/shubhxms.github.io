@@ -7,14 +7,9 @@ tldr: "My adventures."
 draft: false
 ---
 
-{{< side-rail >}}
-### About this page
-
-A small index of academic work, experiments, and things I have built over the years.
-{{< /side-rail >}}
 ## Academic
 - Autonomous Grid Exploration Vehicle
-  - Self-driving grid navigation using Boolean SAT solvers and computer vision. {{< sidenote >}}An early attempt to turn movement, obstacles, and destination constraints into satisfiability clauses.{{< /sidenote >}}
+  - Self-driving grid navigation using Boolean SAT solvers and computer vision.
 - Gesture-Controlled Vehicular System
   - An IoT prototype that reads hand gestures through IMU sensors and drives a vehicle
 - Vision Based Mugger Identification System
