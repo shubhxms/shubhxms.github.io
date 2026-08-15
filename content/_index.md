@@ -1,51 +1,77 @@
- <div class="hero-img">
-  <img src="/images/home-header.jpg" alt="adalaj ni vav" style="object-position: center 85%;">
+<!-- Editorial homepage -->
+{{< side-rail >}}
+<div class="home-rail-feature">
+  <img src="/images/home-header.jpg" alt="Adalaj ni Vav">
+  <p class="home-caption">Adalaj ni Vav, photographed in Gujarat.</p>
 </div>
 
-<!--# Shubham-->
-# ✪ Shubham Shah
+## Now
 
-<hr class="divider-main">
+Playing across different domains and open to interesting work or collaboration. Currently reading Douglas Hofstadter’s *Gödel, Escher, Bach*. [The longer version →](/now)
+{{< /side-rail >}}
 
-## Life and ~lies~ stuff
+<div class="home-masthead">
+  <div class="home-masthead-copy">
+    <p class="home-kicker">ENGINEER · AHMEDABAD, INDIA</p>
+    <h1 id="shubham-shah">Shubham Shah</h1>
+    <p class="home-deck">I make computers do my bidding, usually with state machines, stories, and an unreasonable amount of attention to detail.</p>
+  </div>
+  <figure class="home-portrait">
+    <img src="/images/me_bw.jpg" alt="Shubham Shah">
+    <figcaption>Building software; collecting questions.</figcaption>
+  </figure>
+</div>
 
- <!--<div style="float: right; max-width: 25%; max-height: 25%;" id="home-img">
-  <img src="/images/me_bw.jpg" id="home-img" alt="me, 6yo (i think)">
-</div> -->
+<section class="home-section">
+  <h2>About</h2>
+  <p>I’m 23 and live and work out of <a href="https://en.wikipedia.org/wiki/Ahmedabad">Ahmedabad</a>. I graduated with honours in Computer Science and a minor in Mathematics from <a href="https://ahduni.edu.in">Ahmedabad University</a> in 2025.</p>
+  <p>I like early-stage systems: finding the shape of a problem, building the machinery around it, and making the result legible to the people who use it.</p>
+</section>
 
- <!--[i like making computers do my bidding.] -->
-I'm **Shubham**. I am 23. I live and work out of [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
+<section class="home-section">
+  <h2>Work</h2>
+  <ul class="home-link-list">
+    <li>
+      <strong>Custom ERP</strong>
+      <span>Fixed critical bugs on-site and built a task-management system for an earth-mover spare-parts dealer.</span>
+    </li>
+    <li>
+      <a href="https://dipapp.in"><strong>Dip</strong></a>
+      <span>Built the REST backend, payment integration, TigerBeetle ledger, and a custom-locks booking system.</span>
+    </li>
+  </ul>
+</section>
 
-I have varied interests but usually spend my time on [computers](images/i-love-computers-it.gif) playing with state-machines, stories and science.
+<section class="home-section">
+  <h2>Selected</h2>
+  <ul class="home-link-list">
+    <li><a href="/projects"><strong>Projects</strong></a><span>Academic work, experiments, and things I have built.</span></li>
+    <li><a href="/sarabhai"><strong>On Vikram Sarabhai</strong></a><span>Notes after reading Amrita Shah’s biography of the scientist and institution-builder.</span></li>
+    <li><a href="/feed"><strong>Feed</strong></a><span>What I’m watching, reading, saving, and dropping.</span></li>
+    <li><a href="/shelf"><strong>Shelf</strong></a><span>Books and films that have stayed with me.</span></li>
+    <li><a href="/timeline"><strong>Timeline</strong></a><span>A chronological view of work and study.</span></li>
+  </ul>
+</section>
 
-I graduated with a bachelors degree (with honors) in Computer Science with a minor in Mathematics from [Ahmedabad University](https://ahduni.edu.in) in 2025.
+{{< side-rail >}}
+## A small shelf
 
-I've shipped early-stage software at two places (recent-first):
+<div class="home-shelf-grid">
+  <a href="/shelf"><img src="/images/shelf/antifragile.jpg" alt="Antifragile"></a>
+  <a href="/shelf"><img src="/images/shelf/vikram-sarabhai.jpg" alt="Vikram Sarabhai"></a>
+  <a href="/shelf"><img src="/images/shelf/feynman.jpg" alt="Surely You're Joking, Mr. Feynman!"></a>
+</div>
 
-* Custom ERP for a dealer of earth-mover spare parts
-  * Fixed critical bugs on-site and shipped a task-management system from scratch.
-* [Dip](https://dipapp.in) (a social media startup)
-  * Built the RESTful backend, integrated a payments gateway and the [tigerbeetle](https://tigerbeetle.com/) ledger, and shipped a custom-locks-based booking system.
+[See the whole shelf →](/shelf)
+{{< /side-rail >}}
 
-## Some things I like
- <!--<div id="home-img" style="float: right; max-width: 25%; max-height: 20%;">
-  <img src="/images/home_header.jpeg" id="home-img" alt="vintage market">
-</div> -->
-State-Machines, Science, Stories, Story-Telling, Photography, Open Source, Public Transport, Institutions, Being Early To Institutions, Serif, Sans-Serif, Ampersand, Contractions, Spiral-Binding, Attention To Detail, Ornamental Flourish, Brutalism, Intricate Designs, Coffee, Chai, Mountains, Beaches, Forests, Nature, Religion, Mythology, Cricket, Tennis, Badminton, Pickle-Ball, [Passion-Projects](https://twitter.com/collision/status/1529452415346302976), Solarpunk, Climate, Conservation, Sudokus, Nonograms
+<section class="home-section">
+  <h2>Things I return to</h2>
+  <p class="home-index">State machines · science · stories · photography · open source · public transport · institutions · ornamental flourishes · brutalism · coffee · chai · forests · mythology · cricket · racket sports · solarpunk · conservation · sudokus · nonograms.</p>
+</section>
 
-## Now _(July '26)_
-
-_Read the full thing at [/now](/now)._
-
-I'm currently spending my time playing with different domains. I remain open to interesting work/collaboration opportunities.
-
-Other than that I'm reading Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter. 
-
-
-## Contact
-
-* I love receiving correspondence & will try my best to reply in a reasonable frame of time.
-* Please reach out on [twitter](https://twitter.com/shubhxms), [telegram](https://telegram.me/shubhxms), or [bsky](https://bsky.app/profile/shubhamshah.net)
-* Email me: [hey@shubhamshah.net](mailto:hey@shubhamshah.net)
-
-<!-- ## **Ideas I keep going back to** -->
+<section class="home-section home-contact">
+  <h2>Correspondence</h2>
+  <p>I enjoy hearing from people and try to reply within a reasonable frame of time.</p>
+  <p><a href="mailto:hey@shubhamshah.net">Email</a> · <a href="https://twitter.com/shubhxms">Twitter</a> · <a href="https://telegram.me/shubhxms">Telegram</a> · <a href="https://bsky.app/profile/shubhamshah.net">Bluesky</a></p>
+</section>

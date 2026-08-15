@@ -89,4 +89,8 @@ assert_contains "$OUT/projects/index.html" '<section class="side-rail" data-rail
 assert_contains "$OUT/projects/index.html" 'class="rail-anchor"'
 assert_contains "$OUT/projects/index.html" 'class="sidenote"'
 assert_contains "$OUT/projects/index.html" '/js/side-rail.js'
+assert_contains "$OUT/index.html" 'class="home-editorial"'
+assert_contains "$OUT/index.html" 'class="home-masthead"'
+assert_contains "$OUT/index.html" 'class="home-link-list"'
+assert_contains "$OUT/index.html" 'class="home-shelf-grid"'
 printf 'layout smoke tests passed\n'
