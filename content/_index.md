@@ -23,7 +23,8 @@
 
 <div class="home-masthead">
   <div class="home-masthead-copy">
-    <p class="home-deck">I'm <strong>Shubham</strong>, a 23-year-old engineer living and working in <a href="https://en.wikipedia.org/wiki/Ahmedabad">Ahmedabad</a>{{< sidenote >}}Ahmedabad is home—for now.{{< /sidenote >}}.</p>
+    <p class="home-deck">I'm <strong>Shubham</strong>, a 23-year-old technology enthusiast living and working in <a href="https://en.wikipedia.org/wiki/Ahmedabad">Ahmedabad</a>.</p>
+      <p class="home-deck">I have varied interests, but spend most of my time playing with <a href="/images/i-love-computers-it.gif">computers</a>, trying to make sense of the world using state machines, stories, and science.</p>
   </div>
   <figure class="home-portrait">
     <img src="/images/me_bw.jpg" alt="Shubham Shah">
@@ -33,7 +34,6 @@
 
 <section class="home-section">
   <h2>Life and <del>lies</del> stuff</h2>
-  <p>I have varied interests, but spend most of my time with <a href="/images/i-love-computers-it.gif">computers</a>—playing with state machines, stories, and science.</p>
   <p>I graduated from <a href="https://ahduni.edu.in">Ahmedabad University</a> in 2025 with a bachelor's degree with honors in Computer Science and a minor in Mathematics.</p>
   <p>I've shipped early-stage software at two places, most recently:</p>
   <ul>
