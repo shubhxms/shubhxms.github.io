@@ -18,7 +18,7 @@ Playing across different domains and open to interesting work or collaboration. 
   </div>
   <figure class="home-portrait">
     <img src="/images/me_bw.jpg" alt="Shubham Shah">
-    <figcaption>Building software; collecting questions.</figcaption>
+    <figcaption>Me, age six (I think).</figcaption>
   </figure>
 </div>
 
@@ -42,7 +42,7 @@ Playing across different domains and open to interesting work or collaboration. 
   </ul>
 </section>
 
-<section class="home-section">
+<section class="home-section home-section-selected">
   <h2>Selected</h2>
   <ul class="home-link-list">
     <li><a href="/projects"><strong>Projects</strong></a><span>Academic work, experiments, and things I have built.</span></li>
