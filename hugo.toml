@@ -38,34 +38,39 @@ url = "/projects"
 weight = 3
 
 [[menu.main]]
-name = "Timeline"
-url = "/timeline"
+name = "Contact"
+url = "/contact"
 weight = 2
+
+# [[menu.main]]
+# name = "Timeline"
+# url = "/timeline"
+# weight = 2
 
 [[menu.main]]
 name = "Notes"
 url = "/notes"
-weight = 4
+weight = 5
 
 [[menu.main]]
 name = "Shelf"
 url = "/shelf"
-weight = 5
+weight = 6
 
 [[menu.main]]
 name = "Core"
 url = "/core"
-weight = 6
+weight = 7
 
 [[menu.main]]
 name = "Feed"
 url = "/feed"
-weight = 7
+weight = 4
 
 [[menu.main]]
 name = "Uses"
 url = "/uses"
-weight = 9
+weight = 8
 [permalinks]
 pages = '/:title'
 
