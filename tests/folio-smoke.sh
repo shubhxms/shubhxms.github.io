@@ -54,6 +54,14 @@ has index.html '<div class="doc-bar" inert>'
 # Colophon: last commit for this page, source, markdown and print.
 has now/index.html 'class="colophon"'
 has now/index.html 'class="colophon-subject"'
+python3 - "$OUT/now/index.html" <<'PY2' || fail 'colophon order: date, message | commit, source, .md, print'
+import sys
+html = open(sys.argv[1]).read()
+foot = html[html.index('class="colophon"'):html.index('</footer>', html.index('class="colophon"'))]
+order = ['<time', 'colophon-subject', 'colophon-actions', '/commit/', '/blob/main/', 'index.md', 'data-action="print"']
+at = [foot.index(mark) for mark in order]
+assert at == sorted(at), dict(zip(order, at))
+PY2
 python3 - "$OUT/now/index.html" <<'PY2' || fail 'the colophon should sit inside the paper'
 import sys
 html = open(sys.argv[1]).read()
