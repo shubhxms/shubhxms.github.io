@@ -19,9 +19,8 @@
     --selection-text: #000;
     --sheet-shadow: 0 1px 2px rgba(20, 30, 50, 0.1), 0 10px 28px rgba(20, 30, 50, 0.1);
 
-    /* Wider than A4 (794px at 96 dpi), as tall; print scales it down. */
+    /* Wider than A4 (794px at 96 dpi); print scales it down. */
     --sheet-w: 860px;
-    --sheet-h: 1123px;
     --sheet-gap: 24px;
     --pad-top: 56px;
     --pad-bottom: 36px;
@@ -29,7 +28,7 @@
     --text-w: 540px;
     --gutter: 28px;
     --note-w: 184px;
-    --bar-h: 38px;
+    --bar-h: 46px;
 
     --sidebar-width: 10rem;
     --shell-left-padding: 5%;
@@ -225,7 +224,9 @@ a:hover {
     flex-direction: column;
     box-sizing: border-box;
     width: var(--sheet-w);
-    min-height: var(--sheet-h);
+    /* At least one screen tall, so a short page fills the view without
+       scrolling; reader.js sets it from the window and the zoom. */
+    min-height: var(--sheet-min, 0px);
     padding: var(--pad-top) 0 var(--pad-bottom) var(--pad-left);
     background: var(--paper);
     box-shadow: var(--sheet-shadow);
@@ -238,7 +239,6 @@ a:hover {
     font-size: 15px;
     line-height: 1.36;
     font-variant-numeric: oldstyle-nums proportional-nums;
-    counter-reset: section;
 }
 
 /* ---------- Big header: kicker, title, summary, contents ---------- */
@@ -266,68 +266,84 @@ a:hover {
     letter-spacing: -0.015em;
 }
 
-.sheet-body .doc-tldr {
-    margin: 0 0 0.9rem;
-    font-size: 1.08rem;
-    font-style: italic;
-    line-height: 1.35;
-    text-align: left;
-    hyphens: manual;
-}
-
 .doc-toc ol {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-/* In the big header: one bracketed line, [ first / second / third ]. */
-.doc-head .doc-toc ol {
+/* One bracketed line, [ first / second / third ], in the big header and
+   in the compact bar alike. */
+:is(.doc-head, .doc-bar) .doc-toc ol {
     display: inline;
     padding: 0;
     font-size: 0.95rem;
     font-style: italic;
 }
 
-.doc-head .doc-toc ol::before,
-.doc-head .doc-toc ol::after {
+:is(.doc-head, .doc-bar) .doc-toc ol::before,
+:is(.doc-head, .doc-bar) .doc-toc ol::after {
     font-style: normal;
     color: var(--text-secondary);
 }
 
-.doc-head .doc-toc ol::before {
+:is(.doc-head, .doc-bar) .doc-toc ol::before {
     content: "[ ";
 }
 
-.doc-head .doc-toc ol::after {
+:is(.doc-head, .doc-bar) .doc-toc ol::after {
     content: " ]";
 }
 
-.doc-head .doc-toc li {
+:is(.doc-head, .doc-bar) .doc-toc li {
     display: inline;
 }
 
-.doc-head .doc-toc li + li::before {
+:is(.doc-head, .doc-bar) .doc-toc li + li::before {
     content: " / ";
     font-style: normal;
     color: var(--text-secondary);
 }
 
-.doc-head .doc-toc .doc-toc-n {
-    display: none;
-}
-
-.doc-toc-n {
-    display: inline-block;
-    min-width: 1.9em;
-    font-family: var(--mono);
-    font-size: 0.68em;
-    color: var(--text-secondary);
-}
-
+/* The section being read: a small square, like the list bullets. */
 .doc-toc a[aria-current="true"] {
     color: var(--text);
     text-decoration: none;
+}
+
+.doc-toc a[aria-current="true"]::before {
+    content: "";
+    display: inline-block;
+    width: 0.32em;
+    height: 0.32em;
+    margin: 0 0.3em 0.15em 0;
+    background: var(--text);
+}
+
+/* The home page opens with its title page: edition, name, subtitle. */
+.sheet-body .doc-head--title .title-edition {
+    margin: 0 0 0.1rem;
+    font-size: 1.9rem;
+    font-style: italic;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.sheet-body .doc-head--title .title-name {
+    margin: 0 0 0.2rem;
+    font-family: var(--serif);
+    font-size: 3.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.sheet-body .doc-head--title .title-subtitle {
+    margin: 0 0 1.1rem;
+    font-size: 1.9rem;
+    font-style: italic;
+    line-height: 1.12;
+    text-align: left;
 }
 
 /* ---------- Compact bar: appears once the big header scrolls away ---------- */
@@ -348,78 +364,56 @@ a:hover {
     box-sizing: border-box;
     height: var(--bar-h);
     padding: 0 20px 0 var(--pad-left);
-    border-bottom: 1.5px solid var(--text);
+    border-bottom: 1px solid var(--text);
     background: var(--paper);
     box-shadow: 0 8px 16px -14px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
     opacity: 0;
     transform: translateY(-8px);
     visibility: hidden;
-    transition: opacity 0.18s ease, transform 0.22s ease, visibility 0s linear 0.22s;
 }
 
 .doc-bar.is-shown .doc-bar-inner {
     opacity: 1;
     transform: none;
     visibility: visible;
+}
+
+/* Animate only once the script has placed the bar, so a page never opens
+   with the bar fading out as the stylesheet arrives. */
+.doc-bar.is-ready .doc-bar-inner {
+    transition: opacity 0.18s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+}
+
+.doc-bar.is-ready.is-shown .doc-bar-inner {
     transition: opacity 0.18s ease, transform 0.22s ease;
 }
 
 .doc-bar-title {
     flex: none;
-    max-width: 30%;
+    max-width: 40%;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .doc-bar .doc-toc {
     min-width: 0;
     overflow-x: auto;
     scrollbar-width: none;
+    font-size: 0.9rem;
 }
 
 .doc-bar .doc-toc::-webkit-scrollbar {
     display: none;
 }
 
-.doc-bar .doc-toc ol {
-    display: flex;
-    gap: 2px;
-}
-
-.doc-bar .doc-toc a {
-    display: block;
-    padding: 3px 7px 2px;
-    color: var(--text-secondary);
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
-.doc-bar .doc-toc a:hover {
-    color: var(--selection-text);
-}
-
-/* The current section, set like a sign: inverted. */
-.doc-bar .doc-toc a[aria-current="true"] {
-    background: var(--text);
-    color: var(--paper);
-}
-
-.doc-bar .doc-toc a[aria-current="true"] .doc-toc-n {
-    color: inherit;
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .doc-bar-inner,
-    .doc-bar.is-shown .doc-bar-inner {
+    .doc-bar.is-ready .doc-bar-inner,
+    .doc-bar.is-ready.is-shown .doc-bar-inner {
         transform: none;
         transition: none;
     }
@@ -452,19 +446,6 @@ a:hover {
     font-size: 1.12rem;
     font-weight: 700;
     letter-spacing: -0.005em;
-}
-
-/* Sections are numbered to match the contents: 01, 02, … */
-.sheet-body > h2::before {
-    counter-increment: section;
-    content: counter(section, decimal-leading-zero);
-    display: inline-block;
-    min-width: 2.1em;
-    font-family: var(--mono);
-    font-size: 0.68em;
-    font-weight: 400;
-    vertical-align: 0.12em;
-    color: var(--text-secondary);
 }
 
 .sheet-body h3 {
@@ -776,9 +757,21 @@ hr {
 }
 
 .contents li {
+    margin: 0 0 0.6rem;
+}
+
+.sheet-body .contents-entry {
     display: flex;
     align-items: baseline;
-    margin: 0.2rem 0;
+    margin: 0;
+}
+
+.sheet-body .contents-abstract {
+    margin: 0.1rem 0 0;
+    font-size: 0.92em;
+    font-style: italic;
+    text-align: left;
+    color: var(--text-secondary);
 }
 
 .contents-leader {
@@ -864,148 +857,6 @@ hr {
     text-decoration: none;
 }
 
-/* ---------- Title page ---------- */
-
-.sheet--title {
-    padding-top: 96px;
-    padding-bottom: 72px;
-}
-
-.sheet--title .sheet-body {
-    display: flex;
-    flex-direction: column;
-    width: calc(var(--sheet-w) - var(--pad-left) - 80px);
-    font-size: 16px;
-    font-variant-numeric: lining-nums;
-}
-
-.sheet--title .sheet-body p {
-    margin: 0;
-    text-align: left;
-    hyphens: manual;
-}
-
-.sheet--title .title-edition {
-    margin: 0 0 0.2rem;
-    font-size: 2.6rem;
-    font-style: italic;
-    line-height: 1.1;
-}
-
-.sheet--title .title-name {
-    margin: 0 0 0.35rem;
-    font-family: var(--serif);
-    font-size: 4.6rem;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.01em;
-}
-
-.sheet--title .title-subtitle {
-    margin: 0 0 2.2rem;
-    font-size: 2.6rem;
-    font-style: italic;
-    line-height: 1.12;
-}
-
-.sheet--title .title-block h2 {
-    margin: 1.3rem 0 0.3rem;
-    padding: 0;
-    border: 0;
-    font-family: var(--serif);
-    font-size: 1.85rem;
-    font-weight: 700;
-    line-height: 1.1;
-}
-
-.sheet--title .title-block p {
-    font-size: 1.25rem;
-    line-height: 1.32;
-}
-
-.title-block span {
-    display: block;
-}
-
-/* The postcard at the foot of the title page: picture | stamp, greeting, lines. */
-.postcard {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 220px;
-    margin-top: auto;
-    border: 1px solid var(--border);
-    background: var(--paper);
-    box-shadow: 4px 4px 0 var(--desk);
-    font-size: 15px;
-}
-
-.postcard-image {
-    margin: 10px;
-    overflow: hidden;
-}
-
-.postcard-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* No picture yet: a ruled, empty frame keeps its place. */
-.postcard-image.is-empty {
-    border: 1px dashed var(--text-secondary);
-    background: repeating-linear-gradient(-45deg, transparent 0 9px, var(--callout-bg) 9px 10px);
-}
-
-.postcard-back {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 14px 16px 14px 18px;
-    border-left: 1px solid var(--border);
-}
-
-.postcard-stamp {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    display: grid;
-    place-items: center;
-    width: 54px;
-    height: 54px;
-    border: 1.5px solid var(--text);
-    border-radius: 50%;
-    font-family: var(--serif);
-    font-size: 2rem;
-    font-style: italic;
-    line-height: 1;
-}
-
-.sheet--title .postcard-greeting {
-    max-width: 70%;
-    margin: 2px 0 0;
-    font-size: 1.35rem;
-    font-style: italic;
-    line-height: 1.15;
-}
-
-.sheet-body .postcard-lines {
-    margin: auto 0 0;
-    padding: 0;
-    list-style: none;
-    font-family: var(--sans);
-    font-size: 13.5px;
-}
-
-.postcard-lines li {
-    padding: 5px 0 2px;
-    border-bottom: 1px solid var(--rule);
-}
-
-.sheet-body .postcard-lines li::before {
-    content: none;
-}
-
 /* ---------- Floating controls: reader bar, mobile menu, palette ---------- */
 
 .reader,
@@ -1088,11 +939,12 @@ hr {
     padding-top: 3px;
     overflow: hidden;
     border-top: 1px solid var(--rule);
-    color: var(--text-secondary);
+    color: var(--text);
     font-family: var(--serif);
-    font-size: 13px;
-    font-style: italic;
+    font-size: 13.5px;
+    font-weight: 700;
     line-height: 1.4em;
+    text-align: center;
     text-overflow: ellipsis;
 }
 
@@ -1139,6 +991,15 @@ hr {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 0 1rem;
     padding: 6px 15px;
+}
+
+.palette li.palette-group {
+    display: block;
+    padding: 8px 15px 3px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
 }
 
 .palette li[aria-selected="true"] {
@@ -1224,8 +1085,7 @@ hr {
         box-shadow: none;
     }
 
-    .sheet-body,
-    .sheet--title .sheet-body {
+    .sheet-body {
         width: auto;
     }
 
@@ -1242,38 +1102,12 @@ hr {
         padding-bottom: 72px;
     }
 
-    .sheet--title {
-        border-bottom: 1px solid var(--border);
+    .sheet-body .doc-head--title .title-name {
+        font-size: 2.6rem;
     }
 
-    .sheet--title .title-edition,
-    .sheet--title .title-subtitle {
-        font-size: 1.7rem;
-    }
-
-    .sheet--title .title-name {
-        font-size: 3rem;
-    }
-
-    .sheet--title .title-block h2 {
-        font-size: 1.35rem;
-    }
-
-    .sheet--title .title-block p {
-        font-size: 1.05rem;
-    }
-
-    .postcard {
-        grid-template-columns: 1fr;
-    }
-
-    .postcard-image {
-        height: 160px;
-    }
-
-    .postcard-back {
-        border-left: 0;
-        border-top: 1px solid var(--border);
+    .sheet-body .doc-head--title :is(.title-edition, .title-subtitle) {
+        font-size: 1.45rem;
     }
 
     .sidenote,
@@ -1404,11 +1238,6 @@ hr {
         padding-top: 0;
         padding-bottom: 0;
         box-shadow: none;
-    }
-
-    .sheet--title {
-        min-height: 268mm;
-        break-after: page;
     }
 
     .sheet-body > h2 {

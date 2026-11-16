@@ -31,6 +31,7 @@ function startReader(folio, actions) {
     if (wide.matches) reader.applyZoom();
     else {
       folio.style.zoom = '';
+      folio.style.removeProperty('--sheet-min');
       reader.render();
     }
   };

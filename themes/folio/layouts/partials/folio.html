@@ -1,17 +1,15 @@
 {{- /*
-  A document set as paper: one continuous sheet, after any sheets that
-  come first (the title page). The sheet opens with a big header; once
-  that scrolls away, a compact bar with the title and contents stays on top.
-    page   – the page being rendered
-    body   – its rendered content
-    before – sheets that come first (the title page)
-    bare   – leave out the big header; `before` stands in for it
+  A document set as paper: one continuous sheet. It opens with a big
+  header; once that scrolls away, a compact bar with the title and
+  contents stays on top.
+    page – the page being rendered
+    body – its rendered content
+    head – a header to open with instead of the usual one (the home page's)
 */}}
 {{- $page := .page }}
 {{- $title := partial "page-title.html" $page }}
 {{- $toc := partial "toc.html" $page }}
 <div class="folio" data-title="{{ $title }}">
-  {{- with .before }}{{ . }}{{ end }}
   <article class="sheet sheet--doc">
     <div class="doc-bar" inert>
       <div class="doc-bar-inner">
@@ -20,13 +18,12 @@
       </div>
     </div>
     <div class="sheet-body">
-      {{- if not .bare }}
+      {{- with .head }}
+      {{ . }}
+      {{- else }}
       <header class="doc-head">
         <p class="doc-kicker">{{ partial "kicker.html" $page }}</p>
         <h1 class="doc-title">{{ $title }}</h1>
-        {{- with $page.Params.tldr }}
-        <p class="doc-tldr">{{ . | markdownify }}</p>
-        {{- end }}
         {{- $toc }}
       </header>
       {{- end }}

@@ -1,24 +1,27 @@
 // The ⌘K command palette: jump to a section, open or search pages, run actions.
-import { rank } from './search.js';
+import { rank, arrange } from './search.js';
+
+// Groups, in the order they are listed when nothing is typed.
+const GROUPS = ['Sections', 'Pages', 'Move', 'View', 'This page'];
 
 const ACTIONS = [
-  { label: 'Next section', action: 'next', hint: 'j' },
-  { label: 'Previous section', action: 'prev', hint: 'k' },
-  { label: 'Back to top', action: 'first', keywords: 'start beginning' },
-  { label: 'Last section', action: 'last', keywords: 'end' },
-  { label: 'Zoom in', action: 'zoom-in', hint: '+' },
-  { label: 'Zoom out', action: 'zoom-out', hint: '−' },
-  { label: 'Fit width', action: 'zoom-fit', hint: '0' },
-  { label: 'Actual size', action: 'zoom-reset', keywords: '100%' },
-  { label: 'Print or save as PDF', action: 'print', keywords: 'download pdf' },
-  { label: 'Light theme', action: 'theme-light', keywords: 'mode day' },
-  { label: 'Dark theme', action: 'theme-dark', keywords: 'mode night' },
+  { group: 'Move', label: 'Next section', action: 'next', hint: 'j' },
+  { group: 'Move', label: 'Previous section', action: 'prev', hint: 'k' },
+  { group: 'Move', label: 'Back to top', action: 'first', keywords: 'start beginning' },
+  { group: 'Move', label: 'Last section', action: 'last', keywords: 'end' },
+  { group: 'View', label: 'Zoom in', action: 'zoom-in', hint: '+' },
+  { group: 'View', label: 'Zoom out', action: 'zoom-out', hint: '−' },
+  { group: 'View', label: 'Fit to window', action: 'zoom-fit', hint: '0', keywords: 'width' },
+  { group: 'View', label: 'Actual size', action: 'zoom-reset', keywords: '100%' },
+  { group: 'View', label: 'Light theme', action: 'theme-light', keywords: 'mode day' },
+  { group: 'View', label: 'Dark theme', action: 'theme-dark', keywords: 'mode night' },
+  { group: 'This page', label: 'Print or save as PDF', action: 'print', keywords: 'download pdf' },
 ];
 
 function sectionItems() {
   return Array.from(document.querySelectorAll('.sheet--doc .sheet-body > h2[id]'), (heading) => ({
     label: heading.textContent.trim(),
-    group: 'On this page',
+    group: 'Sections',
     href: `#${heading.id}`,
   }));
 }
@@ -27,7 +30,7 @@ function linkItems() {
   const links = document.querySelectorAll('.colophon a[data-palette]');
   return Array.from(links, (link) => ({
     label: link.dataset.palette,
-    group: 'Actions',
+    group: 'This page',
     href: link.href,
   }));
 }
@@ -59,7 +62,7 @@ export function createPalette(dialog, actions) {
   const input = dialog.querySelector('input');
   const list = dialog.querySelector('[role="listbox"]');
   const status = dialog.querySelector('.palette-status');
-  const actionItems = ACTIONS.filter((item) => item.action in actions).map((item) => ({ ...item, group: 'Actions' }));
+  const actionItems = ACTIONS.filter((item) => item.action in actions);
 
   let items = [];
   let results = [];
@@ -85,7 +88,7 @@ export function createPalette(dialog, actions) {
 
     const meta = document.createElement('span');
     meta.className = 'palette-meta';
-    meta.textContent = item.hint || item.group;
+    meta.textContent = item.hint || '';
     li.append(meta);
 
     if (result.snippet) {
@@ -100,23 +103,40 @@ export function createPalette(dialog, actions) {
     return li;
   }
 
+  const options = () => list.querySelectorAll('[role="option"]');
+
   function select(index) {
     if (!results.length) {
       input.removeAttribute('aria-activedescendant');
       return;
     }
     selected = (index + results.length) % results.length;
-    Array.from(list.children).forEach((li, i) => li.setAttribute('aria-selected', String(i === selected)));
+    options().forEach((li, i) => li.setAttribute('aria-selected', String(i === selected)));
     input.setAttribute('aria-activedescendant', `palette-option-${selected}`);
-    list.children[selected]?.scrollIntoView({ block: 'nearest' });
+    options()[selected]?.scrollIntoView({ block: 'nearest' });
   }
 
-  // Re-ranks, keeping the highlighted item highlighted if it is still listed.
+  // A group's name, set above its first result.
+  function heading(name) {
+    const li = document.createElement('li');
+    li.className = 'palette-group';
+    li.setAttribute('role', 'presentation');
+    li.textContent = name;
+    return li;
+  }
+
+  // Re-ranks into groups, keeping the highlighted item highlighted if it is
+  // still listed.
   function update() {
     const current = results[selected]?.item;
-    results = rank(items, input.value);
+    results = arrange(rank(items, input.value), GROUPS, input.value);
     selected = Math.max(0, results.findIndex((result) => result.item === current));
-    list.replaceChildren(...results.map(option));
+    const rows = [];
+    results.forEach((result, index) => {
+      if (result.item.group !== results[index - 1]?.item.group) rows.push(heading(result.item.group));
+      rows.push(option(result, index));
+    });
+    list.replaceChildren(...rows);
     status.textContent = results.length ? '' : 'Nothing found.';
     select(selected);
   }

@@ -55,3 +55,22 @@ export function rank(items, rawQuery) {
     .sort((a, b) => b.score - a.score || a.order - b.order)
     .map(({ order, ...result }) => result);
 }
+
+// Orders ranked results into groups. With nothing typed, groups follow
+// `order`; while typing, the group holding the best match comes first.
+// Within a group, results keep their rank.
+export function arrange(results, order, query) {
+  const groups = new Map();
+  results.forEach((result) => {
+    const name = result.item.group;
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push(result);
+  });
+
+  const position = (name) => (order.includes(name) ? order.indexOf(name) : order.length);
+  const best = (name) => Math.max(...groups.get(name).map((result) => result.score));
+  const names = [...groups.keys()].sort((a, b) =>
+    (query.trim() ? best(b) - best(a) : 0) || position(a) - position(b));
+
+  return names.flatMap((name) => groups.get(name).sort((a, b) => b.score - a.score));
+}

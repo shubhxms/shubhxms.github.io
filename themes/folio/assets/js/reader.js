@@ -36,8 +36,14 @@ export function createReader(folio) {
     return zoom === 'fit' ? fitScale() : Number(zoom);
   }
 
+  // A sheet is at least one screen tall, so a short page fills the view
+  // and never scrolls past it. The zoomed folio needs the height unzoomed.
   function applyZoom() {
-    folio.style.zoom = String(scale());
+    const zoomed = scale();
+    folio.style.zoom = String(zoomed);
+    const shell = getComputedStyle(desk.parentElement);
+    const room = window.innerHeight - parseFloat(shell.paddingTop) - parseFloat(shell.paddingBottom);
+    folio.style.setProperty('--sheet-min', `${room / zoomed}px`);
     render();
   }
 
@@ -112,17 +118,19 @@ export function createReader(folio) {
   };
 }
 
-// Shows the compact bar once the big header (or the title page) has
-// scrolled out of view above, and hides it again on the way back up.
+// Shows the compact bar once the big header has scrolled out of view
+// above, and hides it again on the way back up.
 export function bindBar(folio) {
   const bar = folio.querySelector('.doc-bar');
-  const header = folio.querySelector('.doc-head') || folio.querySelector('.sheet--title');
+  const header = folio.querySelector('.doc-head');
   if (!bar || !header) return;
 
   const observer = new IntersectionObserver(([entry]) => {
     const passed = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
     bar.classList.toggle('is-shown', passed);
     bar.inert = !passed;
+    // From the next frame on, changes animate; the first placement does not.
+    if (!bar.classList.contains('is-ready')) requestAnimationFrame(() => bar.classList.add('is-ready'));
   });
   observer.observe(header);
 }

@@ -1,11 +1,17 @@
-{{- /* A book-style contents list: title, dot leaders, date. */}}
+{{- /* A book-style contents list: title, dot leaders, date, then the
+       page's abstract (its tldr). */}}
 {{- with . }}
 <ol class="contents">
   {{- range . }}
   <li>
-    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-    <span class="contents-leader" aria-hidden="true"></span>
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+    <p class="contents-entry">
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      <span class="contents-leader" aria-hidden="true"></span>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+    </p>
+    {{- with .Params.tldr }}
+    <p class="contents-abstract">{{ . | markdownify }}</p>
+    {{- end }}
   </li>
   {{- end }}
 </ol>

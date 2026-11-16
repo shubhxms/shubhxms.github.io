@@ -1,6 +1,12 @@
-{{- /* The line above a title: date, length and reading time. */}}
+{{- /* The line above a title. A page: date, length and reading time.
+       A list: how many entries it holds. */}}
 {{- $parts := slice }}
-{{- if not .Date.IsZero }}{{ $parts = $parts | append (.Date.Format "2 Jan 2006") }}{{ end }}
-{{- $parts = $parts | append (printf "%d words" .WordCount) }}
-{{- $parts = $parts | append (printf "%d min read" (cond (lt .ReadingTime 1) 1 .ReadingTime)) }}
+{{- if .IsPage }}
+  {{- if not .Date.IsZero }}{{ $parts = $parts | append (.Date.Format "2 Jan 2006") }}{{ end }}
+  {{- $parts = $parts | append (printf "%d words" .WordCount) }}
+  {{- $parts = $parts | append (printf "%d min read" (cond (lt .ReadingTime 1) 1 .ReadingTime)) }}
+{{- else }}
+  {{- $count := len .Pages }}
+  {{- $parts = $parts | append (printf "%d %s" $count (cond (eq $count 1) "entry" "entries")) }}
+{{- end }}
 {{- delimit $parts " · " -}}

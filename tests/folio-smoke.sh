@@ -27,17 +27,22 @@ for page in index.html now/index.html notes/index.html fixture-typesetting/index
 done
 has now/index.html 'class="active-page">★ Now</a>'
 
-# Title page, modelled on a book's frontmatter.
-has index.html 'class="sheet sheet--title"'
+# Home: one sheet, opening with a title-page header (edition, name,
+# subtitle) and running straight into the content.
+lacks index.html 'sheet--title'
+lacks index.html 'class="postcard'
+lacks index.html 'title-block'
+has index.html '<header class="doc-head doc-head--title">'
 has index.html '<p class="title-edition">Second Edition</p>'
-lacks index.html 'title-press'
-has index.html '<h1 class="title-name">'
-lacks index.html 'title-imprint'
-has index.html '<aside class="postcard"'
-has index.html 'class="postcard-stamp"'
-has index.html 'class="postcard-image is-empty"'
+has index.html '<h1 class="title-name">Shubham Shah</h1>'
+has index.html 'id="contact"'
 
-# Documents: one continuous sheet. A big header (kicker, title, numbered
+# Abstracts live where pages are listed, not on the pages themselves.
+lacks sarabhai/index.html 'class="doc-tldr"'
+has notes/index.html '<p class="contents-abstract">In this I gather some thoughts'
+has notes/index.html 'class="doc-kicker">1 entry<'
+
+# Documents: one continuous sheet. A big header (kicker, title,
 # contents) gives way on scroll to a compact bar, inert until shown.
 has now/index.html '<article class="sheet sheet--doc">'
 lacks now/index.html 'data-flow'
@@ -48,7 +53,8 @@ has now/index.html '<div class="doc-bar" inert>'
 has now/index.html '<span class="doc-bar-title">Now</span>'
 lacks now/index.html 'class="doc-toc"'
 has uses/index.html 'class="doc-toc"'
-has uses/index.html '<a href="#devices"><span class="doc-toc-n">01</span>'
+has uses/index.html '<li><a href="#devices">Devices</a></li>'
+lacks uses/index.html 'doc-toc-n'
 has index.html '<div class="doc-bar" inert>'
 
 # Colophon: last commit for this page, source, markdown and print.
