@@ -1,0 +1,29 @@
+{{- /*
+  Core's sections (data/core.yaml) as lists, Books by category. Each
+  section's covers sit in the margin as a small strip beside its list.
+*/}}
+{{- range .sections }}
+<h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
+{{- $covers := slice }}
+{{- range partial "core-entries.html" . }}{{ if .cover }}{{ $covers = $covers | append . }}{{ end }}{{ end }}
+{{- with $covers }}
+<figure class="core-covers">
+  {{- range . }}
+  <img class="core-cover" src="{{ .cover }}" alt="{{ .title }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}" loading="lazy" decoding="async" />
+  {{- end }}
+</figure>
+{{- end }}
+<ul class="core-list">
+  {{- with .lists }}
+  {{- range . }}
+  <li class="core-group">{{ .name }}
+    <ul>
+      {{- range .items }}{{ partial "core-item.html" . }}{{ end }}
+    </ul>
+  </li>
+  {{- end }}
+  {{- else }}
+  {{- range .items }}{{ partial "core-item.html" . }}{{ end }}
+  {{- end }}
+</ul>
+{{- end }}

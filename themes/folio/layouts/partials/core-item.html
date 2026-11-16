@@ -1,0 +1,10 @@
+{{- /* One Core entry, as a list line: the title (linked to its note or
+       site), then maker, year or kind. */}}
+{{- $href := .note | default .url }}
+<li class="core-item">
+  {{- if $href }}<a href="{{ $href | relURL }}">{{ .title }}</a>{{ else }}{{ .title }}{{ end }}
+  {{- if .what }} <span class="core-meta">({{ .what }})</span>
+  {{- else if .year }} <span class="core-meta">({{ .year }}{{ with .by }}, {{ . }}{{ end }})</span>
+  {{- else if .by }} <span class="core-meta">– {{ .by }}</span>
+  {{- end -}}
+</li>

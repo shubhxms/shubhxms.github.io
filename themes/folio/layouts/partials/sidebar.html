@@ -5,21 +5,24 @@
       <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
       <span class="site-title-gu" lang="gu">શુભમ શાહ</span>
     </div>
-    {{- range site.Menus.main }}
-    {{- $active := eq $current (strings.TrimSuffix "/" .URL) }}
-    <a href="{{ .URL }}"{{ if $active }} class="active-page"{{ end }}>{{ if $active }}★ {{ end }}{{ .Name }}</a>
-    {{- end }}
+    <div class="sidebar-links">
+      {{- range site.Menus.main }}
+      {{- $active := eq $current (strings.TrimSuffix "/" .URL) }}
+      <a href="{{ .URL }}"{{ if $active }} class="active-page" aria-current="page"{{ end }}>{{ if $active }}★ {{ end }}{{ .Name }}</a>
+      {{- end }}
+    </div>
     <div class="sidebar-meta">
+      <button class="sidebar-search" type="button" data-action="palette" title="Search and commands">Search <kbd>⌘K</kbd></button>
       <div class="theme-switcher">
         <button class="theme-btn" type="button" data-action="theme-light" title="Light">☀</button>
         <button class="theme-btn" type="button" data-action="theme-dark" title="Dark">☽</button>
       </div>
+      {{- with .GitInfo }}
+      <div class="git-info">
+        <a href="{{ site.Params.repo }}/commit/{{ .Hash }}" title="{{ .Subject }}">rev {{ .AbbreviatedHash }}</a>
+        <span class="git-date">{{ partial "relative-date.html" .AuthorDate }}</span>
+      </div>
+      {{- end }}
     </div>
-    {{- with .GitInfo }}
-    <div class="git-info">
-      <a href="{{ site.Params.repo }}/commit/{{ .Hash }}" title="{{ .Subject }}">{{ .AbbreviatedHash }}</a>
-      <span class="git-date">{{ partial "relative-date.html" .AuthorDate }}</span>
-    </div>
-    {{- end }}
   </nav>
 </aside>

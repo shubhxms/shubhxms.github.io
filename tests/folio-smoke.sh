@@ -25,7 +25,7 @@ for page in index.html now/index.html notes/index.html fixture-typesetting/index
 	lacks "$page" 'heading-index'
 	lacks "$page" 'roman-numerals'
 done
-has now/index.html 'class="active-page">★ Now</a>'
+has now/index.html 'class="active-page" aria-current="page">★ Now</a>'
 
 # Home: one sheet, opening with a title-page header (edition, name,
 # subtitle) and running straight into the content.
@@ -166,7 +166,7 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-grep -q -- '--hedera: url(' "$CSS" || fail 'the side rule should hang from a leaf'
+grep -q -- '--spade: url(' "$CSS" || fail 'an empty side column should open with a card corner'
 lacks contact/index.html 'class="ornament'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
@@ -182,14 +182,16 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# Core: its lists from data/core.yaml, one catalogue each, covers where
-# there are any and the rest set in type, in list order. /shelf now leads
-# here, and an entry with a note links to it.
-[ "$(grep -o '<ol class="catalogue">' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 5 ] || fail 'core should set its five lists'
-[ "$(grep -o 'class="catalogue-item' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 36 ] || fail 'core should list all 36 entries'
-[ "$(grep -o 'class="catalogue-card"' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 16 ] || fail 'entries without covers should be set in type'
-has core/index.html '<a class="catalogue-link" href="/sarabhai/">'
-has core/index.html '<a class="catalogue-link" href="https://dynomight.substack.com/">'
+# Core: its lists from data/core.yaml, set as lists (Books in categories,
+# then films, then the internet), with each section's covers as a small
+# strip in the margin. /shelf leads here; entries with a note link to it.
+[ "$(grep -o '<li class="core-item' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 36 ] || fail 'core should list all 36 entries'
+[ "$(grep -o '<figure class="core-covers' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 2 ] || fail 'books and films should each show their covers'
+[ "$(grep -o '<img class="core-cover' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 20 ] || fail 'every cover should appear once'
+has core/index.html '<h2 id="books">Books</h2>'
+has core/index.html '<a href="/sarabhai/">Vikram Sarabhai: A Life</a>'
+has core/index.html '<a href="https://dynomight.substack.com/">Dynomight</a>'
+lacks core/index.html 'catalogue-card'
 grep -q 'url=https://shubhamshah.net/core/' "$OUT/shelf/index.html" || fail '/shelf should lead to /core/'
 [ "$(grep -o '<a class="shelf-pick' "$OUT/index.html" | wc -l | tr -d ' ')" = 6 ] || fail 'the home page should show the six picks'
 has index.html '<p class="likes">state machines · science'

@@ -16,8 +16,8 @@
   <section class="lately-col lately-shelf">
     <p class="lately-kicker">On the shelf</p>
     <div class="shelf-strip">
-      {{- range site.Data.core.lists }}
-      {{- range .items }}
+      {{- range site.Data.core.sections }}
+      {{- range partial "core-entries.html" . }}
       {{- if .pick }}
       <a class="shelf-pick" href="{{ .note | default "core/" | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
         <img src="{{ .cover }}" alt="{{ .title }}" decoding="async" />
