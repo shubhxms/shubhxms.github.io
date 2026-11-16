@@ -1,0 +1,9 @@
+# Merged over hugo.toml by tests/folio-smoke.sh to add fixture pages.
+[module]
+[[module.mounts]]
+source = "content"
+target = "content"
+
+[[module.mounts]]
+source = "tests/fixtures/content"
+target = "content"

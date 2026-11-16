@@ -1,20 +1,17 @@
 baseURL = 'https://shubhamshah.net/'
 locale = 'en-us'
 title = '✪ Shubham Shah'
-theme = "archie"
+theme = "folio"
+enableGitInfo = true
 pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 paginate = 4
 
 [params]
-mode = "toggle"
-useCDN = false
-subtitle = ""
 description = "personal website of shubham shah"
-enableGitInfo = true
-katex = true                                     # enable KaTeX support
-showTicker = false
+repo = "https://github.com/shubhxms/shubhxms.github.io"
+born = 2003
 feedApi = "https://feed.shubhxms.workers.dev"
 
 [[params.social]]
@@ -77,10 +74,30 @@ pages = '/:title'
 [markup.goldmark.renderer]
 unsafe = true
 
+# Maths is handed to KaTeX at build time (layouts/_default/_markup/render-passthrough.html).
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]
+
 [outputFormats]
 [outputFormats.data]
 mediaType = "text/html"
 isHTML = true
 
+[outputFormats.markdown]
+mediaType = "text/markdown"
+baseName = "index"
+isPlainText = true
+rel = "alternate"
+
+[outputFormats.searchindex]
+mediaType = "application/json"
+baseName = "search"
+isPlainText = true
+notAlternative = true
+
 [outputs]
-home = ["HTML", "data"]
+home = ["HTML", "data", "searchindex"]
+page = ["HTML", "markdown"]

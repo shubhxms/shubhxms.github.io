@@ -1,0 +1,21 @@
+---
+title: "Typesetting fixture"
+url: /fixture-typesetting
+tldr: "Exercises maths, marginalia and page breaks."
+---
+
+Euler wrote \(e^{i\pi} + 1 = 0\) and also $a^2 + b^2 = c^2$.{{< sidenote >}}A numbered note.{{< /sidenote >}}
+
+$$
+\int_0^1 x^2 \, dx = \frac{1}{3}
+$$
+
+## Margins
+
+Text with an unnumbered aside.{{< marginnote >}}An unnumbered note.{{< /marginnote >}}
+
+{{< pagebreak >}}
+
+## After the break
+
+{{< callout text="A callout." >}}
