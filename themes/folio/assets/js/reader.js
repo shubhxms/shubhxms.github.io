@@ -33,17 +33,24 @@ export function createReader(folio) {
     const set = (name, px) => folio.style.setProperty(name, `${px}px`);
     set('--sheet-w', g.sheet);
     set('--pad-left', g.padLeft);
+    set('--side', g.side);
+    set('--side-gap', g.sideGap);
     set('--text-w', g.text);
     set('--gutter', g.gutter);
     set('--note-w', g.note);
     set('--type', g.type);
     set('--sheet-min', Math.floor(height));
+    // Centre the reader controls under the content, whatever the layout.
+    requestAnimationFrame(() => {
+      const box = desk.getBoundingClientRect();
+      document.documentElement.style.setProperty('--reader-x', `${Math.round(box.left + box.width / 2)}px`);
+    });
     render();
   }
 
   // Back to the stylesheet's own sizes (narrow screens).
   function unlayout() {
-    ['--sheet-w', '--pad-left', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min']
+    ['--sheet-w', '--pad-left', '--side', '--side-gap', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min']
       .forEach((name) => folio.style.removeProperty(name));
     render();
   }

@@ -58,7 +58,7 @@ lacks uses/index.html 'doc-kicker'
 
 # Layout: "paper" (a sheet on a desk, with floating controls) or "plain"
 # (the page is the site), set in hugo.toml and switchable from the palette.
-has index.html 'data-layout-default="paper"'
+has index.html 'data-layout-default="plain"'
 has index.html 'dataset.layout'
 has now/index.html '<div class="doc-bar" inert>'
 has now/index.html '<span class="doc-bar-title">Now</span>'

@@ -14,9 +14,9 @@ repo = "https://github.com/shubhxms/shubhxms.github.io"
 born = 2003
 feedApi = "https://feed.shubhxms.workers.dev"
 # "paper": pages are a sheet on a desk, with floating reader controls.
-# "plain": pages sit on the site itself; ⌘K and the keys still work.
+# "plain": pages sit on the site itself, without desk or sheet edge.
 # Readers can switch from the palette; this is the default.
-layout = "paper"
+layout = "plain"
 
 [[params.social]]
 name = "GitHub"

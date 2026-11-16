@@ -111,10 +111,10 @@ test('geometry fills the room, within the sheet limits, in whole pixels', () => 
   const huge = geometry(3000);
   assert.equal(small.sheet, 680);
   assert.equal(mid.sheet, 900);
-  assert.equal(huge.sheet, 1120);
+  assert.equal(huge.sheet, 1180);
   for (const g of [small, mid, huge]) {
     for (const value of Object.values(g)) assert.ok(Number.isInteger(value), JSON.stringify(g));
-    assert.equal(g.padLeft + g.text + g.gutter + g.note + g.padRight, g.sheet);
+    assert.equal(g.padLeft + g.side + g.sideGap + g.text + g.gutter + g.note + g.padRight, g.sheet);
   }
 });
 
@@ -133,4 +133,12 @@ test('geometry scales type, not the page, when asked for larger text', () => {
   assert.equal(larger.sheet, normal.sheet);
   assert.equal(larger.text, normal.text);
   assert.ok(larger.type > normal.type);
+});
+
+test('geometry keeps a side column for section heads, wide enough for a label', () => {
+  for (const room of [700, 900, 1400]) {
+    const g = geometry(room);
+    assert.ok(g.side >= 64 && g.side <= 110, JSON.stringify(g));
+    assert.ok(g.sideGap >= 12, JSON.stringify(g));
+  }
 });
