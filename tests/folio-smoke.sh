@@ -48,7 +48,7 @@ has notes/index.html 'class="doc-kicker">1 entry<'
 
 # Documents: one continuous sheet. A big header (kicker, title,
 # contents) gives way on scroll to a compact bar, inert until shown.
-has now/index.html '<article class="sheet sheet--doc">'
+has now/index.html '<article class="sheet sheet--doc'
 lacks now/index.html 'data-flow'
 lacks now/index.html 'sheet-head'
 # Length and reading time only where turned on (stats: true; notes cascade it).
@@ -59,6 +59,13 @@ lacks uses/index.html 'doc-kicker'
 # Layout: "paper" (a sheet on a desk, with floating controls) or "plain"
 # (the page is the site), set in hugo.toml and switchable from the palette.
 has index.html 'data-layout-default="plain"'
+
+# Section heads: "side" (side column, rule across), "side-bare" (side
+# column, no rule across) or "inline" (an underlined heading in the text).
+# Pages without sections never get the side column.
+has index.html 'data-heads-default="side"'
+has contact/index.html 'class="sheet sheet--doc sheet--flat"'
+lacks uses/index.html 'sheet--flat'
 has index.html 'dataset.layout'
 has now/index.html '<div class="doc-bar" inert>'
 has now/index.html '<span class="doc-bar-title">Now</span>'
@@ -82,7 +89,7 @@ PY2
 python3 - "$OUT/now/index.html" <<'PY2' || fail 'the colophon should sit inside the paper'
 import sys
 html = open(sys.argv[1]).read()
-sheet = html.index('<article class="sheet sheet--doc">')
+sheet = html.index('<article class="sheet sheet--doc')
 assert sheet < html.index('class="colophon"') < html.index('</article>', sheet)
 PY2
 has now/index.html '/commit/'

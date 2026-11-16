@@ -461,7 +461,10 @@ a:hover {
     width: var(--side);
     height: 0;
     margin: 1.45em 0 0.65em calc(-1 * (var(--side) + var(--side-gap) + 1px));
-    padding: 0.55em 10px 0 0;
+    /* Shifted down onto the text's first line; the box itself takes no
+       height, so the text starts right under the rule. */
+    top: 0.95em;
+    padding: 0 10px 0 0;
     font-family: var(--mono);
     font-size: 0.68em;
     font-weight: 700;
@@ -474,7 +477,7 @@ a:hover {
 .sheet-body h2::before {
     content: "";
     position: absolute;
-    top: 0;
+    top: -0.95em;
     left: 0;
     width: calc(var(--side) + var(--side-gap) + 1px + var(--text-w));
     border-top: 1px solid var(--rule);
@@ -922,6 +925,45 @@ hr {
     text-decoration: none;
 }
 
+/* ---------- Section heads: side column (default), side-bare, inline ----------
+   A page without sections, and the inline style, drop the side column: the
+   text takes its width, and h2s are underlined headings in the text. */
+
+:root[data-heads="side-bare"] .sheet-body h2::before {
+    content: none;
+}
+
+:root[data-heads="inline"] .sheet-body,
+.sheet--flat .sheet-body {
+    width: calc(var(--text-w) + var(--side) + var(--side-gap) + 1px);
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+}
+
+:root[data-heads="inline"] .doc-head,
+.sheet--flat .doc-head {
+    margin-left: 0;
+}
+
+:root[data-heads="inline"] .sheet-body h2 {
+    top: 0;
+    width: auto;
+    height: auto;
+    margin: 1.05em 0 0.35em;
+    padding: 0 0 0.1em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans);
+    font-size: 1.195em;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    overflow-wrap: normal;
+}
+
+:root[data-heads="inline"] .sheet-body h2::before {
+    content: none;
+}
+
 /* ---------- Plain layout ----------
    The page sits on the site itself: no desk and no sheet edge; content and
    sidebar sit together, centred as one unit. Everything else is shared, so
@@ -1267,6 +1309,7 @@ hr {
     }
 
     .sheet-body h2 {
+        top: 0;
         width: auto;
         height: auto;
         margin: 1.2em 0 0.4em;

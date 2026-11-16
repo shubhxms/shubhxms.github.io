@@ -1,0 +1,7 @@
+{{- /* The page's sections: its h2s, as Fragments headings. */}}
+{{- $sections := slice }}
+{{- range .Fragments.Headings }}
+  {{- if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}
+  {{- range .Headings }}{{ if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}{{ end }}
+{{- end }}
+{{- return $sections }}

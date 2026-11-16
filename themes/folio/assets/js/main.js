@@ -20,10 +20,11 @@ function setTheme(mode) {
   markTheme();
 }
 
-// "paper" or "plain"; the head sets it before paint.
-function setLayout(layout) {
-  store('folio-layout', layout);
-  document.documentElement.dataset.layout = layout;
+// Layout ("paper", "plain") and section heads ("side", "side-bare",
+// "inline"): attributes on <html>, set before paint by the head.
+function setView(key, name, value) {
+  store(key, value);
+  document.documentElement.dataset[name] = value;
   window.dispatchEvent(new Event('resize'));
 }
 
@@ -49,8 +50,11 @@ function start() {
     print: () => window.print(),
     'theme-light': () => setTheme('light'),
     'theme-dark': () => setTheme('dark'),
-    'layout-paper': () => setLayout('paper'),
-    'layout-plain': () => setLayout('plain'),
+    'layout-paper': () => setView('folio-layout', 'layout', 'paper'),
+    'layout-plain': () => setView('folio-layout', 'layout', 'plain'),
+    'heads-side': () => setView('folio-heads', 'heads', 'side'),
+    'heads-side-bare': () => setView('folio-heads', 'heads', 'side-bare'),
+    'heads-inline': () => setView('folio-heads', 'heads', 'inline'),
   };
 
   const folio = document.querySelector('.folio');

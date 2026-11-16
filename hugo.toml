@@ -17,6 +17,10 @@ feedApi = "https://feed.shubhxms.workers.dev"
 # "plain": pages sit on the site itself, without desk or sheet edge.
 # Readers can switch from the palette; this is the default.
 layout = "plain"
+# Section heads: "side" (in a side column, with a rule across), "side-bare"
+# (side column, no rule across) or "inline" (underlined, in the text).
+# Readers can switch from the palette; this is the default.
+heads = "side"
 
 [[params.social]]
 name = "GitHub"

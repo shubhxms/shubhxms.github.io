@@ -13,16 +13,15 @@
   {{- end }}
 
   {{- /* Before paint, so the page never flashes the wrong theme or layout. */}}
-  <script data-layout-default="{{ site.Params.layout | default "paper" }}">
+  <script data-layout-default="{{ site.Params.layout | default "paper" }}" data-heads-default="{{ site.Params.heads | default "side" }}">
     (function (defaults) {
-      var mode = null, layout = null;
-      try {
-        mode = localStorage.getItem("theme-storage");
-        layout = localStorage.getItem("folio-layout");
-      } catch (e) {}
-      if (!mode) mode = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.dataset.theme = mode;
-      document.documentElement.dataset.layout = layout || defaults.dataset.layoutDefault;
+      var root = document.documentElement, saved = function (key) {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+      };
+      root.dataset.theme = saved("theme-storage")
+        || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      root.dataset.layout = saved("folio-layout") || defaults.dataset.layoutDefault;
+      root.dataset.heads = saved("folio-heads") || defaults.dataset.headsDefault;
     })(document.currentScript);
   </script>
 

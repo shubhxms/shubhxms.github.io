@@ -1,9 +1,5 @@
 {{- /* The page's sections, from its h2s: [ First / Second / Third ]. */}}
-{{- $sections := slice }}
-{{- range .Fragments.Headings }}
-  {{- if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}
-  {{- range .Headings }}{{ if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}{{ end }}
-{{- end }}
+{{- $sections := partial "sections.html" . }}
 {{- if ge (len $sections) 2 }}
 <nav class="doc-toc" aria-label="Contents">
   <ol>
