@@ -1,0 +1,4 @@
+{{ define "main" }}
+{{- $body := print .Content (partial "catalogue.html" site.Data.core.lists) | safeHTML }}
+{{- partial "folio.html" (dict "page" . "body" $body) }}
+{{ end }}

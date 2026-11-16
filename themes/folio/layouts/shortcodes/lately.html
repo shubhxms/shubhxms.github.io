@@ -1,6 +1,6 @@
 {{- /*
-  The home page's "lately": the feed's newest entries beside the shelf's
-  picks, two columns across text and margin. {{< lately 6 >}}
+  The home page's "lately": the feed's newest entries, then the shelf's
+  picks (pick: true in data/core.yaml). {{< lately 6 >}}
 */}}
 {{- $count := .Get 0 | default 6 }}
 <div class="lately">
@@ -16,14 +16,16 @@
   <section class="lately-col lately-shelf">
     <p class="lately-kicker">On the shelf</p>
     <div class="shelf-strip">
-      {{- range (append site.Data.shelf.films site.Data.shelf.books) }}
+      {{- range site.Data.core.lists }}
+      {{- range .items }}
       {{- if .pick }}
-      <a class="shelf-pick" href="{{ .note | default "shelf/" | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
+      <a class="shelf-pick" href="{{ .note | default "core/" | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
         <img src="{{ .cover }}" alt="{{ .title }}" decoding="async" />
       </a>
       {{- end }}
       {{- end }}
+      {{- end }}
     </div>
-    <p class="lately-more"><a href="{{ "shelf/" | relURL }}">The whole shelf</a></p>
+    <p class="lately-more"><a href="{{ "core/" | relURL }}">The whole shelf</a>, in Core</p>
   </section>
 </div>

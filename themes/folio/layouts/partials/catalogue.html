@@ -1,24 +1,32 @@
 {{- /*
-  The shelf as a catalogue: books, then films and shows, each a cover over
-  its title and maker or year. An entry with a note (note: /path/) links
-  to it.
+  Lists as catalogues (data/core.yaml): each list a heading and a grid of
+  plates in list order. An entry with a cover shows it; one without is set
+  in type on a card the same size, so the two interleave. An entry with a
+  note or url links to it.
 */}}
-{{- $groups := slice (dict "name" "Books" "items" .books) (dict "name" "Films & shows" "items" .films) }}
-{{- range $groups }}
-<h2 class="catalogue-group">{{ .name }} <span class="catalogue-count">{{ len .items }}</span></h2>
+{{- range . }}
+<h2 class="catalogue-group" id="{{ .name | anchorize }}">{{ .name }}</h2>
 <ol class="catalogue">
   {{- range .items }}
+  {{- $href := .note | default .url }}
   <li class="catalogue-item">
-    {{- with .note }}<a class="catalogue-link" href="{{ . | relURL }}">{{ end }}
+    {{- with $href }}<a class="catalogue-link" href="{{ . | relURL }}">{{ end }}
     <figure>
-      <img src="{{ .cover }}" alt="" loading="lazy" decoding="async" />
+      {{- with .cover }}
+      <img src="{{ . }}" alt="" loading="lazy" decoding="async" />
+      {{- else }}
+      <span class="catalogue-card" aria-hidden="true">
+        <span class="catalogue-card-title">{{ .title }}</span>
+        <span class="catalogue-card-by">{{ .by | default .what }}</span>
+      </span>
+      {{- end }}
       <figcaption>
         <span class="catalogue-title">{{ .title }}</span>
-        <span class="catalogue-by">{{ with .by }}{{ . }}{{ else }}{{ .year }}{{ end }}</span>
-        {{- with .note }}<span class="catalogue-note">Read the note →</span>{{ end }}
+        <span class="catalogue-by">{{ with .year }}{{ . }}{{ end }}{{ if and .year .by }} · {{ end }}{{ .by | default .what }}</span>
+        {{- if .note }}<span class="catalogue-note">Read the note →</span>{{ end }}
       </figcaption>
     </figure>
-    {{- with .note }}</a>{{ end }}
+    {{- with $href }}</a>{{ end }}
   </li>
   {{- end }}
 </ol>

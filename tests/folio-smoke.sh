@@ -158,7 +158,6 @@ lacks now/index.html '/js/feed'
 # by side, and no longer carries the stepwell photograph.
 has index.html '<div class="lately">'
 lacks index.html 'home-header.jpg'
-has notes/index.html 'class="ornament-trunk"'
 has index.html 'class="feed-recent"'
 grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fail 'the home page should load the feed script for its recent list'
 
@@ -167,8 +166,8 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-has contact/index.html '<div class="ornament" aria-hidden="true">'
-lacks uses/index.html 'class="ornament"'
+grep -q -- '--hedera: url(' "$CSS" || fail 'the side rule should hang from a leaf'
+lacks contact/index.html 'class="ornament'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
@@ -183,14 +182,15 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# The shelf: a numbered catalogue from data/shelf.yaml, books then films;
-# the home page shows the picks and a column index of likes.
-has shelf/index.html '<ol class="catalogue">'
-[ "$(grep -o 'class="catalogue-item' "$OUT/shelf/index.html" | wc -l | tr -d ' ')" = 22 ] || fail 'the shelf should list all 22 entries'
-lacks shelf/index.html 'class="catalogue-n"'
-# An entry with a note links to it.
-has shelf/index.html '<a class="catalogue-link" href="/sarabhai/">'
-lacks shelf/index.html 'media-grid'
+# Core: its lists from data/core.yaml, one catalogue each, covers where
+# there are any and the rest set in type, in list order. /shelf now leads
+# here, and an entry with a note links to it.
+[ "$(grep -o '<ol class="catalogue">' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 5 ] || fail 'core should set its five lists'
+[ "$(grep -o 'class="catalogue-item' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 36 ] || fail 'core should list all 36 entries'
+[ "$(grep -o 'class="catalogue-card"' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 16 ] || fail 'entries without covers should be set in type'
+has core/index.html '<a class="catalogue-link" href="/sarabhai/">'
+has core/index.html '<a class="catalogue-link" href="https://dynomight.substack.com/">'
+grep -q 'url=https://shubhamshah.net/core/' "$OUT/shelf/index.html" || fail '/shelf should lead to /core/'
 [ "$(grep -o '<a class="shelf-pick' "$OUT/index.html" | wc -l | tr -d ' ')" = 6 ] || fail 'the home page should show the six picks'
 has index.html '<p class="likes">state machines · science'
 
