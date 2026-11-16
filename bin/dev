@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Runs the Hugo development server with live reload.
+#
+#   bin/dev              serve on http://localhost:1313
+#   PORT=1414 bin/dev    serve on another port
+#   bin/dev --disableFastRender   extra flags go to `hugo server`
+#
+# Pages render to memory, so nothing stale piles up in public/. If Hugo
+# crashes mid-rebuild, the server starts again and open tabs reconnect on
+# their own. Ctrl-C stops it for good.
+set -uo pipefail
+
+cd "$(dirname "$0")/.."
+port="${PORT:-1313}"
+
+trap 'exit 0' INT TERM
+
+until hugo server \
+	--renderToMemory \
+	--bind 127.0.0.1 \
+	--port "$port" \
+	--navigateToChanged \
+	"$@"; do
+	printf '\nbin/dev: hugo exited with status %s; restarting.\n\n' "$?" >&2
+	sleep 1
+done

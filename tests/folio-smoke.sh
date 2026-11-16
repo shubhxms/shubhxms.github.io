@@ -69,6 +69,20 @@ has fixture-typesetting/index.html 'class="pagebreak"'
 has fixture-typesetting/index.html 'class="callout"'
 has sarabhai/index.html 'class="marginfigure"'
 
+# Production assets are fingerprinted with integrity hashes.
+grep -Eq 'href="/css/folio\.min\.[0-9a-f]{64}\.css" integrity="sha256-' "$OUT/now/index.html" \
+	|| fail 'production CSS should be fingerprinted'
+grep -Eq 'src="/js/folio\.min\.[0-9a-f]{64}\.js" integrity="sha256-' "$OUT/now/index.html" \
+	|| fail 'production JS should be fingerprinted'
+
+# Development assets keep stable URLs, so live reload can swap CSS in place.
+DEV="$(mktemp -d)"
+trap 'rm -rf "$OUT" "$DEV"' EXIT
+hugo --quiet --source "$ROOT" --destination "$DEV" --environment development
+grep -Fq 'href="/css/folio.css"' "$DEV/now/index.html" || fail 'development CSS should have a stable URL'
+grep -Fq 'src="/js/folio.js"' "$DEV/now/index.html" || fail 'development JS should have a stable URL'
+! grep -Fq 'integrity=' "$DEV/now/index.html" || fail 'development assets should carry no integrity hash'
+
 # Pages that keep their own scripts still build.
 has feed/index.html 'id="feed-root"'
 

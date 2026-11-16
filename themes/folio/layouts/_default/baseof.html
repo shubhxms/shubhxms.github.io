@@ -13,7 +13,8 @@
     {{- partial "mobile-menu.html" . }}
     {{- partial "reader.html" . }}
     {{- partial "palette.html" . }}
-    {{- $js := resources.Get "js/main.js" | js.Build (dict "targetPath" "js/folio.js" "minify" hugo.IsProduction "target" "es2020") | fingerprint }}
-    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+    {{- $js := resources.Get "js/main.js" | js.Build (dict "targetPath" "js/folio.js" "target" "es2020" "sourceMap" (cond hugo.IsProduction "" "inline")) }}
+    {{- $js = partial "asset.html" $js }}
+    <script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>
   </body>
 </html>

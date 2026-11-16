@@ -25,8 +25,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Urbanist:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  {{- $css := resources.Get "css/folio.css" | minify | fingerprint }}
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+  {{- $css := partial "asset.html" (resources.Get "css/folio.css") }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }} />
 
   {{- /* Set by the passthrough render hook when the page has maths. */}}
   {{- if .Store.Get "hasMath" }}
