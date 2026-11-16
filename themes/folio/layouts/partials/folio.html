@@ -22,7 +22,9 @@
       {{ . }}
       {{- else }}
       <header class="doc-head">
-        <p class="doc-kicker">{{ partial "kicker.html" $page }}</p>
+        {{- with partial "kicker.html" $page }}
+        <p class="doc-kicker">{{ . }}</p>
+        {{- end }}
         <h1 class="doc-title">{{ $title }}</h1>
         {{- $toc }}
       </header>

@@ -61,6 +61,7 @@ export function createPalette(dialog, actions) {
   const input = dialog.querySelector('input');
   const list = dialog.querySelector('[role="listbox"]');
   const status = dialog.querySelector('.palette-status');
+  const count = dialog.querySelector('.palette-count');
   const actionItems = ACTIONS.filter((item) => item.action in actions);
 
   let items = [];
@@ -73,30 +74,69 @@ export function createPalette(dialog, actions) {
     else if (item.href) window.location.href = item.href;
   }
 
-  function option(result, index) {
+  // The label, with the letters the query matched marked.
+  function marked(text, indices) {
+    const span = document.createElement('span');
+    span.className = 'palette-label';
+    const hits = new Set(indices);
+    let run = '';
+    let inHit = false;
+    const flush = () => {
+      if (!run) return;
+      if (inHit) {
+        const mark = document.createElement('mark');
+        mark.textContent = run;
+        span.append(mark);
+      } else span.append(run);
+      run = '';
+    };
+    [...text].forEach((ch, at) => {
+      if (hits.has(at) !== inHit) {
+        flush();
+        inHit = hits.has(at);
+      }
+      run += ch;
+    });
+    flush();
+    return span;
+  }
+
+  // A row of the directory: group (on its first row only) | label and any
+  // quote from the body | key or kind.
+  function option(result, index, first) {
     const { item } = result;
     const li = document.createElement('li');
     li.id = `palette-option-${index}`;
     li.setAttribute('role', 'option');
     li.setAttribute('aria-selected', String(index === selected));
+    if (first) li.classList.add('is-first');
 
-    const label = document.createElement('span');
-    label.className = 'palette-label';
-    label.textContent = item.label;
-    li.append(label);
+    const group = document.createElement('span');
+    group.className = 'palette-group';
+    group.textContent = first ? item.group : '';
+    group.setAttribute('aria-hidden', 'true');
 
-    const meta = document.createElement('span');
-    meta.className = 'palette-meta';
-    meta.textContent = item.hint || '';
-    li.append(meta);
-
+    const main = document.createElement('span');
+    main.className = 'palette-main';
+    main.append(marked(item.label, result.indices || []));
     if (result.snippet) {
       const quote = document.createElement('span');
       quote.className = 'palette-snippet';
       quote.textContent = result.snippet;
-      li.append(quote);
+      main.append(quote);
     }
 
+    const meta = document.createElement('span');
+    meta.className = 'palette-meta';
+    if (item.hint) {
+      const key = document.createElement('kbd');
+      key.textContent = item.hint;
+      meta.append(key);
+    } else if (item.href && !item.href.startsWith('#') && item.group === 'Pages') {
+      meta.textContent = '↵';
+    }
+
+    li.append(group, main, meta);
     li.addEventListener('mousemove', () => select(index));
     li.addEventListener('click', () => run(item));
     return li;
@@ -115,28 +155,16 @@ export function createPalette(dialog, actions) {
     options()[selected]?.scrollIntoView({ block: 'nearest' });
   }
 
-  // A group's name, set above its first result.
-  function heading(name) {
-    const li = document.createElement('li');
-    li.className = 'palette-group';
-    li.setAttribute('role', 'presentation');
-    li.textContent = name;
-    return li;
-  }
-
   // Re-ranks into groups, keeping the highlighted item highlighted if it is
   // still listed.
   function update() {
     const current = results[selected]?.item;
     results = arrange(rank(items, input.value), GROUPS, input.value);
     selected = Math.max(0, results.findIndex((result) => result.item === current));
-    const rows = [];
-    results.forEach((result, index) => {
-      if (result.item.group !== results[index - 1]?.item.group) rows.push(heading(result.item.group));
-      rows.push(option(result, index));
-    });
-    list.replaceChildren(...rows);
+    list.replaceChildren(...results.map((result, index) =>
+      option(result, index, result.item.group !== results[index - 1]?.item.group)));
     status.textContent = results.length ? '' : 'Nothing found.';
+    count.textContent = `${results.length} ${results.length === 1 ? 'result' : 'results'}`;
     select(selected);
   }
 

@@ -24,28 +24,52 @@ test('position numbers sections the way the contents line does', () => {
 const items = [
   { label: 'Now', group: 'Pages' },
   { label: 'Uses', group: 'Pages', body: 'MacBook M1 Air and a BenQ monitor' },
-  { label: 'Print or save as PDF', group: 'Actions', keywords: 'download pdf' },
+  { label: 'Print or save as PDF', group: 'This page', keywords: 'download pdf' },
   { label: 'Notes', group: 'Pages' },
+  { label: 'Next section', group: 'Move' },
+  { label: 'On Vikram Sarabhai', group: 'Pages', body: 'Aristocrat. Vikram Sarabhai was an aristocrat of the soul.' },
+  { label: 'Dark theme', group: 'View', keywords: 'mode night' },
+  { label: 'Default text size', group: 'View' },
 ];
+const labels = (query) => rank(items, query).map((r) => r.item.label);
 
 test('rank returns every item, in order, for an empty query', () => {
-  assert.deepEqual(rank(items, '  ').map((r) => r.item.label), ['Now', 'Uses', 'Print or save as PDF', 'Notes']);
+  assert.deepEqual(labels('  '), items.map((item) => item.label));
 });
 
-test('rank prefers prefix matches over inner and fuzzy matches', () => {
-  const labels = rank(items, 'no').map((r) => r.item.label);
-  assert.deepEqual(labels.slice(0, 2), ['Now', 'Notes']);
+test('rank prefers prefix matches, then word starts', () => {
+  assert.deepEqual(labels('no').slice(0, 2), ['Now', 'Notes']);
+  assert.equal(labels('sara')[0], 'On Vikram Sarabhai');
 });
 
-test('rank matches keywords and body text, and quotes the body', () => {
-  assert.equal(rank(items, 'download')[0].item.label, 'Print or save as PDF');
+test('rank matches initials and scattered letters, preferring word starts', () => {
+  assert.equal(labels('ns')[0], 'Next section');
+  assert.equal(labels('vsar')[0], 'On Vikram Sarabhai');
+  assert.equal(labels('dts')[0], 'Default text size');
+});
+
+test('rank needs every word of the query, in any order', () => {
+  assert.deepEqual(labels('theme dark'), ['Dark theme']);
+  assert.deepEqual(labels('vikram soul'), ['On Vikram Sarabhai']);
+});
+
+test('rank falls back to keywords and body text, and quotes the body', () => {
+  assert.equal(labels('download')[0], 'Print or save as PDF');
   const [hit] = rank(items, 'benq');
   assert.equal(hit.item.label, 'Uses');
   assert.match(hit.snippet, /BenQ/);
 });
 
-test('rank drops items that do not match at all', () => {
-  assert.deepEqual(rank(items, 'zzz'), []);
+test('rank rejects letters strewn too thinly to mean anything', () => {
+  assert.deepEqual(labels('zzz'), []);
+  assert.ok(!labels('nsz').length);
+  assert.ok(!labels('oi').includes('Print or save as PDF'));
+});
+
+test('rank reports which letters of the label matched', () => {
+  const [hit] = rank(items, 'ns');
+  assert.equal(hit.item.label, 'Next section');
+  assert.deepEqual(hit.indices, [0, 5]);
 });
 
 test('snippet trims long text around the match with ellipses', () => {
@@ -75,7 +99,7 @@ test('geometry fills the room, within the sheet limits, in whole pixels', () => 
   const huge = geometry(3000);
   assert.equal(small.sheet, 680);
   assert.equal(mid.sheet, 900);
-  assert.equal(huge.sheet, 1200);
+  assert.equal(huge.sheet, 1120);
   for (const g of [small, mid, huge]) {
     for (const value of Object.values(g)) assert.ok(Number.isInteger(value), JSON.stringify(g));
     assert.equal(g.padLeft + g.text + g.gutter + g.note + g.padRight, g.sheet);
@@ -87,8 +111,8 @@ test('geometry sets type for a comfortable measure, larger on wider sheets', () 
   const huge = geometry(3000);
   assert.ok(mid.type >= 16 && mid.type <= 18, mid.type);
   assert.ok(huge.type > mid.type);
-  // About 30–34 ems of text a line: 70–80 characters of Crimson.
-  for (const g of [mid, huge]) assert.ok(g.text / g.type > 29 && g.text / g.type < 35, JSON.stringify(g));
+  // About 33–38 ems of text a line: 80–90 characters of Crimson.
+  for (const g of [mid, huge]) assert.ok(g.text / g.type > 32 && g.text / g.type < 38, JSON.stringify(g));
 });
 
 test('geometry scales type, not the page, when asked for larger text', () => {

@@ -21,9 +21,9 @@
 
     /* Wider than A4 (794px at 96 dpi); print scales it down. */
     --sheet-w: 860px;
-    --sheet-gap: 24px;
-    --pad-top: 56px;
-    --pad-bottom: 36px;
+    --sheet-gap: 16px;
+    --pad-top: 34px;
+    --pad-bottom: 22px;
     --pad-left: 60px;
     --text-w: 540px;
     --gutter: 28px;
@@ -99,10 +99,10 @@ a:hover {
 .shell {
     display: grid;
     grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width);
-    gap: 2rem;
+    gap: 1.25rem;
     align-items: start;
     min-height: 100vh;
-    padding: 32px 2rem 5rem var(--shell-left-padding);
+    padding: 18px 1.25rem 4rem var(--shell-left-padding);
     box-sizing: border-box;
 }
 
@@ -119,21 +119,21 @@ a:hover {
 
 .sidebar {
     position: sticky;
-    top: 32px;
+    top: 18px;
     width: var(--sidebar-width);
     text-align: right;
     font-family: var(--mono);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 .sidebar-nav {
-    line-height: 1.3;
+    line-height: 1.22;
 }
 
 .sidebar-nav .site-title {
-    margin-bottom: 3px;
-    font-size: 15px;
+    margin-bottom: 2px;
+    font-size: 13px;
     font-weight: 600;
 }
 
@@ -144,8 +144,8 @@ a:hover {
 
 .site-title-gu {
     display: block;
-    margin-top: 1px;
-    font-size: 11px;
+    margin-top: 0;
+    font-size: 10px;
     font-weight: 400;
     letter-spacing: 0.3px;
     color: var(--text-secondary);
@@ -162,7 +162,7 @@ a:hover {
 }
 
 .sidebar-meta {
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .theme-switcher {
@@ -193,9 +193,9 @@ a:hover {
 }
 
 .git-info {
-    margin-top: 12px;
-    font-size: 11px;
-    line-height: 1.4;
+    margin-top: 8px;
+    font-size: 10px;
+    line-height: 1.3;
     color: var(--text-secondary);
 }
 
@@ -242,18 +242,18 @@ a:hover {
     position: relative;
     flex: 1;
     width: var(--text-w);
-    line-height: 1.38;
+    line-height: 1.3;
     font-variant-numeric: oldstyle-nums proportional-nums;
 }
 
 /* ---------- Big header: kicker, title, summary, contents ---------- */
 
 .doc-head {
-    margin-bottom: 1.4rem;
+    margin-bottom: 0.9em;
 }
 
 .doc-kicker {
-    margin: 0 0 0.55rem;
+    margin: 0 0 0.3em;
     font-family: var(--mono);
     font-size: 0.7em;
     letter-spacing: 0.06em;
@@ -262,9 +262,9 @@ a:hover {
 }
 
 .sheet-body .doc-title {
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.25em;
     font-family: var(--serif);
-    font-size: 2.827em;
+    font-size: 2.4em;
     font-style: normal;
     font-weight: 600;
     line-height: 1.02;
@@ -424,7 +424,7 @@ a:hover {
 /* ---------- Document typography ---------- */
 
 .sheet-body p {
-    margin: 0 0 0.55em;
+    margin: 0 0 0.4em;
     text-align: justify;
     hyphens: auto;
     -webkit-hyphens: auto;
@@ -442,8 +442,8 @@ a:hover {
 }
 
 .sheet-body h2 {
-    margin: 1.5rem 0 0.55rem;
-    padding-bottom: 0.18rem;
+    margin: 1.05em 0 0.35em;
+    padding-bottom: 0.1em;
     border-bottom: 1px solid var(--border);
     font-size: 1.195em;
     font-weight: 700;
@@ -451,13 +451,13 @@ a:hover {
 }
 
 .sheet-body h3 {
-    margin: 1.1rem 0 0.3rem;
+    margin: 0.85em 0 0.2em;
     font-size: 1.045em;
     font-weight: 700;
 }
 
 .sheet-body h4 {
-    margin: 0.9rem 0 0.25rem;
+    margin: 0.7em 0 0.15em;
     font-size: 0.875em;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -469,12 +469,12 @@ a:hover {
 }
 
 .sheet-body :is(ul, ol) {
-    margin: 0.25rem 0 0.6rem;
+    margin: 0.15em 0 0.4em;
     padding-left: 1.3em;
 }
 
 .sheet-body li {
-    margin: 0.05rem 0;
+    margin: 0;
 }
 
 .sheet-body li p {
@@ -852,8 +852,8 @@ hr {
     align-items: baseline;
     gap: 0.8rem;
     width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin-top: 1.6rem;
-    padding-top: 0.4rem;
+    margin-top: 1.1rem;
+    padding-top: 0.3rem;
     border-top: 1px solid var(--border);
     font-family: var(--mono);
     font-size: 0.7em;
@@ -892,7 +892,9 @@ hr {
     text-decoration: none;
 }
 
-/* ---------- Floating controls: reader bar, mobile menu, palette ---------- */
+/* ---------- Floating controls: reader plate, mobile menu, palette ----------
+   Set like signage: a black-ruled plate on paper, cells divided by full-height
+   rules, a hard offset shadow, and inverted (black) for the active cell. */
 
 .reader,
 .mobile-menu summary,
@@ -901,20 +903,20 @@ hr {
     border: 1px solid var(--border);
     background: var(--paper);
     color: var(--text);
-    box-shadow: 3px 3px 0 var(--selection);
+    box-shadow: 3px 3px 0 var(--border);
     font-family: var(--mono);
 }
 
 .reader {
     position: fixed;
-    bottom: 18px;
+    bottom: 16px;
     left: calc(var(--shell-left-padding) + (100vw - var(--shell-left-padding) - var(--sidebar-width) - 4rem) / 2);
     z-index: 50;
     box-sizing: border-box;
-    width: 19.5rem;
-    padding: 3px 5px 5px;
+    width: 20rem;
     transform: translateX(-50%);
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 1;
     white-space: nowrap;
 }
 
@@ -922,17 +924,36 @@ hr {
     display: none;
 }
 
+/* ↑ | § 02 / 05 | ↓ ‖ A− | 100% | A+ ‖ ⌘K, every cell a fixed width. */
 .reader-controls {
+    display: grid;
+    grid-template-columns: 2.2em 1fr 2.2em 2.6em 4.6em 2.6em 3em;
+    height: 26px;
+}
+
+.reader-controls > * {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    min-width: 0;
+    border-left: 1px solid var(--rule);
+}
+
+.reader-controls > :first-child {
+    border-left: 0;
+}
+
+.reader-controls > [data-action="text-smaller"],
+.reader-controls > [data-action="palette"] {
+    border-left-color: var(--border);
 }
 
 .reader button {
-    min-width: 28px;
-    height: 28px;
-    padding: 0 5px;
-    border: 0;
+    height: 100%;
+    padding: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
     background: none;
     color: inherit;
     font: inherit;
@@ -940,68 +961,73 @@ hr {
 
 .reader button:hover,
 .reader button:focus-visible {
-    background: var(--selection);
-    color: var(--selection-text);
+    background: var(--text);
+    color: var(--paper);
     outline: none;
 }
 
 .reader-mark {
+    margin-right: 0.35em;
     font-family: var(--serif);
-    font-size: 1.15em;
+    font-size: 1.25em;
 }
 
-.reader-pos {
-    width: 9ch;
-    text-align: center;
-    font-variant-numeric: tabular-nums;
-}
-
+.reader-pos,
 .reader-size {
-    width: 5.5ch;
     font-variant-numeric: tabular-nums;
 }
 
-.reader-rule {
-    width: 1px;
-    height: 16px;
-    background: var(--border);
-}
-
-/* Always one line tall, so the box never changes size. */
+/* Always one line tall, so the plate never changes size. */
 .reader-section {
-    height: 1.4em;
-    margin: 1px 5px 0;
-    padding-top: 3px;
+    height: 22px;
+    margin: 0;
+    padding: 0 8px;
     overflow: hidden;
-    border-top: 1px solid var(--rule);
-    color: var(--text);
+    border-top: 1px solid var(--border);
+    background: var(--text);
+    color: var(--paper);
     font-family: var(--serif);
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 700;
-    line-height: 1.4em;
+    line-height: 22px;
     text-align: center;
     text-overflow: ellipsis;
 }
 
+/* The palette: a directory. Group | entry (and a quote) | key. */
 .palette {
-    width: min(580px, calc(100vw - 32px));
-    max-height: 70vh;
-    margin-top: 14vh;
+    width: min(640px, calc(100vw - 32px));
+    max-height: 72vh;
+    margin-top: 12vh;
     padding: 0;
-    box-shadow: 4px 4px 0 var(--selection);
-    font-size: 13px;
+    box-shadow: 5px 5px 0 var(--border);
+    font-size: 12px;
 }
 
 .palette::backdrop {
-    background: rgba(8, 12, 20, 0.35);
+    background: rgba(8, 12, 20, 0.28);
+}
+
+.palette-input {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--border);
+}
+
+.palette-prompt {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background: var(--text);
+    color: var(--paper);
+    font-size: 11px;
 }
 
 .palette input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 13px 15px;
+    flex: 1;
+    min-width: 0;
+    padding: 11px 12px;
     border: 0;
-    border-bottom: 1px solid var(--border);
     outline: none;
     background: transparent;
     color: inherit;
@@ -1014,61 +1040,109 @@ hr {
 }
 
 .palette ul {
-    max-height: 48vh;
+    max-height: 52vh;
     margin: 0;
-    padding: 4px 0;
+    padding: 0;
     overflow-y: auto;
     list-style: none;
 }
 
 .palette li {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0 1rem;
-    padding: 6px 15px;
+    grid-template-columns: 6.5em minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0 10px;
+    padding: 1px 12px 1px 0;
+    cursor: default;
 }
 
-.palette li.palette-group {
-    display: block;
-    padding: 8px 15px 3px;
-    font-size: 10px;
+.palette li.is-first {
+    border-top: 1px solid var(--rule);
+}
+
+.palette li.is-first:first-child {
+    border-top: 0;
+}
+
+.palette-group {
+    align-self: stretch;
+    padding: 4px 0 0 12px;
+    border-right: 1px solid var(--rule);
+    font-size: 9.5px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-secondary);
 }
 
-.palette li[aria-selected="true"] {
-    background: var(--selection);
-    color: var(--selection-text);
+.palette-main {
+    min-width: 0;
+    padding: 2px 0;
 }
 
 .palette-label {
+    display: block;
     overflow: hidden;
+    font-family: var(--serif);
+    font-size: 14.5px;
+    line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.palette-meta {
-    font-size: 11px;
-    color: var(--text-secondary);
-    text-transform: lowercase;
+.palette mark {
+    background: none;
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
 }
 
 .palette-snippet {
-    grid-column: 1 / -1;
+    display: block;
+    overflow: hidden;
     font-family: var(--serif);
-    font-size: 14px;
+    font-size: 12.5px;
     font-style: italic;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: var(--text-secondary);
 }
 
-.palette li[aria-selected="true"] :is(.palette-meta, .palette-snippet) {
-    color: inherit;
+.palette-meta {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.palette kbd,
+.palette-meta kbd {
+    display: inline-block;
+    min-width: 1.4em;
+    padding: 1px 3px;
+    border: 1px solid currentColor;
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.palette li[aria-selected="true"] .palette-main,
+.palette li[aria-selected="true"] .palette-meta {
+    color: var(--paper);
+}
+
+.palette li[aria-selected="true"] {
+    background: linear-gradient(to right, transparent 6.5em, var(--text) 6.5em);
+}
+
+.palette li[aria-selected="true"] .palette-snippet {
+    color: var(--paper);
+    opacity: 0.75;
 }
 
 .palette-status {
     margin: 0;
-    padding: 8px 15px;
+    padding: 10px 12px;
     color: var(--text-secondary);
 }
 
@@ -1077,18 +1151,21 @@ hr {
 }
 
 .palette-keys {
+    display: flex;
+    justify-content: space-between;
     margin: 0;
-    padding: 6px 15px;
+    padding: 5px 12px;
     border-top: 1px solid var(--border);
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-secondary);
 }
 
-.palette kbd {
-    margin-right: 2px;
-    padding: 0 4px;
-    border: 1px solid var(--text-secondary);
-    font: inherit;
+.palette-keys kbd {
+    margin: 0 2px 0 6px;
+}
+
+.palette-keys kbd:first-child {
+    margin-left: 0;
 }
 
 .mobile-menu {
