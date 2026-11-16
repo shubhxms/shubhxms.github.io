@@ -1,64 +1,67 @@
-# Core: things that matter to me, in lists. Rendered by the Core page
-# (layouts/_default/core.html) as one catalogue per list: entries with a
-# cover show it, the rest are set in type, interleaved in list order.
+# Core: things that matter to me, as lists. Rendered by the Core page
+# (layouts/_default/core.html): each section is a list, with the covers of
+# its entries as a small strip in the margin.
 #
-# An entry takes: title; by (author or maker) or year and by; cover
-# (an image under /images/shelf/); note (a path on this site, linked); url
-# (elsewhere, linked); what (for the Internet list); pick: true to show
-# it in the home page's Lately.
+# A section has items, or lists of items (Books, by category). An entry
+# takes: title; by (author or maker); year; cover (an image under
+# /images/shelf/); note (a path on this site, linked); url (elsewhere,
+# linked); what (for the Internet list); pick: true to show it in the home
+# page's Lately.
 
-lists:
-  - name: "Science & Math"
-    items:
-      - title: "Chaos"
-        by: "James Gleick"
-        cover: /images/shelf/chaos.jpg
-        pick: true
-      - title: "The Man Who Bent Light: Father of Fibre Optics"
-        by: "Narinder Singh Kapany"
-        cover: /images/shelf/man-who-bent-light.jpg
-      - title: "Richard Feynman: A Life in Science"
-        by: "John & Mary Gribbin"
-        cover: /images/shelf/feynman.jpg
+sections:
+  - name: "Books"
+    lists:
+      - name: "Science & Math"
+        items:
+          - title: "Chaos"
+            by: "James Gleick"
+            cover: /images/shelf/chaos.jpg
+            pick: true
+          - title: "The Man Who Bent Light: Father of Fibre Optics"
+            by: "Narinder Singh Kapany"
+            cover: /images/shelf/man-who-bent-light.jpg
+          - title: "Richard Feynman: A Life in Science"
+            by: "John & Mary Gribbin"
+            cover: /images/shelf/feynman.jpg
 
-  - name: "Non-Fiction"
-    items:
-      - title: "Vikram Sarabhai: A Life"
-        by: "Amrita Shah"
-        cover: /images/shelf/vikram-sarabhai.jpg
-        note: /sarabhai/
-        pick: true
-      - title: "Incerto"
-        by: "Nassim Taleb"
-        cover: /images/shelf/antifragile.jpg
-      - title: "Zero to One"
-        by: "Peter Thiel & Blake Masters"
-        cover: /images/shelf/zero-to-one.jpg
-      - title: "Shoe Dog"
-        by: "Phil Knight"
-        cover: /images/shelf/shoe-dog.jpg
+      - name: "Non-Fiction"
+        items:
+          - title: "Vikram Sarabhai: A Life"
+            by: "Amrita Shah"
+            cover: /images/shelf/vikram-sarabhai.jpg
+            note: /sarabhai/
+            pick: true
+          - title: "Incerto"
+            by: "Nassim Taleb"
+            cover: /images/shelf/antifragile.jpg
+          - title: "Zero to One"
+            by: "Peter Thiel & Blake Masters"
+            cover: /images/shelf/zero-to-one.jpg
+          - title: "Shoe Dog"
+            by: "Phil Knight"
+            cover: /images/shelf/shoe-dog.jpg
 
-  - name: "Fiction & Mythology"
-    items:
-      - title: "Suheldev and the Battle of Bahraich"
-        by: "Amish Tripathi"
-      - title: "The Shiva Trilogy"
-        by: "Amish Tripathi"
-        cover: /images/shelf/meluha.jpg
-      - title: "The Song of Achilles"
-        by: "Madeline Miller"
-        cover: /images/shelf/achilles.webp
-        pick: true
-      - title: "Circe"
-        by: "Madeline Miller"
-        cover: /images/shelf/circe.jpg
-      - title: "The Picture of Dorian Gray"
-        by: "Oscar Wilde"
-        cover: /images/shelf/dorian-gray.jpg
-        pick: true
-      - title: "Jonathan Livingston Seagull"
-        by: "Richard Bach"
-        cover: /images/shelf/seagull.jpg
+      - name: "Fiction & Mythology"
+        items:
+          - title: "Suheldev and the Battle of Bahraich"
+            by: "Amish Tripathi"
+          - title: "The Shiva Trilogy"
+            by: "Amish Tripathi"
+            cover: /images/shelf/meluha.jpg
+          - title: "The Song of Achilles"
+            by: "Madeline Miller"
+            cover: /images/shelf/achilles.webp
+            pick: true
+          - title: "Circe"
+            by: "Madeline Miller"
+            cover: /images/shelf/circe.jpg
+          - title: "The Picture of Dorian Gray"
+            by: "Oscar Wilde"
+            cover: /images/shelf/dorian-gray.jpg
+            pick: true
+          - title: "Jonathan Livingston Seagull"
+            by: "Richard Bach"
+            cover: /images/shelf/seagull.jpg
 
   - name: "Films, Shows & Anime"
     items:
