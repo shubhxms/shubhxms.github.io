@@ -899,6 +899,23 @@ hr {
     text-decoration: none;
 }
 
+/* ---------- Drop cap ----------
+   A script initial, three lines deep, opening the first paragraph of pages
+   that set dropcap. */
+
+.sheet--dropcap .sheet-body > p:first-of-type::first-letter {
+    float: left;
+    /* Room on the right for the script's swash. */
+    margin: 0.06em 0.3em 0 -0.02em;
+    padding-right: 0.04em;
+    font-family: "Pinyon Script", var(--serif);
+    font-size: 3.55em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.82;
+    color: var(--text);
+}
+
 /* ---------- Section heads in a side column ----------
    data-heads="side": every page keeps a side column beyond a dotted rule,
    so text starts at the same place on every page. A page's own sections
@@ -920,24 +937,27 @@ hr {
         margin-left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
     }
 
-    /* Hung from the foot of the header, so it opens the text. */
+    /* Four asterisks set as a lozenge, a printer's ornament in type, hung
+       from the foot of the header so it opens the text. */
     :root[data-heads="side"] .sheet--flat .doc-head::after {
-        content: "⁂";
+        /* "\A " ends the escape and eats one space, hence two. */
+        content: " *\A* *\A  *";
         position: absolute;
-        top: 100%;
+        top: calc(100% + 0.3em);
         left: 0;
-        width: calc(var(--side) - 10px);
-        font-family: var(--serif);
-        font-size: 1.5em;
+        font-family: var(--mono);
+        font-size: 10px;
         line-height: 1;
+        white-space: pre;
         color: var(--text-secondary);
     }
 
     /* The h2 takes no height, so the text starts right under the space
-       above; the name is shifted down onto the text's first line. */
+       above; the name is shifted down so its first line sits on the text's
+       first line. */
     :root[data-heads="side"] .sheet-body > h2 {
         position: relative;
-        top: 0.95em;
+        top: 1em;
         box-sizing: border-box;
         width: var(--side);
         height: 0;

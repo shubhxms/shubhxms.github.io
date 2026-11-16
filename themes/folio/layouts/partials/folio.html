@@ -11,7 +11,7 @@
 {{- $toc := partial "toc.html" $page }}
 <div class="folio" data-title="{{ $title }}">
   {{- /* Without sections, there is nothing for a side column to hold. */}}
-  <article class="sheet sheet--doc{{ if not (partial "sections.html" $page) }} sheet--flat{{ end }}">
+  <article class="sheet sheet--doc{{ if not (partial "sections.html" $page) }} sheet--flat{{ end }}{{ if $page.Params.dropcap }} sheet--dropcap{{ end }}">
     <div class="doc-bar" inert>
       <div class="doc-bar-inner">
         <span class="doc-bar-title">{{ $title }}</span>

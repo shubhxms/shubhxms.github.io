@@ -158,4 +158,12 @@ grep -q ':root\[data-heads="side"\] .sheet--flat .doc-head::after {' "$CSS" || f
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
+# Drop caps: a script initial on pages that set dropcap (notes cascade it),
+# with the font loaded only there, and only its capitals.
+has sarabhai/index.html 'sheet--dropcap'
+has sarabhai/index.html 'family=Pinyon+Script'
+lacks uses/index.html 'Pinyon'
+lacks uses/index.html 'sheet--dropcap'
+grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'drop cap rule missing'
+
 printf 'folio smoke tests passed\n'

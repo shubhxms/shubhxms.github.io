@@ -1,6 +1,7 @@
 ---
 title: "Shubham Shah"
 edition: 2
+dropcap: true
 subtitle: "Computers, Stories<br>& Science"
 ---
 
