@@ -1,7 +1,7 @@
 {{- /*
   The home page's first sheet, set like a book's title page.
-  Front matter: edition (a number), subtitle, mark, press, and
-  blocks [{ name, lines }].
+  Front matter: edition (a number), subtitle, blocks [{ name, lines }],
+  and postcard (see postcard.html).
 */}}
 {{- $edition := partial "ordinal.html" (.Params.edition | default 1) }}
 <article class="sheet sheet--title">
@@ -17,20 +17,6 @@
     </section>
     {{- end }}
 
-    <footer class="title-imprint">
-      <span class="title-mark" aria-hidden="true">{{ .Params.mark | default "S" }}</span>
-      <div>
-        <p class="title-press">{{ .Params.press }}</p>
-        <p class="title-links">
-          {{- $last := sub (len site.Params.social) 1 }}
-          {{- range $i, $s := site.Params.social }}
-          {{- if and $i (eq $i $last) }} &amp; {{ else if $i }}, {{ end }}<a href="{{ $s.url }}">{{ $s.name }}</a>
-          {{- end }}
-        </p>
-        <nav class="title-places" aria-label="Pages">
-          {{- range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
-        </nav>
-      </div>
-    </footer>
+    {{- partial "postcard.html" . }}
   </div>
 </article>

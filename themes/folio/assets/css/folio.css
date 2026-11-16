@@ -6,7 +6,7 @@
 /* ---------- Tokens ---------- */
 
 :root {
-    --desk: #dde5ef;
+    --desk: #d3dbf4;
     --paper: #fcfdff;
     --text: #000;
     --text-secondary: #4a4f58;
@@ -19,16 +19,16 @@
     --selection-text: #000;
     --sheet-shadow: 0 1px 2px rgba(20, 30, 50, 0.1), 0 10px 28px rgba(20, 30, 50, 0.1);
 
-    /* A4 at 96 dpi. */
-    --sheet-w: 794px;
+    /* Wider than A4 (794px at 96 dpi), as tall; print scales it down. */
+    --sheet-w: 860px;
     --sheet-h: 1123px;
     --sheet-gap: 24px;
     --pad-top: 56px;
-    --pad-bottom: 40px;
-    --pad-left: 64px;
-    --text-w: 476px;
-    --gutter: 26px;
-    --note-w: 176px;
+    --pad-bottom: 36px;
+    --pad-left: 60px;
+    --text-w: 540px;
+    --gutter: 28px;
+    --note-w: 184px;
     --bar-h: 38px;
 
     --sidebar-width: 10rem;
@@ -281,15 +281,40 @@ a:hover {
     list-style: none;
 }
 
+/* In the big header: one bracketed line, [ first / second / third ]. */
 .doc-head .doc-toc ol {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-    gap: 0.1rem 1rem;
-    padding: 0.45rem 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    display: inline;
+    padding: 0;
     font-size: 0.95rem;
-    line-height: 1.35;
+    font-style: italic;
+}
+
+.doc-head .doc-toc ol::before,
+.doc-head .doc-toc ol::after {
+    font-style: normal;
+    color: var(--text-secondary);
+}
+
+.doc-head .doc-toc ol::before {
+    content: "[ ";
+}
+
+.doc-head .doc-toc ol::after {
+    content: " ]";
+}
+
+.doc-head .doc-toc li {
+    display: inline;
+}
+
+.doc-head .doc-toc li + li::before {
+    content: " / ";
+    font-style: normal;
+    color: var(--text-secondary);
+}
+
+.doc-head .doc-toc .doc-toc-n {
+    display: none;
 }
 
 .doc-toc-n {
@@ -482,19 +507,26 @@ a:hover {
 }
 
 .sheet-body ul > li::before {
-    content: "*";
+    content: "";
     position: absolute;
-    left: -1.1em;
-    color: var(--accent);
-    font-family: var(--mono);
+    top: 0.62em;
+    left: -0.95em;
+    width: 0.3em;
+    height: 0.3em;
+    background: var(--text);
 }
 
 .sheet-body ul ul > li::before {
-    content: "+";
+    background: none;
+    box-shadow: inset 0 0 0 1px var(--text);
 }
 
 .sheet-body ul ul ul > li::before {
-    content: "-";
+    top: 0.72em;
+    height: 1px;
+    width: 0.4em;
+    box-shadow: none;
+    background: var(--text);
 }
 
 .sheet-body blockquote {
@@ -597,17 +629,18 @@ a:hover {
     margin: 0.7rem 0;
     padding: 0.5rem 0.75rem;
     border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
+    border-left: 3px solid var(--text);
     background: var(--callout-bg);
     text-align: left;
 }
 
 .callout::before {
-    content: "*";
-    margin-right: 0.5em;
-    color: var(--accent);
+    content: "NOTE";
+    margin-right: 0.6em;
     font-family: var(--mono);
-    font-weight: 700;
+    font-size: 0.7em;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
 }
 
 hr {
@@ -784,30 +817,35 @@ hr {
     width: 100%;
 }
 
-/* ---------- Colophon: at the foot of the paper ---------- */
+/* ---------- Colophon: one line at the foot of the paper ---------- */
 
 .colophon {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.3rem 1.5rem;
+    align-items: baseline;
+    gap: 0.8rem;
     width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin-top: 2rem;
-    padding-top: 0.45rem;
+    margin-top: 1.6rem;
+    padding-top: 0.4rem;
     border-top: 1px solid var(--border);
     font-family: var(--mono);
     font-size: 10.5px;
-    line-height: 1.5;
+    line-height: 1.4;
+    white-space: nowrap;
     color: var(--text-secondary);
 }
 
-.colophon q {
+.colophon-subject {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-style: italic;
 }
 
 .colophon-actions {
     display: flex;
-    gap: 1rem;
+    flex: none;
+    gap: 0.9rem;
 }
 
 .colophon button {
@@ -889,47 +927,83 @@ hr {
     display: block;
 }
 
-.title-imprint {
-    display: flex;
-    align-items: center;
-    gap: 2.2rem;
+/* The postcard at the foot of the title page: picture | stamp, greeting, lines. */
+.postcard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 220px;
     margin-top: auto;
-    padding-top: 2.5rem;
-    font-family: var(--sans);
+    border: 1px solid var(--border);
+    background: var(--paper);
+    box-shadow: 4px 4px 0 var(--desk);
+    font-size: 15px;
 }
 
-.title-mark {
+.postcard-image {
+    margin: 10px;
+    overflow: hidden;
+}
+
+.postcard-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* No picture yet: a ruled, empty frame keeps its place. */
+.postcard-image.is-empty {
+    border: 1px dashed var(--text-secondary);
+    background: repeating-linear-gradient(-45deg, transparent 0 9px, var(--callout-bg) 9px 10px);
+}
+
+.postcard-back {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 16px 14px 18px;
+    border-left: 1px solid var(--border);
+}
+
+.postcard-stamp {
+    position: absolute;
+    top: 12px;
+    right: 14px;
     display: grid;
-    flex: none;
     place-items: center;
-    width: 112px;
-    height: 112px;
-    border: 2px solid var(--text);
+    width: 54px;
+    height: 54px;
+    border: 1.5px solid var(--text);
     border-radius: 50%;
     font-family: var(--serif);
-    font-size: 4.4rem;
+    font-size: 2rem;
     font-style: italic;
     line-height: 1;
 }
 
-.sheet--title .title-press {
-    font-size: 1.3rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+.sheet--title .postcard-greeting {
+    max-width: 70%;
+    margin: 2px 0 0;
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.15;
 }
 
-.sheet--title .title-links {
-    margin: 0.1rem 0 0.25rem;
-    font-size: 1.15rem;
-    font-weight: 700;
+.sheet-body .postcard-lines {
+    margin: auto 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--sans);
+    font-size: 13.5px;
 }
 
-.title-places {
-    display: grid;
-    grid-template-columns: repeat(4, max-content);
-    gap: 0.1rem 1.8rem;
-    font-size: 1.12rem;
+.postcard-lines li {
+    padding: 5px 0 2px;
+    border-bottom: 1px solid var(--rule);
+}
+
+.sheet-body .postcard-lines li::before {
+    content: none;
 }
 
 /* ---------- Floating controls: reader bar, mobile menu, palette ---------- */
@@ -950,10 +1024,9 @@ hr {
     bottom: 18px;
     left: calc(var(--shell-left-padding) + (100vw - var(--shell-left-padding) - var(--sidebar-width) - 4rem) / 2);
     z-index: 50;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    padding: 3px 5px;
+    box-sizing: border-box;
+    width: 19.5rem;
+    padding: 3px 5px 5px;
     transform: translateX(-50%);
     font-size: 12px;
     white-space: nowrap;
@@ -961,6 +1034,12 @@ hr {
 
 .reader[hidden] {
     display: none;
+}
+
+.reader-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .reader button {
@@ -986,34 +1065,35 @@ hr {
 }
 
 .reader-pos {
-    min-width: 9ch;
+    width: 9ch;
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
 
-.reader-section {
-    max-width: 20ch;
-    padding: 0 0.4em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text-secondary);
-    font-style: italic;
-}
-
-.reader-section:empty {
-    display: none;
-}
-
 .reader-zoom {
-    min-width: 5ch;
+    width: 5.5ch;
     font-variant-numeric: tabular-nums;
 }
 
 .reader-rule {
     width: 1px;
     height: 16px;
-    margin: 0 4px;
     background: var(--border);
+}
+
+/* Always one line tall, so the box never changes size. */
+.reader-section {
+    height: 1.4em;
+    margin: 1px 5px 0;
+    padding-top: 3px;
+    overflow: hidden;
+    border-top: 1px solid var(--rule);
+    color: var(--text-secondary);
+    font-family: var(--serif);
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.4em;
+    text-overflow: ellipsis;
 }
 
 .palette {
@@ -1183,19 +1263,17 @@ hr {
         font-size: 1.05rem;
     }
 
-    .title-imprint {
-        gap: 1.2rem;
+    .postcard {
+        grid-template-columns: 1fr;
     }
 
-    .title-mark {
-        width: 72px;
-        height: 72px;
-        font-size: 2.8rem;
+    .postcard-image {
+        height: 160px;
     }
 
-    .title-places {
-        grid-template-columns: repeat(3, max-content);
-        gap: 0.1rem 1.1rem;
+    .postcard-back {
+        border-left: 0;
+        border-top: 1px solid var(--border);
     }
 
     .sidenote,
@@ -1315,9 +1393,10 @@ hr {
         padding: 0;
     }
 
+    /* 860px × 0.92 ≈ A4's 794px. */
     .folio {
         gap: 0;
-        zoom: 1 !important;
+        zoom: 0.92 !important;
     }
 
     .sheet {

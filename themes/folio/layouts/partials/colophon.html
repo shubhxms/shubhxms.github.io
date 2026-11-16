@@ -1,11 +1,12 @@
-{{- /* At the foot of the paper: whence this page was last edited, and its sources. */}}
+{{- /* At the foot of the paper, on one line: the commit that last touched
+       this page, and its sources. */}}
 <footer class="colophon">
   {{- with .GitInfo }}
-  <span class="colophon-edit">
-    Last edited <time datetime="{{ .AuthorDate.Format "2006-01-02" }}">{{ .AuthorDate.Format "2 Jan 2006" }}</time>
-    in <a href="{{ site.Params.repo }}/commit/{{ .Hash }}">{{ .AbbreviatedHash }}</a>
-    <q>{{ .Subject }}</q>
-  </span>
+  <a class="colophon-commit" href="{{ site.Params.repo }}/commit/{{ .Hash }}">{{ .AbbreviatedHash }}</a>
+  <time datetime="{{ .AuthorDate.Format "2006-01-02" }}">{{ .AuthorDate.Format "2 Jan 2006" }}</time>
+  <q class="colophon-subject" title="{{ .Subject }}">{{ .Subject }}</q>
+  {{- else }}
+  <span class="colophon-subject"></span>
   {{- end }}
   <span class="colophon-actions">
     {{- with .File }}

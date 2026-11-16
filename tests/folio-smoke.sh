@@ -30,9 +30,12 @@ has now/index.html 'class="active-page">★ Now</a>'
 # Title page, modelled on a book's frontmatter.
 has index.html 'class="sheet sheet--title"'
 has index.html '<p class="title-edition">Second Edition</p>'
-has index.html '<p class="title-press">shubhamshah.net</p>'
+lacks index.html 'title-press'
 has index.html '<h1 class="title-name">'
-has index.html 'class="title-imprint"'
+lacks index.html 'title-imprint'
+has index.html '<aside class="postcard"'
+has index.html 'class="postcard-stamp"'
+has index.html 'class="postcard-image is-empty"'
 
 # Documents: one continuous sheet. A big header (kicker, title, numbered
 # contents) gives way on scroll to a compact bar, inert until shown.
@@ -50,6 +53,7 @@ has index.html '<div class="doc-bar" inert>'
 
 # Colophon: last commit for this page, source, markdown and print.
 has now/index.html 'class="colophon"'
+has now/index.html 'class="colophon-subject"'
 python3 - "$OUT/now/index.html" <<'PY2' || fail 'the colophon should sit inside the paper'
 import sys
 html = open(sys.argv[1]).read()
@@ -91,6 +95,7 @@ lacks index.html 'loading="lazy"'
 CSS="$ROOT/themes/folio/assets/css/folio.css"
 grep -Fq '.sheet-body figure:not(.marginfigure) {' "$CSS" || fail 'text-column figure rules must not pull margin figures back in'
 grep -Fq '@media screen and (max-width: 800px)' "$CSS" || fail 'phone layout must not apply to printed A4 pages'
+grep -Fq -- '--sheet-w: 860px' "$CSS" || fail 'the sheet should be wider than A4'
 grep -Fq 'grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width)' "$CSS" \
 	|| fail 'a zoomed folio must widen the desk, not slide under the sidebar'
 

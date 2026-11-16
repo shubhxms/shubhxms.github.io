@@ -6,11 +6,10 @@ import { sectionAt, position } from './sections.js';
 
 const ZOOM_STEPS = [0.5, 0.67, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2];
 const ZOOM_KEY = 'folio-zoom';
-// "Fit" sizes a sheet to this share of the window (within the room beside
-// the sidebar), never smaller than READABLE_WIDTH or larger than MAX_ZOOM.
-const FIT_SHARE = 0.58;
-const READABLE_WIDTH = 700;
-const MAX_ZOOM = 1.75;
+// "Fit" fills the room beside the sidebar, up to FIT_SHARE of the window,
+// and never past MAX_ZOOM, so type stays a reading size on big screens.
+const FIT_SHARE = 0.75;
+const MAX_ZOOM = 1.15;
 
 export function createReader(folio) {
   const desk = folio.closest('.desk');
@@ -30,8 +29,7 @@ export function createReader(folio) {
 
   function fitScale() {
     const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
-    const wanted = Math.max(FIT_SHARE * window.innerWidth, READABLE_WIDTH);
-    return Math.min(MAX_ZOOM, Math.min(wanted, room()) / sheetWidth);
+    return Math.min(MAX_ZOOM, Math.min(FIT_SHARE * window.innerWidth, room()) / sheetWidth);
   }
 
   function scale() {
@@ -80,7 +78,7 @@ export function createReader(folio) {
     const heading = all[index];
     const state = {
       position: position(index, all.length),
-      section: heading ? heading.textContent.trim() : '',
+      section: heading ? heading.textContent.trim() : folio.dataset.title || '',
       sectionId: heading?.id || '',
       zoom: Math.round(scale() * 100),
       fit: zoom === 'fit',

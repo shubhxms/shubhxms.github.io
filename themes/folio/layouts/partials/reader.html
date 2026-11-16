@@ -1,13 +1,16 @@
-{{- /* Shown by the script on pages set as paper. */}}
+{{- /* Shown by the script on pages set as paper. A fixed-size box: the
+       controls on one line, the current section's title on the next. */}}
 <nav class="reader" aria-label="Reader" hidden>
-  <button type="button" data-action="prev" title="Previous section (k)" aria-label="Previous section">↑</button>
-  <span class="reader-pos" aria-live="polite"><span class="reader-mark">§</span> <span data-reader="position">—</span></span>
-  <button type="button" data-action="next" title="Next section (j)" aria-label="Next section">↓</button>
-  <span class="reader-section" data-reader="section"></span>
-  <span class="reader-rule" aria-hidden="true"></span>
-  <button type="button" data-action="zoom-out" title="Zoom out (−)" aria-label="Zoom out">−</button>
-  <button type="button" data-action="zoom-fit" class="reader-zoom" title="Fit (0)" aria-label="Fit"><span data-reader="zoom">fit</span></button>
-  <button type="button" data-action="zoom-in" title="Zoom in (+)" aria-label="Zoom in">+</button>
-  <span class="reader-rule" aria-hidden="true"></span>
-  <button type="button" data-action="palette" title="Commands and search (⌘K)" aria-label="Commands and search">⌘K</button>
+  <div class="reader-controls">
+    <button type="button" data-action="prev" title="Previous section (k)" aria-label="Previous section">↑</button>
+    <span class="reader-pos" aria-live="polite"><span class="reader-mark">§</span> <span data-reader="position">—</span></span>
+    <button type="button" data-action="next" title="Next section (j)" aria-label="Next section">↓</button>
+    <span class="reader-rule" aria-hidden="true"></span>
+    <button type="button" data-action="zoom-out" title="Zoom out (−)" aria-label="Zoom out">−</button>
+    <button type="button" data-action="zoom-fit" class="reader-zoom" title="Fit (0)" aria-label="Fit"><span data-reader="zoom">fit</span></button>
+    <button type="button" data-action="zoom-in" title="Zoom in (+)" aria-label="Zoom in">+</button>
+    <span class="reader-rule" aria-hidden="true"></span>
+    <button type="button" data-action="palette" title="Commands and search (⌘K)" aria-label="Commands and search">⌘K</button>
+  </div>
+  <p class="reader-section" data-reader="section"></p>
 </nav>
