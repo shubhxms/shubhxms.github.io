@@ -20,8 +20,8 @@ function setTheme(mode) {
   markTheme();
 }
 
-// Layout ("paper", "plain") and section heads ("side", "side-bare",
-// "inline"): attributes on <html>, set before paint by the head.
+// Layout ("paper", "plain") and section heads ("side", "inline"):
+// attributes on <html>, set before paint by the head.
 function setView(key, name, value) {
   store(key, value);
   document.documentElement.dataset[name] = value;
@@ -53,7 +53,6 @@ function start() {
     'layout-paper': () => setView('folio-layout', 'layout', 'paper'),
     'layout-plain': () => setView('folio-layout', 'layout', 'plain'),
     'heads-side': () => setView('folio-heads', 'heads', 'side'),
-    'heads-side-bare': () => setView('folio-heads', 'heads', 'side-bare'),
     'heads-inline': () => setView('folio-heads', 'heads', 'inline'),
   };
 

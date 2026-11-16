@@ -244,21 +244,16 @@ a:hover {
     position: relative;
     flex: 1;
     box-sizing: content-box;
-    width: var(--text-w);
-    /* Section heads hang in a side column, beyond a dotted rule. */
-    margin-left: var(--side);
-    padding-left: var(--side-gap);
-    border-left: 1px dotted var(--rule);
+    /* Without a side column the text takes its width too. */
+    width: calc(var(--text-w) + var(--side) + var(--side-gap) + 1px);
     line-height: 1.3;
     font-variant-numeric: oldstyle-nums proportional-nums;
 }
 
 /* ---------- Big header: kicker, title, summary, contents ---------- */
 
-/* The header spans side column and text, over the dotted rule. */
 .doc-head {
     position: relative;
-    margin: 0 0 0 calc(-1 * (var(--side) + var(--side-gap) + 1px));
     padding-bottom: 0.9em;
     background: var(--paper);
 }
@@ -452,35 +447,15 @@ a:hover {
     scroll-margin-top: calc(var(--bar-h) + 14px);
 }
 
-/* A section head: a rule across side column and text, with the name set
-   small in the side column, beside the section's first lines. The h2 takes
-   no height of its own, so the text starts right under the rule. */
+/* A section head, underlined in the text. With data-heads="side", a page's
+   own sections hang their names in a side column instead (below). */
 .sheet-body h2 {
-    position: relative;
-    box-sizing: border-box;
-    width: var(--side);
-    height: 0;
-    margin: 1.45em 0 0.65em calc(-1 * (var(--side) + var(--side-gap) + 1px));
-    /* Shifted down onto the text's first line; the box itself takes no
-       height, so the text starts right under the rule. */
-    top: 0.95em;
-    padding: 0 10px 0 0;
-    font-family: var(--mono);
-    font-size: 0.68em;
+    margin: 1.05em 0 0.35em;
+    padding: 0 0 0.1em;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.195em;
     font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    overflow-wrap: anywhere;
-}
-
-.sheet-body h2::before {
-    content: "";
-    position: absolute;
-    top: -0.95em;
-    left: 0;
-    width: calc(var(--side) + var(--side-gap) + 1px + var(--text-w));
-    border-top: 1px solid var(--rule);
+    letter-spacing: -0.005em;
 }
 
 .sheet-body h3 {
@@ -925,43 +900,43 @@ hr {
     text-decoration: none;
 }
 
-/* ---------- Section heads: side column (default), side-bare, inline ----------
-   A page without sections, and the inline style, drop the side column: the
-   text takes its width, and h2s are underlined headings in the text. */
+/* ---------- Section heads in a side column ----------
+   data-heads="side": a page's own sections (top-level h2s) set their names
+   small in a side column, beyond a dotted rule, beside the section's first
+   line. Pages without sections (sheet--flat), headings nested in other
+   blocks (an archive's years) and phones keep underlined heads. */
 
-:root[data-heads="side-bare"] .sheet-body h2::before {
-    content: none;
-}
+@media print, screen and (min-width: 801px) {
+    :root[data-heads="side"] .sheet:not(.sheet--flat) .sheet-body {
+        width: var(--text-w);
+        margin-left: var(--side);
+        padding-left: var(--side-gap);
+        border-left: 1px dotted var(--rule);
+    }
 
-:root[data-heads="inline"] .sheet-body,
-.sheet--flat .sheet-body {
-    width: calc(var(--text-w) + var(--side) + var(--side-gap) + 1px);
-    margin-left: 0;
-    padding-left: 0;
-    border-left: 0;
-}
+    /* The header spans side column and text, over the dotted rule. */
+    :root[data-heads="side"] .sheet:not(.sheet--flat) .doc-head {
+        margin-left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+    }
 
-:root[data-heads="inline"] .doc-head,
-.sheet--flat .doc-head {
-    margin-left: 0;
-}
-
-:root[data-heads="inline"] .sheet-body h2 {
-    top: 0;
-    width: auto;
-    height: auto;
-    margin: 1.05em 0 0.35em;
-    padding: 0 0 0.1em;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--sans);
-    font-size: 1.195em;
-    letter-spacing: -0.005em;
-    text-transform: none;
-    overflow-wrap: normal;
-}
-
-:root[data-heads="inline"] .sheet-body h2::before {
-    content: none;
+    /* The h2 takes no height, so the text starts right under the space
+       above; the name is shifted down onto the text's first line. */
+    :root[data-heads="side"] .sheet:not(.sheet--flat) .sheet-body > h2 {
+        position: relative;
+        top: 0.95em;
+        box-sizing: border-box;
+        width: var(--side);
+        height: 0;
+        margin: 1.6em 0 0.65em calc(-1 * (var(--side) + var(--side-gap) + 1px));
+        padding: 0 10px 0 0;
+        border: 0;
+        font-family: var(--mono);
+        font-size: 0.68em;
+        line-height: 1.3;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+    }
 }
 
 /* ---------- Plain layout ----------
@@ -1299,26 +1274,6 @@ hr {
 
     .sheet-body {
         width: auto;
-        margin-left: 0;
-        padding-left: 0;
-        border-left: 0;
-    }
-
-    .doc-head {
-        margin-left: 0;
-    }
-
-    .sheet-body h2 {
-        top: 0;
-        width: auto;
-        height: auto;
-        margin: 1.2em 0 0.4em;
-        padding: 0.4em 0 0;
-        border-top: 1px solid var(--rule);
-    }
-
-    .sheet-body h2::before {
-        content: none;
     }
 
     .doc-bar {

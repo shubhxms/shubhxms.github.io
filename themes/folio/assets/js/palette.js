@@ -17,7 +17,6 @@ const ACTIONS = [
   { group: 'View', label: 'Paper layout', action: 'layout-paper', keywords: 'sheet page desk pdf' },
   { group: 'View', label: 'Plain layout', action: 'layout-plain', keywords: 'flat simple no page' },
   { group: 'View', label: 'Section heads in a side column', action: 'heads-side', keywords: 'headings margin left' },
-  { group: 'View', label: 'Side column, without rules across', action: 'heads-side-bare', keywords: 'headings section lines' },
   { group: 'View', label: 'Section heads inline, underlined', action: 'heads-inline', keywords: 'headings normal horizontal' },
   { group: 'This page', label: 'Print or save as PDF', action: 'print', keywords: 'download pdf' },
 ];

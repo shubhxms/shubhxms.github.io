@@ -60,9 +60,9 @@ lacks uses/index.html 'doc-kicker'
 # (the page is the site), set in hugo.toml and switchable from the palette.
 has index.html 'data-layout-default="plain"'
 
-# Section heads: "side" (side column, rule across), "side-bare" (side
-# column, no rule across) or "inline" (an underlined heading in the text).
-# Pages without sections never get the side column.
+# Section heads: "side" (names in a side column beyond a dotted rule) or
+# "inline" (underlined headings in the text). Only a page's own sections
+# hang in the side column, and pages without sections have none.
 has index.html 'data-heads-default="side"'
 has contact/index.html 'class="sheet sheet--doc sheet--flat"'
 lacks uses/index.html 'sheet--flat'
@@ -148,5 +148,10 @@ grep -Fq 'src="/js/folio.js"' "$DEV/now/index.html" || fail 'development JS shou
 
 # Pages that keep their own scripts still build.
 has feed/index.html 'id="feed-root"'
+
+# Side-column heads apply only to sections of pages that have them, so
+# headings inside lists (the archive's years) stay put.
+grep -q ':root\[data-heads="side"\] .sheet:not(.sheet--flat) .sheet-body > h2 {' "$CSS" || fail 'side heads should be scoped to sectioned pages'
+! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
 printf 'folio smoke tests passed\n'
