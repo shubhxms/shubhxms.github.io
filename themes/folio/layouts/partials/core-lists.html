@@ -1,45 +1,23 @@
 {{- /*
-  Core (data/core.yaml). A section with covers is a bookshelf: a row of
-  spines, coloured from their covers; under it a plate showing one entry
-  large (cover, title, maker, year, note); then the whole section as a
-  catalogue, by category. A spine or a catalogue line leads to its entry's
-  card (#id), which the plate shows by :target; with none chosen, the
-  first. A section without covers (Internet) is a plain list.
+  Core (data/core.yaml). Each list is a stack of books lying flat: every
+  line is a spine, coloured from its cover, with title and maker across
+  it, and opens to show the cover and the note (core-book.html). Books
+  keep their categories. A section without covers (Internet) is a plain
+  list.
 */}}
 {{- range .sections }}
 {{- $groups := .lists | default (slice (dict "items" .items)) }}
 {{- $entries := partial "core-entries.html" . }}
 <h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
 {{- if where $entries "cover" "!=" nil }}
-<div class="core-shelf" role="list" aria-label="{{ .name }}, by spine">
-  {{- range $i, $group := $groups }}
-  {{- if $i }}<span class="core-bookend" aria-hidden="true"></span>{{ end }}
-  {{- range .items }}
-  {{- $cover := partial "core-cover.html" . }}
-  <a class="core-spine{{ if not $cover.colour }} core-spine--plain{{ end }}{{ if $cover.light }} core-spine--light{{ end }}" role="listitem" href="#{{ .title | anchorize }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}" style="--w: {{ add 1.75 (mul 0.3 (mod (len .title) 3)) }}em;{{ with $cover.colour }} --c: {{ . }};{{ end }}"><span>{{ .title }}</span></a>
+{{- range $groups }}
+{{- with .name }}<p class="core-category">{{ . }}</p>{{ end }}
+<ol class="core-stack">
+  {{- range $i, $e := .items }}
+  <li>{{ partial "core-book.html" (dict "entry" $e "index" $i) }}</li>
   {{- end }}
-  {{- end }}
-</div>
-<div class="core-plate">
-  {{- range $groups }}
-  {{- $group := .name }}
-  {{- range .items }}{{ partial "core-card.html" (dict "entry" . "group" $group) }}{{ end }}
-  {{- end }}
-</div>
-<table class="core-table">
-  {{- range $groups }}
-  <tbody>
-    {{- with .name }}<tr class="core-table-group"><th colspan="3" scope="rowgroup">{{ . }}</th></tr>{{ end }}
-    {{- range .items }}
-    <tr>
-      <td class="core-table-title"><a href="#{{ .title | anchorize }}">{{ .title }}</a></td>
-      <td class="core-table-by">{{ .by }}</td>
-      <td class="core-table-year">{{ .year }}</td>
-    </tr>
-    {{- end }}
-  </tbody>
-  {{- end }}
-</table>
+</ol>
+{{- end }}
 {{- else }}
 <ul class="core-links">
   {{- range $entries }}

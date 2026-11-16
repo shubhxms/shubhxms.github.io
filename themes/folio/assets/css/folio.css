@@ -1288,102 +1288,110 @@ hr {
     text-align: left;
 }
 
-/* ---------- Core: a shelf, a plate, a catalogue ----------
-   Each section opens with its spines on a shelf, coloured from their
-   covers (core-cover.html); under it a plate shows one entry large, the
-   one whose spine or line was chosen (:target), else the first; then the
-   section as a catalogue. */
+/* ---------- Core: lists as stacks of books ----------
+   Every line is a spine lying flat: the cover's colour (core-cover.html),
+   title and maker across it, banded at both ends like a binding, a little
+   shorter or longer than its neighbours. Clicking one opens it under its
+   spine: cover, year, note. */
 
-.core-shelf {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin: 0.4em 0 0;
-    padding: 0.6em 0 0;
-    overflow-x: auto;
-    border-bottom: 4px solid var(--text);
-    scrollbar-width: thin;
+.sheet-body .core-category {
+    margin: 1em 0 0.3em;
+    font-family: var(--mono);
+    font-size: 0.7em;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--text-secondary);
 }
 
-.sheet-body .core-spine {
-    flex: none;
+.sheet-body ol.core-stack {
+    margin: 0 0 0.6em;
+    padding: 0;
+    list-style: none;
+}
+
+.sheet-body .core-stack > li {
+    margin: 0 0 2px;
+}
+
+.sheet-body .core-stack > li::before {
+    content: none;
+}
+
+.core-spine {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1em;
     box-sizing: border-box;
-    width: var(--w);
-    height: 8.6em;
-    padding: 0.5em 0;
-    overflow: hidden;
-    background: var(--c);
-    /* A little light down one edge, a little shade down the other. */
-    background-image: linear-gradient(90deg, rgb(255 255 255 / 0.18), transparent 22%, transparent 78%, rgb(0 0 0 / 0.18));
+    width: calc(100% - var(--short) * 2.2%);
+    margin-left: calc(var(--short) * 0.35%);
+    padding: 0.32em 0.9em;
+    background-color: var(--c);
+    /* The binding: a band at each end, light along the top, shade below. */
+    background-image:
+        linear-gradient(90deg, rgb(0 0 0 / 0.22) 0 0.3em, transparent 0.3em 0.55em, rgb(0 0 0 / 0.22) 0.55em 0.65em, transparent 0.65em calc(100% - 0.65em), rgb(0 0 0 / 0.22) calc(100% - 0.65em) calc(100% - 0.55em), transparent calc(100% - 0.55em) calc(100% - 0.3em), rgb(0 0 0 / 0.22) calc(100% - 0.3em)),
+        linear-gradient(180deg, rgb(255 255 255 / 0.16), transparent 45%, rgb(0 0 0 / 0.14));
     color: #111;
-    text-decoration: none;
-    transition: transform 0.15s ease;
+    cursor: pointer;
+    list-style: none;
+    transition: transform 0.12s ease;
 }
 
-.sheet-body .core-spine--light {
+.core-spine::-webkit-details-marker {
+    display: none;
+}
+
+.core-spine--light {
     color: #fff;
 }
 
-.sheet-body .core-spine--plain {
+.core-spine--plain {
     border: 1px solid var(--border);
     background-color: var(--paper);
     color: var(--text);
 }
 
-.core-spine span {
-    max-height: 100%;
+.core-spine:hover,
+.core-spine:focus-visible {
+    transform: translateX(0.4em);
+    outline: none;
+}
+
+.core-book[open] > .core-spine {
+    transform: translateX(0.4em);
+}
+
+.core-spine-title {
+    min-width: 0;
     overflow: hidden;
     font-family: var(--sans);
-    font-size: 0.66em;
+    font-size: 0.86em;
     font-weight: 700;
-    line-height: 1.1;
+    letter-spacing: 0.01em;
     text-overflow: ellipsis;
     white-space: nowrap;
-    writing-mode: vertical-rl;
 }
 
-.sheet-body .core-spine:is(:hover, :focus-visible) {
-    transform: translateY(-0.45em);
-    color: #111;
-}
-
-.sheet-body .core-spine--light:is(:hover, :focus-visible) {
-    color: #fff;
-}
-
-.sheet-body .core-spine--plain:is(:hover, :focus-visible) {
-    color: var(--text);
-}
-
-/* Where one category ends and the next begins. */
-.core-bookend {
+.core-spine-by {
     flex: none;
-    width: 0.7em;
+    max-width: 45%;
+    overflow: hidden;
+    font-family: var(--serif);
+    font-size: 0.82em;
+    font-style: italic;
+    opacity: 0.85;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* The plate: one card at a time. */
-.core-plate {
-    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin: 0 0 0.8em;
-    border-bottom: 1px solid var(--border);
-}
-
-.core-card {
-    display: none;
-    grid-template-columns: 6.5em minmax(0, 1fr);
-    align-items: start;
-    gap: 1.1em;
-    padding: 0.9em 0;
-    scroll-margin-top: 14em;
-}
-
-.core-card:target,
-.core-plate:not(:has(.core-card:target)) .core-card:first-child {
+/* Opened: the book lies open under its spine. */
+.core-open {
     display: grid;
+    grid-template-columns: 6em minmax(0, 1fr);
+    align-items: start;
+    gap: 1em;
+    padding: 0.7em 0 0.9em 0.9em;
 }
 
 .core-cover {
@@ -1409,99 +1417,41 @@ hr {
 }
 
 .core-cover-title {
-    font-size: 0.9em;
+    font-size: 0.85em;
     overflow-wrap: anywhere;
 }
 
 .core-cover-by {
     padding-top: 0.3em;
     border-top: 1px solid var(--rule);
-    font-size: 0.66em;
+    font-size: 0.62em;
     color: var(--text-secondary);
 }
 
-.sheet-body .core-about :is(p, h3) {
+.sheet-body .core-about p {
     margin: 0;
     text-align: left;
 }
 
-.sheet-body .core-meta {
-    margin-bottom: 0.3em;
-    font-family: var(--mono);
-    font-size: 0.68em;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-}
-
-.sheet-body h3.core-title {
-    font-family: var(--serif);
-    font-size: 1.5em;
+.sheet-body .core-title {
+    font-size: 1.25em;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.15;
 }
 
 .sheet-body .core-by {
-    margin-top: 0.15em;
+    margin-top: 0.1em;
     font-style: italic;
     color: var(--text-secondary);
 }
 
 .sheet-body .core-blurb {
-    margin-top: 0.6em;
-    max-width: 34em;
+    margin-top: 0.5em;
 }
 
 .sheet-body .core-more {
-    margin-top: 0.3em;
+    margin-top: 0.25em;
     font-size: 0.9em;
-}
-
-/* The catalogue: dense lines, by category, like the feed. */
-.sheet-body table.core-table {
-    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin: 0 0 1.2em;
-    border: 0;
-    font-size: 0.9em;
-}
-
-.sheet-body .core-table td {
-    padding: 0.16em 0.6em 0.16em 0;
-    border-bottom: 1px solid var(--rule);
-    vertical-align: baseline;
-}
-
-.core-table-title {
-    width: 50%;
-}
-
-.sheet-body .core-table-by {
-    font-style: italic;
-    color: var(--text-secondary);
-}
-
-.sheet-body .core-table-year {
-    width: 3.5em;
-    padding-right: 0;
-    font-family: var(--mono);
-    font-size: 0.8em;
-    text-align: right;
-    color: var(--text-secondary);
-}
-
-.sheet-body .core-table-group th {
-    padding: 0.8em 0 0.15em;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: 0.68em;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-align: left;
-    text-transform: uppercase;
-}
-
-.sheet-body .core-table tr:has(a:hover) td {
-    background: var(--callout-bg);
 }
 
 /* The internet: no covers, so a plain list, kind after name. */
@@ -1927,20 +1877,13 @@ hr {
         min-width: 0;
     }
 
-    .core-shelf,
-    .core-plate,
-    .sheet-body table.core-table {
-        width: auto;
+    .core-open {
+        grid-template-columns: 4.6em minmax(0, 1fr);
+        padding-left: 0.5em;
     }
 
-    .core-card {
-        grid-template-columns: 5em minmax(0, 1fr);
-        gap: 0.9em;
-        scroll-margin-top: 12em;
-    }
-
-    .sheet-body .core-table-by {
-        display: none;
+    .core-spine-by {
+        max-width: 38%;
     }
 
     .sidebar {

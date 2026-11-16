@@ -1,0 +1,40 @@
+{{- /*
+  One Core entry as a book lying in a stack. Closed, it is its spine:
+  the cover's colour, title and maker across it, a little shorter or
+  longer than its neighbours (the stack is uneven, as stacks are). Open,
+  it shows the cover (or title and maker on a plate the same size), year,
+  and for an entry with a note, the note's summary and a link to it.
+    entry – the entry; index – its place in the stack
+*/}}
+{{- $e := .entry }}
+{{- $cover := partial "core-cover.html" $e }}
+{{- $note := false }}
+{{- with $e.note }}
+{{- $note = index (where site.RegularPages "RelPermalink" .) 0 }}
+{{- if not $note }}{{ errorf "core: note %q is not a page on this site" . }}{{ end }}
+{{- end }}
+{{- $n := len $e.title }}
+<details class="core-book" id="{{ $e.title | anchorize }}">
+  <summary class="core-spine{{ if not $cover.colour }} core-spine--plain{{ end }}{{ if $cover.light }} core-spine--light{{ end }}" style="--short: {{ mod (add $n (mul .index 3)) 5 }};{{ with $cover.colour }} --c: {{ . }};{{ end }}">
+    <span class="core-spine-title">{{ $e.title }}</span>
+    {{- with $e.by }}<span class="core-spine-by">{{ . }}</span>{{ end }}
+  </summary>
+  <div class="core-open">
+    {{- with $cover.thumb }}
+    <img class="core-cover" src="{{ . }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
+    {{- else }}
+    <span class="core-cover core-cover--type" aria-hidden="true">
+      <span class="core-cover-title">{{ $e.title }}</span>
+      <span class="core-cover-by">{{ $e.by }}</span>
+    </span>
+    {{- end }}
+    <div class="core-about">
+      <p class="core-title">{{ $e.title }}</p>
+      {{- with $e.by }}<p class="core-by">{{ . }}{{ with $e.year }} · {{ . }}{{ end }}</p>{{ end }}
+      {{- with $note }}
+      <p class="core-blurb">{{ .Params.tldr | default .Summary | plainify | truncate 260 }}</p>
+      <p class="core-more"><a href="{{ .RelPermalink }}">Read the note →</a></p>
+      {{- end }}
+    </div>
+  </div>
+</details>

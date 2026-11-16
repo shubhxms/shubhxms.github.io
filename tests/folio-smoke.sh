@@ -189,21 +189,20 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# Core: per section, a shelf of spines coloured from their covers, each
-# leading to its entry; then the entries, cover beside text. Covers are
-# resized thumbnails; one without a cover gets a typographic plate. An
-# entry with a note quotes its summary. /shelf leads here.
+# Core: each list a stack of books lying flat; every line is a spine,
+# coloured from its cover (Hugo reads the dominant colour), with title and
+# maker across it, and opens to show the cover (a 240x360 thumbnail; a
+# type-set plate without one) and the note. No separate shelf or table.
 C="$OUT/core/index.html"
-[ "$(grep -o '<article class="core-card"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'core should card its 30 books and films'
-[ "$(grep -o '<a class="core-spine' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'every book and film should have a spine'
-[ "$(grep -o '<td class="core-table-title">' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'every book and film should be catalogued'
-[ "$(grep -o 'style="[^"]*--c: #[0-9a-f]\{6\}' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'spines with covers take their colour'
+[ "$(grep -o '<details class="core-book"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'core should stack its 30 books and films'
+[ "$(grep -o '<summary class="core-spine[^"]*" style="[^"]*--c: #[0-9a-f]\{6\}' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'spines with covers take their colour'
 [ "$(grep -o '<img class="core-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
 [ "$(grep -o 'class="core-cover core-cover--type"' "$C" | wc -l | tr -d ' ')" = 10 ] || fail 'entries without covers get a plate'
-[ "$(grep -o '<tr class="core-table-group">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
-has core/index.html 'href="#vikram-sarabhai-a-life"'
+[ "$(grep -o '<p class="core-category">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
+lacks core/index.html 'core-shelf'
+lacks core/index.html 'core-table'
+has core/index.html '<details class="core-book" id="vikram-sarabhai-a-life">'
 has core/index.html '<li><a href="#films-shows--anime">Films, Shows &amp; Anime</a></li>'
-lacks core/index.html 'style="--h:'
 has core/index.html '<p class="core-blurb">In this I gather some thoughts on Vikram Sarabhai'
 has core/index.html '<a href="https://dynomight.substack.com/">Dynomight</a>'
 lacks index.html 'src="/images/shelf/chaos.jpg"'

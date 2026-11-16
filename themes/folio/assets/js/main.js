@@ -44,9 +44,19 @@ function startReader(folio, actions) {
   document.fonts?.ready.then(() => wide.matches && reader.layout());
 
   // Laying out moves everything, so return to a linked #fragment afterwards.
-  const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+  const target = linked();
   if (target) target.scrollIntoView({ block: 'start' });
 }
+
+// The element the URL's #fragment names. A linked <details> (a book in
+// Core's stacks) opens.
+function linked() {
+  const id = window.location.hash && decodeURIComponent(window.location.hash.slice(1));
+  const target = id && document.getElementById(id);
+  if (target instanceof HTMLDetailsElement) target.open = true;
+  return target;
+}
+window.addEventListener('hashchange', linked);
 
 function start() {
   const actions = {
