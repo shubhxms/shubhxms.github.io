@@ -26,7 +26,18 @@ function startReader(folio, actions) {
   Object.assign(actions, reader.actions);
   bindToolbar(document.querySelector('.reader'), reader);
 
+  // Printing narrows the page to A4, which can flip `wide`; the sheets are
+  // already the right size for paper, so leave them alone until it is done.
+  let printing = false;
+  window.addEventListener('beforeprint', () => { printing = true; });
+  window.addEventListener('afterprint', () => { printing = false; });
+
+  let firstLayout = true;
   const layout = () => {
+    if (printing) return;
+    const anchor = readingPosition(folio, firstLayout);
+    firstLayout = false;
+
     unpaginate(folio);
     folio.style.zoom = '';
     if (wide.matches) {
@@ -35,6 +46,7 @@ function startReader(folio, actions) {
     } else {
       reader.render();
     }
+    anchor?.scrollIntoView({ block: 'start' });
   };
 
   document.fonts.ready.then(() => {
@@ -43,6 +55,18 @@ function startReader(folio, actions) {
     if (document.readyState !== 'complete') window.addEventListener('load', layout, { once: true });
   });
   wide.addEventListener('change', layout);
+}
+
+// What the reader is looking at, so a relayout can return to it: the linked
+// #fragment on first load, otherwise the first block at the top of the view.
+function readingPosition(folio, firstLayout) {
+  const target = firstLayout && window.location.hash
+    ? document.getElementById(decodeURIComponent(window.location.hash.slice(1)))
+    : null;
+  if (target) return target;
+  if (window.scrollY === 0) return null;
+  const blocks = folio.querySelectorAll('.sheet-body > *');
+  return Array.from(blocks).find((block) => block.getBoundingClientRect().bottom > 0) ?? null;
 }
 
 function start() {

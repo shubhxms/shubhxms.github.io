@@ -95,7 +95,9 @@ a:hover {
 
 .shell {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+    /* A folio zoomed past the desk widens it (and scrolls the page)
+       rather than sliding under the sidebar. */
+    grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width);
     gap: 2rem;
     align-items: start;
     min-height: 100vh;
@@ -561,6 +563,14 @@ hr.pagebreak {
     color: var(--text);
 }
 
+.note-para {
+    display: block;
+}
+
+.note-para + .note-para {
+    margin-top: 0.4em;
+}
+
 .sidenote::before {
     content: counter(sidenote) " ";
     color: var(--accent);
@@ -961,7 +971,7 @@ hr.pagebreak {
 
 /* ---------- Narrow screens: one reflowed sheet, notes inline ---------- */
 
-@media (max-width: 800px) {
+@media screen and (max-width: 800px) {
     .shell {
         display: block;
         padding: 0;

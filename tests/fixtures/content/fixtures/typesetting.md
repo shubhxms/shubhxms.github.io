@@ -2,6 +2,7 @@
 title: "Typesetting fixture"
 url: /fixture-typesetting
 tldr: "Exercises maths, marginalia and page breaks."
+description: "A description skips the summary, which used to be what rendered the content early."
 ---
 
 Euler wrote \(e^{i\pi} + 1 = 0\) and also $a^2 + b^2 = c^2$.{{< sidenote >}}A numbered note.{{< /sidenote >}}
@@ -12,7 +13,9 @@ $$
 
 ## Margins
 
-Text with an unnumbered aside.{{< marginnote >}}An unnumbered note.{{< /marginnote >}}
+Text with an unnumbered aside.{{< marginnote >}}An unnumbered note.{{< /marginnote >}} And a longer note.{{< sidenote >}}First paragraph.
+
+Second paragraph.{{< /sidenote >}}
 
 {{< pagebreak >}}
 

@@ -51,6 +51,21 @@ test('planPages keeps the first section on the same page as the document head', 
   assert.deepEqual(planPages(blocks, 1000, 'section'), [[0, 1, 2], [3, 4]]);
 });
 
+test('planPages does not leave a blank page between a forced break and a section', () => {
+  const blocks = [block(100), block(0, { pagebreak: true }), block(20, { section: true, heading: true }), block(50)];
+  assert.deepEqual(planPages(blocks, 900, 'section'), [[0], [1, 2, 3]]);
+});
+
+test('planPages keeps a heading with a following block that is taller than a page', () => {
+  const blocks = [block(100), block(30, { heading: true }), block(2000)];
+  assert.deepEqual(planPages(blocks, 400, 'flow'), [[0], [1, 2]]);
+});
+
+test('planPages counts the marginalia of the block a heading is kept with', () => {
+  const blocks = [block(800), block(30, { heading: true }), block(50, { extent: 300 })];
+  assert.deepEqual(planPages(blocks, 900, 'flow'), [[0], [1, 2]]);
+});
+
 test('planPages measures a block by its marginalia when they reach further', () => {
   assert.deepEqual(planPages([block(300), block(50, { extent: 200 })], 400), [[0], [1]]);
   // Marginalia hang beside later blocks; they do not push them down.

@@ -40,6 +40,10 @@ async function pageItems(indexUrl) {
         if (!response.ok) throw new Error(`search index: HTTP ${response.status}`);
         return response.json();
       })
+      .catch((error) => {
+        searchIndex = undefined; // try again next time the palette opens
+        throw error;
+      })
       .then((pages) => pages.map((page) => ({
         label: page.title,
         group: 'Pages',
@@ -97,19 +101,24 @@ export function createPalette(dialog, actions) {
   }
 
   function select(index) {
-    if (!results.length) return;
+    if (!results.length) {
+      input.removeAttribute('aria-activedescendant');
+      return;
+    }
     selected = (index + results.length) % results.length;
     Array.from(list.children).forEach((li, i) => li.setAttribute('aria-selected', String(i === selected)));
     input.setAttribute('aria-activedescendant', `palette-option-${selected}`);
     list.children[selected]?.scrollIntoView({ block: 'nearest' });
   }
 
+  // Re-ranks, keeping the highlighted item highlighted if it is still listed.
   function update() {
+    const current = results[selected]?.item;
     results = rank(items, input.value);
-    selected = 0;
+    selected = Math.max(0, results.findIndex((result) => result.item === current));
     list.replaceChildren(...results.map(option));
     status.textContent = results.length ? '' : 'Nothing found.';
-    select(0);
+    select(selected);
   }
 
   input.addEventListener('input', update);
@@ -120,7 +129,7 @@ export function createPalette(dialog, actions) {
     } else if (event.key === 'ArrowUp' || (event.ctrlKey && event.key === 'p')) {
       event.preventDefault();
       select(selected - 1);
-    } else if (event.key === 'Enter' && results[selected]) {
+    } else if (event.key === 'Enter' && !event.isComposing && results[selected]) {
       event.preventDefault();
       run(results[selected].item);
     }
@@ -134,6 +143,7 @@ export function createPalette(dialog, actions) {
     if (dialog.open) return;
     items = [...sectionItems(), ...actionItems, ...linkItems()];
     input.value = '';
+    results = [];
     update();
     dialog.showModal();
     try {

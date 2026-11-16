@@ -6,8 +6,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT="$(mktemp -d)"
 trap 'rm -rf "$OUT"' EXIT
 
-hugo --quiet --source "$ROOT" --destination "$OUT" \
-	--config "$ROOT/hugo.toml,$ROOT/tests/hugo.test.toml" --enableGitInfo
+# Hugo prints build errors only when not --quiet; keep them, drop the rest.
+hugo --source "$ROOT" --destination "$OUT" \
+	--config "$ROOT/hugo.toml,$ROOT/tests/hugo.test.toml" --enableGitInfo >/dev/null
 
 fail() { printf 'FAIL: %s\n' "$1" >&2; exit 1; }
 has() { grep -Fq -- "$2" "$OUT/$1" || fail "$1 should contain: $2"; }
@@ -68,6 +69,17 @@ has fixture-typesetting/index.html 'class="marginnote"'
 has fixture-typesetting/index.html 'class="pagebreak"'
 has fixture-typesetting/index.html 'class="callout"'
 has sarabhai/index.html 'class="marginfigure"'
+# Notes sit inside a paragraph, so their own paragraphs must not be <p>s.
+has fixture-typesetting/index.html '<span class="note-para">Second paragraph.</span>'
+lacks fixture-typesetting/index.html '<p>Second paragraph.</p>'
+# Margin images are measured on load, so they must not load lazily.
+lacks index.html 'loading="lazy"'
+
+# Stylesheet rules the layout depends on.
+CSS="$ROOT/themes/folio/assets/css/folio.css"
+grep -Fq '@media screen and (max-width: 800px)' "$CSS" || fail 'phone layout must not apply to printed A4 pages'
+grep -Fq 'grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width)' "$CSS" \
+	|| fail 'a zoomed folio must widen the desk, not slide under the sidebar'
 
 # Production assets are fingerprinted with integrity hashes.
 grep -Eq 'href="/css/folio\.min\.[0-9a-f]{64}\.css" integrity="sha256-' "$OUT/now/index.html" \
@@ -78,7 +90,7 @@ grep -Eq 'src="/js/folio\.min\.[0-9a-f]{64}\.js" integrity="sha256-' "$OUT/now/i
 # Development assets keep stable URLs, so live reload can swap CSS in place.
 DEV="$(mktemp -d)"
 trap 'rm -rf "$OUT" "$DEV"' EXIT
-hugo --quiet --source "$ROOT" --destination "$DEV" --environment development
+hugo --source "$ROOT" --destination "$DEV" --environment development >/dev/null
 grep -Fq 'href="/css/folio.css"' "$DEV/now/index.html" || fail 'development CSS should have a stable URL'
 grep -Fq 'src="/js/folio.js"' "$DEV/now/index.html" || fail 'development JS should have a stable URL'
 ! grep -Fq 'integrity=' "$DEV/now/index.html" || fail 'development assets should carry no integrity hash'

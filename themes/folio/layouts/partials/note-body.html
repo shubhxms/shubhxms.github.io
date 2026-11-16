@@ -1,0 +1,8 @@
+{{- /*
+  Renders a note's markdown for use inside a paragraph: a note's own
+  paragraphs become block spans, since a <p> cannot sit inside a <p>.
+  Takes { page, inner }.
+*/}}
+{{- $html := .inner | .page.RenderString (dict "display" "block") }}
+{{- $html = $html | replaceRE `<p>` `<span class="note-para">` | replaceRE `</p>` `</span>` | strings.TrimSpace }}
+{{- return ($html | safeHTML) }}

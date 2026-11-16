@@ -18,14 +18,18 @@ export function planPages(blocks, capacity, mode = 'section') {
   let page = [];
   let used = 0;
 
+  const reach = (block) => Math.max(block.height, block.extent ?? 0);
+  // A page "holds nothing yet" if it has only these, so it never ends there.
+  const holdsOnly = (test) => page.every((j) => blocks[j].pagebreak || test(blocks[j]));
+
   blocks.forEach((block, i) => {
     const next = blocks[i + 1];
-    const reach = Math.max(block.height, block.extent ?? 0);
-    const needed = block.heading && next ? block.height + next.height : reach;
+    const needed = block.heading && next
+      ? block.height + Math.min(reach(next), capacity)
+      : reach(block);
 
-    const onlyLead = page.every((j) => blocks[j].lead);
-    const newSection = block.section && mode === 'section' && !onlyLead;
-    const overflows = used + needed > capacity;
+    const newSection = block.section && mode === 'section' && !holdsOnly((b) => b.lead);
+    const overflows = used + needed > capacity && !holdsOnly((b) => b.heading);
 
     if (page.length > 0 && (block.pagebreak || newSection || overflows)) {
       pages.push(page);
@@ -55,7 +59,8 @@ function measure(body) {
       ...Array.from(notes, (note) => noteOffset(note, body) + note.offsetHeight),
     );
     return {
-      height: bottom - top,
+      // A floated block (a margin figure) takes no room in the flow.
+      height: Math.max(0, bottom - top),
       extent: noteBottom - top,
       lead: el.classList.contains('doc-head'),
       section: el.tagName === 'H2',
@@ -138,7 +143,7 @@ function label(folio) {
     if (opener && opener.tagName === 'H2') section = opener.textContent.trim();
 
     sheet.dataset.number = String(i + 1);
-    sheet.dataset.section = section;
+    sheet.dataset.section = sheet.dataset.label || section;
     const head = sheet.querySelector('.sheet-head');
     const foot = sheet.querySelector('.sheet-foot');
     if (head) head.textContent = paged && i > 0 ? [title, section].filter(Boolean).join(' · ') : '';

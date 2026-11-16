@@ -1,3 +1,3 @@
 {{- /* An unnumbered note in the margin, beside the line it is written on. */ -}}
-<span class="marginnote" role="note">{{ .Inner | .Page.RenderString }}</span>
+<span class="marginnote" role="note">{{ partial "note-body.html" (dict "page" .Page "inner" .Inner) }}</span>
 {{- /**/ -}}

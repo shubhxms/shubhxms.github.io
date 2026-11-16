@@ -28,7 +28,9 @@
   {{- $css := partial "asset.html" (resources.Get "css/folio.css") }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }} />
 
-  {{- /* Set by the passthrough render hook when the page has maths. */}}
+  {{- /* The passthrough render hook marks pages with maths while rendering
+       the content, so render it before asking. */}}
+  {{- $rendered := .Content }}
   {{- if .Store.Get "hasMath" }}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous" />
   {{- end }}

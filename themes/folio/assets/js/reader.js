@@ -10,9 +10,17 @@ export function createReader(folio) {
   const sheets = () => Array.from(folio.querySelectorAll('.sheet'));
   let zoom = stored(ZOOM_KEY) || 'fit';
 
+  // The desk grows with a zoomed folio, so measure the room around it
+  // instead: the shell, less its padding, gap and sidebar.
   function fitScale() {
-    const width = folio.querySelector('.sheet').offsetWidth;
-    return Math.min(1, desk.clientWidth / width);
+    const shell = desk.parentElement;
+    const style = getComputedStyle(shell);
+    const sidebar = shell.querySelector('.sidebar');
+    const room = shell.clientWidth
+      - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+      - (sidebar ? sidebar.offsetWidth + parseFloat(style.columnGap) : 0);
+    const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
+    return Math.min(1, room / sheetWidth);
   }
 
   function scale() {
