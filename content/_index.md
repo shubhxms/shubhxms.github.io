@@ -2,7 +2,6 @@
 title: "Shubham Shah"
 edition: 2
 subtitle: "Computers, Stories<br>& Science"
-press: "shubhamshah.net"
 blocks:
   - name: "Now"
     lines:
@@ -18,6 +17,9 @@ blocks:
       - "Computer Science, with a minor in Mathematics"
       - "[Ahmedabad University](https://ahduni.edu.in), class of 2025"
       - "Ahmedabad, Gujarat"
+postcard:
+  greeting: "Greetings from *Ahmedabad*"
+  stamp: "S"
 ---
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
