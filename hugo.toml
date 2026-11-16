@@ -24,6 +24,16 @@ name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/shubhxms/"
 
+[[params.social]]
+name = "Telegram"
+icon = "telegram"
+url = "https://telegram.me/shubhxms"
+
+[[params.social]]
+name = "Bluesky"
+icon = "bluesky"
+url = "https://bsky.app/profile/shubhamshah.net"
+
 [[menu.main]]
 name = "Now"
 url = "/now"

@@ -6,17 +6,17 @@ press: "shubhamshah.net"
 blocks:
   - name: "Now"
     lines:
-      - "Exploring different domains, on [unstructured time](/now)"
+      - "On a stretch of [unstructured time](/now), learning what I'm curious about"
+      - "Reading *The Information* by James Gleick"
       - "Open to interesting work & collaboration"
-      - "Ahmedabad, Gujarat"
   - name: "Previously"
     lines:
-      - "[Dip](https://dipapp.in), a social media startup"
-      - "An ERP for a dealer of earth-mover spare parts"
+      - "[Dip](https://dipapp.in): its REST API, payments & ledger, and bookings"
+      - "An ERP for an earth-mover parts dealer: on-site fixes & task management"
   - name: "Education"
     lines:
-      - "Bachelor's in Computer Science, minor in Mathematics"
-      - "[Ahmedabad University](https://ahduni.edu.in), 2025"
+      - "Computer Science, with a minor in Mathematics"
+      - "[Ahmedabad University](https://ahduni.edu.in), class of 2025"
       - "Ahmedabad, Gujarat"
 ---
 
