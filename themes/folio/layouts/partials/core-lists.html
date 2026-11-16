@@ -1,29 +1,20 @@
 {{- /*
-  Core's sections (data/core.yaml) as lists, Books by category. Each
-  section's covers sit in the margin as a small strip beside its list.
+  Core's sections (data/core.yaml). Each entry is a row of thumbnail and
+  text, two rows to a line across text and margin, so covers and words
+  carry equal weight. Books keep their categories.
 */}}
 {{- range .sections }}
 <h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
-{{- $covers := slice }}
-{{- range partial "core-entries.html" . }}{{ if .cover }}{{ $covers = $covers | append . }}{{ end }}{{ end }}
-{{- with $covers }}
-<figure class="core-covers">
-  {{- range . }}
-  <img class="core-cover" src="{{ .cover }}" alt="{{ .title }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}" loading="lazy" decoding="async" />
-  {{- end }}
-</figure>
-{{- end }}
-<ul class="core-list">
-  {{- with .lists }}
-  {{- range . }}
-  <li class="core-group">{{ .name }}
-    <ul>
-      {{- range .items }}{{ partial "core-item.html" . }}{{ end }}
-    </ul>
-  </li>
-  {{- end }}
-  {{- else }}
+{{- with .lists }}
+{{- range . }}
+<p class="core-category">{{ .name }}</p>
+<ol class="core-grid">
   {{- range .items }}{{ partial "core-item.html" . }}{{ end }}
-  {{- end }}
-</ul>
+</ol>
+{{- end }}
+{{- else }}
+<ol class="core-grid">
+  {{- range .items }}{{ partial "core-item.html" . }}{{ end }}
+</ol>
+{{- end }}
 {{- end }}

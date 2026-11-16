@@ -1,5 +1,5 @@
-// Wires the folio theme together: reader controls, compact bar, palette.
-import { createReader, bindActions, bindBar, bindContents, bindToolbar, bindKeys } from './reader.js';
+// Wires the folio theme together: layout, keys, compact bar, palette.
+import { createReader, bindActions, bindBar, bindContents, bindKeys } from './reader.js';
 import { createPalette } from './palette.js';
 import { store } from './storage.js';
 
@@ -31,7 +31,6 @@ function setView(key, name, value) {
 function startReader(folio, actions) {
   const reader = createReader(folio);
   Object.assign(actions, reader.actions);
-  bindToolbar(document.querySelector('.reader'), reader);
   bindContents(folio, reader);
   bindBar(folio);
 
@@ -39,8 +38,6 @@ function startReader(folio, actions) {
   fit();
   wide.addEventListener('change', fit);
   window.addEventListener('resize', () => wide.matches && reader.layout());
-  // Web fonts change heights (the header's, for one): lay out again once in.
-  document.fonts?.ready.then(() => wide.matches && reader.layout());
 
   // Laying out moves everything, so return to a linked #fragment afterwards.
   const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));

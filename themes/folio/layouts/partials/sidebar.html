@@ -12,10 +12,10 @@
       {{- end }}
     </div>
     <div class="sidebar-meta">
-      <button class="sidebar-search" type="button" data-action="palette" title="Search and commands">Search <kbd>⌘K</kbd></button>
-      <div class="theme-switcher">
-        <button class="theme-btn" type="button" data-action="theme-light" title="Light">☀</button>
-        <button class="theme-btn" type="button" data-action="theme-dark" title="Dark">☽</button>
+      <div class="sidebar-tools">
+        <button class="theme-btn" type="button" data-action="theme-light" title="Light theme" aria-label="Light theme">☀</button>
+        <button class="theme-btn" type="button" data-action="theme-dark" title="Dark theme" aria-label="Dark theme">☽</button>
+        <button class="sidebar-search" type="button" data-action="palette" title="Search and commands" aria-label="Search and commands"><kbd>⌘K</kbd></button>
       </div>
       {{- with .GitInfo }}
       <div class="git-info">

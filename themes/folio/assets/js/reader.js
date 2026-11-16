@@ -40,20 +40,12 @@ export function createReader(folio) {
     set('--note-w', g.note);
     set('--type', g.type);
     set('--sheet-min', Math.floor(height));
-    // Where the text starts, for the side column's ornament.
-    const head = folio.querySelector('.sheet--doc .doc-head');
-    if (head) set('--head-h', Math.round(head.offsetHeight));
-    // Centre the reader controls under the content, whatever the layout.
-    requestAnimationFrame(() => {
-      const box = desk.getBoundingClientRect();
-      document.documentElement.style.setProperty('--reader-x', `${Math.round(box.left + box.width / 2)}px`);
-    });
     render();
   }
 
   // Back to the stylesheet's own sizes (narrow screens).
   function unlayout() {
-    ['--sheet-w', '--pad-left', '--side', '--side-gap', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min', '--head-h']
+    ['--sheet-w', '--pad-left', '--side', '--side-gap', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min']
       .forEach((name) => folio.style.removeProperty(name));
     render();
   }
@@ -157,16 +149,6 @@ export function bindContents(folio, reader) {
 }
 
 // Reflects reader state in the toolbar.
-export function bindToolbar(toolbar, reader) {
-  const field = (name) => toolbar.querySelector(`[data-reader="${name}"]`);
-  reader.onChange((state) => {
-    field('position').textContent = state.position;
-    field('section').textContent = state.section;
-    field('text').textContent = `${state.text}%`;
-  });
-  toolbar.hidden = false;
-}
-
 // Clicks on any [data-action] element run the matching action.
 export function bindActions(root, actions) {
   root.addEventListener('click', (event) => {

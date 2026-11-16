@@ -26,8 +26,6 @@
     --pad-bottom: 22px;
     --pad-left: 30px;
     --side: 76px;
-    /* A spade, as on a playing card. */
-    --spade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M12 1C9 6.5 2.5 9.5 2.5 15c0 3.3 2.8 5.2 5.6 4.6 1.4-.3 2.6-1.2 3.2-2.4-.3 3-1.4 5.6-3.6 7.3h8.6c-2.2-1.7-3.3-4.3-3.6-7.3.6 1.2 1.8 2.1 3.2 2.4 2.8.6 5.6-1.3 5.6-4.6C21.5 9.5 15 6.5 12 1z'/%3E%3C/svg%3E");
     --side-gap: 16px;
     --text-w: 540px;
     --gutter: 28px;
@@ -188,17 +186,21 @@ a:hover {
     border-top: 1px solid var(--rule);
 }
 
+.sidebar-tools {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
 .sidebar-search {
     padding: 0;
     border: 0;
     background: none;
     color: var(--text-secondary);
     font: inherit;
-    font-size: 11px;
 }
 
 .sidebar-search kbd {
-    margin-left: 3px;
     padding: 0 3px;
     border: 1px solid currentColor;
     font: inherit;
@@ -208,12 +210,6 @@ a:hover {
 .sidebar-search:hover {
     background: var(--selection);
     color: var(--selection-text);
-}
-
-.theme-switcher {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
 }
 
 .theme-btn {
@@ -1288,53 +1284,103 @@ hr {
     text-align: left;
 }
 
-/* ---------- Core: lists, with covers in the margin ---------- */
+/* ---------- Core: entries as rows of thumbnail and text ----------
+   Two rows to a line, across text and margin. A cover where there is one;
+   otherwise the title's initial set on a plate the same size, so every
+   row lines up and pictures and words carry the same weight. */
 
-/* Each section's covers, small, three to a row beside its list. */
-.sheet-body figure.core-covers {
-    position: static;
-    float: right;
-    clear: right;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
-    width: var(--note-w);
-    margin: 0.2em calc(-1 * (var(--note-w) + var(--gutter))) 0.8em 0;
+.sheet-body .core-category {
+    margin: 0.9em 0 0.2em;
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.7em;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--text-secondary);
 }
 
-.core-cover {
+.sheet-body ol.core-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--gutter);
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0.3em 0 0.9em;
+    padding: 0;
+    list-style: none;
+}
+
+.sheet-body .core-entry {
+    margin: 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.core-entry-link {
+    display: grid;
+    grid-template-columns: 3.6em minmax(0, 1fr);
+    align-items: center;
+    gap: 0.8em;
+    padding: 0.45em 0.3em 0.45em 0;
+    color: var(--text);
+    text-decoration: none;
+}
+
+a.core-entry-link:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+.core-thumb {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     aspect-ratio: 2 / 3;
     object-fit: cover;
     border: 1px solid var(--border);
 }
 
-/* Books' categories: a small heading, then their entries. */
-.sheet-body .core-group {
-    margin-top: 0.35em;
+.core-thumb--type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        repeating-linear-gradient(135deg, transparent 0 5px, var(--rule) 5px 6px) top / 100% 0.45em no-repeat,
+        var(--paper);
+    font-family: var(--serif);
+    font-size: 1.9em;
+    font-style: italic;
+    line-height: 1;
+    color: var(--text-secondary);
+}
+
+.core-text {
+    display: grid;
+    gap: 0.1em;
+    min-width: 0;
+    line-height: 1.22;
+}
+
+.core-title {
+    font-weight: 700;
+}
+
+.core-by {
+    font-size: 0.9em;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.core-meta {
     font-family: var(--mono);
-    font-size: 0.72em;
-    letter-spacing: 0.06em;
+    font-size: 0.66em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-secondary);
 }
 
-.sheet-body .core-group::before {
-    content: none;
-}
-
-.sheet-body .core-group > ul {
-    margin: 0.15em 0 0.3em;
-    font-family: var(--serif);
-    font-size: calc(1em / 0.72);
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--text);
-}
-
-.core-meta {
-    color: var(--text-secondary);
+a.core-entry-link:hover :is(.core-by, .core-meta) {
+    color: inherit;
 }
 
 /* ---------- Subscribe: the newsletter sign-up ---------- */
@@ -1416,7 +1462,7 @@ hr {
    data-heads="side": every page keeps a side column beyond a dotted rule,
    so text starts at the same place on every page. A page's own sections
    (top-level h2s) set their names small there, beside the section's first
-   line; a page without sections sets an ornament at its head. Headings
+   line. Headings
    nested in other blocks (an archive's years) and phones keep underlined
    heads. */
 
@@ -1434,36 +1480,6 @@ hr {
     }
 
     /* Hangs in the side column where it falls, beside the opening text. */
-    /* Where a page opens without a section head, the side column would
-       stand empty: a playing card's corner, an A over a spade, holds it. */
-    :root[data-heads="side"] .sheet-body:not(:has(> .doc-head + h2))::before,
-    :root[data-heads="side"] .sheet-body:not(:has(> .doc-head + h2))::after {
-        position: absolute;
-        left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
-        color: var(--text-secondary);
-    }
-
-    :root[data-heads="side"] .sheet-body:not(:has(> .doc-head + h2))::before {
-        content: "A";
-        top: calc(var(--head-h, 7em) + 0.05em);
-        width: 0.85em;
-        font-family: var(--serif);
-        font-size: 1.15em;
-        font-weight: 700;
-        line-height: 1;
-        text-align: center;
-    }
-
-    :root[data-heads="side"] .sheet-body:not(:has(> .doc-head + h2))::after {
-        content: "";
-        top: calc(var(--head-h, 7em) + 1.3em);
-        width: 0.98em;
-        height: 1.1em;
-        background: currentColor;
-        -webkit-mask: var(--spade) center / contain no-repeat;
-        mask: var(--spade) center / contain no-repeat;
-    }
-
     /* The h2 takes no height, so the text starts right under the space
        above; the name is shifted down so its first line sits on the text's
        first line. */
@@ -1509,11 +1525,9 @@ hr {
     box-shadow: none;
 }
 
-/* ---------- Floating controls: reader plate, mobile menu, palette ----------
-   Set like signage: a black-ruled plate on paper, cells divided by full-height
-   rules, a hard offset shadow, and inverted (black) for the active cell. */
+/* ---------- Floating controls: mobile menu, palette ----------
+   Set like signage: black-ruled on paper, with a hard offset shadow. */
 
-.reader,
 .mobile-menu summary,
 .mobile-nav,
 .palette {
@@ -1522,94 +1536,6 @@ hr {
     color: var(--text);
     box-shadow: 3px 3px 0 var(--border);
     font-family: var(--mono);
-}
-
-.reader {
-    position: fixed;
-    bottom: 16px;
-    /* Centred under the content; reader.js measures it. */
-    left: var(--reader-x, 50%);
-    z-index: 50;
-    box-sizing: border-box;
-    width: 20rem;
-    transform: translateX(-50%);
-    font-size: 11px;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.reader[hidden] {
-    display: none;
-}
-
-/* ↑ | § 02 / 05 | ↓ ‖ A− | 100% | A+ ‖ ⌘K, every cell a fixed width. */
-.reader-controls {
-    display: grid;
-    grid-template-columns: 2.2em 1fr 2.2em 2.6em 4.6em 2.6em 3em;
-    height: 26px;
-}
-
-.reader-controls > * {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    border-left: 1px solid var(--rule);
-}
-
-.reader-controls > :first-child {
-    border-left: 0;
-}
-
-.reader-controls > [data-action="text-smaller"],
-.reader-controls > [data-action="palette"] {
-    border-left-color: var(--border);
-}
-
-.reader button {
-    height: 100%;
-    padding: 0;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 0;
-    background: none;
-    color: inherit;
-    font: inherit;
-}
-
-.reader button:hover,
-.reader button:focus-visible {
-    background: var(--text);
-    color: var(--paper);
-    outline: none;
-}
-
-.reader-mark {
-    margin-right: 0.35em;
-    font-family: var(--serif);
-    font-size: 1.25em;
-}
-
-.reader-pos,
-.reader-size {
-    font-variant-numeric: tabular-nums;
-}
-
-/* Always one line tall, so the plate never changes size. */
-.reader-section {
-    height: 22px;
-    margin: 0;
-    padding: 0 8px;
-    overflow: hidden;
-    border-top: 1px solid var(--border);
-    background: var(--text);
-    color: var(--paper);
-    font-family: var(--serif);
-    font-size: 13px;
-    font-weight: 700;
-    line-height: 22px;
-    text-align: center;
-    text-overflow: ellipsis;
 }
 
 /* The palette: a directory. Group | entry (and a quote) | key. */
@@ -1796,22 +1722,15 @@ hr {
 /* ---------- Narrow screens: the paper fills the width, notes inline ---------- */
 
 @media screen and (max-width: 800px) {
-    .lately {
-        grid-template-columns: 1fr;
-        gap: 1em;
-        width: auto;
-    }
 
     .feed-rail,
     .feed-table :is(.feed-site, .feed-n) {
         display: none;
     }
 
-    .sheet-body figure.core-covers {
-        float: none;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
+    .sheet-body ol.core-grid {
+        grid-template-columns: 1fr;
         width: auto;
-        margin: 0.4em 0;
     }
 
     .shelf-strip {
@@ -1823,13 +1742,15 @@ hr {
         padding: 0;
     }
 
-    .sidebar,
-    .reader {
+    .sidebar {
         display: none !important;
     }
 
+    /* No measured sheet on phones: the page is the screen's width. (Auto
+       would let it, a flex item, grow to fit its widest line.) */
     .folio {
-        width: auto;
+        width: 100%;
+        min-width: 0;
         gap: 0;
     }
 
@@ -1970,7 +1891,6 @@ hr {
 
     .sidebar,
     .doc-bar,
-    .reader,
     .mobile-menu,
     .palette,
     .colophon-actions {
