@@ -146,8 +146,17 @@ grep -Fq 'href="/css/folio.css"' "$DEV/now/index.html" || fail 'development CSS 
 grep -Fq 'src="/js/folio.js"' "$DEV/now/index.html" || fail 'development JS should have a stable URL'
 ! grep -Fq 'integrity=' "$DEV/now/index.html" || fail 'development assets should carry no integrity hash'
 
-# Pages that keep their own scripts still build.
-has feed/index.html 'id="feed-root"'
+# The feed: a searchable table set on the paper, with its own script, and
+# none of the old activity wall.
+has feed/index.html 'class="sheet sheet--doc'
+has feed/index.html '<table class="feed-table">'
+has feed/index.html 'data-api="https://feed.shubhxms.workers.dev"'
+grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/feed/index.html" || fail 'the feed page should load the feed script'
+lacks feed/index.html 'feed-root'
+lacks now/index.html '/js/feed'
+# The home page lists the latest few entries.
+has index.html 'class="feed-recent"'
+grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fail 'the home page should load the feed script for its recent list'
 
 # Side-column heads apply only to a page's own (top-level) sections, so
 # headings inside lists (the archive's years) stay put.
@@ -165,5 +174,15 @@ has sarabhai/index.html 'family=Pinyon+Script'
 lacks uses/index.html 'Pinyon'
 lacks uses/index.html 'sheet--dropcap'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'drop cap rule missing'
+
+# The shelf: a numbered catalogue from data/shelf.yaml, books then films;
+# the home page shows the picks and a column index of likes.
+has shelf/index.html '<ol class="catalogue">'
+[ "$(grep -o 'class="catalogue-item' "$OUT/shelf/index.html" | wc -l | tr -d ' ')" = 22 ] || fail 'the shelf should list all 22 entries'
+has shelf/index.html '<span class="catalogue-n">B01</span>'
+has shelf/index.html '<span class="catalogue-n">F01</span>'
+lacks shelf/index.html 'media-grid'
+[ "$(grep -o '<a class="shelf-pick' "$OUT/index.html" | wc -l | tr -d ' ')" = 6 ] || fail 'the home page should show the six picks'
+has index.html '<ul class="likes">'
 
 printf 'folio smoke tests passed\n'

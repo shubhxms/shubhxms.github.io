@@ -1,0 +1,23 @@
+{{- /*
+  The shelf as a catalogue: numbered plates, books (B01…) then films and
+  shows (F01…), each a cover over its number, title and maker or year.
+*/}}
+{{- $groups := slice (dict "name" "Books" "prefix" "B" "items" .books) (dict "name" "Films & shows" "prefix" "F" "items" .films) }}
+{{- range $groups }}
+{{- $prefix := .prefix }}
+<h2 class="catalogue-group">{{ .name }} <span class="catalogue-count">{{ len .items }}</span></h2>
+<ol class="catalogue">
+  {{- range $i, $item := .items }}
+  <li class="catalogue-item">
+    <figure>
+      <img src="{{ .cover }}" alt="" loading="lazy" decoding="async" />
+      <figcaption>
+        <span class="catalogue-n">{{ $prefix }}{{ printf "%02d" (add $i 1) }}</span>
+        <span class="catalogue-title">{{ .title }}</span>
+        <span class="catalogue-by">{{ with .by }}{{ . }}{{ else }}{{ .year }}{{ end }}</span>
+      </figcaption>
+    </figure>
+  </li>
+  {{- end }}
+</ol>
+{{- end }}

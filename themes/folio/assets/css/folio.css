@@ -830,8 +830,8 @@ hr {
 
 .shelf-strip {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
     margin: 0.7rem 0;
 }
 
@@ -897,6 +897,395 @@ hr {
     background: var(--selection);
     color: var(--selection-text);
     text-decoration: none;
+}
+
+/* ---------- Feed: a searchable index table ----------
+   Set like a parts catalogue: mono labels and numbers, hairline rules,
+   month bands, the entry in serif. Pictures stay out of the table; the
+   plate in the margin shows the entry under the pointer, with its image. */
+
+.feed {
+    position: relative;
+}
+
+.feed-find {
+    display: flex;
+    align-items: stretch;
+    margin: 0 0 0.4em;
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.78em;
+}
+
+.feed-prompt {
+    display: flex;
+    align-items: center;
+    padding: 0 0.8em;
+    background: var(--text);
+    color: var(--paper);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.feed-find input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.55em 0.7em;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+}
+
+.sheet-body .feed-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.3em 1em;
+    margin: 0 0 0.6em;
+    font-family: var(--mono);
+    font-size: 0.7em;
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.feed-kinds {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.feed-kinds button {
+    padding: 0.15em 0.6em;
+    border: 1px solid var(--rule);
+    border-left-width: 0;
+    background: none;
+    color: var(--text);
+    font: inherit;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.feed-kinds button:first-child {
+    border-left-width: 1px;
+}
+
+.feed-kinds button[aria-pressed="true"] {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--paper);
+}
+
+.feed-status {
+    align-self: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.sheet-body .feed-table {
+    table-layout: fixed;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.86em;
+}
+
+.sheet-body .feed-table :is(th, td) {
+    padding: 0.18em 0.4em;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+
+.sheet-body .feed-table thead th {
+    padding-top: 0.35em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.feed-table .feed-n {
+    width: 3.2em;
+    padding-left: 0;
+    text-align: right;
+}
+
+.feed-table .feed-date {
+    width: 4.6em;
+}
+
+.feed-table .feed-kind {
+    width: 3.4em;
+}
+
+.feed-table .feed-site {
+    width: 9.5em;
+    padding-right: 0;
+}
+
+.feed-table td:is(.feed-n, .feed-date, .feed-kind, .feed-site) {
+    font-family: var(--mono);
+    font-size: 0.74em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.feed-table td.feed-site {
+    text-transform: none;
+}
+
+.feed-title {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.feed-title:hover {
+    text-decoration: underline;
+}
+
+.feed-extra,
+.feed-pic {
+    font-family: var(--mono);
+    font-size: 0.72em;
+    color: var(--text-secondary);
+}
+
+.sheet-body .feed-month th {
+    padding: 0.7em 0 0.15em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.feed-month-n {
+    float: right;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.feed-row {
+    cursor: default;
+}
+
+.feed-row:is(:hover, :focus-visible, .is-pinned) {
+    outline: none;
+    background: var(--text);
+}
+
+.feed-row:is(:hover, :focus-visible, .is-pinned) td,
+.feed-row:is(:hover, :focus-visible, .is-pinned) :is(.feed-title, .feed-extra, .feed-pic) {
+    color: var(--paper);
+}
+
+.feed-more {
+    display: block;
+    width: 100%;
+    margin-top: 0.5em;
+    padding: 0.4em;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.feed-more:hover {
+    background: var(--text);
+    color: var(--paper);
+}
+
+/* The plate rides down the margin beside the table. */
+.feed-rail {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% + var(--gutter));
+    width: var(--note-w);
+}
+
+.feed-plate {
+    position: sticky;
+    top: calc(var(--bar-h) + 16px);
+    font-size: 0.8em;
+    line-height: 1.3;
+}
+
+.sheet-body .feed-plate p {
+    margin: 0 0 0.4em;
+    text-align: left;
+}
+
+.sheet-body .feed-plate-kicker {
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.82em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.feed-plate-img {
+    display: block;
+    width: 100%;
+    max-height: 16em;
+    margin: 0 0 0.5em;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    background: var(--rule);
+}
+
+/* Posters keep their own proportions. */
+.feed-plate-img--film {
+    width: 62%;
+    max-height: none;
+    object-fit: contain;
+}
+
+.feed-plate-title {
+    display: block;
+    margin-bottom: 0.3em;
+    font-size: 1.15em;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.sheet-body .feed-plate-extra,
+.sheet-body .feed-plate-site {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    color: var(--text-secondary);
+}
+
+.sheet-body .feed-plate-text {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    white-space: pre-line;
+}
+
+.feed-syntax {
+    margin: 0.5em 0 0;
+}
+
+.feed-syntax dt {
+    font-family: var(--mono);
+    font-size: 0.85em;
+}
+
+.feed-syntax dd {
+    margin: 0 0 0.35em;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* The home page's recent list: the same rows, without number or source. */
+.feed-recent .feed-table :is(.feed-n, .feed-site) {
+    display: none;
+}
+
+.sheet-body .feed-recent-more {
+    margin-top: 0.3em;
+    font-size: 0.9em;
+}
+
+/* ---------- Shelf: a numbered catalogue ---------- */
+
+.sheet-body .catalogue-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.catalogue-count {
+    font-family: var(--mono);
+    font-size: 0.7em;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* Plates run across text and margin: covers want the width. */
+.sheet-body ol.catalogue {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7.2em, 1fr));
+    gap: 1em 0.8em;
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0.6em 0 1.2em;
+    padding: 0;
+    list-style: none;
+}
+
+.sheet-body .catalogue-item {
+    margin: 0;
+}
+
+.sheet-body .catalogue figure {
+    margin: 0;
+}
+
+.sheet-body .catalogue img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+.catalogue figcaption {
+    display: grid;
+    margin-top: 0.35em;
+    font-size: 0.78em;
+    line-height: 1.2;
+}
+
+.catalogue-n {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+
+.catalogue-title {
+    font-weight: 700;
+}
+
+.catalogue-by {
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* ---------- Likes: a column index ---------- */
+
+.sheet-body ul.likes {
+    columns: 3;
+    column-gap: 1.2em;
+    column-rule: 1px dotted var(--rule);
+    margin: 0.3em 0 0.8em;
+    padding: 0;
+}
+
+.sheet-body ul.likes > li {
+    break-inside: avoid;
+    padding: 0;
+    font-size: 0.95em;
+    line-height: 1.32;
+}
+
+.sheet-body ul.likes > li::before {
+    content: none;
 }
 
 /* ---------- Drop cap ----------
@@ -1284,6 +1673,23 @@ hr {
 /* ---------- Narrow screens: the paper fills the width, notes inline ---------- */
 
 @media screen and (max-width: 800px) {
+    .feed-rail,
+    .feed-table :is(.feed-site, .feed-n) {
+        display: none;
+    }
+
+    .sheet-body ol.catalogue {
+        width: auto;
+    }
+
+    .sheet-body ul.likes {
+        columns: 2;
+    }
+
+    .shelf-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .shell {
         display: block;
         padding: 0;

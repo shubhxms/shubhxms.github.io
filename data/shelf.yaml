@@ -1,0 +1,79 @@
+# The shelf: books, films and shows. Rendered by the shelf page
+# (layouts/_default/shelf.html) and, for entries with pick: true,
+# the home page ({{< shelf-strip >}}).
+
+books:
+  - title: "Chaos"
+    by: "James Gleick"
+    cover: /images/shelf/chaos.jpg
+    pick: true
+  - title: "The Man Who Bent Light: Father of Fibre Optics"
+    by: "Narinder Singh Kapany"
+    cover: /images/shelf/man-who-bent-light.jpg
+  - title: "Richard Feynman: A Life in Science"
+    by: "John & Mary Gribbin"
+    cover: /images/shelf/feynman.jpg
+  - title: "Incerto Series"
+    by: "Nassim Taleb"
+    cover: /images/shelf/antifragile.jpg
+  - title: "Zero to One"
+    by: "Peter Thiel & Blake Masters"
+    cover: /images/shelf/zero-to-one.jpg
+  - title: "Shoe Dog"
+    by: "Phil Knight"
+    cover: /images/shelf/shoe-dog.jpg
+  - title: "The Immortals of Meluha"
+    by: "Amish Tripathi"
+    cover: /images/shelf/meluha.jpg
+  - title: "The Secret of the Nagas"
+    by: "Amish Tripathi"
+    cover: /images/shelf/secret-of-nagas.webp
+  - title: "The Oath of the Vayuputras"
+    by: "Amish Tripathi"
+    cover: /images/shelf/vayuputras.jpg
+  - title: "The Song of Achilles"
+    by: "Madeline Miller"
+    cover: /images/shelf/achilles.webp
+    pick: true
+  - title: "Circe"
+    by: "Madeline Miller"
+    cover: /images/shelf/circe.jpg
+  - title: "The Picture of Dorian Gray"
+    by: "Oscar Wilde"
+    cover: /images/shelf/dorian-gray.jpg
+    pick: true
+  - title: "Jonathan Livingston Seagull"
+    by: "Richard Bach"
+    cover: /images/shelf/seagull.jpg
+  - title: "Vikram Sarabhai: A Life"
+    by: "Amrita Shah"
+    cover: /images/shelf/vikram-sarabhai.jpg
+    pick: true
+
+films:
+  - title: "The Grand Budapest Hotel"
+    year: "2014"
+    cover: /images/shelf/grand-budapest.jpg
+    pick: true
+  - title: "Boyhood"
+    year: "2014"
+    cover: /images/shelf/boyhood.jpg
+  - title: "The Wonderful Story of Henry Sugar"
+    year: "2023"
+    cover: /images/shelf/henry-sugar-and-three.jpg
+  - title: "Silicon Valley"
+    year: "2014-2019"
+    cover: /images/shelf/silicon-valley.jpg
+  - title: "Dead Poets Society"
+    year: "1989"
+    cover: /images/shelf/dead-poets-socity.jpg
+  - title: "Call Me By Your Name"
+    year: "2017"
+    cover: /images/shelf/cmbyn.webp
+  - title: "The Wind Rises"
+    year: "2013"
+    cover: /images/shelf/wind-rises.jpg
+    pick: true
+  - title: "Attack on Titan"
+    year: "2013"
+    cover: /images/shelf/aot.jpg

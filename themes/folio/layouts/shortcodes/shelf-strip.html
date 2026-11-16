@@ -1,0 +1,11 @@
+{{- /* The shelf's picks (pick: true in data/shelf.yaml), as a strip of covers
+       linking to the shelf. */}}
+<div class="shelf-strip">
+  {{- range (append site.Data.shelf.films site.Data.shelf.books) }}
+  {{- if .pick }}
+  <a class="shelf-pick" href="{{ "shelf/" | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
+    <img src="{{ .cover }}" alt="{{ .title }}" decoding="async" />
+  </a>
+  {{- end }}
+  {{- end }}
+</div>

@@ -1,0 +1,6 @@
+{{- /* The home page's likes (front matter `likes`), as a column index. */}}
+<ul class="likes">
+  {{- range .Page.Params.likes }}
+  <li>{{ . | markdownify }}</li>
+  {{- end }}
+</ul>
