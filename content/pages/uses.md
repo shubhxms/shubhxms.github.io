@@ -5,7 +5,7 @@ tldr: Things, tools and services I use.
 ---
 
 ## Devices
-- MacBook M1 Air
+- MacBook M1 Air{{< sidenote >}}TEST NOTE. A sidenote inside a list item.{{< /sidenote >}}
 - BenQ GW2490
 - [Nothing Phone 2A](https://in.nothing.tech/products/phone-2a?Colour=White&Capacity=12+256GB)
 

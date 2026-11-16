@@ -1,7 +1,8 @@
 ---
 title: "Shubham Shah"
+edition: 2
 subtitle: "Computers, Stories<br>& Science"
-pages: flow
+press: "shubhamshah.net"
 blocks:
   - name: "Now"
     lines:
@@ -21,7 +22,7 @@ blocks:
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
 
-I'm **Shubham**, a {{< age >}}-year-old technology enthusiast living and working in [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
+I'm **Shubham**, a {{< age >}}-year-old technology enthusiast living and working in [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).{{< sidenote >}}TEST NOTE. Ahmedabad was India's first UNESCO World Heritage City, named in 2017.{{< /sidenote >}}
 
 I have varied interests, but spend most of my time playing with [computers](/images/i-love-computers-it.gif), trying to make sense of the world using state machines, stories, and science.
 
@@ -34,7 +35,7 @@ I've shipped early-stage software at two places:
 - ERP for a dealer of earth-mover spare parts
   - Fixed critical bugs on-site, optimized workflows and processes, and built a task-management system.
 - [Dip](https://dipapp.in) (a social media startup)
-  - Built its REST API, integrated payments and ledger, and shipped a booking system using custom locks.
+  - Built its REST API, integrated payments and ledger, and shipped a booking system using custom locks.{{< marginnote >}}TEST NOTE. An unnumbered margin note, set beside the line it belongs to.{{< /marginnote >}}
 
 ## Now <em>(Aug. &rsquo;26)</em>
 
