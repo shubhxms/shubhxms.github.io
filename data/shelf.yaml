@@ -1,6 +1,7 @@
 # The shelf: books, films and shows. Rendered by the shelf page
 # (layouts/_default/shelf.html) and, for entries with pick: true,
-# the home page ({{< shelf-strip >}}).
+# the home page ({{< shelf-strip >}}). An entry with note: /path/ links
+# to that note.
 
 books:
   - title: "Chaos"
@@ -48,6 +49,7 @@ books:
   - title: "Vikram Sarabhai: A Life"
     by: "Amrita Shah"
     cover: /images/shelf/vikram-sarabhai.jpg
+    note: /sarabhai/
     pick: true
 
 films:
