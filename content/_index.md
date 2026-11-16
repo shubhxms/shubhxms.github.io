@@ -3,6 +3,34 @@ title: "Shubham Shah"
 edition: 2
 dropcap: true
 subtitle: "Computers, Stories<br>& Science"
+# Some things I like, listed in columns on the home page ({{< likes >}}).
+likes:
+  - "state machines"
+  - "science"
+  - "stories"
+  - "storytelling"
+  - "photography"
+  - "open source"
+  - "public transport"
+  - "institutions (especially being early to them)"
+  - "typography"
+  - "ampersands"
+  - "contractions"
+  - "spiral binding"
+  - "attention to detail"
+  - "ornamental flourishes"
+  - "brutalism"
+  - "intricate designs"
+  - "coffee & chai"
+  - "mountains, beaches & forests"
+  - "religion & mythology"
+  - "cricket"
+  - "racquet sports"
+  - "[passion projects](https://twitter.com/collision/status/1529452415346302976)"
+  - "solarpunk"
+  - "climate & conservation"
+  - "sudokus"
+  - "nonograms"
 ---
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
@@ -32,18 +60,20 @@ I love receiving correspondence and usually reply within a few days.
 - **Bluesky:** [@shubhamshah.net](https://bsky.app/profile/shubhamshah.net)
 - **GitHub:** [shubhxms](https://github.com/shubhxms)
 
+## Lately
+
+What I've watched, saved and posted, newest first.
+
+{{< recent 6 >}}
+
 ## Some things I like
 
-state machines · science · stories · storytelling · photography · open source · public transport · institutions (especially being early to them) · typography · ampersands · contractions · spiral binding · attention to detail · ornamental flourishes · brutalism · intricate designs · coffee & chai · mountains, beaches & forests · religion & mythology · cricket · racquet sports · [passion projects](https://twitter.com/collision/status/1529452415346302976) · solarpunk · climate & conservation · sudokus · nonograms
+{{< likes >}}
 
 {{< figure src="/images/home-header.jpg" alt="Adalaj ni Vav" caption="Adalaj ni Vav, photographed in Gujarat." >}}
 
 ## From the shelf
 
-<div class="shelf-strip">
-  <a href="/shelf"><img src="/images/shelf/vikram-sarabhai.jpg" alt="Vikram Sarabhai: A Life"></a>
-  <a href="/shelf"><img src="/images/shelf/dorian-gray.jpg" alt="The Picture of Dorian Gray"></a>
-  <a href="/shelf"><img src="/images/shelf/grand-budapest.jpg" alt="The Grand Budapest Hotel"></a>
-</div>
+{{< shelf-strip >}}
 
-See the [full shelf](/shelf), the [live feed](/feed) and the [Telegram channel](https://telegram.me/shubhamcore) for more.
+See the [full shelf](/shelf) and the [Telegram channel](https://telegram.me/shubhamcore) for more.
