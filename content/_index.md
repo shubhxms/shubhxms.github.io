@@ -66,7 +66,7 @@ I love receiving correspondence and usually reply within a few days.
 
 ## Lately
 
-What I've been reading, watching and keeping, as it happens: the feed on the left, the shelf on the right.
+What I've been reading, watching and keeping, as it happens.
 
 {{< lately 6 >}}
 

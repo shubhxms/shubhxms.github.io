@@ -1,0 +1,90 @@
+# Core: things that matter to me, in lists. Rendered by the Core page
+# (layouts/_default/core.html) as one catalogue per list: entries with a
+# cover show it, the rest are set in type, interleaved in list order.
+#
+# An entry takes: title; by (author or maker) or year and by; cover
+# (an image under /images/shelf/); note (a path on this site, linked); url
+# (elsewhere, linked); what (for the Internet list); pick: true to show
+# it in the home page's Lately.
+
+lists:
+  - name: "Science & Math"
+    items:
+      - title: "Chaos"
+        by: "James Gleick"
+        cover: /images/shelf/chaos.jpg
+        pick: true
+      - title: "The Man Who Bent Light: Father of Fibre Optics"
+        by: "Narinder Singh Kapany"
+        cover: /images/shelf/man-who-bent-light.jpg
+      - title: "Richard Feynman: A Life in Science"
+        by: "John & Mary Gribbin"
+        cover: /images/shelf/feynman.jpg
+
+  - name: "Non-Fiction"
+    items:
+      - title: "Vikram Sarabhai: A Life"
+        by: "Amrita Shah"
+        cover: /images/shelf/vikram-sarabhai.jpg
+        note: /sarabhai/
+        pick: true
+      - title: "Incerto"
+        by: "Nassim Taleb"
+        cover: /images/shelf/antifragile.jpg
+      - title: "Zero to One"
+        by: "Peter Thiel & Blake Masters"
+        cover: /images/shelf/zero-to-one.jpg
+      - title: "Shoe Dog"
+        by: "Phil Knight"
+        cover: /images/shelf/shoe-dog.jpg
+
+  - name: "Fiction & Mythology"
+    items:
+      - title: "Suheldev and the Battle of Bahraich"
+        by: "Amish Tripathi"
+      - title: "The Shiva Trilogy"
+        by: "Amish Tripathi"
+        cover: /images/shelf/meluha.jpg
+      - title: "The Song of Achilles"
+        by: "Madeline Miller"
+        cover: /images/shelf/achilles.webp
+        pick: true
+      - title: "Circe"
+        by: "Madeline Miller"
+        cover: /images/shelf/circe.jpg
+      - title: "The Picture of Dorian Gray"
+        by: "Oscar Wilde"
+        cover: /images/shelf/dorian-gray.jpg
+        pick: true
+      - title: "Jonathan Livingston Seagull"
+        by: "Richard Bach"
+        cover: /images/shelf/seagull.jpg
+
+  - name: "Films, Shows & Anime"
+    items:
+      - { title: "The Grand Budapest Hotel", year: "2014", by: "dir. Wes Anderson", cover: /images/shelf/grand-budapest.jpg, pick: true }
+      - { title: "Boyhood", year: "2014", by: "dir. Richard Linklater", cover: /images/shelf/boyhood.jpg }
+      - { title: "The Wonderful Story of Henry Sugar", year: "2023", by: "dir. Wes Anderson", cover: /images/shelf/henry-sugar-and-three.jpg }
+      - { title: "The Swan", year: "2023", by: "dir. Wes Anderson" }
+      - { title: "Silicon Valley", year: "2014", by: "cr. Mike Judge, John Altschuler & Dave Krinsky", cover: /images/shelf/silicon-valley.jpg }
+      - { title: "A Rainy Day in New York", year: "2019", by: "dir. Woody Allen" }
+      - { title: "Manchester by the Sea", year: "2016", by: "dir. Kenneth Lonergan" }
+      - { title: "Dead Poets Society", year: "1989", by: "dir. Peter Weir", cover: /images/shelf/dead-poets-socity.jpg }
+      - { title: "Call Me By Your Name", year: "2017", by: "dir. Luca Guadagnino", cover: /images/shelf/cmbyn.webp }
+      - { title: "Anand", year: "1971", by: "dir. Hrishikesh Mukherjee" }
+      - { title: "The Wind Rises", year: "2013", by: "dir. Hayao Miyazaki", cover: /images/shelf/wind-rises.jpg, pick: true }
+      - { title: "The Fault in Our Stars", year: "2014", by: "dir. Josh Boone" }
+      - { title: "Your Name", year: "2016", by: "dir. Makoto Shinkai" }
+      - { title: "Suzume", year: "2022", by: "dir. Makoto Shinkai" }
+      - { title: "Death Note", year: "2006", by: "dir. Tetsurō Araki" }
+      - { title: "Attack on Titan", year: "2013", by: "dir. Tetsurō Araki", cover: /images/shelf/aot.jpg }
+      - { title: "Ao Ashi", year: "2022", by: "dir. Akira Satō" }
+
+  - name: "Internet"
+    items:
+      - { title: "exurb1a", what: "YouTube", url: "https://www.youtube.com/@exurb1a" }
+      - { title: "Dynomight", what: "Blog", url: "https://dynomight.substack.com/" }
+      - { title: "Be Wrong", what: "Blog", url: "https://bewrong.substack.com/" }
+      - { title: "But What For?", what: "Blog", url: "https://www.butwhatfor.com/" }
+      - { title: "WTF is", what: "Podcast", url: "https://www.youtube.com/@nikhil.kamath" }
+      - { title: "Dwarkesh's Podcast", what: "Podcast", url: "https://www.dwarkeshpatel.com/" }
