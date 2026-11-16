@@ -1,0 +1,11 @@
+{{- $pages := slice }}
+{{- /* Pages written in content/, not folders Hugo lists on its own. */}}
+{{- range where (where site.Pages "Kind" "in" (slice "home" "page" "section")) "File" "!=" nil }}
+  {{- $pages = $pages | append (dict
+    "title" (cond .IsHome site.Title (partial "page-title.html" .))
+    "url" .RelPermalink
+    "summary" (.Params.tldr | default "" | plainify)
+    "body" (.Plain | htmlUnescape)
+  ) }}
+{{- end }}
+{{- $pages | jsonify }}

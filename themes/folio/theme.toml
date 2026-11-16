@@ -1,0 +1,4 @@
+name = "folio"
+license = "MIT"
+description = "Documents set as sheets of paper, read like a PDF."
+min_version = "0.141.0"

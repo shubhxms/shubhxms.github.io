@@ -1,0 +1,37 @@
+{{- /*
+  The home page's first sheet, set like a book's title page.
+  Front matter: subtitle, mark, and blocks [{ name, lines }].
+*/}}
+{{- $edition := partial "ordinal.html" (partial "age.html" .) }}
+<article class="sheet sheet--title" data-section="Title page">
+  <div class="sheet-head" aria-hidden="true"></div>
+  <div class="sheet-body">
+    <p class="title-edition">{{ $edition }} Edition</p>
+    <h1 class="title-name">{{ .Title }}</h1>
+    <p class="title-subtitle">{{ .Params.subtitle | markdownify }}</p>
+
+    {{- range .Params.blocks }}
+    <section class="title-block">
+      <h2>{{ .name | markdownify }}</h2>
+      <p>{{ range .lines }}<span>{{ . | markdownify }}</span>{{ end }}</p>
+    </section>
+    {{- end }}
+
+    <footer class="title-imprint">
+      <span class="title-mark" aria-hidden="true">{{ .Params.mark | default "S" }}</span>
+      <div>
+        <p class="title-press">{{ (urls.Parse site.BaseURL).Host }}</p>
+        <p class="title-links">
+          {{- $last := sub (len site.Params.social) 1 }}
+          {{- range $i, $s := site.Params.social }}
+          {{- if and $i (eq $i $last) }} &amp; {{ else if $i }}, {{ end }}<a href="{{ $s.url }}">{{ $s.name }}</a>
+          {{- end }}
+        </p>
+        <nav class="title-places" aria-label="Pages">
+          {{- range site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+        </nav>
+      </div>
+    </footer>
+  </div>
+  <div class="sheet-foot" aria-hidden="true"></div>
+</article>

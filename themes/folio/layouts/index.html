@@ -1,0 +1,4 @@
+{{ define "main" }}
+{{- $title := partial "title-page.html" . }}
+{{- partial "folio.html" (dict "page" . "body" .Content "before" $title "bare" true) }}
+{{ end }}

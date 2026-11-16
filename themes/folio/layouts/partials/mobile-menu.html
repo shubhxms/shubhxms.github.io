@@ -1,0 +1,10 @@
+{{- $current := strings.TrimSuffix "/" .RelPermalink }}
+<details class="mobile-menu">
+  <summary aria-label="Toggle navigation">Menu</summary>
+  <nav class="mobile-nav" aria-label="Primary navigation">
+    {{- range site.Menus.main }}
+    <a href="{{ .URL }}"{{ if eq $current (strings.TrimSuffix "/" .URL) }} class="active-page"{{ end }}>{{ .Name }}</a>
+    {{- end }}
+    <button type="button" data-action="palette">Search</button>
+  </nav>
+</details>

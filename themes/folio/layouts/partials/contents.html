@@ -1,0 +1,12 @@
+{{- /* A book-style contents list: title, dot leaders, date. */}}
+{{- with . }}
+<ol class="contents">
+  {{- range . }}
+  <li>
+    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    <span class="contents-leader" aria-hidden="true"></span>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+  </li>
+  {{- end }}
+</ol>
+{{- end }}

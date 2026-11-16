@@ -1,0 +1,35 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ partial "page-title.html" . }} · {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Params.tldr }}{{ . | plainify }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}" />
+  {{- with .Params.og_image | default site.Params.og_image }}
+  <meta property="og:image" content="{{ . }}" />
+  {{- end }}
+  {{- template "_internal/opengraph.html" . }}
+  {{- template "_internal/twitter_cards.html" . }}
+  {{- range .AlternativeOutputFormats }}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" />
+  {{- end }}
+
+  {{- /* Before paint, so the page never flashes the wrong theme. */}}
+  <script>
+    (function () {
+      var mode = null;
+      try { mode = localStorage.getItem("theme-storage"); } catch (e) {}
+      if (!mode) mode = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = mode;
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Urbanist:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  {{- $css := resources.Get "css/folio.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+
+  {{- /* Set by the passthrough render hook when the page has maths. */}}
+  {{- if .Store.Get "hasMath" }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" crossorigin="anonymous" />
+  {{- end }}
+</head>

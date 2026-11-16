@@ -1,0 +1,19 @@
+{{- /* Under the last sheet: whence this page was last edited, and its sources. */}}
+<footer class="colophon">
+  {{- with .GitInfo }}
+  <span class="colophon-edit">
+    Last edited <time datetime="{{ .AuthorDate.Format "2006-01-02" }}">{{ .AuthorDate.Format "2 Jan 2006" }}</time>
+    in <a href="{{ site.Params.repo }}/commit/{{ .Hash }}">{{ .AbbreviatedHash }}</a>
+    <q>{{ .Subject }}</q>
+  </span>
+  {{- end }}
+  <span class="colophon-actions">
+    {{- with .File }}
+    <a href="{{ site.Params.repo }}/blob/main/content/{{ .Path }}" data-palette="View source on GitHub">source</a>
+    {{- end }}
+    {{- with .OutputFormats.Get "markdown" }}
+    <a href="{{ .RelPermalink }}" data-palette="View as Markdown">.md</a>
+    {{- end }}
+    <button type="button" data-action="print">print</button>
+  </span>
+</footer>

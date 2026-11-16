@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+  {{- partial "head.html" . }}
+  <body class="{{ if .IsHome }}page-home{{ else }}page-{{ .Kind }}{{ end }}">
+    <div class="shell">
+      <main class="desk" id="main">
+        {{- block "main" . }}{{ end }}
+      </main>
+      {{- partial "sidebar.html" . }}
+    </div>
+    {{- /* Page-specific overlays, such as the feed's detail panel. */}}
+    {{- block "rail" . }}{{ end }}
+    {{- partial "mobile-menu.html" . }}
+    {{- partial "reader.html" . }}
+    {{- partial "palette.html" . }}
+    {{- $js := resources.Get "js/main.js" | js.Build (dict "targetPath" "js/folio.js" "minify" hugo.IsProduction "target" "es2020") | fingerprint }}
+    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+  </body>
+</html>

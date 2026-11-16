@@ -1,0 +1,10 @@
+{{- /* A coarse "how long ago" for a date, as of build time. */}}
+{{- $days := div (now.Sub .).Hours 24 }}
+{{- if lt $days 1 }}today
+{{- else if lt $days 2 }}yesterday
+{{- else if lt $days 7 }}this week
+{{- else if lt $days 14 }}last week
+{{- else if lt $days 30 }}this month
+{{- else if lt $days 60 }}last month
+{{- else }}{{ .Format "Jan 2006" }}
+{{- end }}

@@ -1,0 +1,25 @@
+{{- $current := strings.TrimSuffix "/" .RelPermalink }}
+<aside class="sidebar">
+  <nav class="sidebar-nav" aria-label="Site">
+    <div class="site-title">
+      <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+      <span class="site-title-gu" lang="gu">શુભમ શાહ</span>
+    </div>
+    {{- range site.Menus.main }}
+    {{- $active := eq $current (strings.TrimSuffix "/" .URL) }}
+    <a href="{{ .URL }}"{{ if $active }} class="active-page"{{ end }}>{{ if $active }}★ {{ end }}{{ .Name }}</a>
+    {{- end }}
+    <div class="sidebar-meta">
+      <div class="theme-switcher">
+        <button class="theme-btn" type="button" data-action="theme-light" title="Light">☀</button>
+        <button class="theme-btn" type="button" data-action="theme-dark" title="Dark">☽</button>
+      </div>
+    </div>
+    {{- with .GitInfo }}
+    <div class="git-info">
+      <a href="{{ site.Params.repo }}/commit/{{ .Hash }}" title="{{ .Subject }}">{{ .AbbreviatedHash }}</a>
+      <span class="git-date">{{ partial "relative-date.html" .AuthorDate }}</span>
+    </div>
+    {{- end }}
+  </nav>
+</aside>

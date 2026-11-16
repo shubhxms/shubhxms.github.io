@@ -1,0 +1,1171 @@
+/* folio: documents set as sheets of A4 paper on a desk, read like a PDF.
+   Crimson Text sets the documents, Space Mono the controls around them,
+   Urbanist the imprint. */
+
+/* ---------- Tokens ---------- */
+
+:root {
+    --desk: #dde5ef;
+    --paper: #fcfdff;
+    --text: #000;
+    --text-secondary: #474c55;
+    --link: #1827a3;
+    --accent: #1827a3;
+    --border: #000;
+    --callout-bg: #e9efff;
+    --selection: #fff36d;
+    --selection-text: #000;
+    --sheet-shadow: 0 1px 2px rgba(20, 30, 50, 0.1), 0 10px 28px rgba(20, 30, 50, 0.1);
+
+    /* A4 at 96 dpi, so a printed sheet matches the screen one to one. */
+    --sheet-w: 794px;
+    --sheet-h: 1123px;
+    --sheet-gap: 28px;
+    --pad-top: 104px;
+    --pad-bottom: 96px;
+    --pad-left: 92px;
+    --text-w: 430px;
+    --gutter: 34px;
+    --note-w: 172px;
+
+    --sidebar-width: 10rem;
+    --shell-left-padding: 5%;
+
+    --serif: "Crimson Text", Georgia, serif;
+    --mono: "Space Mono", ui-monospace, monospace;
+    --sans: "Urbanist", system-ui, sans-serif;
+}
+
+:root[data-theme="dark"] {
+    --desk: #0b0e15;
+    --paper: #191e2b;
+    --text: #f7f2e7;
+    --text-secondary: #b9b4a6;
+    --link: #ffd166;
+    --accent: #ffd166;
+    --border: #817b6d;
+    --callout-bg: #1f2638;
+    --selection: #3656c9;
+    --selection-text: #fff;
+    --sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Base ---------- */
+
+html {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--text);
+    background: var(--desk);
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--desk);
+    cursor: crosshair;
+}
+
+:is(a[href], button, summary, [role="option"]) {
+    cursor: pointer;
+}
+
+::selection {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+a {
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+    text-decoration: none;
+}
+
+/* ---------- Shell: desk on the left, sidebar on the right ---------- */
+
+.shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+    gap: 2rem;
+    align-items: start;
+    min-height: 100vh;
+    padding: 40px 2rem 6rem var(--shell-left-padding);
+    box-sizing: border-box;
+}
+
+.desk {
+    min-width: 0;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+    position: sticky;
+    top: 40px;
+    width: var(--sidebar-width);
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.sidebar-nav {
+    line-height: 1.3;
+}
+
+.sidebar-nav .site-title {
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.sidebar-nav .site-title a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.site-title-gu {
+    display: block;
+    margin-top: 1px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+}
+
+.sidebar-nav a {
+    display: block;
+}
+
+.sidebar-nav a.active-page {
+    color: var(--text);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.sidebar-meta {
+    margin-top: 8px;
+}
+
+.theme-switcher {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.theme-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.5;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.theme-btn:hover {
+    color: var(--text);
+    opacity: 0.8;
+}
+
+.theme-btn.active {
+    color: var(--text);
+    opacity: 1;
+}
+
+.git-info {
+    margin-top: 12px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.git-info a {
+    display: inline;
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.git-date {
+    display: block;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* ---------- Sheets ---------- */
+
+.folio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sheet-gap);
+    width: var(--sheet-w);
+    counter-reset: sidenote;
+}
+
+.sheet {
+    position: relative;
+    box-sizing: border-box;
+    width: var(--sheet-w);
+    min-height: var(--sheet-h);
+    padding: var(--pad-top) 0 var(--pad-bottom) var(--pad-left);
+    background: var(--paper);
+    box-shadow: var(--sheet-shadow);
+    scroll-margin-top: 24px;
+}
+
+.sheet-head,
+.sheet-foot {
+    position: absolute;
+    left: var(--pad-left);
+    width: var(--text-w);
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-variant-numeric: oldstyle-nums;
+}
+
+.sheet-head {
+    top: 48px;
+    font-style: italic;
+}
+
+.sheet-foot {
+    bottom: 44px;
+    text-align: center;
+}
+
+/* Offsets inside a sheet are measured from its body. */
+.sheet-body {
+    position: relative;
+    width: var(--text-w);
+    font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+/* ---------- Document typography ---------- */
+
+.sheet-body p {
+    margin: 0;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+.sheet-body p + p {
+    text-indent: 1.5em;
+}
+
+.doc-head {
+    margin-bottom: 2.4rem;
+}
+
+.doc-title {
+    margin: 0 0 1rem;
+    font-size: 2.2rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.12;
+}
+
+.sheet-body .doc-tldr {
+    text-align: left;
+}
+
+.doc-toc {
+    margin-top: 0.9rem;
+    font-size: 0.94rem;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.doc-toc::before,
+.doc-toc::after {
+    color: var(--text-secondary);
+    font-style: normal;
+}
+
+.doc-toc::before {
+    content: "[ ";
+}
+
+.doc-toc::after {
+    content: " ]";
+}
+
+.doc-toc-sep {
+    color: var(--text-secondary);
+    font-style: normal;
+}
+
+.sheet-body :is(h2, h3, h4) {
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+.sheet-body h2 {
+    margin: 2.4rem 0 0.9rem;
+    font-size: 1.4rem;
+}
+
+.sheet-body h3 {
+    margin: 1.8rem 0 0.6rem;
+    font-size: 1.15rem;
+}
+
+.sheet-body h4 {
+    margin: 1.4rem 0 0.4rem;
+    font-size: 1rem;
+}
+
+.sheet-body > :first-child {
+    margin-top: 0;
+}
+
+.sheet-body :is(ul, ol) {
+    margin: 0.6rem 0;
+    padding-left: 1.4em;
+}
+
+.sheet-body li {
+    margin: 0.15rem 0;
+}
+
+.sheet-body li p {
+    text-indent: 0;
+}
+
+.sheet-body ul {
+    list-style: none;
+}
+
+.sheet-body ul > li {
+    position: relative;
+}
+
+.sheet-body ul > li::before {
+    content: "*";
+    position: absolute;
+    left: -1.15em;
+    color: var(--accent);
+    font-family: var(--mono);
+}
+
+.sheet-body ul ul > li::before {
+    content: "+";
+}
+
+.sheet-body ul ul ul > li::before {
+    content: "-";
+}
+
+.sheet-body blockquote {
+    margin: 1rem 1.5em;
+    font-style: italic;
+}
+
+.sheet-body :is(code, kbd, samp) {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82em;
+}
+
+.sheet-body pre {
+    margin: 1rem 0;
+    padding: 0.7rem 0.9rem;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    background: var(--callout-bg);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.sheet-body pre code {
+    font-size: inherit;
+}
+
+.sheet-body img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sheet-body table {
+    width: 100%;
+    margin: 1rem 0;
+    border-collapse: collapse;
+    border-top: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.92em;
+}
+
+.sheet-body th {
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    text-align: left;
+}
+
+.sheet-body :is(th, td) {
+    padding: 0.25rem 0.5rem 0.25rem 0;
+}
+
+.sheet-body .katex {
+    font-size: 1.05em;
+}
+
+.sheet-body .katex-display {
+    margin: 1rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Figures span the text column; their captions sit in the margin. */
+.sheet-body figure {
+    position: relative;
+    margin: 1.2rem 0;
+}
+
+.sheet-body figure img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border);
+}
+
+.sheet-body figure:not(.marginfigure) figcaption {
+    position: absolute;
+    top: 0;
+    left: calc(100% + var(--gutter));
+    width: var(--note-w);
+}
+
+.sheet-body figcaption,
+.sheet-body figcaption p {
+    font-size: 12.5px;
+    font-style: italic;
+    line-height: 1.35;
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.callout {
+    margin: 1rem 0;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    background: var(--callout-bg);
+    text-align: left;
+}
+
+.callout::before {
+    content: "*";
+    margin-right: 0.5em;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 700;
+}
+
+hr {
+    margin: 1.2rem 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+}
+
+.divider-main,
+.divider-minor {
+    position: relative;
+    overflow: visible;
+    border: 0;
+    text-align: center;
+}
+
+.divider-main::before,
+.divider-minor::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--border);
+}
+
+.divider-minor::before {
+    left: 20%;
+    right: 20%;
+}
+
+.divider-main::after,
+.divider-minor::after {
+    position: relative;
+    padding: 0 0.6em;
+    background: var(--paper);
+    line-height: 1;
+}
+
+.divider-main::after {
+    content: "🂡";
+    font-size: 0.75rem;
+    color: var(--accent);
+}
+
+.divider-minor::after {
+    content: "·";
+    color: var(--text-secondary);
+}
+
+/* Takes no room, but stays measurable for the paginator. */
+hr.pagebreak {
+    height: 0;
+    margin: 0;
+    border: 0;
+    visibility: hidden;
+}
+
+/* ---------- Marginalia ---------- */
+
+.sn-ref {
+    counter-increment: sidenote;
+}
+
+.sn-ref::after {
+    content: counter(sidenote);
+    position: relative;
+    top: -0.45em;
+    margin-left: 0.05em;
+    font-size: 0.7em;
+    line-height: 0;
+    color: var(--accent);
+}
+
+.sidenote,
+.marginnote,
+.marginfigure {
+    float: right;
+    clear: right;
+    width: var(--note-w);
+    margin: 0.25rem calc(-1 * (var(--note-w) + var(--gutter))) 0.8rem 0;
+    font-size: 12.5px;
+    font-style: normal;
+    line-height: 1.38;
+    text-align: left;
+    text-indent: 0;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    color: var(--text);
+}
+
+.sidenote::before {
+    content: counter(sidenote) " ";
+    color: var(--accent);
+}
+
+.sheet-body .marginfigure {
+    margin-top: 0.3rem;
+}
+
+.sheet-body .marginfigure img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border);
+}
+
+.sheet-body .marginfigure figcaption {
+    margin-top: 0.3rem;
+}
+
+/* ---------- Lists of pages, shelf strip ---------- */
+
+.sheet-body ol.contents {
+    margin: 1.5rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.contents li {
+    display: flex;
+    align-items: baseline;
+    margin: 0.3rem 0;
+}
+
+.contents-leader {
+    flex: 1;
+    margin: 0 0.5em;
+    border-bottom: 1px dotted var(--text-secondary);
+}
+
+.contents time {
+    font-variant-numeric: oldstyle-nums;
+}
+
+.shelf-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+.shelf-strip a:hover {
+    background: none;
+}
+
+.shelf-strip img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+.hero-img img {
+    display: block;
+    width: 100%;
+}
+
+/* ---------- Title page ---------- */
+
+.sheet--title .sheet-body {
+    display: flex;
+    flex-direction: column;
+    width: calc(var(--sheet-w) - var(--pad-left) - 92px);
+    min-height: calc(var(--sheet-h) - var(--pad-top) - var(--pad-bottom));
+    font-variant-numeric: lining-nums;
+}
+
+.sheet--title .sheet-body p {
+    text-align: left;
+    hyphens: manual;
+    text-indent: 0;
+}
+
+.sheet--title .title-edition {
+    margin: 0 0 0.2rem;
+    font-size: 2.6rem;
+    font-style: italic;
+    line-height: 1.1;
+}
+
+.sheet--title .title-name {
+    margin: 0 0 0.35rem;
+    font-size: 4.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.sheet--title .title-subtitle {
+    margin: 0 0 2.4rem;
+    font-size: 2.6rem;
+    font-style: italic;
+    line-height: 1.12;
+}
+
+.sheet--title .title-block h2 {
+    margin: 1.4rem 0 0.35rem;
+    font-size: 1.85rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.sheet--title .title-block p {
+    font-size: 1.3rem;
+    line-height: 1.32;
+}
+
+.title-block span {
+    display: block;
+}
+
+.title-block a,
+.title-imprint a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.title-block a:hover,
+.title-imprint a:hover {
+    color: var(--selection-text);
+}
+
+.title-imprint {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    margin-top: auto;
+    padding-top: 3rem;
+    font-family: var(--sans);
+}
+
+.title-mark {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 112px;
+    height: 112px;
+    border: 2px solid var(--text);
+    border-radius: 50%;
+    font-family: var(--serif);
+    font-size: 4.4rem;
+    font-style: italic;
+    line-height: 1;
+}
+
+.sheet--title .title-press {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sheet--title .title-links {
+    margin: 0.1rem 0 0.25rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.title-places {
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    gap: 0.1rem 1.8rem;
+    font-size: 1.15rem;
+}
+
+/* ---------- Colophon ---------- */
+
+.colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1.5rem;
+    margin-top: calc(14px - var(--sheet-gap));
+    padding: 0 2px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.colophon q {
+    font-style: italic;
+}
+
+.colophon-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.colophon button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--link);
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.colophon button:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+    text-decoration: none;
+}
+
+/* ---------- Floating controls: reader bar, mobile menu, palette ---------- */
+
+.reader,
+.mobile-menu summary,
+.mobile-nav,
+.palette {
+    border: 1px solid var(--border);
+    background: var(--paper);
+    color: var(--text);
+    box-shadow: 3px 3px 0 var(--selection);
+    font-family: var(--mono);
+}
+
+.reader {
+    position: fixed;
+    bottom: 18px;
+    left: calc(var(--shell-left-padding) + (100vw - var(--shell-left-padding) - var(--sidebar-width) - 4rem) / 2);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px 5px;
+    transform: translateX(-50%);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.reader[hidden] {
+    display: none;
+}
+
+.reader button {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 5px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+}
+
+.reader button:hover,
+.reader button:focus-visible {
+    background: var(--selection);
+    color: var(--selection-text);
+    outline: none;
+}
+
+.reader-pos {
+    min-width: 5ch;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.reader-section {
+    max-width: 18ch;
+    padding: 0 0.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.reader-section:empty {
+    display: none;
+}
+
+.reader-zoom {
+    min-width: 5ch;
+    font-variant-numeric: tabular-nums;
+}
+
+.reader-rule {
+    width: 1px;
+    height: 16px;
+    margin: 0 4px;
+    background: var(--border);
+}
+
+.palette {
+    width: min(580px, calc(100vw - 32px));
+    max-height: 70vh;
+    margin-top: 14vh;
+    padding: 0;
+    box-shadow: 4px 4px 0 var(--selection);
+    font-size: 13px;
+}
+
+.palette::backdrop {
+    background: rgba(8, 12, 20, 0.35);
+}
+
+.palette input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 13px 15px;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+}
+
+.palette input::placeholder {
+    color: var(--text-secondary);
+}
+
+.palette ul {
+    max-height: 48vh;
+    margin: 0;
+    padding: 4px 0;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.palette li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 1rem;
+    padding: 6px 15px;
+}
+
+.palette li[aria-selected="true"] {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+.palette-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.palette-meta {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: lowercase;
+}
+
+.palette-snippet {
+    grid-column: 1 / -1;
+    font-family: var(--serif);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.palette li[aria-selected="true"] :is(.palette-meta, .palette-snippet) {
+    color: inherit;
+}
+
+.palette-status {
+    margin: 0;
+    padding: 8px 15px;
+    color: var(--text-secondary);
+}
+
+.palette-status:empty {
+    display: none;
+}
+
+.palette-keys {
+    margin: 0;
+    padding: 6px 15px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.palette kbd {
+    margin-right: 2px;
+    padding: 0 4px;
+    border: 1px solid var(--text-secondary);
+    font: inherit;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* ---------- Narrow screens: one reflowed sheet, notes inline ---------- */
+
+@media (max-width: 800px) {
+    .shell {
+        display: block;
+        padding: 0;
+    }
+
+    .sidebar,
+    .reader {
+        display: none !important;
+    }
+
+    .folio {
+        width: auto;
+        gap: 0;
+    }
+
+    .sheet {
+        width: auto;
+        min-height: 0;
+        padding: 32px 20px 40px;
+        box-shadow: none;
+    }
+
+    .sheet-head,
+    .sheet-foot {
+        display: none;
+    }
+
+    .sheet-body,
+    .sheet--title .sheet-body {
+        width: auto;
+        min-height: 0;
+    }
+
+    .sheet--title {
+        border-bottom: 1px solid var(--border);
+    }
+
+    .sheet--title .title-edition,
+    .sheet--title .title-subtitle {
+        font-size: 1.7rem;
+    }
+
+    .sheet--title .title-name {
+        font-size: 3rem;
+    }
+
+    .sheet--title .title-block h2 {
+        font-size: 1.35rem;
+    }
+
+    .sheet--title .title-block p {
+        font-size: 1.05rem;
+    }
+
+    .title-imprint {
+        gap: 1.2rem;
+    }
+
+    .title-mark {
+        width: 72px;
+        height: 72px;
+        font-size: 2.8rem;
+    }
+
+    .title-places {
+        grid-template-columns: repeat(3, max-content);
+        gap: 0.1rem 1.1rem;
+    }
+
+    .sidenote,
+    .marginnote,
+    .marginfigure {
+        float: none;
+        display: block;
+        width: auto;
+        margin: 0.5rem 0 0.7rem;
+        padding-left: 0.8rem;
+        border-left: 2px solid var(--accent);
+    }
+
+    .sheet-body .marginfigure img {
+        max-width: 60%;
+    }
+
+    .sheet-body figure:not(.marginfigure) figcaption {
+        position: static;
+        width: auto;
+        margin-top: 0.3rem;
+    }
+
+    .colophon {
+        margin: 0;
+        padding: 12px 20px 96px;
+        border-top: 1px solid var(--border);
+        background: var(--paper);
+    }
+
+    .mobile-menu {
+        display: block;
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 100;
+    }
+
+    .mobile-menu summary {
+        display: grid;
+        place-items: center;
+        min-width: 3rem;
+        height: 3rem;
+        padding: 0 0.65rem;
+        box-sizing: border-box;
+        font-size: 0.7rem;
+        font-weight: 700;
+        line-height: 1;
+        text-transform: uppercase;
+        list-style: none;
+    }
+
+    .mobile-menu summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .mobile-menu[open] summary {
+        color: var(--accent);
+    }
+
+    .mobile-nav {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 0.65rem);
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        width: max-content;
+        padding: 0.7rem 0.8rem;
+        font-size: 0.72rem;
+        line-height: 1.4;
+    }
+
+    .mobile-nav :is(a, button) {
+        display: block;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: var(--text);
+        font: inherit;
+        text-align: left;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .mobile-nav a.active-page {
+        color: var(--accent);
+        font-weight: 700;
+    }
+}
+
+/* ---------- Print: the sheets, and nothing around them ---------- */
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    :root,
+    :root[data-theme="dark"] {
+        --desk: #fff;
+        --paper: #fff;
+        --text: #000;
+        --text-secondary: #333;
+        --link: #000;
+        --accent: #000;
+        --border: #000;
+        --callout-bg: #f2f2f2;
+    }
+
+    .sidebar,
+    .reader,
+    .mobile-menu,
+    .palette,
+    .colophon {
+        display: none !important;
+    }
+
+    .shell {
+        display: block;
+        padding: 0;
+    }
+
+    .folio {
+        gap: 0;
+        zoom: 1 !important;
+    }
+
+    .sheet {
+        min-height: 0;
+        box-shadow: none;
+        break-after: page;
+    }
+
+    /* Just under A4, so a full sheet never spills a blank page. */
+    .folio.is-paged .sheet {
+        min-height: 296mm;
+    }
+}

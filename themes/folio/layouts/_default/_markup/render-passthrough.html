@@ -1,0 +1,10 @@
+{{- /* Typesets \( \), $ $, \[ \] and $$ $$ maths with KaTeX at build time. */}}
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") }}
+{{- with try (transform.ToMath .Inner $opts) }}
+  {{- with .Err }}
+    {{- errorf "KaTeX could not render %q at %s: %s" $.Inner $.Position . }}
+  {{- else }}
+    {{- .Value }}
+    {{- $.Page.Store.Set "hasMath" true }}
+  {{- end }}
+{{- end -}}

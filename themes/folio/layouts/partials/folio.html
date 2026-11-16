@@ -1,0 +1,30 @@
+{{- /*
+  A document set as paper: one flowing sheet that the script splits into
+  fixed-size sheets on wide screens.
+    page   – the page being rendered
+    body   – its rendered content
+    before – sheets that come first and are never split (the title page)
+    bare   – leave out the title, tldr and contents
+*/}}
+{{- $page := .page }}
+{{- $title := partial "page-title.html" $page }}
+<div class="folio" data-pages="{{ $page.Params.pages | default "section" }}" data-title="{{ $title }}">
+  {{- with .before }}{{ . }}{{ end }}
+  <article class="sheet" data-flow>
+    <div class="sheet-head" aria-hidden="true"></div>
+    <div class="sheet-body">
+      {{- if not .bare }}
+      <header class="doc-head">
+        <h1 class="doc-title">{{ $title }}</h1>
+        {{- with $page.Params.tldr }}
+        <p class="doc-tldr">{{ . | markdownify }}</p>
+        {{- end }}
+        {{- partial "toc.html" $page }}
+      </header>
+      {{- end }}
+      {{ .body }}
+    </div>
+    <div class="sheet-foot" aria-hidden="true"></div>
+  </article>
+  {{- partial "colophon.html" $page }}
+</div>
