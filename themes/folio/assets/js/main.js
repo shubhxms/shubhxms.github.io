@@ -3,7 +3,7 @@ import { createReader, bindActions, bindBar, bindContents, bindToolbar, bindKeys
 import { createPalette } from './palette.js';
 import { store } from './storage.js';
 
-// Wide screens zoom the paper to fit; narrow screens show it as it is.
+// Wide screens size the paper to the window; narrow screens show it as it is.
 const wide = window.matchMedia('(min-width: 801px)');
 
 // The head sets the initial theme before paint; this marks and changes it.
@@ -27,19 +27,12 @@ function startReader(folio, actions) {
   bindContents(folio, reader);
   bindBar(folio);
 
-  const fit = () => {
-    if (wide.matches) reader.applyZoom();
-    else {
-      folio.style.zoom = '';
-      folio.style.removeProperty('--sheet-min');
-      reader.render();
-    }
-  };
+  const fit = () => (wide.matches ? reader.layout() : reader.unlayout());
   fit();
   wide.addEventListener('change', fit);
-  window.addEventListener('resize', () => wide.matches && reader.refit());
+  window.addEventListener('resize', () => wide.matches && reader.layout());
 
-  // Zooming moves everything, so return to a linked #fragment afterwards.
+  // Laying out moves everything, so return to a linked #fragment afterwards.
   const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
   if (target) target.scrollIntoView({ block: 'start' });
 }

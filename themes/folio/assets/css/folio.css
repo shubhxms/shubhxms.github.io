@@ -6,7 +6,7 @@
 /* ---------- Tokens ---------- */
 
 :root {
-    --desk: #d3dbf4;
+    --desk: #dde5ef;
     --paper: #fcfdff;
     --text: #000;
     --text-secondary: #4a4f58;
@@ -98,8 +98,6 @@ a:hover {
 
 .shell {
     display: grid;
-    /* A folio zoomed past the desk widens it (and scrolls the page)
-       rather than sliding under the sidebar. */
     grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width);
     gap: 2rem;
     align-items: start;
@@ -109,6 +107,11 @@ a:hover {
 }
 
 .desk {
+    display: flex;
+    flex-direction: column;
+    /* On a screen wider than the widest sheet, the sheet sits centred in
+       the room rather than leaving it all on one side. */
+    align-items: center;
     min-width: 0;
 }
 
@@ -225,8 +228,11 @@ a:hover {
     box-sizing: border-box;
     width: var(--sheet-w);
     /* At least one screen tall, so a short page fills the view without
-       scrolling; reader.js sets it from the window and the zoom. */
+       scrolling; reader.js sets it from the window. */
     min-height: var(--sheet-min, 0px);
+    /* Everything on the sheet is sized in ems of the reading size, which
+       reader.js sets for the sheet's width and the reader's text size. */
+    font-size: var(--type, 15px);
     padding: var(--pad-top) 0 var(--pad-bottom) var(--pad-left);
     background: var(--paper);
     box-shadow: var(--sheet-shadow);
@@ -236,8 +242,7 @@ a:hover {
     position: relative;
     flex: 1;
     width: var(--text-w);
-    font-size: 15px;
-    line-height: 1.36;
+    line-height: 1.38;
     font-variant-numeric: oldstyle-nums proportional-nums;
 }
 
@@ -250,7 +255,7 @@ a:hover {
 .doc-kicker {
     margin: 0 0 0.55rem;
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 0.7em;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--text-secondary);
@@ -259,7 +264,7 @@ a:hover {
 .sheet-body .doc-title {
     margin: 0 0 0.5rem;
     font-family: var(--serif);
-    font-size: 2.65rem;
+    font-size: 2.827em;
     font-style: normal;
     font-weight: 600;
     line-height: 1.02;
@@ -277,7 +282,7 @@ a:hover {
 :is(.doc-head, .doc-bar) .doc-toc ol {
     display: inline;
     padding: 0;
-    font-size: 0.95rem;
+    font-size: 1.013em;
     font-style: italic;
 }
 
@@ -321,29 +326,26 @@ a:hover {
 }
 
 /* The home page opens with its title page: edition, name, subtitle. */
-.sheet-body .doc-head--title .title-edition {
-    margin: 0 0 0.1rem;
-    font-size: 1.9rem;
+.sheet-body .doc-head--title .title-edition,
+.sheet-body .doc-head--title .title-subtitle {
+    margin: 0;
+    font-size: 1.75em;
     font-style: italic;
-    line-height: 1.1;
+    line-height: 1.12;
     text-align: left;
 }
 
 .sheet-body .doc-head--title .title-name {
-    margin: 0 0 0.2rem;
+    margin: 0.05em 0 0.1em;
     font-family: var(--serif);
-    font-size: 3.6rem;
+    font-size: 3.5em;
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.01em;
 }
 
 .sheet-body .doc-head--title .title-subtitle {
-    margin: 0 0 1.1rem;
-    font-size: 1.9rem;
-    font-style: italic;
-    line-height: 1.12;
-    text-align: left;
+    margin-bottom: 0.6em;
 }
 
 /* ---------- Compact bar: appears once the big header scrolls away ---------- */
@@ -395,7 +397,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: var(--serif);
-    font-size: 1.3rem;
+    font-size: 1.387em;
     font-weight: 700;
     letter-spacing: -0.01em;
 }
@@ -404,7 +406,7 @@ a:hover {
     min-width: 0;
     overflow-x: auto;
     scrollbar-width: none;
-    font-size: 0.9rem;
+    font-size: 0.96em;
 }
 
 .doc-bar .doc-toc::-webkit-scrollbar {
@@ -443,20 +445,20 @@ a:hover {
     margin: 1.5rem 0 0.55rem;
     padding-bottom: 0.18rem;
     border-bottom: 1px solid var(--border);
-    font-size: 1.12rem;
+    font-size: 1.195em;
     font-weight: 700;
     letter-spacing: -0.005em;
 }
 
 .sheet-body h3 {
     margin: 1.1rem 0 0.3rem;
-    font-size: 0.98rem;
+    font-size: 1.045em;
     font-weight: 700;
 }
 
 .sheet-body h4 {
     margin: 0.9rem 0 0.25rem;
-    font-size: 0.82rem;
+    font-size: 0.875em;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -528,7 +530,7 @@ a:hover {
     overflow-x: auto;
     border: 1px solid var(--border);
     background: var(--callout-bg);
-    font-size: 12.5px;
+    font-size: 0.833em;
     line-height: 1.4;
 }
 
@@ -599,7 +601,7 @@ a:hover {
 .sheet-body figcaption,
 .sheet-body figcaption p {
     margin: 0;
-    font-size: 12px;
+    font-size: 0.8em;
     font-style: italic;
     line-height: 1.32;
     text-align: left;
@@ -663,7 +665,7 @@ hr {
 
 .divider-main::after {
     content: "🂡";
-    font-size: 0.75rem;
+    font-size: 0.8em;
     color: var(--accent);
 }
 
@@ -675,7 +677,7 @@ hr {
 /* Markdown footnotes: small, ruled off, at the foot of the text. */
 .sheet-body .footnotes {
     margin-top: 1.4rem;
-    font-size: 13px;
+    font-size: 0.867em;
     line-height: 1.35;
 }
 
@@ -708,7 +710,7 @@ hr {
     clear: right;
     width: var(--note-w);
     margin: 0.15rem calc(-1 * (var(--note-w) + var(--gutter))) 0.6rem 0;
-    font-size: 12px;
+    font-size: 0.8em;
     font-style: normal;
     line-height: 1.32;
     text-align: left;
@@ -750,40 +752,73 @@ hr {
 
 /* ---------- Lists of pages, shelf strip ---------- */
 
-.sheet-body ol.contents {
-    margin: 1rem 0;
+/* An archive: a year, then its entries as rows of date | title, length,
+   abstract. */
+.sheet-body .archive-year {
+    margin-top: 1.4em;
+    font-family: var(--mono);
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.sheet-body .archive-list {
+    margin: 0.3em 0 0;
     padding: 0;
     list-style: none;
 }
 
-.contents li {
-    margin: 0 0 0.6rem;
+.sheet-body .archive-entry {
+    display: grid;
+    grid-template-columns: 4.6em 1fr;
+    gap: 0 0.6em;
+    margin: 0;
+    padding: 0.45em 0;
+    border-bottom: 1px solid var(--rule);
 }
 
-.sheet-body .contents-entry {
+.sheet-body .archive-entry::before {
+    content: none;
+}
+
+.archive-date {
+    padding-top: 0.3em;
+    font-family: var(--mono);
+    font-size: 0.72em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+}
+
+.sheet-body .archive-head {
     display: flex;
     align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 0.8em;
     margin: 0;
+    text-align: left;
 }
 
-.sheet-body .contents-abstract {
-    margin: 0.1rem 0 0;
+.archive-title {
+    font-weight: 600;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+}
+
+.archive-meta {
+    flex-basis: 100%;
+    font-family: var(--mono);
+    font-size: 0.68em;
+    white-space: nowrap;
+    color: var(--text-secondary);
+}
+
+.sheet-body .archive-abstract {
+    margin: 0.1em 0 0;
     font-size: 0.92em;
     font-style: italic;
     text-align: left;
     color: var(--text-secondary);
-}
-
-.contents-leader {
-    flex: 1;
-    margin: 0 0.5em;
-    border-bottom: 1px dotted var(--text-secondary);
-}
-
-.contents time {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
 }
 
 .shelf-strip {
@@ -821,7 +856,7 @@ hr {
     padding-top: 0.4rem;
     border-top: 1px solid var(--border);
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 0.7em;
     line-height: 1.4;
     white-space: nowrap;
     color: var(--text-secondary);
@@ -921,7 +956,7 @@ hr {
     font-variant-numeric: tabular-nums;
 }
 
-.reader-zoom {
+.reader-size {
     width: 5.5ch;
     font-variant-numeric: tabular-nums;
 }
@@ -1103,11 +1138,11 @@ hr {
     }
 
     .sheet-body .doc-head--title .title-name {
-        font-size: 2.6rem;
+        font-size: 2.6em;
     }
 
     .sheet-body .doc-head--title :is(.title-edition, .title-subtitle) {
-        font-size: 1.45rem;
+        font-size: 1.4em;
     }
 
     .sidenote,
@@ -1227,10 +1262,15 @@ hr {
         padding: 0;
     }
 
-    /* 860px × 0.92 ≈ A4's 794px. */
+    /* Print sets its own A4 measurements, whatever the window was. */
     .folio {
         gap: 0;
-        zoom: 0.92 !important;
+        --sheet-w: 794px !important;
+        --pad-left: 52px !important;
+        --text-w: 470px !important;
+        --gutter: 24px !important;
+        --note-w: 200px !important;
+        --type: 14px !important;
     }
 
     .sheet {

@@ -66,3 +66,35 @@ test('arrange puts the group with the best match first while typing', () => {
   const results = [r('Zoom in', 'View', 100), r('Notes', 'Pages', 40), r('Now', 'Pages', 80)];
   assert.deepEqual(arrange(results, ORDER, 'zo').map((x) => x.item.label), ['Zoom in', 'Now', 'Notes']);
 });
+
+import { geometry, TEXT_STEPS } from '../themes/folio/assets/js/layout.js';
+
+test('geometry fills the room, within the sheet limits, in whole pixels', () => {
+  const small = geometry(500);
+  const mid = geometry(900);
+  const huge = geometry(3000);
+  assert.equal(small.sheet, 680);
+  assert.equal(mid.sheet, 900);
+  assert.equal(huge.sheet, 1200);
+  for (const g of [small, mid, huge]) {
+    for (const value of Object.values(g)) assert.ok(Number.isInteger(value), JSON.stringify(g));
+    assert.equal(g.padLeft + g.text + g.gutter + g.note + g.padRight, g.sheet);
+  }
+});
+
+test('geometry sets type for a comfortable measure, larger on wider sheets', () => {
+  const mid = geometry(900);
+  const huge = geometry(3000);
+  assert.ok(mid.type >= 16 && mid.type <= 18, mid.type);
+  assert.ok(huge.type > mid.type);
+  // About 30–34 ems of text a line: 70–80 characters of Crimson.
+  for (const g of [mid, huge]) assert.ok(g.text / g.type > 29 && g.text / g.type < 35, JSON.stringify(g));
+});
+
+test('geometry scales type, not the page, when asked for larger text', () => {
+  const normal = geometry(900, 1);
+  const larger = geometry(900, TEXT_STEPS[TEXT_STEPS.length - 1]);
+  assert.equal(larger.sheet, normal.sheet);
+  assert.equal(larger.text, normal.text);
+  assert.ok(larger.type > normal.type);
+});

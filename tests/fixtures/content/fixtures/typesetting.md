@@ -20,3 +20,8 @@ Second paragraph.{{< /sidenote >}}
 ## Callouts
 
 {{< callout text="A callout." >}}
+
+## Line breaks
+
+First line
+second line.

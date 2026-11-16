@@ -83,6 +83,8 @@ pages = '/:title'
 
 [markup.goldmark.renderer]
 unsafe = true
+# A line break in the source is a line break on the page.
+hardWraps = true
 
 # Maths is handed to KaTeX at build time (layouts/_default/_markup/render-passthrough.html).
 [markup.goldmark.extensions.passthrough]

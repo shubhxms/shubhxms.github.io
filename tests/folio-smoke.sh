@@ -33,13 +33,17 @@ lacks index.html 'sheet--title'
 lacks index.html 'class="postcard'
 lacks index.html 'title-block'
 has index.html '<header class="doc-head doc-head--title">'
+lacks index.html 'title-card'
 has index.html '<p class="title-edition">Second Edition</p>'
 has index.html '<h1 class="title-name">Shubham Shah</h1>'
 has index.html 'id="contact"'
 
 # Abstracts live where pages are listed, not on the pages themselves.
 lacks sarabhai/index.html 'class="doc-tldr"'
-has notes/index.html '<p class="contents-abstract">In this I gather some thoughts'
+has notes/index.html '<h2 class="archive-year">2026</h2>'
+has notes/index.html '<time class="archive-date" datetime="2026-02-13">13 Feb</time>'
+has notes/index.html '<p class="archive-abstract">In this I gather some thoughts'
+lacks notes/index.html 'contents-leader'
 has notes/index.html 'class="doc-kicker">1 entry<'
 
 # Documents: one continuous sheet. A big header (kicker, title,
@@ -102,6 +106,7 @@ has sarabhai/index.html 'class="marginfigure"'
 # Notes sit inside a paragraph, so their own paragraphs must not be <p>s.
 has fixture-typesetting/index.html '<span class="note-para">Second paragraph.</span>'
 lacks fixture-typesetting/index.html '<p>Second paragraph.</p>'
+has fixture-typesetting/index.html '<p>First line<br>'
 # Margin images are measured on load, so they must not load lazily.
 lacks index.html 'loading="lazy"'
 

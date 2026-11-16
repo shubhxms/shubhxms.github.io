@@ -1,23 +1,20 @@
-// Reading a document set as paper: which section is in view, moving
-// between sections, zoom, and the compact bar. Every control (toolbar,
-// keyboard, palette) goes through an actions map.
+// Reading a document set as paper: laying the sheet out for the window,
+// text size, which section is in view, moving between sections, and the
+// compact bar. Every control (toolbar, keyboard, palette) goes through an
+// actions map.
 import { stored, store } from './storage.js';
 import { sectionAt, position } from './sections.js';
+import { geometry, TEXT_STEPS } from './layout.js';
 
-const ZOOM_STEPS = [0.5, 0.67, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2];
-const ZOOM_KEY = 'folio-zoom';
-// "Fit" fills the room beside the sidebar, up to FIT_SHARE of the window,
-// and never past MAX_ZOOM, so type stays a reading size on big screens.
-const FIT_SHARE = 0.75;
-const MAX_ZOOM = 1.15;
+const TEXT_KEY = 'folio-text';
 
 export function createReader(folio) {
   const desk = folio.closest('.desk');
   const bar = folio.querySelector('.doc-bar');
-  let zoom = stored(ZOOM_KEY) || 'fit';
+  let textStep = TEXT_STEPS.indexOf(Number(stored(TEXT_KEY)));
+  if (textStep === -1) textStep = TEXT_STEPS.indexOf(1);
 
-  // The desk grows with a zoomed folio, so measure the room around it
-  // instead: the shell, less its padding, gap and sidebar.
+  // The width beside the sidebar: the shell, less its padding, gap and sidebar.
   function room() {
     const shell = desk.parentElement;
     const style = getComputedStyle(shell);
@@ -27,37 +24,34 @@ export function createReader(folio) {
       - (sidebar ? sidebar.offsetWidth + parseFloat(style.columnGap) : 0);
   }
 
-  function fitScale() {
-    const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
-    return Math.min(MAX_ZOOM, Math.min(FIT_SHARE * window.innerWidth, room()) / sheetWidth);
-  }
-
-  function scale() {
-    return zoom === 'fit' ? fitScale() : Number(zoom);
-  }
-
-  // A sheet is at least one screen tall, so a short page fills the view
-  // and never scrolls past it. The zoomed folio needs the height unzoomed.
-  function applyZoom() {
-    const zoomed = scale();
-    folio.style.zoom = String(zoomed);
+  // Sets the sheet's measurements as whole pixels. A sheet is also at
+  // least one screen tall, so a short page fills the view without scrolling.
+  function layout() {
+    const g = geometry(room(), TEXT_STEPS[textStep]);
     const shell = getComputedStyle(desk.parentElement);
-    const room = window.innerHeight - parseFloat(shell.paddingTop) - parseFloat(shell.paddingBottom);
-    folio.style.setProperty('--sheet-min', `${room / zoomed}px`);
+    const height = window.innerHeight - parseFloat(shell.paddingTop) - parseFloat(shell.paddingBottom);
+    const set = (name, px) => folio.style.setProperty(name, `${px}px`);
+    set('--sheet-w', g.sheet);
+    set('--pad-left', g.padLeft);
+    set('--text-w', g.text);
+    set('--gutter', g.gutter);
+    set('--note-w', g.note);
+    set('--type', g.type);
+    set('--sheet-min', Math.floor(height));
     render();
   }
 
-  function setZoom(value) {
-    zoom = value;
-    store(ZOOM_KEY, String(value));
-    applyZoom();
+  // Back to the stylesheet's own sizes (narrow screens).
+  function unlayout() {
+    ['--sheet-w', '--pad-left', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min']
+      .forEach((name) => folio.style.removeProperty(name));
+    render();
   }
 
-  function stepZoom(direction) {
-    const current = scale();
-    const steps = direction > 0 ? ZOOM_STEPS : [...ZOOM_STEPS].reverse();
-    const next = steps.find((step) => (direction > 0 ? step > current + 0.001 : step < current - 0.001));
-    if (next) setZoom(next);
+  function setText(step) {
+    textStep = Math.max(0, Math.min(TEXT_STEPS.length - 1, step));
+    store(TEXT_KEY, String(TEXT_STEPS[textStep]));
+    layout();
   }
 
   const headings = () => Array.from(folio.querySelectorAll('.sheet--doc .sheet-body > h2[id]'));
@@ -86,8 +80,7 @@ export function createReader(folio) {
       position: position(index, all.length),
       section: heading ? heading.textContent.trim() : folio.dataset.title || '',
       sectionId: heading?.id || '',
-      zoom: Math.round(scale() * 100),
-      fit: zoom === 'fit',
+      text: Math.round(TEXT_STEPS[textStep] * 100),
     };
     listeners.forEach((listener) => listener(state));
   }
@@ -97,10 +90,9 @@ export function createReader(folio) {
     prev: () => goTo(currentIndex() - 1),
     first: () => goTo(-1),
     last: () => goTo(headings().length - 1),
-    'zoom-in': () => stepZoom(1),
-    'zoom-out': () => stepZoom(-1),
-    'zoom-fit': () => setZoom('fit'),
-    'zoom-reset': () => setZoom(1),
+    'text-larger': () => setText(textStep + 1),
+    'text-smaller': () => setText(textStep - 1),
+    'text-reset': () => setText(TEXT_STEPS.indexOf(1)),
   };
 
   let frame = 0;
@@ -111,9 +103,9 @@ export function createReader(folio) {
 
   return {
     actions,
-    applyZoom,
+    layout,
+    unlayout,
     render,
-    refit: () => (zoom === 'fit' ? applyZoom() : render()),
     onChange: (listener) => listeners.add(listener),
   };
 }
@@ -160,7 +152,7 @@ export function bindToolbar(toolbar, reader) {
   reader.onChange((state) => {
     field('position').textContent = state.position;
     field('section').textContent = state.section;
-    field('zoom').textContent = state.fit ? 'fit' : `${state.zoom}%`;
+    field('text').textContent = `${state.text}%`;
   });
   toolbar.hidden = false;
 }
@@ -180,9 +172,9 @@ function isTyping(event) {
   return target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName);
 }
 
-// j/k sections, +/- zoom, 0 fit, ⌘K or / opens the palette.
+// j/k sections, +/- text size, 0 default size, ⌘K or / opens the palette.
 export function bindKeys(actions, openPalette) {
-  const keys = { j: 'next', k: 'prev', '+': 'zoom-in', '=': 'zoom-in', '-': 'zoom-out', 0: 'zoom-fit' };
+  const keys = { j: 'next', k: 'prev', '+': 'text-larger', '=': 'text-larger', '-': 'text-smaller', 0: 'text-reset' };
   document.addEventListener('keydown', (event) => {
     const command = event.metaKey || event.ctrlKey;
     if (command && event.key.toLowerCase() === 'k') {
