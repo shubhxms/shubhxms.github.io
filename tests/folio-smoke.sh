@@ -163,26 +163,31 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-grep -q ':root\[data-heads="side"\] .sheet--flat .doc-head::after {' "$CSS" || fail 'flat pages should mark the side column'
+has contact/index.html '<pre class="ornament" aria-hidden="true">'
+lacks uses/index.html 'class="ornament"'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
-# Drop caps: a script initial on pages that set dropcap (notes cascade it),
+# Raised caps: a script initial on pages that set dropcap (notes cascade it),
 # with the font loaded only there, and only its capitals.
 has sarabhai/index.html 'sheet--dropcap'
 has sarabhai/index.html 'family=Pinyon+Script'
 lacks uses/index.html 'Pinyon'
 lacks uses/index.html 'sheet--dropcap'
-grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'drop cap rule missing'
+# Notes take sign-ups with the site's own form, posting to Substack.
+has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.com/api/v1/free?nojs=true" method="post"'
+lacks notes/index.html 'substack.com/embed'
+grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
 # The shelf: a numbered catalogue from data/shelf.yaml, books then films;
 # the home page shows the picks and a column index of likes.
 has shelf/index.html '<ol class="catalogue">'
 [ "$(grep -o 'class="catalogue-item' "$OUT/shelf/index.html" | wc -l | tr -d ' ')" = 22 ] || fail 'the shelf should list all 22 entries'
-has shelf/index.html '<span class="catalogue-n">B01</span>'
-has shelf/index.html '<span class="catalogue-n">F01</span>'
+lacks shelf/index.html 'class="catalogue-n"'
+# An entry with a note links to it.
+has shelf/index.html '<a class="catalogue-link" href="/sarabhai/">'
 lacks shelf/index.html 'media-grid'
 [ "$(grep -o '<a class="shelf-pick' "$OUT/index.html" | wc -l | tr -d ' ')" = 6 ] || fail 'the home page should show the six picks'
-has index.html '<ul class="likes">'
+has index.html '<p class="likes">state machines · science'
 
 printf 'folio smoke tests passed\n'

@@ -83,7 +83,10 @@ export function stars(rating) {
   return '★'.repeat(Math.floor(rating)) + (rating % 1 ? '½' : '');
 }
 
-function row(e) {
+// A table row. On the feed page (linked = false) the title is plain text:
+// pointing shows the entry in the plate, and it opens from there. The
+// recent list, without a plate, links the title directly.
+function row(e, linked = false) {
   const tr = el('tr', `feed-row feed-row--${e.kind}`);
   tr.dataset.id = e.id;
   tr.tabIndex = 0;
@@ -92,10 +95,14 @@ function row(e) {
   tr.append(el('td', 'feed-kind', KIND_LABEL[e.kind] || e.kind));
 
   const cell = el('td', 'feed-entry');
-  const link = el('a', 'feed-title', e.title);
-  link.href = e.url;
-  link.rel = 'noopener';
-  cell.append(link);
+  if (linked) {
+    const link = el('a', 'feed-title', e.title);
+    link.href = e.url;
+    link.rel = 'noopener';
+    cell.append(link);
+  } else {
+    cell.append(el('span', 'feed-title', e.title));
+  }
   if (e.kind === 'film') {
     const extra = [e.year, stars(e.rating)].filter(Boolean).join(' ');
     if (extra) cell.append(' ', el('span', 'feed-extra', extra));
@@ -162,7 +169,10 @@ function feedPage(root) {
       plate.append(el('p', 'feed-plate-extra', [e.year, stars(e.rating), e.liked ? '♥' : ''].filter(Boolean).join('  ')));
     }
     if (e.text) plate.append(el('p', 'feed-plate-text', e.text));
-    plate.append(el('p', 'feed-plate-site', e.site));
+    const open = el('a', 'feed-plate-open', `Open on ${e.site} ↗`);
+    open.href = e.url;
+    open.rel = 'noopener';
+    plate.append(open);
   }
 
   function draw() {
@@ -265,14 +275,14 @@ function feedPage(root) {
   });
   body.addEventListener('click', (event) => {
     const tr = rowOf(event.target);
-    if (!tr || event.target.closest('a')) return;
+    if (!tr) return;
     const e = byId.get(tr.dataset.id);
     pinned = pinned === e ? null : e;
     body.querySelectorAll('.is-pinned').forEach((r) => r.classList.remove('is-pinned'));
     if (pinned) tr.classList.add('is-pinned');
     showPlate(pinned || e);
   });
-  // Up and down move between rows; Enter opens the entry.
+  // Up and down move between rows; Enter pins the entry, Enter again opens it.
   body.addEventListener('keydown', (event) => {
     const tr = rowOf(event.target);
     if (!tr) return;
@@ -285,7 +295,9 @@ function feedPage(root) {
         next.focus();
       }
     } else if (event.key === 'Enter' && event.target === tr) {
-      tr.querySelector('a').click();
+      const e = byId.get(tr.dataset.id);
+      if (pinned === e) window.open(e.url, '_blank', 'noopener');
+      else tr.click();
     }
   });
 
@@ -307,7 +319,7 @@ function recentList(root) {
   const count = Number(root.dataset.count) || 6;
   load(root.dataset.api, (entries) => {
     const latest = [...entries].sort((a, b) => b.date - a.date).slice(0, count);
-    body.replaceChildren(...latest.map(row));
+    body.replaceChildren(...latest.map((e) => row(e, true)));
   }, () => {
     root.hidden = true;
   });

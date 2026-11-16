@@ -1,6 +1,4 @@
-{{- /* The home page's likes (front matter `likes`), as a column index. */}}
-<ul class="likes">
-  {{- range .Page.Params.likes }}
-  <li>{{ . | markdownify }}</li>
-  {{- end }}
-</ul>
+{{- /* The home page's likes (front matter `likes`), as one dotted line. */}}
+<p class="likes">
+  {{- range $i, $like := .Page.Params.likes }}{{ if $i }} · {{ end }}{{ $like | markdownify }}{{ end -}}
+</p>

@@ -30,6 +30,7 @@
         {{- $toc }}
       </header>
       {{- end }}
+      {{- if not (partial "sections.html" $page) }}{{ partial "ornament.html" . }}{{ end }}
       {{ .body }}
     </div>
     {{- partial "colophon.html" $page }}

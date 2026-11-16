@@ -1,0 +1,14 @@
+{{- /*
+  A sign-up for the newsletter in the site's own type, posting to
+  Substack's form endpoint (it takes the address and shows its own
+  confirmation): {{< subscribe "shubhxms" >}}.
+*/}}
+{{- $pub := .Get 0 }}
+<form class="subscribe" action="https://{{ $pub }}.substack.com/api/v1/free?nojs=true" method="post" target="_blank">
+  <p class="subscribe-lede">New notes by email, now and then. <a href="https://{{ $pub }}.substack.com">The newsletter</a> is on Substack.</p>
+  <label class="subscribe-field">
+    <span class="subscribe-prompt">Email</span>
+    <input type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
+    <button type="submit">Subscribe</button>
+  </label>
+</form>

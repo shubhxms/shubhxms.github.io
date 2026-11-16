@@ -1074,7 +1074,7 @@ hr {
 }
 
 .feed-row {
-    cursor: default;
+    cursor: pointer;
 }
 
 .feed-row:is(:hover, :focus-visible, .is-pinned) {
@@ -1164,8 +1164,14 @@ hr {
     text-decoration: none;
 }
 
-.sheet-body .feed-plate-extra,
-.sheet-body .feed-plate-site {
+.feed-plate-open {
+    display: inline-block;
+    margin-top: 0.2em;
+    font-family: var(--mono);
+    font-size: 0.82em;
+}
+
+.sheet-body .feed-plate-extra {
     font-family: var(--mono);
     font-size: 0.82em;
     color: var(--text-secondary);
@@ -1221,8 +1227,8 @@ hr {
 /* Plates run across text and margin: covers want the width. */
 .sheet-body ol.catalogue {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(7.2em, 1fr));
-    gap: 1em 0.8em;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2em 1em;
     width: calc(var(--text-w) + var(--gutter) + var(--note-w));
     margin: 0.6em 0 1.2em;
     padding: 0;
@@ -1252,10 +1258,30 @@ hr {
     line-height: 1.2;
 }
 
-.catalogue-n {
+.catalogue-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.catalogue-link:hover img {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+}
+
+.catalogue-note {
+    margin-top: 0.15em;
     font-family: var(--mono);
     font-size: 0.85em;
-    color: var(--text-secondary);
+    color: var(--link);
+}
+
+.sheet-body .lede {
+    margin-bottom: 0.8em;
+    font-size: 1.3em;
+    font-style: italic;
+    line-height: 1.3;
+    text-align: left;
 }
 
 .catalogue-title {
@@ -1267,42 +1293,98 @@ hr {
     color: var(--text-secondary);
 }
 
-/* ---------- Likes: a column index ---------- */
-
-.sheet-body ul.likes {
-    columns: 3;
-    column-gap: 1.2em;
-    column-rule: 1px dotted var(--rule);
-    margin: 0.3em 0 0.8em;
+/* The ornament (partials/ornament.html), absolutely placed but left at its
+   own height, so it opens the text from the side column. Not a code block. */
+.sheet-body .ornament {
+    display: none;
+    position: absolute;
+    left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+    width: var(--side);
+    margin: 0.2em 0 0;
     padding: 0;
+    overflow: visible;
+    border: 0;
+    background: none;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    line-height: 1.05;
+    text-align: left;
+    color: var(--text-secondary);
 }
 
-.sheet-body ul.likes > li {
-    break-inside: avoid;
-    padding: 0;
-    font-size: 0.95em;
-    line-height: 1.32;
+/* ---------- Subscribe: the newsletter sign-up ---------- */
+
+.subscribe {
+    margin: 0.8em 0 1.2em;
 }
 
-.sheet-body ul.likes > li::before {
-    content: none;
+.sheet-body .subscribe-lede {
+    margin-bottom: 0.35em;
+    text-align: left;
 }
 
-/* ---------- Drop cap ----------
-   A script initial, three lines deep, opening the first paragraph of pages
-   that set dropcap. */
+.subscribe-field {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.78em;
+}
+
+.subscribe-prompt {
+    display: flex;
+    align-items: center;
+    padding: 0 0.8em;
+    background: var(--text);
+    color: var(--paper);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.subscribe input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.55em 0.7em;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+}
+
+.subscribe button {
+    padding: 0 1em;
+    border: 0;
+    border-left: 1px solid var(--border);
+    background: none;
+    color: var(--text);
+    font: inherit;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.subscribe button:hover {
+    background: var(--text);
+    color: var(--paper);
+}
+
+/* ---------- Raised cap ----------
+   A script initial standing on the first line and rising above it, opening
+   the first paragraph of pages that set dropcap. */
 
 .sheet--dropcap .sheet-body > p:first-of-type::first-letter {
-    float: left;
-    /* Room on the right for the script's swash. */
-    margin: 0.06em 0.3em 0 -0.02em;
-    padding-right: 0.04em;
+    margin-right: 0.04em;
     font-family: "Pinyon Script", var(--serif);
-    font-size: 3.55em;
+    font-size: 3.1em;
     font-style: normal;
     font-weight: 400;
-    line-height: 0.82;
+    line-height: 1;
     color: var(--text);
+}
+
+/* The first line makes room above for the initial. */
+.sheet--dropcap .sheet-body > p:first-of-type {
+    margin-top: 0.5em;
 }
 
 /* ---------- Section heads in a side column ----------
@@ -1326,19 +1408,9 @@ hr {
         margin-left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
     }
 
-    /* Four asterisks set as a lozenge, a printer's ornament in type, hung
-       from the foot of the header so it opens the text. */
-    :root[data-heads="side"] .sheet--flat .doc-head::after {
-        /* "\A " ends the escape and eats one space, hence two. */
-        content: " *\A* *\A  *";
-        position: absolute;
-        top: calc(100% + 0.3em);
-        left: 0;
-        font-family: var(--mono);
-        font-size: 10px;
-        line-height: 1;
-        white-space: pre;
-        color: var(--text-secondary);
+    /* Hangs in the side column where it falls, beside the opening text. */
+    :root[data-heads="side"] .sheet--flat .sheet-body .ornament {
+        display: block;
     }
 
     /* The h2 takes no height, so the text starts right under the space
@@ -1682,8 +1754,8 @@ hr {
         width: auto;
     }
 
-    .sheet-body ul.likes {
-        columns: 2;
+    .sheet-body ol.catalogue {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .shelf-strip {
