@@ -60,20 +60,14 @@ I love receiving correspondence and usually reply within a few days.
 - **Bluesky:** [@shubhamshah.net](https://bsky.app/profile/shubhamshah.net)
 - **GitHub:** [shubhxms](https://github.com/shubhxms)
 
-## Lately
-
-What I've watched, saved and posted, newest first.
-
-{{< recent 6 >}}
-
 ## Some things I like
 
 {{< likes >}}
 
-{{< figure src="/images/home-header.jpg" alt="Adalaj ni Vav" caption="Adalaj ni Vav, photographed in Gujarat." >}}
+## Lately
 
-## From the shelf
+What I've been reading, watching and keeping, as it happens: the feed on the left, the shelf on the right.
 
-{{< shelf-strip >}}
+{{< lately 6 >}}
 
-See the [full shelf](/shelf) and the [Telegram channel](https://telegram.me/shubhamcore) for more.
+Most of it also goes to the [Telegram channel](https://telegram.me/shubhamcore).
