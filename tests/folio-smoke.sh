@@ -29,17 +29,26 @@ has now/index.html 'class="active-page">★ Now</a>'
 
 # Title page, modelled on a book's frontmatter.
 has index.html 'class="sheet sheet--title"'
-grep -Eq '<p class="title-edition">[A-Z][a-z]+(-[a-z]+)? Edition</p>' "$OUT/index.html" \
-	|| fail 'index.html should open with a spelled-out edition'
+has index.html '<p class="title-edition">Second Edition</p>'
+has index.html '<p class="title-press">shubhamshah.net</p>'
 has index.html '<h1 class="title-name">'
 has index.html 'class="title-imprint"'
-has index.html 'data-pages="flow"'
 
-# Documents: one flowing sheet that the paginator splits; ToC from h2s.
+# Documents: one flowing sheet that the paginator splits, under a sticky
+# bar with the title and a contents line built from the h2s.
 has now/index.html 'class="sheet" data-flow'
+lacks now/index.html 'data-pages='
+has now/index.html '<header class="folio-bar">'
+has now/index.html '<span class="folio-bar-title">Now</span>'
+lacks now/index.html 'class="doc-toc"'
 has uses/index.html 'class="doc-toc"'
 has uses/index.html 'href="#devices"'
-lacks now/index.html 'class="doc-toc"'
+python3 - "$OUT/uses/index.html" <<'PY2' || fail 'the contents line should live in the sticky bar'
+import sys
+html = open(sys.argv[1]).read()
+bar = html[html.index('<header class="folio-bar">'):]
+assert bar.index('class="doc-toc"') < bar.index('</header>')
+PY2
 
 # Colophon: last commit for this page, source, markdown and print.
 has now/index.html 'class="colophon"'
@@ -77,6 +86,7 @@ lacks index.html 'loading="lazy"'
 
 # Stylesheet rules the layout depends on.
 CSS="$ROOT/themes/folio/assets/css/folio.css"
+grep -Fq '.sheet-body figure:not(.marginfigure) {' "$CSS" || fail 'text-column figure rules must not pull margin figures back in'
 grep -Fq '@media screen and (max-width: 800px)' "$CSS" || fail 'phone layout must not apply to printed A4 pages'
 grep -Fq 'grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width)' "$CSS" \
 	|| fail 'a zoomed folio must widen the desk, not slide under the sidebar'

@@ -4,16 +4,14 @@
 // never inside one. A block taller than a sheet gets a sheet of its own and
 // stretches it.
 
-// Plans which blocks go on which sheet.
-//   blocks:   [{ height, extent?, lead?, section?, heading?, pagebreak? }]
+// Plans which blocks go on which sheet: text flows on until a sheet is
+// full, or until a {{< pagebreak >}}.
+//   blocks:   [{ height, extent?, heading?, pagebreak? }]
 //             extent  – how far the block reaches, counting its marginalia
-//             lead    – the document's title block; the first section joins it
-//             section – an h2; starts a new sheet in 'section' mode
 //             heading – kept on the same sheet as the block after it
 //   capacity: the height available on one sheet
-//   mode:     'section' (each h2 starts a sheet) or 'flow' (break when full)
 // Returns a list of sheets, each a list of block indices.
-export function planPages(blocks, capacity, mode = 'section') {
+export function planPages(blocks, capacity) {
   const pages = [];
   let page = [];
   let used = 0;
@@ -28,10 +26,9 @@ export function planPages(blocks, capacity, mode = 'section') {
       ? block.height + Math.min(reach(next), capacity)
       : reach(block);
 
-    const newSection = block.section && mode === 'section' && !holdsOnly((b) => b.lead);
     const overflows = used + needed > capacity && !holdsOnly((b) => b.heading);
 
-    if (page.length > 0 && (block.pagebreak || newSection || overflows)) {
+    if (page.length > 0 && (block.pagebreak || overflows)) {
       pages.push(page);
       page = [];
       used = 0;
@@ -62,8 +59,6 @@ function measure(body) {
       // A floated block (a margin figure) takes no room in the flow.
       height: Math.max(0, bottom - top),
       extent: noteBottom - top,
-      lead: el.classList.contains('doc-head'),
-      section: el.tagName === 'H2',
       heading: /^H[2-4]$/.test(el.tagName),
       pagebreak: el.classList.contains('pagebreak'),
     };
@@ -93,12 +88,11 @@ function emptySheetLike(sheet) {
 // Splits every flowing sheet inside `folio` into sheets of fixed size.
 export function paginate(folio) {
   folio.classList.add('is-paged');
-  const mode = folio.dataset.pages || 'section';
 
   folio.querySelectorAll('.sheet[data-flow]').forEach((flow) => {
     const body = flow.querySelector('.sheet-body');
     const blocks = Array.from(body.children);
-    const plan = planPages(measure(body), sheetCapacity(flow), mode);
+    const plan = planPages(measure(body), sheetCapacity(flow));
 
     let anchor = flow;
     plan.slice(1).forEach((indices) => {

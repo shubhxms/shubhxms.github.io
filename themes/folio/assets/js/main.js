@@ -1,6 +1,6 @@
 // Wires the folio theme together: pagination, reader controls, palette.
 import { paginate, unpaginate } from './paginate.js';
-import { createReader, bindActions, bindToolbar, bindKeys } from './reader.js';
+import { createReader, bindActions, bindToolbar, bindContents, bindKeys } from './reader.js';
 import { createPalette } from './palette.js';
 import { store } from './storage.js';
 
@@ -25,6 +25,8 @@ function startReader(folio, actions) {
   const reader = createReader(folio);
   Object.assign(actions, reader.actions);
   bindToolbar(document.querySelector('.reader'), reader);
+  const bar = folio.querySelector('.folio-bar');
+  if (bar) bindContents(bar, reader);
 
   // Printing narrows the page to A4, which can flip `wide`; the sheets are
   // already the right size for paper, so leave them alone until it is done.

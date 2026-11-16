@@ -1,8 +1,9 @@
 {{- /*
   The home page's first sheet, set like a book's title page.
-  Front matter: subtitle, mark, and blocks [{ name, lines }].
+  Front matter: edition (a number), subtitle, mark, press, and
+  blocks [{ name, lines }].
 */}}
-{{- $edition := partial "ordinal.html" (partial "age.html" .) }}
+{{- $edition := partial "ordinal.html" (.Params.edition | default 1) }}
 <article class="sheet sheet--title" data-label="Title page">
   <div class="sheet-head" aria-hidden="true"></div>
   <div class="sheet-body">
@@ -20,7 +21,7 @@
     <footer class="title-imprint">
       <span class="title-mark" aria-hidden="true">{{ .Params.mark | default "S" }}</span>
       <div>
-        <p class="title-press">{{ (urls.Parse site.BaseURL).Host }}</p>
+        <p class="title-press">{{ .Params.press }}</p>
         <p class="title-links">
           {{- $last := sub (len site.Params.social) 1 }}
           {{- range $i, $s := site.Params.social }}

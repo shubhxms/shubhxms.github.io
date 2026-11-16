@@ -4,6 +4,11 @@ import { stored, store } from './storage.js';
 
 const ZOOM_STEPS = [0.5, 0.67, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2];
 const ZOOM_KEY = 'folio-zoom';
+// "Fit" sizes a sheet to this share of the window (within the room beside
+// the sidebar), never smaller than READABLE_WIDTH or larger than MAX_ZOOM.
+const FIT_SHARE = 0.58;
+const READABLE_WIDTH = 700;
+const MAX_ZOOM = 1.75;
 
 export function createReader(folio) {
   const desk = folio.closest('.desk');
@@ -13,14 +18,30 @@ export function createReader(folio) {
   // The desk grows with a zoomed folio, so measure the room around it
   // instead: the shell, less its padding, gap and sidebar.
   function fitScale() {
+    const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
+    const wanted = Math.max(FIT_SHARE * window.innerWidth, READABLE_WIDTH);
+    return Math.min(MAX_ZOOM, Math.min(wanted, room()) / sheetWidth);
+  }
+
+  function room() {
     const shell = desk.parentElement;
     const style = getComputedStyle(shell);
     const sidebar = shell.querySelector('.sidebar');
-    const room = shell.clientWidth
+    return shell.clientWidth
       - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
       - (sidebar ? sidebar.offsetWidth + parseFloat(style.columnGap) : 0);
-    const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
-    return Math.min(1, room / sheetWidth);
+  }
+
+  // The last section heading that has scrolled up to the sticky bar.
+  function currentHeading() {
+    const bar = folio.querySelector('.folio-bar');
+    const line = (bar ? bar.getBoundingClientRect().bottom : 0) + 24;
+    let current = null;
+    for (const heading of folio.querySelectorAll('.sheet-body > h2[id]')) {
+      if (heading.getBoundingClientRect().top > line) break;
+      current = heading;
+    }
+    return current;
   }
 
   function scale() {
@@ -63,10 +84,12 @@ export function createReader(folio) {
   function render() {
     const all = sheets();
     const index = currentIndex();
+    const heading = currentHeading();
     const state = {
       page: index + 1,
       pages: all.length,
-      section: all[index]?.dataset.section || '',
+      section: heading ? heading.textContent.trim() : all[index]?.dataset.label || '',
+      sectionId: heading?.id || '',
       zoom: Math.round(scale() * 100),
       fit: zoom === 'fit',
     };
@@ -110,6 +133,23 @@ export function bindActions(root, actions) {
     if (!control || !(control.dataset.action in actions)) return;
     event.preventDefault();
     actions[control.dataset.action]();
+  });
+}
+
+// Marks the current section in the sticky bar's contents line, and keeps it
+// scrolled into view when the line is wider than the bar.
+export function bindContents(bar, reader) {
+  const toc = bar.querySelector('.doc-toc');
+  if (!toc) return;
+  let shown = null;
+  reader.onChange((state) => {
+    if (state.sectionId === shown) return;
+    shown = state.sectionId;
+    toc.querySelectorAll('a').forEach((link) => {
+      const current = link.hash === `#${state.sectionId}`;
+      link.setAttribute('aria-current', String(current));
+      if (current) toc.scrollLeft = link.offsetLeft - toc.clientWidth / 3;
+    });
   });
 }
 

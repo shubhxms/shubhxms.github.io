@@ -1,6 +1,6 @@
 {{- /*
-  A document set as paper: one flowing sheet that the script splits into
-  fixed-size sheets on wide screens.
+  A document set as paper: a sticky bar with its title and contents, then
+  one flowing sheet that the script splits into A4 sheets on wide screens.
     page   – the page being rendered
     body   – its rendered content
     before – sheets that come first and are never split (the title page)
@@ -8,7 +8,11 @@
 */}}
 {{- $page := .page }}
 {{- $title := partial "page-title.html" $page }}
-<div class="folio" data-pages="{{ $page.Params.pages | default "section" }}" data-title="{{ $title }}">
+<div class="folio" data-title="{{ $title }}">
+  <header class="folio-bar">
+    <span class="folio-bar-title">{{ $title }}</span>
+    {{- partial "toc.html" $page }}
+  </header>
   {{- with .before }}{{ . }}{{ end }}
   <article class="sheet" data-flow>
     <div class="sheet-head" aria-hidden="true"></div>
@@ -19,7 +23,6 @@
         {{- with $page.Params.tldr }}
         <p class="doc-tldr">{{ . | markdownify }}</p>
         {{- end }}
-        {{- partial "toc.html" $page }}
       </header>
       {{- end }}
       {{ .body }}

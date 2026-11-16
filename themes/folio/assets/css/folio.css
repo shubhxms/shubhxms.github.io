@@ -28,6 +28,7 @@
     --gutter: 34px;
     --note-w: 172px;
 
+    --bar-h: 46px;
     --sidebar-width: 10rem;
     --shell-left-padding: 5%;
 
@@ -223,7 +224,7 @@ a:hover {
     padding: var(--pad-top) 0 var(--pad-bottom) var(--pad-left);
     background: var(--paper);
     box-shadow: var(--sheet-shadow);
-    scroll-margin-top: 24px;
+    scroll-margin-top: var(--bar-h);
 }
 
 .sheet-head,
@@ -267,7 +268,60 @@ a:hover {
 }
 
 .doc-head {
-    margin-bottom: 2.4rem;
+    margin-bottom: 2rem;
+}
+
+/* Jumping to a section stops below the sticky bar. */
+.sheet-body > :is(h2, h3) {
+    scroll-margin-top: calc(var(--bar-h) + 16px);
+}
+
+/* ---------- Sticky bar: title and contents ---------- */
+
+.folio-bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: baseline;
+    gap: 1.4rem;
+    box-sizing: border-box;
+    height: var(--bar-h);
+    margin-bottom: calc(-1 * var(--sheet-gap));
+    padding: 13px 40px 0 var(--pad-left);
+    border-bottom: 1px solid var(--border);
+    background: var(--paper);
+    box-shadow: var(--sheet-shadow);
+    white-space: nowrap;
+}
+
+.folio-bar-title {
+    flex: none;
+    font-size: 1.05rem;
+    font-style: italic;
+}
+
+.folio-bar .doc-toc {
+    min-width: 0;
+    margin: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.folio-bar .doc-toc::-webkit-scrollbar {
+    display: none;
+}
+
+.doc-toc a[aria-current="true"] {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.doc-toc a[aria-current="true"]::before {
+    content: "★ ";
+    font-family: var(--mono);
+    font-size: 0.8em;
+    font-style: normal;
 }
 
 .doc-title {
@@ -283,7 +337,6 @@ a:hover {
 }
 
 .doc-toc {
-    margin-top: 0.9rem;
     font-size: 0.94rem;
     font-style: italic;
     line-height: 1.5;
@@ -429,13 +482,14 @@ a:hover {
     overflow-y: hidden;
 }
 
-/* Figures span the text column; their captions sit in the margin. */
-.sheet-body figure {
+/* Figures span the text column; their captions sit in the margin.
+   Margin figures are excluded: they float out of the column instead. */
+.sheet-body figure:not(.marginfigure) {
     position: relative;
     margin: 1.2rem 0;
 }
 
-.sheet-body figure img {
+.sheet-body figure:not(.marginfigure) img {
     display: block;
     width: 100%;
     border: 1px solid var(--border);
@@ -565,6 +619,11 @@ hr.pagebreak {
 
 .note-para {
     display: block;
+}
+
+/* The first paragraph runs on from the note's number. */
+.note-para:first-child {
+    display: inline;
 }
 
 .note-para + .note-para {
@@ -999,6 +1058,12 @@ hr.pagebreak {
         display: none;
     }
 
+    .folio-bar {
+        margin-bottom: 0;
+        padding: 13px 20px 0;
+        box-shadow: none;
+    }
+
     .sheet-body,
     .sheet--title .sheet-body {
         width: auto;
@@ -1151,6 +1216,7 @@ hr.pagebreak {
     }
 
     .sidebar,
+    .folio-bar,
     .reader,
     .mobile-menu,
     .palette,
