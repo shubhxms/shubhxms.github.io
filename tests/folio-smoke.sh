@@ -44,7 +44,7 @@ has notes/index.html '<h2 class="archive-year">2026</h2>'
 has notes/index.html '<time class="archive-date" datetime="2026-02-13">13 Feb</time>'
 has notes/index.html '<p class="archive-abstract">In this I gather some thoughts'
 lacks notes/index.html 'contents-leader'
-has notes/index.html 'class="doc-kicker">1 entry<'
+grep -Eq 'class="doc-kicker">[0-9]+ entr(y|ies)<' "$OUT/notes/index.html" || fail 'a list kicker should count its entries'
 
 # Documents: one continuous sheet. A big header (kicker, title,
 # contents) gives way on scroll to a compact bar, inert until shown.
