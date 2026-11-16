@@ -34,24 +34,28 @@ has index.html '<p class="title-press">shubhamshah.net</p>'
 has index.html '<h1 class="title-name">'
 has index.html 'class="title-imprint"'
 
-# Documents: one flowing sheet that the paginator splits, under a sticky
-# bar with the title and a contents line built from the h2s.
-has now/index.html 'class="sheet" data-flow'
-lacks now/index.html 'data-pages='
-has now/index.html '<header class="folio-bar">'
-has now/index.html '<span class="folio-bar-title">Now</span>'
+# Documents: one continuous sheet. A big header (kicker, title, numbered
+# contents) gives way on scroll to a compact bar, inert until shown.
+has now/index.html '<article class="sheet sheet--doc">'
+lacks now/index.html 'data-flow'
+lacks now/index.html 'sheet-head'
+has now/index.html 'class="doc-kicker"'
+grep -Eq 'class="doc-kicker">[0-9]+ words [^<]* [0-9]+ min read<' "$OUT/now/index.html" || fail 'the kicker should read "N words · N min read"'
+has now/index.html '<div class="doc-bar" inert>'
+has now/index.html '<span class="doc-bar-title">Now</span>'
 lacks now/index.html 'class="doc-toc"'
 has uses/index.html 'class="doc-toc"'
-has uses/index.html 'href="#devices"'
-python3 - "$OUT/uses/index.html" <<'PY2' || fail 'the contents line should live in the sticky bar'
-import sys
-html = open(sys.argv[1]).read()
-bar = html[html.index('<header class="folio-bar">'):]
-assert bar.index('class="doc-toc"') < bar.index('</header>')
-PY2
+has uses/index.html '<a href="#devices"><span class="doc-toc-n">01</span>'
+has index.html '<div class="doc-bar" inert>'
 
 # Colophon: last commit for this page, source, markdown and print.
 has now/index.html 'class="colophon"'
+python3 - "$OUT/now/index.html" <<'PY2' || fail 'the colophon should sit inside the paper'
+import sys
+html = open(sys.argv[1]).read()
+sheet = html.index('<article class="sheet sheet--doc">')
+assert sheet < html.index('class="colophon"') < html.index('</article>', sheet)
+PY2
 has now/index.html '/commit/'
 has now/index.html '/blob/main/content/pages/now.md'
 has now/index.html 'href="/now/index.md"'
@@ -75,7 +79,6 @@ lacks fixture-typesetting/index.html '\(e^'
 lacks now/index.html 'katex.min.css'
 has fixture-typesetting/index.html 'class="sidenote"'
 has fixture-typesetting/index.html 'class="marginnote"'
-has fixture-typesetting/index.html 'class="pagebreak"'
 has fixture-typesetting/index.html 'class="callout"'
 has sarabhai/index.html 'class="marginfigure"'
 # Notes sit inside a paragraph, so their own paragraphs must not be <p>s.

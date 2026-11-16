@@ -4,8 +4,7 @@
   blocks [{ name, lines }].
 */}}
 {{- $edition := partial "ordinal.html" (.Params.edition | default 1) }}
-<article class="sheet sheet--title" data-label="Title page">
-  <div class="sheet-head" aria-hidden="true"></div>
+<article class="sheet sheet--title">
   <div class="sheet-body">
     <p class="title-edition">{{ $edition }} Edition</p>
     <h1 class="title-name">{{ .Title }}</h1>
@@ -34,5 +33,4 @@
       </div>
     </footer>
   </div>
-  <div class="sheet-foot" aria-hidden="true"></div>
 </article>

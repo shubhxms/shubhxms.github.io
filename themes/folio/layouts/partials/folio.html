@@ -1,33 +1,37 @@
 {{- /*
-  A document set as paper: a sticky bar with its title and contents, then
-  one flowing sheet that the script splits into A4 sheets on wide screens.
+  A document set as paper: one continuous sheet, after any sheets that
+  come first (the title page). The sheet opens with a big header; once
+  that scrolls away, a compact bar with the title and contents stays on top.
     page   – the page being rendered
     body   – its rendered content
-    before – sheets that come first and are never split (the title page)
-    bare   – leave out the title, tldr and contents
+    before – sheets that come first (the title page)
+    bare   – leave out the big header; `before` stands in for it
 */}}
 {{- $page := .page }}
 {{- $title := partial "page-title.html" $page }}
+{{- $toc := partial "toc.html" $page }}
 <div class="folio" data-title="{{ $title }}">
-  <header class="folio-bar">
-    <span class="folio-bar-title">{{ $title }}</span>
-    {{- partial "toc.html" $page }}
-  </header>
   {{- with .before }}{{ . }}{{ end }}
-  <article class="sheet" data-flow>
-    <div class="sheet-head" aria-hidden="true"></div>
+  <article class="sheet sheet--doc">
+    <div class="doc-bar" inert>
+      <div class="doc-bar-inner">
+        <span class="doc-bar-title">{{ $title }}</span>
+        {{- $toc }}
+      </div>
+    </div>
     <div class="sheet-body">
       {{- if not .bare }}
       <header class="doc-head">
+        <p class="doc-kicker">{{ partial "kicker.html" $page }}</p>
         <h1 class="doc-title">{{ $title }}</h1>
         {{- with $page.Params.tldr }}
         <p class="doc-tldr">{{ . | markdownify }}</p>
         {{- end }}
+        {{- $toc }}
       </header>
       {{- end }}
       {{ .body }}
     </div>
-    <div class="sheet-foot" aria-hidden="true"></div>
+    {{- partial "colophon.html" $page }}
   </article>
-  {{- partial "colophon.html" $page }}
 </div>

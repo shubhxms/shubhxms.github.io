@@ -2,10 +2,10 @@
 import { rank } from './search.js';
 
 const ACTIONS = [
-  { label: 'Next page', action: 'next', hint: 'j' },
-  { label: 'Previous page', action: 'prev', hint: 'k' },
-  { label: 'First page', action: 'first' },
-  { label: 'Last page', action: 'last' },
+  { label: 'Next section', action: 'next', hint: 'j' },
+  { label: 'Previous section', action: 'prev', hint: 'k' },
+  { label: 'Back to top', action: 'first', keywords: 'start beginning' },
+  { label: 'Last section', action: 'last', keywords: 'end' },
   { label: 'Zoom in', action: 'zoom-in', hint: '+' },
   { label: 'Zoom out', action: 'zoom-out', hint: '−' },
   { label: 'Fit width', action: 'zoom-fit', hint: '0' },
@@ -16,7 +16,7 @@ const ACTIONS = [
 ];
 
 function sectionItems() {
-  return Array.from(document.querySelectorAll('.sheet-body > h2[id]'), (heading) => ({
+  return Array.from(document.querySelectorAll('.sheet--doc .sheet-body > h2[id]'), (heading) => ({
     label: heading.textContent.trim(),
     group: 'On this page',
     href: `#${heading.id}`,

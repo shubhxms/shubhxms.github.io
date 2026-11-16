@@ -1,0 +1,6 @@
+{{- /* The line above a title: date, length and reading time. */}}
+{{- $parts := slice }}
+{{- if not .Date.IsZero }}{{ $parts = $parts | append (.Date.Format "2 Jan 2006") }}{{ end }}
+{{- $parts = $parts | append (printf "%d words" .WordCount) }}
+{{- $parts = $parts | append (printf "%d min read" (cond (lt .ReadingTime 1) 1 .ReadingTime)) }}
+{{- delimit $parts " · " -}}

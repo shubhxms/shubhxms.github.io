@@ -1,10 +1,9 @@
-// Wires the folio theme together: pagination, reader controls, palette.
-import { paginate, unpaginate } from './paginate.js';
-import { createReader, bindActions, bindToolbar, bindContents, bindKeys } from './reader.js';
+// Wires the folio theme together: reader controls, compact bar, palette.
+import { createReader, bindActions, bindBar, bindContents, bindToolbar, bindKeys } from './reader.js';
 import { createPalette } from './palette.js';
 import { store } from './storage.js';
 
-// Sheets are fixed-size on wide screens; narrow screens get one reflowed sheet.
+// Wide screens zoom the paper to fit; narrow screens show it as it is.
 const wide = window.matchMedia('(min-width: 801px)');
 
 // The head sets the initial theme before paint; this marks and changes it.
@@ -25,50 +24,23 @@ function startReader(folio, actions) {
   const reader = createReader(folio);
   Object.assign(actions, reader.actions);
   bindToolbar(document.querySelector('.reader'), reader);
-  const bar = folio.querySelector('.folio-bar');
-  if (bar) bindContents(bar, reader);
+  bindContents(folio, reader);
+  bindBar(folio);
 
-  // Printing narrows the page to A4, which can flip `wide`; the sheets are
-  // already the right size for paper, so leave them alone until it is done.
-  let printing = false;
-  window.addEventListener('beforeprint', () => { printing = true; });
-  window.addEventListener('afterprint', () => { printing = false; });
-
-  let firstLayout = true;
-  const layout = () => {
-    if (printing) return;
-    const anchor = readingPosition(folio, firstLayout);
-    firstLayout = false;
-
-    unpaginate(folio);
-    folio.style.zoom = '';
-    if (wide.matches) {
-      paginate(folio);
-      reader.applyZoom();
-    } else {
+  const fit = () => {
+    if (wide.matches) reader.applyZoom();
+    else {
+      folio.style.zoom = '';
       reader.render();
     }
-    anchor?.scrollIntoView({ block: 'start' });
   };
+  fit();
+  wide.addEventListener('change', fit);
+  window.addEventListener('resize', () => wide.matches && reader.refit());
 
-  document.fonts.ready.then(() => {
-    layout();
-    // Images without dimensions change height once they load.
-    if (document.readyState !== 'complete') window.addEventListener('load', layout, { once: true });
-  });
-  wide.addEventListener('change', layout);
-}
-
-// What the reader is looking at, so a relayout can return to it: the linked
-// #fragment on first load, otherwise the first block at the top of the view.
-function readingPosition(folio, firstLayout) {
-  const target = firstLayout && window.location.hash
-    ? document.getElementById(decodeURIComponent(window.location.hash.slice(1)))
-    : null;
-  if (target) return target;
-  if (window.scrollY === 0) return null;
-  const blocks = folio.querySelectorAll('.sheet-body > *');
-  return Array.from(blocks).find((block) => block.getBoundingClientRect().bottom > 0) ?? null;
+  // Zooming moves everything, so return to a linked #fragment afterwards.
+  const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+  if (target) target.scrollIntoView({ block: 'start' });
 }
 
 function start() {

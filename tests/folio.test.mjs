@@ -3,62 +3,22 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { planPages } from '../themes/folio/assets/js/paginate.js';
+import { sectionAt, position } from '../themes/folio/assets/js/sections.js';
 import { rank, snippet } from '../themes/folio/assets/js/search.js';
 
-const block = (height, extra = {}) => ({ height, ...extra });
-
-test('planPages keeps blocks together while they fit', () => {
-  assert.deepEqual(planPages([block(100), block(100), block(100)], 400), [[0, 1, 2]]);
+test('sectionAt finds the last section whose heading has reached the line', () => {
+  const tops = [100, 600, 1400];
+  assert.equal(sectionAt(tops, 50), -1);
+  assert.equal(sectionAt(tops, 100), 0);
+  assert.equal(sectionAt(tops, 900), 1);
+  assert.equal(sectionAt(tops, 5000), 2);
+  assert.equal(sectionAt([], 500), -1);
 });
 
-test('planPages starts a new page when a block would overflow', () => {
-  assert.deepEqual(planPages([block(300), block(150), block(50)], 400), [[0], [1, 2]]);
-});
-
-test('planPages never leaves a heading alone at the bottom of a page', () => {
-  const blocks = [block(350), block(30, { heading: true }), block(100)];
-  assert.deepEqual(planPages(blocks, 400), [[0], [1, 2]]);
-});
-
-test('planPages honours forced breaks', () => {
-  const blocks = [block(10), block(0, { pagebreak: true }), block(10)];
-  assert.deepEqual(planPages(blocks, 1000), [[0], [1, 2]]);
-});
-
-test('planPages gives an oversized block its own page instead of an empty one', () => {
-  assert.deepEqual(planPages([block(900), block(10)], 400), [[0], [1]]);
-  assert.deepEqual(planPages([block(10), block(900)], 400), [[0], [1]]);
-});
-
-test('planPages lets sections run on in the same page', () => {
-  const blocks = [block(50), block(20, { heading: true }), block(50), block(20, { heading: true }), block(50)];
-  assert.deepEqual(planPages(blocks, 1000), [[0, 1, 2, 3, 4]]);
-});
-
-test('planPages does not leave a blank page after a forced break', () => {
-  const blocks = [block(100), block(0, { pagebreak: true }), block(20, { heading: true }), block(900)];
-  assert.deepEqual(planPages(blocks, 900), [[0], [1, 2, 3]]);
-});
-
-test('planPages keeps a heading with a following block that is taller than a page', () => {
-  const blocks = [block(100), block(30, { heading: true }), block(2000)];
-  assert.deepEqual(planPages(blocks, 400), [[0], [1, 2]]);
-});
-
-test('planPages counts the marginalia of the block a heading is kept with', () => {
-  const blocks = [block(800), block(30, { heading: true }), block(50, { extent: 300 })];
-  assert.deepEqual(planPages(blocks, 900), [[0], [1, 2]]);
-});
-
-test('planPages measures a block by its marginalia when they reach further', () => {
-  assert.deepEqual(planPages([block(300), block(50, { extent: 200 })], 400), [[0], [1]]);
-  // Marginalia hang beside later blocks; they do not push them down.
-  assert.deepEqual(planPages([block(100, { extent: 350 }), block(100)], 400), [[0, 1]]);
-});
-
-test('planPages returns no pages for no blocks', () => {
-  assert.deepEqual(planPages([], 400), []);
+test('position numbers sections the way the contents line does', () => {
+  assert.equal(position(1, 5), '02 / 05');
+  assert.equal(position(-1, 5), '00 / 05');
+  assert.equal(position(0, 0), '—');
 });
 
 const items = [

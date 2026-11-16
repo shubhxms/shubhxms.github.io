@@ -1,4 +1,4 @@
-{{- /* A one-line contents: [ first / second / third ], from the page's h2s. */}}
+{{- /* Numbered contents from the page's h2s: 01 First, 02 Second, … */}}
 {{- $sections := slice }}
 {{- range .Fragments.Headings }}
   {{- if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}
@@ -6,8 +6,10 @@
 {{- end }}
 {{- if ge (len $sections) 2 }}
 <nav class="doc-toc" aria-label="Contents">
-  {{- range $i, $s := $sections }}
-  {{- if $i }}<span class="doc-toc-sep" aria-hidden="true"> / </span>{{ end }}<a href="#{{ $s.ID }}">{{ $s.Title | plainify }}</a>
-  {{- end }}
+  <ol>
+    {{- range $i, $s := $sections }}
+    <li><a href="#{{ $s.ID }}"><span class="doc-toc-n">{{ printf "%02d" (add $i 1) }}</span> {{ $s.Title | plainify }}</a></li>
+    {{- end }}
+  </ol>
 </nav>
 {{- end }}

@@ -1,6 +1,8 @@
-// PDF-reader behaviour: which sheet is in view, paging and zoom.
-// Every control (toolbar, keyboard, palette) goes through an actions map.
+// Reading a document set as paper: which section is in view, moving
+// between sections, zoom, and the compact bar. Every control (toolbar,
+// keyboard, palette) goes through an actions map.
 import { stored, store } from './storage.js';
+import { sectionAt, position } from './sections.js';
 
 const ZOOM_STEPS = [0.5, 0.67, 0.8, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2];
 const ZOOM_KEY = 'folio-zoom';
@@ -12,17 +14,11 @@ const MAX_ZOOM = 1.75;
 
 export function createReader(folio) {
   const desk = folio.closest('.desk');
-  const sheets = () => Array.from(folio.querySelectorAll('.sheet'));
+  const bar = folio.querySelector('.doc-bar');
   let zoom = stored(ZOOM_KEY) || 'fit';
 
   // The desk grows with a zoomed folio, so measure the room around it
   // instead: the shell, less its padding, gap and sidebar.
-  function fitScale() {
-    const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
-    const wanted = Math.max(FIT_SHARE * window.innerWidth, READABLE_WIDTH);
-    return Math.min(MAX_ZOOM, Math.min(wanted, room()) / sheetWidth);
-  }
-
   function room() {
     const shell = desk.parentElement;
     const style = getComputedStyle(shell);
@@ -32,16 +28,10 @@ export function createReader(folio) {
       - (sidebar ? sidebar.offsetWidth + parseFloat(style.columnGap) : 0);
   }
 
-  // The last section heading that has scrolled up to the sticky bar.
-  function currentHeading() {
-    const bar = folio.querySelector('.folio-bar');
-    const line = (bar ? bar.getBoundingClientRect().bottom : 0) + 24;
-    let current = null;
-    for (const heading of folio.querySelectorAll('.sheet-body > h2[id]')) {
-      if (heading.getBoundingClientRect().top > line) break;
-      current = heading;
-    }
-    return current;
+  function fitScale() {
+    const sheetWidth = parseFloat(getComputedStyle(folio).getPropertyValue('--sheet-w'));
+    const wanted = Math.max(FIT_SHARE * window.innerWidth, READABLE_WIDTH);
+    return Math.min(MAX_ZOOM, Math.min(wanted, room()) / sheetWidth);
   }
 
   function scale() {
@@ -66,29 +56,31 @@ export function createReader(folio) {
     if (next) setZoom(next);
   }
 
-  // The sheet that crosses the middle of the viewport.
+  const headings = () => Array.from(folio.querySelectorAll('.sheet--doc .sheet-body > h2[id]'));
+
+  // A section is current once its heading reaches the bottom of the bar.
   function currentIndex() {
-    const middle = window.innerHeight / 2;
-    const all = sheets();
-    const index = all.findIndex((sheet) => sheet.getBoundingClientRect().bottom >= middle);
-    return index === -1 ? all.length - 1 : index;
+    const line = (bar ? bar.querySelector('.doc-bar-inner').getBoundingClientRect().bottom : 0) + 24;
+    return sectionAt(headings().map((h) => h.getBoundingClientRect().top), line);
   }
 
   function goTo(index) {
-    const all = sheets();
-    const target = all[Math.max(0, Math.min(all.length - 1, index))];
-    target.scrollIntoView({ block: 'start' });
+    const all = headings();
+    if (index < 0 || all.length === 0) {
+      window.scrollTo({ top: 0 });
+      return;
+    }
+    all[Math.min(index, all.length - 1)].scrollIntoView({ block: 'start' });
   }
 
   const listeners = new Set();
   function render() {
-    const all = sheets();
+    const all = headings();
     const index = currentIndex();
-    const heading = currentHeading();
+    const heading = all[index];
     const state = {
-      page: index + 1,
-      pages: all.length,
-      section: heading ? heading.textContent.trim() : all[index]?.dataset.label || '',
+      position: position(index, all.length),
+      section: heading ? heading.textContent.trim() : '',
       sectionId: heading?.id || '',
       zoom: Math.round(scale() * 100),
       fit: zoom === 'fit',
@@ -99,8 +91,8 @@ export function createReader(folio) {
   const actions = {
     next: () => goTo(currentIndex() + 1),
     prev: () => goTo(currentIndex() - 1),
-    first: () => goTo(0),
-    last: () => goTo(sheets().length - 1),
+    first: () => goTo(-1),
+    last: () => goTo(headings().length - 1),
     'zoom-in': () => stepZoom(1),
     'zoom-out': () => stepZoom(-1),
     'zoom-fit': () => setZoom('fit'),
@@ -112,18 +104,59 @@ export function createReader(folio) {
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(render);
   }, { passive: true });
-  window.addEventListener('resize', () => {
-    if (zoom === 'fit') applyZoom();
-    else render();
-  });
 
   return {
     actions,
-    goTo,
     applyZoom,
     render,
+    refit: () => (zoom === 'fit' ? applyZoom() : render()),
     onChange: (listener) => listeners.add(listener),
   };
+}
+
+// Shows the compact bar once the big header (or the title page) has
+// scrolled out of view above, and hides it again on the way back up.
+export function bindBar(folio) {
+  const bar = folio.querySelector('.doc-bar');
+  const header = folio.querySelector('.doc-head') || folio.querySelector('.sheet--title');
+  if (!bar || !header) return;
+
+  const observer = new IntersectionObserver(([entry]) => {
+    const passed = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
+    bar.classList.toggle('is-shown', passed);
+    bar.inert = !passed;
+  });
+  observer.observe(header);
+}
+
+// Marks the current section in every contents list (big header and bar),
+// and keeps it in view when the bar's list is wider than the bar.
+export function bindContents(folio, reader) {
+  const lists = folio.querySelectorAll('.doc-toc');
+  if (!lists.length) return;
+  let shown = null;
+  reader.onChange((state) => {
+    if (state.sectionId === shown) return;
+    shown = state.sectionId;
+    lists.forEach((list) => {
+      list.querySelectorAll('a').forEach((link) => {
+        const current = link.hash === `#${state.sectionId}`;
+        link.setAttribute('aria-current', String(current));
+        if (current && list.closest('.doc-bar')) list.scrollLeft = link.offsetLeft - list.clientWidth / 3;
+      });
+    });
+  });
+}
+
+// Reflects reader state in the toolbar.
+export function bindToolbar(toolbar, reader) {
+  const field = (name) => toolbar.querySelector(`[data-reader="${name}"]`);
+  reader.onChange((state) => {
+    field('position').textContent = state.position;
+    field('section').textContent = state.section;
+    field('zoom').textContent = state.fit ? 'fit' : `${state.zoom}%`;
+  });
+  toolbar.hidden = false;
 }
 
 // Clicks on any [data-action] element run the matching action.
@@ -136,41 +169,12 @@ export function bindActions(root, actions) {
   });
 }
 
-// Marks the current section in the sticky bar's contents line, and keeps it
-// scrolled into view when the line is wider than the bar.
-export function bindContents(bar, reader) {
-  const toc = bar.querySelector('.doc-toc');
-  if (!toc) return;
-  let shown = null;
-  reader.onChange((state) => {
-    if (state.sectionId === shown) return;
-    shown = state.sectionId;
-    toc.querySelectorAll('a').forEach((link) => {
-      const current = link.hash === `#${state.sectionId}`;
-      link.setAttribute('aria-current', String(current));
-      if (current) toc.scrollLeft = link.offsetLeft - toc.clientWidth / 3;
-    });
-  });
-}
-
-// Reflects reader state in the toolbar.
-export function bindToolbar(toolbar, reader) {
-  const field = (name) => toolbar.querySelector(`[data-reader="${name}"]`);
-  reader.onChange((state) => {
-    field('page').textContent = state.page;
-    field('pages').textContent = state.pages;
-    field('section').textContent = state.section;
-    field('zoom').textContent = state.fit ? 'fit' : `${state.zoom}%`;
-  });
-  toolbar.hidden = false;
-}
-
 function isTyping(event) {
   const target = event.target;
   return target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName);
 }
 
-// j/k page, +/- zoom, 0 fit, ⌘K or / opens the palette.
+// j/k sections, +/- zoom, 0 fit, ⌘K or / opens the palette.
 export function bindKeys(actions, openPalette) {
   const keys = { j: 'next', k: 'prev', '+': 'zoom-in', '=': 'zoom-in', '-': 'zoom-out', 0: 'zoom-fit' };
   document.addEventListener('keydown', (event) => {

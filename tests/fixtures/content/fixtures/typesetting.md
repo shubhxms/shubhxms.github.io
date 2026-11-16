@@ -1,7 +1,7 @@
 ---
 title: "Typesetting fixture"
 url: /fixture-typesetting
-tldr: "Exercises maths, marginalia and page breaks."
+tldr: "Exercises maths and marginalia."
 description: "A description skips the summary, which used to be what rendered the content early."
 ---
 
@@ -17,8 +17,6 @@ Text with an unnumbered aside.{{< marginnote >}}An unnumbered note.{{< /marginno
 
 Second paragraph.{{< /sidenote >}}
 
-{{< pagebreak >}}
-
-## After the break
+## Callouts
 
 {{< callout text="A callout." >}}
