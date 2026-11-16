@@ -2,24 +2,6 @@
 title: "Shubham Shah"
 edition: 2
 subtitle: "Computers, Stories<br>& Science"
-blocks:
-  - name: "Now"
-    lines:
-      - "On a stretch of [unstructured time](/now), learning what I'm curious about"
-      - "Reading *The Information* by James Gleick"
-      - "Open to interesting work & collaboration"
-  - name: "Previously"
-    lines:
-      - "[Dip](https://dipapp.in): its REST API, payments & ledger, and bookings"
-      - "An ERP for an earth-mover parts dealer: on-site fixes & task management"
-  - name: "Education"
-    lines:
-      - "Computer Science, with a minor in Mathematics"
-      - "[Ahmedabad University](https://ahduni.edu.in), class of 2025"
-      - "Ahmedabad, Gujarat"
-postcard:
-  greeting: "Greetings from *Ahmedabad*"
-  stamp: "S"
 ---
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
@@ -28,26 +10,26 @@ I'm **Shubham**, a {{< age >}}-year-old technology enthusiast living and working
 
 I have varied interests, but spend most of my time playing with [computers](/images/i-love-computers-it.gif), trying to make sense of the world using state machines, stories, and science.
 
+## Now
+
+On a stretch of [unstructured time](/now), learning about the things I've been curious about, and open to interesting work and collaboration. Outside that, I'm reading *The Information* by James Gleick.
+
 ## Life and <del>lies</del> stuff
 
-I graduated in 2025 from [Ahmedabad University](https://ahduni.edu.in) with a bachelor's degree in Computer Science and a minor in Mathematics.
+I graduated in 2025 from [Ahmedabad University](https://ahduni.edu.in) with a bachelor's degree in Computer Science and a minor in Mathematics. Since then I've shipped early-stage software at two places:
 
-I've shipped early-stage software at two places:
-
-- ERP for a dealer of earth-mover spare parts
-  - Fixed critical bugs on-site, optimized workflows and processes, and built a task-management system.
-- [Dip](https://dipapp.in) (a social media startup)
-  - Built its REST API, integrated payments and ledger, and shipped a booking system using custom locks.{{< marginnote >}}TEST NOTE. An unnumbered margin note, set beside the line it belongs to.{{< /marginnote >}}
-
-## Now <em>(Aug. &rsquo;26)</em>
-
-I'm currently exploring different domains and remain open to interesting work and collaboration opportunities. Outside that, I'm reading *The Information* by James Gleick. Read the full thing at [/now](/now).
+- [Dip](https://dipapp.in), a social media startup: built its REST API, integrated payments and a ledger, and shipped a booking system using custom locks.
+- An ERP for a dealer of earth-mover spare parts: fixed critical bugs on-site, streamlined workflows, and built a task-management system.{{< marginnote >}}TEST NOTE. An unnumbered margin note, set beside the line it belongs to.{{< /marginnote >}}
 
 ## Contact
 
-- I love receiving correspondence and usually reply in a few days.
-- Email me on hey@[domain]
-- Find me on [Twitter](https://twitter.com/shubhxms), [Telegram](https://telegram.me/shubhxms), or [Bluesky](https://bsky.app/profile/shubhamshah.net).
+I love receiving correspondence and usually reply within a few days.
+
+- **Email:** hey@[domain]
+- **Twitter:** [@shubhxms](https://twitter.com/shubhxms)
+- **Telegram:** [@shubhxms](https://telegram.me/shubhxms)
+- **Bluesky:** [@shubhamshah.net](https://bsky.app/profile/shubhamshah.net)
+- **GitHub:** [shubhxms](https://github.com/shubhxms)
 
 ## Some things I like
 
