@@ -12,14 +12,18 @@
   <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" />
   {{- end }}
 
-  {{- /* Before paint, so the page never flashes the wrong theme. */}}
-  <script>
-    (function () {
-      var mode = null;
-      try { mode = localStorage.getItem("theme-storage"); } catch (e) {}
+  {{- /* Before paint, so the page never flashes the wrong theme or layout. */}}
+  <script data-layout-default="{{ site.Params.layout | default "paper" }}">
+    (function (defaults) {
+      var mode = null, layout = null;
+      try {
+        mode = localStorage.getItem("theme-storage");
+        layout = localStorage.getItem("folio-layout");
+      } catch (e) {}
       if (!mode) mode = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       document.documentElement.dataset.theme = mode;
-    })();
+      document.documentElement.dataset.layout = layout || defaults.dataset.layoutDefault;
+    })(document.currentScript);
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />

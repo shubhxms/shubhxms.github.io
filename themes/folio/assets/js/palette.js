@@ -14,6 +14,8 @@ const ACTIONS = [
   { group: 'View', label: 'Default text size', action: 'text-reset', hint: '0', keywords: 'zoom reset 100%' },
   { group: 'View', label: 'Light theme', action: 'theme-light', keywords: 'mode day' },
   { group: 'View', label: 'Dark theme', action: 'theme-dark', keywords: 'mode night' },
+  { group: 'View', label: 'Paper layout', action: 'layout-paper', keywords: 'sheet page desk pdf' },
+  { group: 'View', label: 'Plain layout', action: 'layout-plain', keywords: 'flat simple no page' },
   { group: 'This page', label: 'Print or save as PDF', action: 'print', keywords: 'download pdf' },
 ];
 

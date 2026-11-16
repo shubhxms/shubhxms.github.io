@@ -10,6 +10,8 @@ const BONUS = { match: 1, boundary: 8, first: 4, run: 6 };
 const GAP = 0.25;
 const KEYWORD = 2;
 const BODY = 1;
+// Shorter words match labels only: a letter or two is in almost any body.
+const MIN_TEXT_TERM = 3;
 
 const isWordChar = (ch) => /[\p{L}\p{N}]/u.test(ch);
 const isBoundary = (text, at) => at === 0 || !isWordChar(text[at - 1])
@@ -74,6 +76,16 @@ export function snippet(text, at, length, radius = 50) {
   return before + text.slice(start, end).trim() + after;
 }
 
+// Where `term` starts a word in `text`, or -1.
+function wordAt(text, term) {
+  if (term.length < MIN_TEXT_TERM || !text) return -1;
+  const lower = text.toLowerCase();
+  for (let at = lower.indexOf(term); at !== -1; at = lower.indexOf(term, at + 1)) {
+    if (isBoundary(text, at)) return at;
+  }
+  return -1;
+}
+
 function match(item, terms) {
   let score = 0;
   const indices = new Set();
@@ -85,11 +97,11 @@ function match(item, terms) {
       label.indices.forEach((index) => indices.add(index));
       continue;
     }
-    if ((item.keywords || '').toLowerCase().includes(term)) {
+    if (wordAt(item.keywords, term) !== -1) {
       score += KEYWORD;
       continue;
     }
-    const at = (item.body || '').toLowerCase().indexOf(term);
+    const at = wordAt(item.body, term);
     if (at === -1) return null;
     score += BODY;
     quote ??= snippet(item.body, at, term.length);

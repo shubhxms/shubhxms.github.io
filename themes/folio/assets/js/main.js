@@ -20,6 +20,13 @@ function setTheme(mode) {
   markTheme();
 }
 
+// "paper" or "plain"; the head sets it before paint.
+function setLayout(layout) {
+  store('folio-layout', layout);
+  document.documentElement.dataset.layout = layout;
+  window.dispatchEvent(new Event('resize'));
+}
+
 function startReader(folio, actions) {
   const reader = createReader(folio);
   Object.assign(actions, reader.actions);
@@ -42,6 +49,8 @@ function start() {
     print: () => window.print(),
     'theme-light': () => setTheme('light'),
     'theme-dark': () => setTheme('dark'),
+    'layout-paper': () => setLayout('paper'),
+    'layout-plain': () => setLayout('plain'),
   };
 
   const folio = document.querySelector('.folio');

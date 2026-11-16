@@ -55,6 +55,11 @@ lacks now/index.html 'sheet-head'
 grep -Eq 'class="doc-kicker">[^<]*[0-9]+ words [^<]* [0-9]+ min read<' "$OUT/sarabhai/index.html" || fail 'a note kicker should read "… N words · N min read"'
 lacks now/index.html 'min read'
 lacks uses/index.html 'doc-kicker'
+
+# Layout: "paper" (a sheet on a desk, with floating controls) or "plain"
+# (the page is the site), set in hugo.toml and switchable from the palette.
+has index.html 'data-layout-default="paper"'
+has index.html 'dataset.layout'
 has now/index.html '<div class="doc-bar" inert>'
 has now/index.html '<span class="doc-bar-title">Now</span>'
 lacks now/index.html 'class="doc-toc"'

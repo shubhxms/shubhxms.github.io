@@ -892,6 +892,28 @@ hr {
     text-decoration: none;
 }
 
+/* ---------- Plain layout ----------
+   The page sits on the site itself: no desk, no sheet edge, no floating
+   controls (⌘K and the keys still work). Everything else is shared, so
+   switching back is one attribute. */
+
+:root[data-layout="plain"] {
+    --desk: var(--paper);
+    --sheet-shadow: none;
+}
+
+:root[data-layout="plain"] .reader {
+    display: none !important;
+}
+
+:root[data-layout="plain"] .sheet {
+    padding-top: 22px;
+}
+
+:root[data-layout="plain"] .doc-bar-inner {
+    box-shadow: none;
+}
+
 /* ---------- Floating controls: reader plate, mobile menu, palette ----------
    Set like signage: a black-ruled plate on paper, cells divided by full-height
    rules, a hard offset shadow, and inverted (black) for the active cell. */
@@ -1014,13 +1036,16 @@ hr {
     border-bottom: 1px solid var(--border);
 }
 
+/* As wide as the group column below, so its edge continues that rule. */
 .palette-prompt {
     display: flex;
+    flex: none;
     align-items: center;
-    padding: 0 10px;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 6.5em;
     background: var(--text);
     color: var(--paper);
-    font-size: 11px;
 }
 
 .palette input {

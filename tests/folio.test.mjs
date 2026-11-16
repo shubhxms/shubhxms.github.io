@@ -53,6 +53,18 @@ test('rank needs every word of the query, in any order', () => {
   assert.deepEqual(labels('vikram soul'), ['On Vikram Sarabhai']);
 });
 
+test('rank matches short queries against labels only', () => {
+  const hits = labels('t');
+  assert.ok(hits.length);
+  hits.forEach((label) => assert.match(label, /t/i));
+  assert.ok(!labels('mo').includes('Uses')); // "monitor" is in its body
+});
+
+test('rank matches body text and keywords only at the start of a word', () => {
+  assert.ok(!labels('onitor').includes('Uses'));
+  assert.ok(labels('monit').includes('Uses'));
+});
+
 test('rank falls back to keywords and body text, and quotes the body', () => {
   assert.equal(labels('download')[0], 'Print or save as PDF');
   const [hit] = rank(items, 'benq');
