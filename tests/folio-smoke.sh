@@ -20,6 +20,8 @@ for page in index.html now/index.html notes/index.html fixture-typesetting/index
 	has "$page" 'class="desk"'
 	has "$page" 'class="sidebar"'
 	lacks "$page" 'class="reader"'
+	lacks "$page" 'class="mobile-menu"'
+	has "$page" '<a class="site-title" href="/">'
 	has "$page" '<div class="sidebar-tools">'
 	has "$page" '<dialog class="palette"'
 	has "$page" '/js/folio.'
@@ -168,7 +170,10 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-! grep -Fq -- '--spade' "$CSS" || fail 'the card corner is gone'
+# A page that opens without a section head shows a playing card's corner
+# in the empty side column (one that opens with a head would not).
+has now/index.html '<span class="card-corner" aria-hidden="true">'
+grep -q -- '--spade: url(' "$CSS" || fail 'the card corner needs its spade'
 lacks contact/index.html 'class="ornament'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
@@ -184,15 +189,24 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# Core: its lists from data/core.yaml as rows of thumbnail and text, two
-# to a line; a cover where there is one, the title's initial set on a plate
-# where there isn't. Books keep their categories. /shelf leads here.
-[ "$(grep -o '<li class="core-entry' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 36 ] || fail 'core should list all 36 entries'
-[ "$(grep -o '<img class="core-thumb' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 20 ] || fail 'every cover should show'
-[ "$(grep -o 'class="core-thumb core-thumb--type"' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 16 ] || fail 'entries without covers get a type plate'
-[ "$(grep -o '<p class="core-category">' "$OUT/core/index.html" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
-has core/index.html '<a class="core-entry-link" href="/sarabhai/">'
-has core/index.html '<a class="core-entry-link" href="https://dynomight.substack.com/">'
+# Core: per section, a shelf of spines coloured from their covers, each
+# leading to its entry; then the entries, cover beside text. Covers are
+# resized thumbnails; one without a cover gets a typographic plate. An
+# entry with a note quotes its summary. /shelf leads here.
+C="$OUT/core/index.html"
+[ "$(grep -o '<article class="core-card"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'core should card its 30 books and films'
+[ "$(grep -o '<a class="core-spine' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'every book and film should have a spine'
+[ "$(grep -o '<td class="core-table-title">' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'every book and film should be catalogued'
+[ "$(grep -o 'style="[^"]*--c: #[0-9a-f]\{6\}' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'spines with covers take their colour'
+[ "$(grep -o '<img class="core-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
+[ "$(grep -o 'class="core-cover core-cover--type"' "$C" | wc -l | tr -d ' ')" = 10 ] || fail 'entries without covers get a plate'
+[ "$(grep -o '<tr class="core-table-group">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
+has core/index.html 'href="#vikram-sarabhai-a-life"'
+has core/index.html '<li><a href="#films-shows--anime">Films, Shows &amp; Anime</a></li>'
+lacks core/index.html 'style="--h:'
+has core/index.html '<p class="core-blurb">In this I gather some thoughts on Vikram Sarabhai'
+has core/index.html '<a href="https://dynomight.substack.com/">Dynomight</a>'
+lacks index.html 'src="/images/shelf/chaos.jpg"'
 grep -q 'url=https://shubhamshah.net/core/' "$OUT/shelf/index.html" || fail '/shelf should lead to /core/'
 [ "$(grep -o '<a class="shelf-pick' "$OUT/index.html" | wc -l | tr -d ' ')" = 6 ] || fail 'the home page should show the six picks'
 has index.html '<p class="likes">state machines · science'

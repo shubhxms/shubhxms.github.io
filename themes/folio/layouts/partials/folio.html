@@ -30,6 +30,11 @@
         {{- $toc }}
       </header>
       {{- end }}
+      {{- /* A page that opens without a section head leaves the side column
+             empty at the top: a playing card's corner holds it. */}}
+      {{- if not (hasPrefix (strings.TrimSpace (string .body)) "<h2") }}
+      <span class="card-corner" aria-hidden="true"><span class="card-rank">A</span><span class="card-suit"></span></span>
+      {{- end }}
       {{ .body }}
     </div>
     {{- partial "colophon.html" $page }}

@@ -23,7 +23,8 @@ const MEASURE = 34;
 const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
 
 export function geometry(room, textScale = 1) {
-  const sheet = Math.round(clamp(room, MIN_SHEET, MAX_SHEET));
+  // A room that could not be measured gets the smallest sheet.
+  const sheet = Math.round(clamp(Number.isFinite(room) ? room : 0, MIN_SHEET, MAX_SHEET));
   const padLeft = Math.round(sheet * PAD_LEFT);
   const padRight = Math.round(sheet * PAD_RIGHT);
   const side = clamp(Math.round(sheet * SIDE), 64, 110);

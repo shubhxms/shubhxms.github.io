@@ -1,10 +1,7 @@
 {{- $current := strings.TrimSuffix "/" .RelPermalink }}
 <aside class="sidebar">
   <nav class="sidebar-nav" aria-label="Site">
-    <div class="site-title">
-      <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
-      <span class="site-title-gu" lang="gu">શુભમ શાહ</span>
-    </div>
+    <a class="site-title" href="{{ site.Home.RelPermalink }}">{{ site.Title }}<span class="site-title-gu" lang="gu">શુભમ શાહ</span></a>
     <div class="sidebar-links">
       {{- range site.Menus.main }}
       {{- $active := eq $current (strings.TrimSuffix "/" .URL) }}

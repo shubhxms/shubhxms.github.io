@@ -4,7 +4,7 @@
 <nav class="doc-toc" aria-label="Contents">
   <ol>
     {{- range $sections }}
-    <li><a href="#{{ .ID }}">{{ .Title | plainify }}</a></li>
+    <li><a href="#{{ .ID }}">{{ .Title | plainify | htmlUnescape }}</a></li>
     {{- end }}
   </ol>
 </nav>

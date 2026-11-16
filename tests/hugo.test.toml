@@ -1,9 +1,24 @@
-# Merged over hugo.toml by tests/folio-smoke.sh to add fixture pages.
+# Merged over hugo.toml by tests/folio-smoke.sh to add fixture pages. Its
+# mounts replace hugo.toml's, so they repeat them, plus the fixtures.
 [module]
 [[module.mounts]]
 source = "content"
 target = "content"
-
 [[module.mounts]]
 source = "tests/fixtures/content"
 target = "content"
+[[module.mounts]]
+source = "static"
+target = "static"
+[[module.mounts]]
+source = "layouts"
+target = "layouts"
+[[module.mounts]]
+source = "data"
+target = "data"
+[[module.mounts]]
+source = "assets"
+target = "assets"
+[[module.mounts]]
+source = "static/images/shelf"
+target = "assets/images/shelf"

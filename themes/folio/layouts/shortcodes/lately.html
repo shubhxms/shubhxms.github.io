@@ -19,8 +19,8 @@
       {{- range site.Data.core.sections }}
       {{- range partial "core-entries.html" . }}
       {{- if .pick }}
-      <a class="shelf-pick" href="{{ .note | default "core/" | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
-        <img src="{{ .cover }}" alt="{{ .title }}" decoding="async" />
+      <a class="shelf-pick" href="{{ .note | default (printf "core/#%s" (anchorize .title)) | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
+        <img src="{{ (partial "core-cover.html" .).thumb }}" alt="{{ .title }}" width="240" height="360" decoding="async" />
       </a>
       {{- end }}
       {{- end }}

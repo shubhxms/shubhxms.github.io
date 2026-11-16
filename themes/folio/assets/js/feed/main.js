@@ -83,12 +83,11 @@ export function stars(rating) {
   return '★'.repeat(Math.floor(rating)) + (rating % 1 ? '½' : '');
 }
 
-// A table row: the title links to the entry; pointing at the row shows it
-// in the plate.
+// A table row: the title links to the entry, and its link covers the row;
+// pointing at the row shows it in the plate.
 function row(e) {
   const tr = el('tr', `feed-row feed-row--${e.kind}`);
   tr.dataset.id = e.id;
-  tr.tabIndex = 0;
   tr.append(el('td', 'feed-n', String(e.n)));
   tr.append(el('td', 'feed-date', dayMonth(e.date)));
   tr.append(el('td', 'feed-kind', KIND_LABEL[e.kind] || e.kind));
@@ -122,11 +121,9 @@ function feedPage(root) {
   let all = [];
   let shown = [];
   let limit = PAGE;
-  let pinned = null;
   const byId = new Map();
 
-  // The plate: the entry under the pointer, else the pinned one, else a key
-  // to the search syntax.
+  // The plate: the entry under the pointer, else a key to the search syntax.
   function showPlate(e) {
     plate.replaceChildren();
     if (!e) {
@@ -201,8 +198,7 @@ function feedPage(root) {
     more.hidden = rest <= 0;
     more.textContent = `${Math.min(PAGE, rest)} more of ${rest}`;
     markKinds();
-    if (pinned && !shown.includes(pinned)) pinned = null;
-    showPlate(pinned);
+    showPlate(null);
   }
 
   // Kind buttons write their filter into the query, so the box always says
@@ -257,42 +253,15 @@ function feedPage(root) {
     draw();
   });
 
-  // Pointer or keyboard over a row shows it; a click (not on its link) pins it.
+  // Pointer or keyboard over a row shows it in the plate.
   const rowOf = (target) => target.closest && target.closest('.feed-row');
-  body.addEventListener('mouseover', (event) => {
+  const show = (event) => {
     const tr = rowOf(event.target);
     if (tr) showPlate(byId.get(tr.dataset.id));
-  });
-  body.addEventListener('mouseleave', () => showPlate(pinned));
-  body.addEventListener('focusin', (event) => {
-    const tr = rowOf(event.target);
-    if (tr) showPlate(byId.get(tr.dataset.id));
-  });
-  body.addEventListener('click', (event) => {
-    const tr = rowOf(event.target);
-    if (!tr || event.target.closest('a')) return;
-    const e = byId.get(tr.dataset.id);
-    pinned = pinned === e ? null : e;
-    body.querySelectorAll('.is-pinned').forEach((r) => r.classList.remove('is-pinned'));
-    if (pinned) tr.classList.add('is-pinned');
-    showPlate(pinned || e);
-  });
-  // Up and down move between rows; Enter opens the entry.
-  body.addEventListener('keydown', (event) => {
-    const tr = rowOf(event.target);
-    if (!tr) return;
-    const step = { ArrowDown: 'nextElementSibling', ArrowUp: 'previousElementSibling' }[event.key];
-    if (step) {
-      let next = tr[step];
-      while (next && !next.classList.contains('feed-row')) next = next[step];
-      if (next) {
-        event.preventDefault();
-        next.focus();
-      }
-    } else if (event.key === 'Enter' && event.target === tr) {
-      tr.querySelector('a').click();
-    }
-  });
+  };
+  body.addEventListener('mouseover', show);
+  body.addEventListener('focusin', show);
+  body.addEventListener('mouseleave', () => showPlate(null));
 
   load(root.dataset.api, (entries) => {
     all = entries;

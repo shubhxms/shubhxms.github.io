@@ -26,6 +26,8 @@
     --pad-bottom: 22px;
     --pad-left: 30px;
     --side: 76px;
+    /* A spade, as on a playing card. */
+    --spade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 26'%3E%3Cpath d='M12 1C9 6.5 2.5 9.5 2.5 15c0 3.3 2.8 5.2 5.6 4.6 1.4-.3 2.6-1.2 3.2-2.4-.3 3-1.4 5.6-3.6 7.3h8.6c-2.2-1.7-3.3-4.3-3.6-7.3.6 1.2 1.8 2.1 3.2 2.4 2.8.6 5.6-1.3 5.6-4.6C21.5 9.5 15 6.5 12 1z'/%3E%3C/svg%3E");
     --side-gap: 16px;
     --text-w: 540px;
     --gutter: 28px;
@@ -134,14 +136,19 @@ a:hover {
 }
 
 .sidebar-nav .site-title {
+    display: block;
     margin-bottom: 2px;
+    padding: 1px 0;
+    color: var(--text);
     font-size: 13px;
     font-weight: 600;
+    text-decoration: none;
 }
 
-.sidebar-nav .site-title a {
-    color: var(--text);
-    text-decoration: none;
+/* Like the links under it: the whole line highlights. */
+.sidebar-nav .site-title:hover {
+    background: var(--selection);
+    color: var(--selection-text);
 }
 
 .site-title-gu {
@@ -1107,23 +1114,20 @@ hr {
     color: var(--text-secondary);
 }
 
-/* In the site's colours: the row under the pointer takes the callout's
-   blue, the pinned one the selection yellow; titles are links as anywhere. */
+/* The whole line is the link: the title's link stretched over its row,
+   which takes the callout's blue under the pointer. */
 .feed-row {
-    cursor: pointer;
+    position: relative;
 }
 
-.feed-row:is(:hover, :focus-visible) {
-    outline: none;
+.feed-row .feed-title::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.feed-row:is(:hover, :focus-within) {
     background: var(--callout-bg);
-}
-
-.feed-row.is-pinned {
-    background: var(--selection);
-}
-
-.feed-row.is-pinned td {
-    color: var(--selection-text);
 }
 
 .feed-more {
@@ -1284,103 +1288,262 @@ hr {
     text-align: left;
 }
 
-/* ---------- Core: entries as rows of thumbnail and text ----------
-   Two rows to a line, across text and margin. A cover where there is one;
-   otherwise the title's initial set on a plate the same size, so every
-   row lines up and pictures and words carry the same weight. */
+/* ---------- Core: a shelf, a plate, a catalogue ----------
+   Each section opens with its spines on a shelf, coloured from their
+   covers (core-cover.html); under it a plate shows one entry large, the
+   one whose spine or line was chosen (:target), else the first; then the
+   section as a catalogue. */
 
-.sheet-body .core-category {
-    margin: 0.9em 0 0.2em;
-    padding-bottom: 0.2em;
-    border-bottom: 1px solid var(--rule);
-    font-family: var(--mono);
-    font-size: 0.7em;
-    letter-spacing: 0.08em;
+.core-shelf {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0.4em 0 0;
+    padding: 0.6em 0 0;
+    overflow-x: auto;
+    border-bottom: 4px solid var(--text);
+    scrollbar-width: thin;
+}
+
+.sheet-body .core-spine {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: var(--w);
+    height: 8.6em;
+    padding: 0.5em 0;
+    overflow: hidden;
+    background: var(--c);
+    /* A little light down one edge, a little shade down the other. */
+    background-image: linear-gradient(90deg, rgb(255 255 255 / 0.18), transparent 22%, transparent 78%, rgb(0 0 0 / 0.18));
+    color: #111;
+    text-decoration: none;
+    transition: transform 0.15s ease;
+}
+
+.sheet-body .core-spine--light {
+    color: #fff;
+}
+
+.sheet-body .core-spine--plain {
+    border: 1px solid var(--border);
+    background-color: var(--paper);
+    color: var(--text);
+}
+
+.core-spine span {
+    max-height: 100%;
+    overflow: hidden;
+    font-family: var(--sans);
+    font-size: 0.66em;
+    font-weight: 700;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+}
+
+.sheet-body .core-spine:is(:hover, :focus-visible) {
+    transform: translateY(-0.45em);
+    color: #111;
+}
+
+.sheet-body .core-spine--light:is(:hover, :focus-visible) {
+    color: #fff;
+}
+
+.sheet-body .core-spine--plain:is(:hover, :focus-visible) {
+    color: var(--text);
+}
+
+/* Where one category ends and the next begins. */
+.core-bookend {
+    flex: none;
+    width: 0.7em;
+}
+
+/* The plate: one card at a time. */
+.core-plate {
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0 0 0.8em;
+    border-bottom: 1px solid var(--border);
+}
+
+.core-card {
+    display: none;
+    grid-template-columns: 6.5em minmax(0, 1fr);
+    align-items: start;
+    gap: 1.1em;
+    padding: 0.9em 0;
+    scroll-margin-top: 14em;
+}
+
+.core-card:target,
+.core-plate:not(:has(.core-card:target)) .core-card:first-child {
+    display: grid;
+}
+
+.core-cover {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    box-shadow: 3px 3px 0 var(--rule);
+}
+
+/* Without a cover: its title and maker, set like a plain typographic one. */
+.core-cover--type {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.6em 0.5em;
+    background: var(--paper);
+    font-family: var(--serif);
+    line-height: 1.1;
+}
+
+.core-cover-title {
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+}
+
+.core-cover-by {
+    padding-top: 0.3em;
+    border-top: 1px solid var(--rule);
+    font-size: 0.66em;
+    color: var(--text-secondary);
+}
+
+.sheet-body .core-about :is(p, h3) {
+    margin: 0;
     text-align: left;
+}
+
+.sheet-body .core-meta {
+    margin-bottom: 0.3em;
+    font-family: var(--mono);
+    font-size: 0.68em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--text-secondary);
 }
 
-.sheet-body ol.core-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 var(--gutter);
-    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin: 0.3em 0 0.9em;
-    padding: 0;
-    list-style: none;
-}
-
-.sheet-body .core-entry {
-    margin: 0;
-    border-bottom: 1px solid var(--rule);
-}
-
-.core-entry-link {
-    display: grid;
-    grid-template-columns: 3.6em minmax(0, 1fr);
-    align-items: center;
-    gap: 0.8em;
-    padding: 0.45em 0.3em 0.45em 0;
-    color: var(--text);
-    text-decoration: none;
-}
-
-a.core-entry-link:hover {
-    background: var(--selection);
-    color: var(--selection-text);
-}
-
-.core-thumb {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
-    border: 1px solid var(--border);
-}
-
-.core-thumb--type {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-        repeating-linear-gradient(135deg, transparent 0 5px, var(--rule) 5px 6px) top / 100% 0.45em no-repeat,
-        var(--paper);
+.sheet-body h3.core-title {
     font-family: var(--serif);
-    font-size: 1.9em;
-    font-style: italic;
-    line-height: 1;
-    color: var(--text-secondary);
-}
-
-.core-text {
-    display: grid;
-    gap: 0.1em;
-    min-width: 0;
-    line-height: 1.22;
-}
-
-.core-title {
+    font-size: 1.5em;
     font-weight: 700;
+    line-height: 1.1;
 }
 
-.core-by {
-    font-size: 0.9em;
+.sheet-body .core-by {
+    margin-top: 0.15em;
     font-style: italic;
     color: var(--text-secondary);
 }
 
-.core-meta {
+.sheet-body .core-blurb {
+    margin-top: 0.6em;
+    max-width: 34em;
+}
+
+.sheet-body .core-more {
+    margin-top: 0.3em;
+    font-size: 0.9em;
+}
+
+/* The catalogue: dense lines, by category, like the feed. */
+.sheet-body table.core-table {
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0 0 1.2em;
+    border: 0;
+    font-size: 0.9em;
+}
+
+.sheet-body .core-table td {
+    padding: 0.16em 0.6em 0.16em 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: baseline;
+}
+
+.core-table-title {
+    width: 50%;
+}
+
+.sheet-body .core-table-by {
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.sheet-body .core-table-year {
+    width: 3.5em;
+    padding-right: 0;
     font-family: var(--mono);
-    font-size: 0.66em;
+    font-size: 0.8em;
+    text-align: right;
+    color: var(--text-secondary);
+}
+
+.sheet-body .core-table-group th {
+    padding: 0.8em 0 0.15em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.sheet-body .core-table tr:has(a:hover) td {
+    background: var(--callout-bg);
+}
+
+/* The internet: no covers, so a plain list, kind after name. */
+.core-what {
+    font-family: var(--mono);
+    font-size: 0.68em;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-secondary);
 }
 
-a.core-entry-link:hover :is(.core-by, .core-meta) {
-    color: inherit;
+/* A playing card's corner, an A over a spade, for a side column that
+   would stand empty at the top of a page. Printed like a newspaper's
+   colour page: the black in halftone dots, with cyan and magenta
+   impressions a hair out of register (the filter's offset copies). Shown
+   only beside the text, in side mode. */
+.card-corner {
+    display: none;
+}
+
+.card-rank,
+.card-suit {
+    display: block;
+}
+
+.card-rank {
+    width: 1em;
+    font-family: var(--serif);
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    color: var(--text);
+}
+
+.card-suit {
+    width: 1.5em;
+    height: 1.6em;
+    margin-top: 0.15em;
+    background: radial-gradient(circle, var(--text) 50%, transparent 56%) 0 0 / 3px 3px;
+    -webkit-mask: var(--spade) center / contain no-repeat;
+    mask: var(--spade) center / contain no-repeat;
 }
 
 /* ---------- Subscribe: the newsletter sign-up ---------- */
@@ -1483,6 +1646,25 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
     /* The h2 takes no height, so the text starts right under the space
        above; the name is shifted down so its first line sits on the text's
        first line. */
+    :root[data-heads="side"] .card-corner {
+        display: block;
+        position: relative;
+        height: 0;
+    }
+
+    :root[data-heads="side"] .card-corner > span:first-child {
+        margin-top: 0.1em;
+    }
+
+    :root[data-heads="side"] .card-corner {
+        filter: drop-shadow(1.5px 1px 0 rgb(0 160 225 / 0.55)) drop-shadow(-1px -0.5px 0 rgb(230 0 125 / 0.5));
+    }
+
+    :root[data-heads="side"] .card-corner > span {
+        position: relative;
+        left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+    }
+
     :root[data-heads="side"] .sheet-body > h2 {
         position: relative;
         top: 1em;
@@ -1525,11 +1707,9 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
     box-shadow: none;
 }
 
-/* ---------- Floating controls: mobile menu, palette ----------
+/* ---------- Floating controls: the palette ----------
    Set like signage: black-ruled on paper, with a hard offset shadow. */
 
-.mobile-menu summary,
-.mobile-nav,
 .palette {
     border: 1px solid var(--border);
     background: var(--paper);
@@ -1715,9 +1895,6 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
     margin-left: 0;
 }
 
-.mobile-menu {
-    display: none;
-}
 
 /* ---------- Narrow screens: the paper fills the width, notes inline ---------- */
 
@@ -1726,11 +1903,6 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
     .feed-rail,
     .feed-table :is(.feed-site, .feed-n) {
         display: none;
-    }
-
-    .sheet-body ol.core-grid {
-        grid-template-columns: 1fr;
-        width: auto;
     }
 
     .shelf-strip {
@@ -1742,8 +1914,182 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
         padding: 0;
     }
 
+    /* The sidebar becomes a masthead: name and tools on one line, the
+       pages on the next, all set across the top of the screen. */
+    .shell {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Flex items grow to their widest child unless told otherwise. */
+    .desk {
+        min-width: 0;
+    }
+
+    .core-shelf,
+    .core-plate,
+    .sheet-body table.core-table {
+        width: auto;
+    }
+
+    .core-card {
+        grid-template-columns: 5em minmax(0, 1fr);
+        gap: 0.9em;
+        scroll-margin-top: 12em;
+    }
+
+    .sheet-body .core-table-by {
+        display: none;
+    }
+
     .sidebar {
-        display: none !important;
+        position: static;
+        order: -1;
+        width: auto;
+        padding: 14px 18px 0;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .sidebar-nav {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: baseline;
+        padding-bottom: 9px;
+        border-bottom: 1px solid var(--text);
+    }
+
+    .sidebar-nav .site-title {
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+    }
+
+    .site-title-gu {
+        display: inline;
+        margin-left: 6px;
+    }
+
+    .sidebar-meta {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .sidebar-tools {
+        gap: 14px;
+    }
+
+    .theme-btn {
+        font-size: 16px;
+    }
+
+    .sidebar .git-info {
+        display: none;
+    }
+
+    .sidebar-links {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px 11px;
+        margin-top: 8px;
+        padding-top: 0;
+        border: 0;
+    }
+
+    .sidebar-links a {
+        padding: 2px 0;
+    }
+
+    .sidebar-links a.active-page {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+    }
+
+    /* The bar names the page; its contents line doesn't fit a phone. */
+    .doc-bar .doc-toc {
+        display: none;
+    }
+
+    .doc-bar-inner {
+        overflow: hidden;
+    }
+
+    .doc-bar-title {
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        font-size: 1.15em;
+    }
+
+    /* The colophon on two lines: why it changed, then where it's from. */
+    .colophon {
+        flex-wrap: wrap;
+        gap: 0.2rem 0.8rem;
+        padding-bottom: 32px;
+    }
+
+    .colophon-subject {
+        flex-basis: 60%;
+    }
+
+    .colophon-actions {
+        flex-basis: 100%;
+    }
+
+    /* The feed: each entry on two lines at most, date over kind beside it. */
+    .sheet-body .feed-table,
+    .feed-table tbody {
+        display: block;
+    }
+
+    .feed-table thead {
+        display: none;
+    }
+
+    .sheet-body .feed-month,
+    .sheet-body .feed-month th {
+        display: block;
+    }
+
+    .feed-table .feed-row {
+        display: grid;
+        grid-template-columns: 4.4em minmax(0, 1fr);
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .sheet-body .feed-table .feed-row td {
+        border: 0;
+        width: auto;
+        padding: 0.1em 0;
+    }
+
+    .feed-table .feed-date {
+        grid-row: 1;
+        padding-top: 0.45em !important;
+    }
+
+    .feed-table .feed-kind {
+        grid-column: 1;
+        grid-row: 2;
+        padding-bottom: 0.4em !important;
+    }
+
+    .sheet-body .feed-table td.feed-entry {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        align-self: center;
+        display: -webkit-box;
+        padding: 0.35em 0 !important;
+        white-space: normal;
+        line-height: 1.3;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
     }
 
     /* No measured sheet on phones: the page is the screen's width. (Auto
@@ -1755,7 +2101,9 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
     }
 
     .sheet {
-        width: auto;
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
         min-height: 0;
         padding: 28px 18px 24px;
         box-shadow: none;
@@ -1807,65 +2155,6 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
         margin-top: 0.3rem;
     }
 
-    .mobile-menu {
-        display: block;
-        position: fixed;
-        right: 1rem;
-        bottom: 1rem;
-        z-index: 100;
-    }
-
-    .mobile-menu summary {
-        display: grid;
-        place-items: center;
-        min-width: 3rem;
-        height: 3rem;
-        padding: 0 0.65rem;
-        box-sizing: border-box;
-        font-size: 0.7rem;
-        font-weight: 700;
-        line-height: 1;
-        text-transform: uppercase;
-        list-style: none;
-    }
-
-    .mobile-menu summary::-webkit-details-marker {
-        display: none;
-    }
-
-    .mobile-menu[open] summary {
-        color: var(--accent);
-    }
-
-    .mobile-nav {
-        position: absolute;
-        right: 0;
-        bottom: calc(100% + 0.65rem);
-        display: flex;
-        flex-direction: column;
-        gap: 0.3rem;
-        width: max-content;
-        padding: 0.7rem 0.8rem;
-        font-size: 0.72rem;
-        line-height: 1.4;
-    }
-
-    .mobile-nav :is(a, button) {
-        display: block;
-        padding: 0;
-        border: 0;
-        background: none;
-        color: var(--text);
-        font: inherit;
-        text-align: left;
-        text-decoration: none;
-        white-space: nowrap;
-    }
-
-    .mobile-nav a.active-page {
-        color: var(--accent);
-        font-weight: 700;
-    }
 }
 
 /* ---------- Print: the paper, and nothing around it ---------- */
@@ -1891,7 +2180,6 @@ a.core-entry-link:hover :is(.core-by, .core-meta) {
 
     .sidebar,
     .doc-bar,
-    .mobile-menu,
     .palette,
     .colophon-actions {
         display: none !important;

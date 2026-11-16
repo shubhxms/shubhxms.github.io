@@ -142,3 +142,11 @@ test('geometry keeps a side column for section heads, wide enough for a label', 
     assert.ok(g.sideGap >= 12, JSON.stringify(g));
   }
 });
+
+test('geometry never returns NaN, even for a room it could not measure', () => {
+  for (const room of [NaN, undefined, -50]) {
+    const g = geometry(room);
+    for (const value of Object.values(g)) assert.ok(Number.isFinite(value), JSON.stringify(g));
+    assert.equal(g.sheet, 680);
+  }
+});

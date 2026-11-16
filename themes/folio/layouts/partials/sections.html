@@ -1,7 +1,13 @@
-{{- /* The page's sections: its h2s, as Fragments headings. */}}
+{{- /* The page's sections: its h2s, as Fragments headings, or for Core,
+       whose sections come from data/core.yaml, their names and anchors. */}}
 {{- $sections := slice }}
 {{- range .Fragments.Headings }}
   {{- if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}
   {{- range .Headings }}{{ if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}{{ end }}
+{{- end }}
+{{- if eq .Layout "core" }}
+  {{- range site.Data.core.sections }}
+  {{- $sections = $sections | append (dict "ID" (anchorize .name) "Title" .name) }}
+  {{- end }}
 {{- end }}
 {{- return $sections }}

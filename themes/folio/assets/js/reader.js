@@ -14,14 +14,17 @@ export function createReader(folio) {
   let textStep = TEXT_STEPS.indexOf(Number(stored(TEXT_KEY)));
   if (textStep === -1) textStep = TEXT_STEPS.indexOf(1);
 
+  // A computed length in px; 0 for "normal" and the like.
+  const px = (value) => parseFloat(value) || 0;
+
   // The width beside the sidebar: the shell, less its padding, gap and sidebar.
   function room() {
     const shell = desk.parentElement;
     const style = getComputedStyle(shell);
     const sidebar = shell.querySelector('.sidebar');
     return shell.clientWidth
-      - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
-      - (sidebar ? sidebar.offsetWidth + parseFloat(style.columnGap) : 0);
+      - px(style.paddingLeft) - px(style.paddingRight)
+      - (sidebar ? sidebar.offsetWidth + px(style.columnGap) : 0);
   }
 
   // Sets the sheet's measurements as whole pixels. A sheet is also at
@@ -29,7 +32,7 @@ export function createReader(folio) {
   function layout() {
     const g = geometry(room(), TEXT_STEPS[textStep]);
     const shell = getComputedStyle(desk.parentElement);
-    const height = window.innerHeight - parseFloat(shell.paddingTop) - parseFloat(shell.paddingBottom);
+    const height = window.innerHeight - px(shell.paddingTop) - px(shell.paddingBottom);
     const set = (name, px) => folio.style.setProperty(name, `${px}px`);
     set('--sheet-w', g.sheet);
     set('--pad-left', g.padLeft);
@@ -148,7 +151,6 @@ export function bindContents(folio, reader) {
   });
 }
 
-// Reflects reader state in the toolbar.
 // Clicks on any [data-action] element run the matching action.
 export function bindActions(root, actions) {
   root.addEventListener('click', (event) => {

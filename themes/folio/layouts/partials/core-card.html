@@ -1,0 +1,35 @@
+{{- /*
+  One Core entry, large, for the plate: its cover (or its title and maker
+  set on a plate the same size), then category and year, title, maker,
+  and for an entry with a note, the note's summary and a link to it.
+    entry – the entry; group – its category, if any
+*/}}
+{{- $e := .entry }}
+{{- $cover := partial "core-cover.html" $e }}
+{{- $note := false }}
+{{- with $e.note }}
+{{- $note = index (where site.RegularPages "RelPermalink" .) 0 }}
+{{- if not $note }}{{ errorf "core: note %q is not a page on this site" . }}{{ end }}
+{{- end }}
+<article class="core-card" id="{{ $e.title | anchorize }}">
+  {{- with $cover.thumb }}
+  <img class="core-cover" src="{{ . }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
+  {{- else }}
+  <span class="core-cover core-cover--type" aria-hidden="true">
+    <span class="core-cover-title">{{ $e.title }}</span>
+    <span class="core-cover-by">{{ $e.by }}</span>
+  </span>
+  {{- end }}
+  <div class="core-about">
+    {{- $meta := slice }}
+    {{- with .group }}{{ $meta = $meta | append . }}{{ end }}
+    {{- with $e.year }}{{ $meta = $meta | append . }}{{ end }}
+    {{- with $meta }}<p class="core-meta">{{ delimit . " · " }}</p>{{ end }}
+    <h3 class="core-title">{{ $e.title }}</h3>
+    {{- with $e.by }}<p class="core-by">{{ . }}</p>{{ end }}
+    {{- with $note }}
+    <p class="core-blurb">{{ .Params.tldr | default .Summary | plainify | truncate 260 }}</p>
+    <p class="core-more"><a href="{{ .RelPermalink }}">Read the note →</a></p>
+    {{- end }}
+  </div>
+</article>

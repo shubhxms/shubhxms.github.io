@@ -38,6 +38,10 @@ function startReader(folio, actions) {
   fit();
   wide.addEventListener('change', fit);
   window.addEventListener('resize', () => wide.matches && reader.layout());
+  // The script can run before the stylesheet or the web fonts have
+  // settled; measure again once they have.
+  window.addEventListener('load', () => wide.matches && reader.layout());
+  document.fonts?.ready.then(() => wide.matches && reader.layout());
 
   // Laying out moves everything, so return to a linked #fragment afterwards.
   const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));

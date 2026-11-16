@@ -116,3 +116,30 @@ notAlternative = true
 [outputs]
 home = ["HTML", "data", "searchindex"]
 page = ["HTML", "markdown"]
+
+# The project's own folders, as Hugo mounts them by default, plus the shelf
+# covers as assets too, so Core can resize them and read their colours.
+[[module.mounts]]
+source = "content"
+target = "content"
+[[module.mounts]]
+source = "static"
+target = "static"
+[[module.mounts]]
+source = "layouts"
+target = "layouts"
+[[module.mounts]]
+source = "data"
+target = "data"
+[[module.mounts]]
+source = "assets"
+target = "assets"
+[[module.mounts]]
+source = "i18n"
+target = "i18n"
+[[module.mounts]]
+source = "archetypes"
+target = "archetypes"
+[[module.mounts]]
+source = "static/images/shelf"
+target = "assets/images/shelf"
