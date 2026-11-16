@@ -149,9 +149,13 @@ grep -Fq 'src="/js/folio.js"' "$DEV/now/index.html" || fail 'development JS shou
 # Pages that keep their own scripts still build.
 has feed/index.html 'id="feed-root"'
 
-# Side-column heads apply only to sections of pages that have them, so
+# Side-column heads apply only to a page's own (top-level) sections, so
 # headings inside lists (the archive's years) stay put.
-grep -q ':root\[data-heads="side"\] .sheet:not(.sheet--flat) .sheet-body > h2 {' "$CSS" || fail 'side heads should be scoped to sectioned pages'
+grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
+# In side mode every page keeps the side column, so text starts at the same
+# place; pages without sections set an ornament there.
+grep -q ':root\[data-heads="side"\] .sheet--flat .doc-head::after {' "$CSS" || fail 'flat pages should mark the side column'
+! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
 printf 'folio smoke tests passed\n'

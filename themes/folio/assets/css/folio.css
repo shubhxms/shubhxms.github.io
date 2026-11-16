@@ -599,11 +599,10 @@ a:hover {
     border: 1px solid var(--border);
 }
 
+/* Under the image: pinned into the margin, a caption could land on a
+   sidenote there. */
 .sheet-body figure:not(.marginfigure) figcaption {
-    position: absolute;
-    top: 0;
-    left: calc(100% + var(--gutter));
-    width: var(--note-w);
+    margin-top: 0.3em;
 }
 
 .sheet-body figcaption,
@@ -901,13 +900,15 @@ hr {
 }
 
 /* ---------- Section heads in a side column ----------
-   data-heads="side": a page's own sections (top-level h2s) set their names
-   small in a side column, beyond a dotted rule, beside the section's first
-   line. Pages without sections (sheet--flat), headings nested in other
-   blocks (an archive's years) and phones keep underlined heads. */
+   data-heads="side": every page keeps a side column beyond a dotted rule,
+   so text starts at the same place on every page. A page's own sections
+   (top-level h2s) set their names small there, beside the section's first
+   line; a page without sections sets an ornament at its head. Headings
+   nested in other blocks (an archive's years) and phones keep underlined
+   heads. */
 
 @media print, screen and (min-width: 801px) {
-    :root[data-heads="side"] .sheet:not(.sheet--flat) .sheet-body {
+    :root[data-heads="side"] .sheet-body {
         width: var(--text-w);
         margin-left: var(--side);
         padding-left: var(--side-gap);
@@ -915,13 +916,26 @@ hr {
     }
 
     /* The header spans side column and text, over the dotted rule. */
-    :root[data-heads="side"] .sheet:not(.sheet--flat) .doc-head {
+    :root[data-heads="side"] .doc-head {
         margin-left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+    }
+
+    /* Hung from the foot of the header, so it opens the text. */
+    :root[data-heads="side"] .sheet--flat .doc-head::after {
+        content: "⁂";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: calc(var(--side) - 10px);
+        font-family: var(--serif);
+        font-size: 1.5em;
+        line-height: 1;
+        color: var(--text-secondary);
     }
 
     /* The h2 takes no height, so the text starts right under the space
        above; the name is shifted down onto the text's first line. */
-    :root[data-heads="side"] .sheet:not(.sheet--flat) .sheet-body > h2 {
+    :root[data-heads="side"] .sheet-body > h2 {
         position: relative;
         top: 0.95em;
         box-sizing: border-box;
