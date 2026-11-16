@@ -1,3 +1,9 @@
+---
+title: "Notes"
+# Notes show their length and reading time above the title.
+cascade:
+  stats: true
+---
  <div class="hero-img">
   <img src="/images/notes-header.jpeg" alt="typewriter for sale at ravivari bazaar in ahmedabad" style="object-position: center 85%;">
 </div> 
