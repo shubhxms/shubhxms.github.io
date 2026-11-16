@@ -1,0 +1,7 @@
+{{- /* The latest few feed entries: {{< recent 6 >}}. */}}
+<div class="feed-recent" data-api="{{ site.Params.feedApi }}" data-count="{{ .Get 0 | default 6 }}">
+  <table class="feed-table">
+    <tbody></tbody>
+  </table>
+  <p class="feed-recent-more"><a href="{{ "feed/" | relURL }}">The whole feed</a>, searchable.</p>
+</div>

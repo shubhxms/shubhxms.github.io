@@ -8,11 +8,10 @@
       </main>
       {{- partial "sidebar.html" . }}
     </div>
-    {{- /* Page-specific overlays, such as the feed's detail panel. */}}
-    {{- block "rail" . }}{{ end }}
     {{- partial "mobile-menu.html" . }}
     {{- partial "reader.html" . }}
     {{- partial "palette.html" . }}
+    {{- if or (eq .Layout "feed") (.HasShortcode "recent") }}{{ partial "feed-script.html" . }}{{ end }}
     {{- $js := resources.Get "js/main.js" | js.Build (dict "targetPath" "js/folio.js" "target" "es2020" "sourceMap" (cond hugo.IsProduction "" "inline")) }}
     {{- $js = partial "asset.html" $js }}
     <script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>
