@@ -1040,15 +1040,6 @@ hr {
     text-transform: none;
 }
 
-.feed-title {
-    color: var(--text);
-    text-decoration: none;
-}
-
-.feed-title:hover {
-    text-decoration: underline;
-}
-
 .feed-extra,
 .feed-pic {
     font-family: var(--mono);
@@ -1073,18 +1064,23 @@ hr {
     color: var(--text-secondary);
 }
 
+/* In the site's colours: the row under the pointer takes the callout's
+   blue, the pinned one the selection yellow; titles are links as anywhere. */
 .feed-row {
     cursor: pointer;
 }
 
-.feed-row:is(:hover, :focus-visible, .is-pinned) {
+.feed-row:is(:hover, :focus-visible) {
     outline: none;
-    background: var(--text);
+    background: var(--callout-bg);
 }
 
-.feed-row:is(:hover, :focus-visible, .is-pinned) td,
-.feed-row:is(:hover, :focus-visible, .is-pinned) :is(.feed-title, .feed-extra, .feed-pic) {
-    color: var(--paper);
+.feed-row.is-pinned {
+    background: var(--selection);
+}
+
+.feed-row.is-pinned td {
+    color: var(--selection-text);
 }
 
 .feed-more {
@@ -1210,6 +1206,43 @@ hr {
     font-size: 0.9em;
 }
 
+/* ---------- Lately: feed beside shelf, across text and margin ---------- */
+
+.lately {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: 0 var(--gutter);
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0.5em 0 0.6em;
+}
+
+.sheet-body .lately-kicker {
+    margin: 0 0 0.3em;
+    padding-bottom: 0.25em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.lately .feed-table {
+    border-top: 0;
+}
+
+.lately .shelf-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0.35em 0 0;
+}
+
+.sheet-body .lately-more {
+    margin: 0.35em 0 0;
+    font-size: 0.88em;
+    text-align: left;
+}
+
 /* ---------- Shelf: a numbered catalogue ---------- */
 
 .sheet-body .catalogue-group {
@@ -1293,23 +1326,36 @@ hr {
     color: var(--text-secondary);
 }
 
-/* The ornament (partials/ornament.html), absolutely placed but left at its
-   own height, so it opens the text from the side column. Not a code block. */
+/* The ornament (partials/ornament.html): a tree down the side column,
+   from under the header (reader.js measures it as --head-h) to the foot of
+   the text. The trunk stretches; crown and roots keep their shape. */
 .sheet-body .ornament {
     display: none;
     position: absolute;
+    top: var(--head-h, 7em);
+    bottom: 0;
     left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+    flex-direction: column;
     width: var(--side);
-    margin: 0.2em 0 0;
+    color: var(--text-secondary);
+}
+
+.sheet-body .ornament pre {
+    margin: 0;
     padding: 0;
-    overflow: visible;
+    overflow: hidden;
     border: 0;
     background: none;
     font-family: var(--mono);
     font-size: 9.5px;
     line-height: 1.05;
     text-align: left;
-    color: var(--text-secondary);
+    color: inherit;
+}
+
+.sheet-body .ornament .ornament-trunk {
+    flex: 1;
+    min-height: 0;
 }
 
 /* ---------- Subscribe: the newsletter sign-up ---------- */
@@ -1410,7 +1456,7 @@ hr {
 
     /* Hangs in the side column where it falls, beside the opening text. */
     :root[data-heads="side"] .sheet--flat .sheet-body .ornament {
-        display: block;
+        display: flex;
     }
 
     /* The h2 takes no height, so the text starts right under the space
@@ -1745,6 +1791,12 @@ hr {
 /* ---------- Narrow screens: the paper fills the width, notes inline ---------- */
 
 @media screen and (max-width: 800px) {
+    .lately {
+        grid-template-columns: 1fr;
+        gap: 1em;
+        width: auto;
+    }
+
     .feed-rail,
     .feed-table :is(.feed-site, .feed-n) {
         display: none;

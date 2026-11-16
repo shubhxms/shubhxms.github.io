@@ -1,12 +1,18 @@
-{{- /* An Ionic column, set in type: the side column's ornament on pages
-       without sections. Shown only with side-column heads. */ -}}
-<pre class="ornament" aria-hidden="true">
-  @-._.-@
-   \_*_/
-   [===]
-    |:|
-    |:|
-    |:|
-    |:|
-   [===]
-  /_____\</pre>
+{{- /* A tree, set in type, down the side column of pages without sections:
+       a starred crown, a trunk with branches that runs as long as the page
+       (cut to fit), and roots at the foot. Shown only with side-column heads. */ -}}
+{{- $trunk := slice "       |" "       |" `       |\_` "       |  `*" "       |" "       |" "     _/|" "    *  |" -}}
+<div class="ornament" aria-hidden="true">
+<pre class="ornament-crown">     _,-._
+   ,'  *  `.
+  ( .:*:*:. )
+ ( :*:.:*:.* )
+  `.  \|/  ,'
+    `-.|.-'
+       |</pre>
+<pre class="ornament-trunk">{{ range seq 90 }}{{ delimit $trunk "\n" }}{{ "\n" }}{{ end }}</pre>
+<pre class="ornament-roots">      /|\
+    _/ | \_
+   / ./|\. \
+ ~~~~~~~~~~~~~</pre>
+</div>

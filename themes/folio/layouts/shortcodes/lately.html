@@ -1,0 +1,29 @@
+{{- /*
+  The home page's "lately": the feed's newest entries beside the shelf's
+  picks, two columns across text and margin. {{< lately 6 >}}
+*/}}
+{{- $count := .Get 0 | default 6 }}
+<div class="lately">
+  <section class="lately-col lately-feed">
+    <p class="lately-kicker">In the feed</p>
+    <div class="feed-recent" data-api="{{ site.Params.feedApi }}" data-count="{{ $count }}">
+      <table class="feed-table">
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="lately-more"><a href="{{ "feed/" | relURL }}">The whole feed</a>, searchable</p>
+  </section>
+  <section class="lately-col lately-shelf">
+    <p class="lately-kicker">On the shelf</p>
+    <div class="shelf-strip">
+      {{- range (append site.Data.shelf.films site.Data.shelf.books) }}
+      {{- if .pick }}
+      <a class="shelf-pick" href="{{ .note | default "shelf/" | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
+        <img src="{{ .cover }}" alt="{{ .title }}" decoding="async" />
+      </a>
+      {{- end }}
+      {{- end }}
+    </div>
+    <p class="lately-more"><a href="{{ "shelf/" | relURL }}">The whole shelf</a></p>
+  </section>
+</div>

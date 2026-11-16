@@ -40,6 +40,9 @@ export function createReader(folio) {
     set('--note-w', g.note);
     set('--type', g.type);
     set('--sheet-min', Math.floor(height));
+    // Where the text starts, for the side column's ornament.
+    const head = folio.querySelector('.sheet--doc .doc-head');
+    if (head) set('--head-h', Math.round(head.offsetHeight));
     // Centre the reader controls under the content, whatever the layout.
     requestAnimationFrame(() => {
       const box = desk.getBoundingClientRect();
@@ -50,7 +53,7 @@ export function createReader(folio) {
 
   // Back to the stylesheet's own sizes (narrow screens).
   function unlayout() {
-    ['--sheet-w', '--pad-left', '--side', '--side-gap', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min']
+    ['--sheet-w', '--pad-left', '--side', '--side-gap', '--text-w', '--gutter', '--note-w', '--type', '--sheet-min', '--head-h']
       .forEach((name) => folio.style.removeProperty(name));
     render();
   }

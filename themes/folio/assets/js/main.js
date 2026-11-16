@@ -39,6 +39,8 @@ function startReader(folio, actions) {
   fit();
   wide.addEventListener('change', fit);
   window.addEventListener('resize', () => wide.matches && reader.layout());
+  // Web fonts change heights (the header's, for one): lay out again once in.
+  document.fonts?.ready.then(() => wide.matches && reader.layout());
 
   // Laying out moves everything, so return to a linked #fragment afterwards.
   const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));

@@ -154,7 +154,11 @@ has feed/index.html 'data-api="https://feed.shubhxms.workers.dev"'
 grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/feed/index.html" || fail 'the feed page should load the feed script'
 lacks feed/index.html 'feed-root'
 lacks now/index.html '/js/feed'
-# The home page lists the latest few entries.
+# The home page sets the feed's latest entries and the shelf's picks side
+# by side, and no longer carries the stepwell photograph.
+has index.html '<div class="lately">'
+lacks index.html 'home-header.jpg'
+has notes/index.html 'class="ornament-trunk"'
 has index.html 'class="feed-recent"'
 grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fail 'the home page should load the feed script for its recent list'
 
@@ -163,7 +167,7 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-has contact/index.html '<pre class="ornament" aria-hidden="true">'
+has contact/index.html '<div class="ornament" aria-hidden="true">'
 lacks uses/index.html 'class="ornament"'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
