@@ -1134,6 +1134,14 @@ hr {
     color: var(--selection-text);
 }
 
+/* A title in a line keeps its look under the pointer: the line's own
+   highlight is enough. */
+.feed-row a:hover {
+    background: none;
+    color: var(--link);
+    text-decoration: underline;
+}
+
 .feed-more {
     display: block;
     width: 100%;
