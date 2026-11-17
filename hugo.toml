@@ -86,6 +86,11 @@ weight = 4
 name = "Uses"
 url = "/uses"
 weight = 8
+
+[[menu.main]]
+name = "Colophon"
+url = "/colophon"
+weight = 9
 [permalinks]
 pages = '/:title'
 
