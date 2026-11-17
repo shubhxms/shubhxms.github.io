@@ -1,4 +1,4 @@
 name = "folio"
 license = "MIT"
-description = "Documents set as sheets of paper, read like a PDF."
+description = "Pages set like a reference book: side heads, notes in the margin, dense type."
 min_version = "0.141.0"

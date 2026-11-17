@@ -1,225 +1,88 @@
-# Shubham Shah's Personal Website
+# shubhamshah.net
 
 [![Deploy Hugo site to Pages](https://github.com/shubhxms/shubhxms.github.io/actions/workflows/hugo.yml/badge.svg)](https://github.com/shubhxms/shubhxms.github.io/actions/workflows/hugo.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The personal website, blog, and digital garden of [Shubham Shah](https://shubhxms.github.io/). Built with [Hugo](https://gohugo.io/) and a custom fork of the [Archie theme](https://github.com/athul/archie).
+The personal website of [Shubham Shah](https://shubhamshah.net). Built with [Hugo](https://gohugo.io/) on **folio**, a theme written for this site (`themes/folio`). See [/colophon](https://shubhamshah.net/colophon) for where its ideas come from.
 
-**Live Site:** [https://shubhxms.github.io/](https://shubhxms.github.io/)
+## Run it
 
-## Features
-
-- **Blog & Notes** - Organized thoughts and articles
-- **Projects** - Showcase of work and side projects
-- **Shelf** - Reading list and recommendations
-- **Stream** - Stream of consciousness and quick updates
-- **Dark/Light Mode** - Toggle between themes
-- **Fast & Lightweight** - Static site with KaTeX for math rendering
-- **Responsive Design** - Works on all devices
-
-## Quick Start
-
-### Prerequisites
-
-- [Hugo](https://gohugo.io/installation/) extended version (v0.128.0 or later)
-- Git
-
-### Local Development
+Needs [Hugo](https://gohugo.io/installation/) **extended**, v0.162.1 (the version the deploy uses), and Node 22+ for the unit tests.
 
 ```bash
-# Clone the repository (including submodules)
-git clone --recursive https://github.com/shubhxms/shubhxms.github.io.git
+git clone https://github.com/shubhxms/shubhxms.github.io.git
 cd shubhxms.github.io
 
-# Start the development server
-hugo server -D
+bin/dev                    # dev server on http://localhost:1313
+PORT=1414 bin/dev          # another port; extra flags go to `hugo server`
 
-# Build the site (output in ./public)
-hugo --cleanDestinationDir
+hugo --gc --minify         # production build, into ./public
 ```
 
-Visit `http://localhost:1313` in your browser to see the site.
+`bin/dev` renders to memory and restarts Hugo by itself when a rebuild hits a Go runtime error (Hugo's own state gone stale); ordinary template errors are shown and left for you to fix.
 
-### Development Commands
+## Tests
 
 ```bash
-# Create a new note
-hugo new notes/my-note.md
-
-# Create a new page
-hugo new pages/my-page.md
-
-# Build with drafts
-hugo -D
-
-# Clean build
-hugo --cleanDestinationDir
+node --test tests/*.mjs    # unit tests for the theme's scripts
+tests/folio-smoke.sh       # builds the site with fixture pages and checks the output
+tests/dev.test.sh          # bin/dev's restart behaviour, with a stand-in for hugo
 ```
 
-## Project Structure
+The deploy runs the first two before it builds.
+
+## Layout
 
 ```
-.
-├── assets/           # Processed files (CSS, JS)
-├── content/          # Site content
-│   ├── notes/        # Blog posts and notes
-│   ├── pages/        # Static pages (About, Core, Uses, etc.)
-│   └── stream/       # Stream of consciousness entries
-├── static/           # Static assets (images, fonts, files)
-│   └── images/       # Site images
-├── layouts/          # Custom layout templates (overrides theme)
-├── themes/           # Hugo themes
-│   └── archie/       # Custom fork of Archie theme
-├── public/           # Generated site (Hugo output, do not edit)
-├── hugo.toml         # Site configuration
-└── README.md         # This file
+content/
+├── _index.md          # home: title page, intro, likes, Lately
+├── notes/             # notes (cascade word count and a drop cap)
+└── pages/             # Now, Contact, Projects, Feed, Shelf, Core, Uses, Colophon
+data/shelf.yaml        # the Shelf: books and films with covers
+static/images/         # images; also mounted as assets so Hugo can resize them
+themes/folio/          # the theme: layouts, CSS, JS, self-hosted fonts
+tests/                 # unit tests, smoke test, fixtures
+bin/dev                # dev server
+hugo.toml              # config: menu, params, module mounts
 ```
 
-## Content Management
+`themes/archie` is the previous theme, kept as a submodule; the site doesn't use it.
 
-### Adding a Note
+## Writing
 
-Notes are organized in `content/notes/`. Each note requires front matter:
+A note in `content/notes/`:
 
 ```markdown
 ---
-title: "My Note Title"
-date: 2026-03-18
-description: "A brief description"
-tldr: "Quick summary"
-draft: false
-tags: ["tag1", "tag2"]
+title: "On Vikram Sarabhai"
+date: 2026-02-13
+description: "Or Rambling about a book I just read"
+tldr: "Shown under the title in the archive."
+tags: ["book-review"]
 ---
-
-Your content here...
 ```
 
-### Adding a Page
+A page in `content/pages/` takes `title`, `url` and `tldr`. Other front matter: `stats: true` (word count and reading time), `dropcap: true`.
 
-Static pages go in `content/pages/`:
+Shortcodes, in `themes/folio/layouts/shortcodes/`:
 
-```markdown
----
-title: "Page Title"
-url: /page-slug
-description: "Page description"
-draft: false
----
+| Shortcode | Does |
+|---|---|
+| `{{< sidenote >}}…{{< /sidenote >}}` | Numbered note in the margin |
+| `{{< marginnote >}}…{{< /marginnote >}}` | Unnumbered note in the margin |
+| `{{< marginfigure src="/images/…" caption="…" >}}` | Image in the margin |
+| `{{< hero src="/images/…" alt="…" position="center 85%" >}}` | Wide, short photo across the top |
+| `{{< callout text="…" >}}` | Boxed note |
+| `{{< likes >}}` / `{{< lately 6 >}}` | Home page lists |
+| `{{< subscribe "substack-name" >}}` | Newsletter sign-up |
 
-Page content...
-```
+Images under `static/images/` are resized to the size they're shown at and served as WebP, whether used in Markdown or in a shortcode. GIFs and outside URLs are left as they are.
 
-### Adding Images
+The **Shelf** comes from `data/shelf.yaml`; an entry without a `cover` is left off it. The **Feed** is fetched in the browser from a Cloudflare Worker (`params.feedApi` in `hugo.toml`).
 
-Place images in `static/images/` and reference them in markdown:
+## Deploy
 
-```markdown
-![Alt text](/images/your-image.jpg)
-```
-
-## Configuration
-
-Key settings in `hugo.toml`:
-
-```toml
-# Site settings
-baseURL = 'https://shubhxms.github.io/'
-languageCode = 'en-us'
-title = 'Shubham Shah'
-theme = "archie"
-
-# Theme toggle
-mode = "toggle"  # or "dark" or "light"
-
-# Math rendering (KaTeX)
-katex = true
-
-# Pagination
-paginate = 4
-
-# Syntax highlighting
-pygmentsstyle = "monokai"
-pygmentscodefences = true
-```
-
-### Navigation Menu
-
-Add menu items in `hugo.toml`:
-
-```toml
-[[menu.main]]
-name = "Page Name"
-url = "/page-url"
-weight = 1
-```
-
-## Deployment
-
-The site is automatically deployed to [GitHub Pages](https://pages.github.com/) via GitHub Actions on every push to the `main` branch.
-
-### Workflow
-
-1. Push changes to `main` branch
-2. GitHub Actions triggers automatically
-3. Hugo builds the site
-4. Output is deployed to `https://shubhxms.github.io/`
-
-### Manual Deployment
-
-You can also trigger a deployment manually from the [Actions tab](https://github.com/shubhxms/shubhxms.github.io/actions).
-
-## Theme Customization
-
-This site uses a custom fork of the [Archie theme](https://github.com/athul/archie) located in `themes/archie/`. Customizations include:
-
-- Modified styling and layout
-- Custom color schemes
-- Feature enhancements
-- Bug fixes and optimizations
-
-### Overriding Theme Templates
-
-To override a template from the theme:
-
-1. Create the same directory structure in your root `layouts/` folder
-2. Copy the template file from `themes/archie/layouts/`
-3. Modify as needed
-
-Example: Override `single.html`:
-```
-layouts/
-└── _default/
-    └── single.html
-```
-
-## Contributing
-
-This is a personal website, but feel free to:
-
-- Report bugs via [GitHub Issues](https://github.com/shubhxms/shubhxms.github.io/issues)
-- Fork for your own use
-- Submit pull requests for theme improvements
+Every push to `main` runs `.github/workflows/hugo.yml`: tests, `hugo --gc --minify`, then GitHub Pages. It can also be run by hand from the [Actions tab](https://github.com/shubhxms/shubhxms.github.io/actions).
 
 ## License
 
-© 2026 Shubham Shah. Content licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Code licensed under [MIT](https://opensource.org/licenses/MIT).
-
-## Tech Stack
-
-- **Static Site Generator:** [Hugo](https://gohugo.io/)
-- **Theme:** [Archie](https://github.com/athul/archie) (custom fork)
-- **Hosting:** [GitHub Pages](https://pages.github.com/)
-- **CI/CD:** [GitHub Actions](https://github.com/features/actions)
-- **Domain:** [GitHub Pages](https://shubhxms.github.io/)
-- **Math Rendering:** [KaTeX](https://katex.org/)
-- **Syntax Highlighting:** [Pygments](https://pygments.org/)
-
-## Links
-
-- **GitHub:** [shubhxms](https://github.com/shubhxms/)
-- **Twitter:** [@shubhxms](https://twitter.com/shubhxms/)
-- **Website:** [shubhxms.github.io](https://shubhxms.github.io/)
-
----
-
-Made with ❤️ and [Hugo](https://gohugo.io/)
+Content © Shubham Shah, [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). Code [MIT](https://opensource.org/licenses/MIT). Fonts under the [SIL Open Font License](https://openfontlicense.org).
