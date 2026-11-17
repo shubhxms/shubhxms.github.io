@@ -24,7 +24,7 @@ likes:
   - "chai"
   - "mountains & forests"
   - "religion & mythology"
-  - "tennis and other sports"
+  - "tennis & other sports"
   - "athleticism"
   - "[passion projects](https://twitter.com/collision/status/1529452415346302976)"
   - "solarpunk"
@@ -34,14 +34,14 @@ likes:
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
 
-I mostly spend my time trying to make sense of the world on my [computer](/images/i-love-computers-it.gif) through science & stories.
-My interests span computation, software, fiction, Hindustani music, jazz, puzzles & sports.
+I spend my time trying to make sense of the world on my [computer](/images/i-love-computers-it.gif) through science & stories.
+My interests span computation, [software](https://github.com/shubhxms), [photography](https://instagram.com/shubhxms), fiction, Hindustani music, jazz, puzzles & sports.
 I'm based out of [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
 
 
 ## [Now](/now)
-I am mostly spending my time learning maths and computer science.
-Other than that I have some projects on-going{{<sidenote>}} I'm looking for token and compute sponsorships. {{</sidenote>}} (more soon!) and remain open to interesting work.
+I am learning selected topics in maths and computer science.
+Other than that I have some projects on-going{{<sidenote>}} Please sponsor tokens and compute lmao.{{</sidenote>}} (more soon!) and remain open to interesting work.
 Outside, I'm reading *Dune* by Frank Herbert and *The Information* by James Gleick.
 
 <!--## Best Work
