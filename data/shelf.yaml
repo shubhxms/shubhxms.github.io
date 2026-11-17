@@ -1,6 +1,7 @@
 # The shelf: books and films, by their covers. Rendered by the Shelf page
-# (layouts/_default/shelf.html): each section a table beside a wall of its
-# covers. Core (content/pages/core.md) is the written list, and overlaps.
+# (layouts/_default/shelf.html): each section a grid of covers. An entry
+# without a cover is left off. Core (content/pages/core.md) is the written
+# list, and overlaps.
 #
 # A section has items, or lists of items (Books, by category). An entry
 # takes: title; by (author or maker); year; cover (an image under
@@ -42,8 +43,6 @@ sections:
 
       - name: "Fiction & Mythology"
         items:
-          - title: "Suheldev and the Battle of Bahraich"
-            by: "Amish Tripathi"
           - title: "The Shiva Trilogy"
             by: "Amish Tripathi"
             cover: /images/shelf/meluha.jpg
@@ -67,17 +66,14 @@ sections:
       - { title: "The Grand Budapest Hotel", year: "2014", by: "dir. Wes Anderson", cover: /images/shelf/grand-budapest.jpg, pick: true }
       - { title: "Boyhood", year: "2014", by: "dir. Richard Linklater", cover: /images/shelf/boyhood.jpg }
       - { title: "The Wonderful Story of Henry Sugar", year: "2023", by: "dir. Wes Anderson", cover: /images/shelf/henry-sugar-and-three.jpg }
-      - { title: "The Swan", year: "2023", by: "dir. Wes Anderson" }
       - { title: "Silicon Valley", year: "2014", by: "cr. Mike Judge, John Altschuler & Dave Krinsky", cover: /images/shelf/silicon-valley.jpg }
-      - { title: "A Rainy Day in New York", year: "2019", by: "dir. Woody Allen" }
-      - { title: "Manchester by the Sea", year: "2016", by: "dir. Kenneth Lonergan" }
+      - { title: "A Rainy Day in New York", year: "2019", by: "dir. Woody Allen", cover: /images/shelf/rainy-day.jpg }
+      - { title: "Manchester by the Sea", year: "2016", by: "dir. Kenneth Lonergan", cover: /images/shelf/manchester-by-the-sea.jpg }
       - { title: "Dead Poets Society", year: "1989", by: "dir. Peter Weir", cover: /images/shelf/dead-poets-socity.jpg }
       - { title: "Call Me By Your Name", year: "2017", by: "dir. Luca Guadagnino", cover: /images/shelf/cmbyn.webp }
-      - { title: "Anand", year: "1971", by: "dir. Hrishikesh Mukherjee" }
+      - { title: "Anand", year: "1971", by: "dir. Hrishikesh Mukherjee", cover: /images/shelf/anand.jpg }
       - { title: "The Wind Rises", year: "2013", by: "dir. Hayao Miyazaki", cover: /images/shelf/wind-rises.jpg, pick: true }
-      - { title: "The Fault in Our Stars", year: "2014", by: "dir. Josh Boone" }
-      - { title: "Your Name", year: "2016", by: "dir. Makoto Shinkai" }
-      - { title: "Suzume", year: "2022", by: "dir. Makoto Shinkai" }
-      - { title: "Death Note", year: "2006", by: "dir. Tetsurō Araki" }
+      - { title: "The Fault in Our Stars", year: "2014", by: "dir. Josh Boone", cover: /images/shelf/fault-in-our-stars.png }
+      - { title: "Your Name", year: "2016", by: "dir. Makoto Shinkai", cover: /images/shelf/your-name.png }
+      - { title: "Suzume", year: "2022", by: "dir. Makoto Shinkai", cover: /images/shelf/suzume.jpg }
       - { title: "Attack on Titan", year: "2013", by: "dir. Tetsurō Araki", cover: /images/shelf/aot.jpg }
-      - { title: "Ao Ashi", year: "2022", by: "dir. Akira Satō" }
