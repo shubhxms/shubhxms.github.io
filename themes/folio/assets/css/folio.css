@@ -71,7 +71,6 @@ html {
 body {
     margin: 0;
     background: var(--desk);
-    cursor: crosshair;
 }
 
 :is(a[href], button, summary, [role="option"]) {

@@ -192,6 +192,7 @@ has now/index.html '<span class="pip pip--reg"></span><span class="pip pip--full
 lacks core/index.html 'class="card-corner"' # opens with a comment, then a head
 ! grep -q -- '--spade' "$CSS" || fail 'the old spade mask should be gone'
 lacks contact/index.html 'class="ornament'
+! grep -q 'cursor: crosshair' "$CSS" || fail 'the page keeps the normal cursor'
 
 # The colophon: how the site is made and what it borrows from, linked from
 # the sidebar on every page.
