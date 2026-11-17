@@ -5,11 +5,10 @@ tldr: What am I upto?
 ---
 
 
-I have arranged for a period of [unstructured](https://twitter.com/shubhxms/status/2037957507810009374) [time](https://twitter.com/shubhxms/status/1873488602375872953) for myself and am primarily spending it learning about stuff I have been curious about!
+I am mostly spending my time learning maths and computer science.
+Other than that I have some projects on-going{{<sidenote>}}I'm looking for token and compute sponsorships.{{</sidenote>}} (more soon!) and remain open to interesting work.
 
-You have the rare chance to hire me while I am off the market. :). I remain open to interesting work/collaboration opportunities.
-
-Outside that, I'm reading <em>The Information</em> by James Gleick.
+Outside, I'm reading *Dune* by Frank Herbert and *The Information* by James Gleick.
 
 <!--I'm reading Gödel, Escher, Bach: an Eternal Golden Braid by Douglas Hofstadter-->
 
