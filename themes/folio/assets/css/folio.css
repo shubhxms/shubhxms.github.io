@@ -1411,21 +1411,43 @@ hr {
 }
 
 /* Printer's marks for a side column that would stand empty at the top of
-   a page: an ace and the four suits, small and in a row, in black like
-   the dots in a newspaper's margin. Shown only
-   beside the text, in side mode. */
+   a page: a registration mark and full, half and empty tone dots, small
+   and in a row, as in a newspaper's margin. Drawn, not set in type, so
+   all four are the same size whatever font is at hand. Shown only beside
+   the text, in side mode. */
 .card-corner {
     display: none;
-    font-family: var(--serif);
-    font-size: 0.8em;
-    font-weight: 700;
     line-height: 1;
     white-space: nowrap;
-    color: var(--text);
+}
+
+.pip {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 0.62em;
+    height: 0.62em;
+    border: 1px solid var(--text);
+    border-radius: 50%;
+    vertical-align: middle;
 }
 
 .pip + .pip {
-    margin-left: 0.3em;
+    margin-left: 0.4em;
+}
+
+.pip--full {
+    background: var(--text);
+}
+
+.pip--half {
+    background: linear-gradient(90deg, var(--text) 50%, transparent 50%);
+}
+
+/* Crosshairs through a ring. */
+.pip--reg {
+    background:
+        linear-gradient(var(--text), var(--text)) center / 1px 100% no-repeat,
+        linear-gradient(var(--text), var(--text)) center / 100% 1px no-repeat;
 }
 
 /* ---------- Subscribe: the newsletter sign-up ---------- */
@@ -1532,7 +1554,7 @@ hr {
         display: block;
         position: relative;
         left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
-        top: 0.45em;
+        top: 0.2em;
         height: 0;
     }
 

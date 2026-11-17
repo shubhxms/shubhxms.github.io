@@ -31,12 +31,11 @@
       </header>
       {{- end }}
       {{- /* A page that opens without a section head leaves the side column
-             empty at the top: a row of small printed marks holds it, an
-             ace and the four suits (paan first), in black like the dots in
-             a newspaper's margin. U+FE0E keeps the suits
-             as text, not emoji. */}}
+             empty at the top: a row of small printer's marks holds it, as
+             in a newspaper's margin: a registration mark, then full, half
+             and empty tone dots. */}}
       {{- if not (hasPrefix (replaceRE `^(\s*<!--[\s\S]*?-->)*\s*` "" (string .body)) "<h2") }}
-      <span class="card-corner" aria-hidden="true"><span class="pip">A</span><span class="pip">♥︎</span><span class="pip">♠︎</span><span class="pip">♦︎</span><span class="pip">♣︎</span></span>
+      <span class="card-corner" aria-hidden="true"><span class="pip pip--reg"></span><span class="pip pip--full"></span><span class="pip pip--half"></span><span class="pip pip--empty"></span></span>
       {{- end }}
       {{ .body }}
     </div>

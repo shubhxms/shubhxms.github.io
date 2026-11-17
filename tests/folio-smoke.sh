@@ -183,12 +183,12 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-# A page that opens without a section head shows a row of small printed
-# marks (an ace, then the four suits, paan first) in the empty side
-# column; one that opens with a head would not.
+# A page that opens without a section head shows a row of small printer's
+# marks (a registration mark and tone dots) in the empty side column; one
+# that opens with a head would not.
 has now/index.html '<span class="card-corner" aria-hidden="true">'
-has now/index.html '<span class="pip">A</span><span class="pip">♥︎</span><span class="pip">♠︎</span><span class="pip">♦︎</span><span class="pip">♣︎</span>'
-! grep -q 'pip--' "$CSS" || fail 'the marks are black and white, no inks'
+has now/index.html '<span class="pip pip--reg"></span><span class="pip pip--full"></span><span class="pip pip--half"></span><span class="pip pip--empty"></span>'
+! grep -q 'rgb(230 0 125)' "$CSS" || fail 'the marks are black and white, no inks'
 lacks core/index.html 'class="card-corner"' # opens with a comment, then a head
 ! grep -q -- '--spade' "$CSS" || fail 'the old spade mask should be gone'
 lacks contact/index.html 'class="ornament'
