@@ -21,14 +21,6 @@ function setTheme(mode) {
   markTheme();
 }
 
-// Layout ("paper", "plain") and section heads ("side", "inline"):
-// attributes on <html>, set before paint by the head.
-function setView(key, name, value) {
-  store(key, value);
-  document.documentElement.dataset[name] = value;
-  window.dispatchEvent(new Event('resize'));
-}
-
 function startReader(folio, actions) {
   const reader = createReader(folio);
   Object.assign(actions, reader.actions);
@@ -54,10 +46,6 @@ function start() {
     print: () => window.print(),
     'theme-light': () => setTheme('light'),
     'theme-dark': () => setTheme('dark'),
-    'layout-paper': () => setView('folio-layout', 'layout', 'paper'),
-    'layout-plain': () => setView('folio-layout', 'layout', 'plain'),
-    'heads-side': () => setView('folio-heads', 'heads', 'side'),
-    'heads-inline': () => setView('folio-heads', 'heads', 'inline'),
   };
 
   const folio = document.querySelector('.folio');

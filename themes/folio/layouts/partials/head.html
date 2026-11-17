@@ -20,13 +20,9 @@
       };
       root.dataset.theme = saved("theme-storage")
         || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      // A saved choice counts only if it is still one of the options.
-      var pick = function (key, options, fallback) {
-        var value = saved(key);
-        return options.indexOf(value) === -1 ? fallback : value;
-      };
-      root.dataset.layout = pick("folio-layout", ["paper", "plain"], defaults.dataset.layoutDefault);
-      root.dataset.heads = pick("folio-heads", ["side", "inline"], defaults.dataset.headsDefault);
+      // Layout and section heads are the site's choice (hugo.toml).
+      root.dataset.layout = defaults.dataset.layoutDefault;
+      root.dataset.heads = defaults.dataset.headsDefault;
     })(document.currentScript);
   </script>
 

@@ -60,9 +60,16 @@ grep -Eq 'class="doc-kicker">[^<]*[0-9]+ words [^<]* [0-9]+ min read<' "$OUT/sar
 lacks now/index.html 'min read'
 lacks uses/index.html 'doc-kicker'
 
-# Layout: "paper" (a sheet on a desk, with floating controls) or "plain"
-# (the page is the site), set in hugo.toml and switchable from the palette.
+# Layout: "paper" (a sheet on a desk) or "plain" (the page is the site),
+# and section heads, "side" or "inline": set in hugo.toml only, not saved
+# per reader, and not offered in the palette.
 has index.html 'data-layout-default="plain"'
+lacks index.html 'folio-layout'
+lacks index.html 'folio-heads'
+! grep -Eq "layout-(paper|plain)|heads-(side|inline)" "$ROOT/themes/folio/assets/js/palette.js" "$ROOT/themes/folio/assets/js/main.js" || fail 'the palette should not switch layouts or heads'
+
+# No test content ships: test notes or TEST NOTE sidenotes.
+! grep -rlq 'TEST' "$ROOT/content" || fail "test content should not ship: $(grep -rl 'TEST' "$ROOT/content" | head -3)"
 
 # Section heads: "side" (names in a side column beyond a dotted rule) or
 # "inline" (underlined headings in the text). Only a page's own sections
