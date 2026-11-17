@@ -69,5 +69,3 @@ I love receiving correspondence and usually reply within a few days.
 What I've been reading, watching and keeping, as it happens.
 
 {{< lately 6 >}}
-
-Most of it also goes to the [Telegram channel](https://telegram.me/shubhamcore).
