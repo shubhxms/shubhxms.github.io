@@ -5,7 +5,7 @@
 */}}
 {{- $pub := .Get 0 }}
 <form class="subscribe" action="https://{{ $pub }}.substack.com/api/v1/free?nojs=true" method="post" target="_blank">
-  <p class="subscribe-lede">New notes by email, now and then. <a href="https://{{ $pub }}.substack.com">The newsletter</a> is on Substack.</p>
+  <p class="subscribe-lede">Get new notes by email when I write them (which isn't often). It goes through <a href="https://{{ $pub }}.substack.com">Substack</a>.</p>
   <label class="subscribe-field">
     <span class="subscribe-prompt">Email</span>
     <input type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
