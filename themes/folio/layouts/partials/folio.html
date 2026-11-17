@@ -31,9 +31,12 @@
       </header>
       {{- end }}
       {{- /* A page that opens without a section head leaves the side column
-             empty at the top: a playing card's corner holds it. */}}
+             empty at the top: a row of small printed marks holds it, an
+             ace and the four suits (paan first), each in its own ink like
+             the colour dots in a newspaper's margin. U+FE0E keeps the suits
+             as text, not emoji. */}}
       {{- if not (hasPrefix (replaceRE `^(\s*<!--[\s\S]*?-->)*\s*` "" (string .body)) "<h2") }}
-      <span class="card-corner" aria-hidden="true"><span class="card-rank">A</span><span class="card-suit"></span></span>
+      <span class="card-corner" aria-hidden="true"><span class="pip pip--k">A</span><span class="pip pip--m">♥︎</span><span class="pip pip--c">♠︎</span><span class="pip pip--y">♦︎</span><span class="pip pip--k">♣︎</span></span>
       {{- end }}
       {{ .body }}
     </div>

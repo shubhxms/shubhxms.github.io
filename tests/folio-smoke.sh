@@ -183,11 +183,13 @@ grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fa
 grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side heads should be top-level h2s only'
 # In side mode every page keeps the side column, so text starts at the same
 # place; pages without sections set an ornament there.
-# A page that opens without a section head shows a playing card's corner
-# in the empty side column (one that opens with a head would not).
+# A page that opens without a section head shows a row of small printed
+# marks (an ace, then the four suits, paan first) in the empty side
+# column; one that opens with a head would not.
 has now/index.html '<span class="card-corner" aria-hidden="true">'
+has now/index.html '<span class="pip pip--k">A</span><span class="pip pip--m">♥︎</span><span class="pip pip--c">♠︎</span><span class="pip pip--y">♦︎</span><span class="pip pip--k">♣︎</span>'
 lacks core/index.html 'class="card-corner"' # opens with a comment, then a head
-grep -q -- '--spade: url(' "$CSS" || fail 'the card corner needs its spade'
+! grep -q -- '--spade' "$CSS" || fail 'the old spade mask should be gone'
 lacks contact/index.html 'class="ornament'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
