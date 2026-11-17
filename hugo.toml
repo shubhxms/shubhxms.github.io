@@ -68,6 +68,11 @@ url = "/notes"
 weight = 5
 
 [[menu.main]]
+name = "Shelf"
+url = "/shelf"
+weight = 6
+
+[[menu.main]]
 name = "Core"
 url = "/core"
 weight = 7

@@ -1,12 +1,11 @@
-# Core: things that matter to me, as lists. Rendered by the Core page
-# (layouts/_default/core.html): each section is a list, with the covers of
-# its entries as a small strip in the margin.
+# The shelf: books and films, by their covers. Rendered by the Shelf page
+# (layouts/_default/shelf.html): each section a table beside a wall of its
+# covers. Core (content/pages/core.md) is the written list, and overlaps.
 #
 # A section has items, or lists of items (Books, by category). An entry
 # takes: title; by (author or maker); year; cover (an image under
-# /images/shelf/); note (a path on this site, linked); url (elsewhere,
-# linked); what (for the Internet list); pick: true to show it in the home
-# page's Lately.
+# /images/shelf/); note (a path on this site, linked); pick: true to show
+# it in the home page's Lately.
 
 sections:
   - name: "Books"
@@ -82,12 +81,3 @@ sections:
       - { title: "Death Note", year: "2006", by: "dir. Tetsurō Araki" }
       - { title: "Attack on Titan", year: "2013", by: "dir. Tetsurō Araki", cover: /images/shelf/aot.jpg }
       - { title: "Ao Ashi", year: "2022", by: "dir. Akira Satō" }
-
-  - name: "Internet"
-    items:
-      - { title: "exurb1a", what: "YouTube", url: "https://www.youtube.com/@exurb1a" }
-      - { title: "Dynomight", what: "Blog", url: "https://dynomight.substack.com/" }
-      - { title: "Be Wrong", what: "Blog", url: "https://bewrong.substack.com/" }
-      - { title: "But What For?", what: "Blog", url: "https://www.butwhatfor.com/" }
-      - { title: "WTF is", what: "Podcast", url: "https://www.youtube.com/@nikhil.kamath" }
-      - { title: "Dwarkesh's Podcast", what: "Podcast", url: "https://www.dwarkeshpatel.com/" }
