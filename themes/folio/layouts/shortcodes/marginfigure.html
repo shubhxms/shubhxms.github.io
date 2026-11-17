@@ -1,0 +1,7 @@
+{{- /* An image in the margin: {{< marginfigure src="…" alt="…" caption="…" >}} */ -}}
+<figure class="marginfigure">
+  <img src="{{ .Get "src" }}" alt="{{ .Get "alt" | default (.Get "caption" | plainify) }}" />
+  {{- with .Get "caption" }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

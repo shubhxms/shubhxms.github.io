@@ -1,0 +1,13 @@
+{{- /* The page's sections: its h2s, as Fragments headings, or for the shelf,
+       whose sections come from data/shelf.yaml, their names and anchors. */}}
+{{- $sections := slice }}
+{{- range .Fragments.Headings }}
+  {{- if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}
+  {{- range .Headings }}{{ if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}{{ end }}
+{{- end }}
+{{- if eq .Layout "shelf" }}
+  {{- range site.Data.shelf.sections }}
+  {{- $sections = $sections | append (dict "ID" (anchorize .name) "Title" .name) }}
+  {{- end }}
+{{- end }}
+{{- return $sections }}

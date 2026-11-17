@@ -1,0 +1,44 @@
+{{- /*
+  A document set as paper: one continuous sheet. It opens with a big
+  header; once that scrolls away, a compact bar with the title and
+  contents stays on top.
+    page – the page being rendered
+    body – its rendered content
+    head – a header to open with instead of the usual one (the home page's)
+*/}}
+{{- $page := .page }}
+{{- $title := partial "page-title.html" $page }}
+{{- $toc := partial "toc.html" $page }}
+<div class="folio" data-title="{{ $title }}">
+  {{- /* Without sections, there is nothing for a side column to hold. */}}
+  <article class="sheet sheet--doc{{ if not (partial "sections.html" $page) }} sheet--flat{{ end }}{{ if $page.Params.dropcap }} sheet--dropcap{{ end }}">
+    <div class="doc-bar" inert>
+      <div class="doc-bar-inner">
+        <span class="doc-bar-title">{{ $title }}</span>
+        {{- $toc }}
+      </div>
+    </div>
+    <div class="sheet-body">
+      {{- with .head }}
+      {{ . }}
+      {{- else }}
+      <header class="doc-head">
+        {{- with partial "kicker.html" $page }}
+        <p class="doc-kicker">{{ . }}</p>
+        {{- end }}
+        <h1 class="doc-title">{{ $title }}</h1>
+        {{- $toc }}
+      </header>
+      {{- end }}
+      {{- /* A page that opens without a section head leaves the side column
+             empty at the top: a row of small printer's marks holds it, as
+             in a newspaper's margin: a registration mark, then full, half
+             and empty tone dots. */}}
+      {{- if not (hasPrefix (replaceRE `^(\s*<!--[\s\S]*?-->)*\s*` "" (string .body)) "<h2") }}
+      <span class="card-corner" aria-hidden="true"><span class="pip pip--reg"></span><span class="pip pip--full"></span><span class="pip pip--half"></span><span class="pip pip--empty"></span></span>
+      {{- end }}
+      {{ .body }}
+    </div>
+    {{- partial "colophon.html" $page }}
+  </article>
+</div>

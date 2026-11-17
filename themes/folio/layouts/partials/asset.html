@@ -1,0 +1,11 @@
+{{- /*
+  Prepares a CSS or JS resource for the page.
+  Production: minified and fingerprinted, for long caching and integrity.
+  Development: a stable URL, so live reload can swap a stylesheet in place
+  instead of looking for a file name that changed with the last edit.
+*/}}
+{{- $resource := . }}
+{{- if hugo.IsProduction }}
+  {{- $resource = $resource | minify | fingerprint }}
+{{- end }}
+{{- return $resource }}

@@ -1,0 +1,15 @@
+{{- /* Spells an ordinal, 1–99: 23 → "Twenty-third". */}}
+{{- $first := slice "" "First" "Second" "Third" "Fourth" "Fifth" "Sixth" "Seventh" "Eighth" "Ninth" "Tenth" "Eleventh" "Twelfth" "Thirteenth" "Fourteenth" "Fifteenth" "Sixteenth" "Seventeenth" "Eighteenth" "Nineteenth" }}
+{{- $tens := slice "" "" "Twenty" "Thirty" "Forty" "Fifty" "Sixty" "Seventy" "Eighty" "Ninety" }}
+{{- $tenths := slice "" "" "Twentieth" "Thirtieth" "Fortieth" "Fiftieth" "Sixtieth" "Seventieth" "Eightieth" "Ninetieth" }}
+{{- $n := int . }}
+{{- if or (lt $n 1) (gt $n 99) }}{{ errorf "ordinal: %d is outside 1–99" $n }}{{ end }}
+{{- $words := "" }}
+{{- if lt $n 20 }}
+  {{- $words = index $first $n }}
+{{- else if eq (mod $n 10) 0 }}
+  {{- $words = index $tenths (div $n 10) }}
+{{- else }}
+  {{- $words = printf "%s-%s" (index $tens (div $n 10)) (lower (index $first (mod $n 10))) }}
+{{- end }}
+{{- return $words }}

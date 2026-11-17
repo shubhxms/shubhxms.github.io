@@ -1,0 +1,29 @@
+{{- /* An archive of pages, newest first, under year headings. Each entry:
+       date, title, length, then its abstract (the page's tldr). */}}
+{{- with . }}
+<div class="archive">
+  {{- range .GroupByDate "2006" }}
+  <h2 class="archive-year">{{ if eq .Key "0001" }}Undated{{ else }}{{ .Key }}{{ end }}</h2>
+  <ol class="archive-list">
+    {{- range .Pages }}
+    <li class="archive-entry">
+      {{- if .Date.IsZero }}
+      <span class="archive-date"></span>
+      {{- else }}
+      <time class="archive-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan" }}</time>
+      {{- end }}
+      <div class="archive-main">
+        <p class="archive-head">
+          <a class="archive-title" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          <span class="archive-meta">{{ lang.FormatNumber 0 .WordCount }} words{{ with .Params.tags }} · {{ delimit . ", " }}{{ end }}</span>
+        </p>
+        {{- with .Params.tldr }}
+        <p class="archive-abstract">{{ . | markdownify }}</p>
+        {{- end }}
+      </div>
+    </li>
+    {{- end }}
+  </ol>
+  {{- end }}
+</div>
+{{- end }}

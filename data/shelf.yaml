@@ -1,0 +1,79 @@
+# The shelf: books and films, by their covers. Rendered by the Shelf page
+# (layouts/_default/shelf.html): each section a grid of covers. An entry
+# without a cover is left off. Core (content/pages/core.md) is the written
+# list, and overlaps.
+#
+# A section has items, or lists of items (Books, by category). An entry
+# takes: title; by (author or maker); year; cover (an image under
+# /images/shelf/); note (a path on this site, linked); pick: true to show
+# it in the home page's Lately.
+
+sections:
+  - name: "Books"
+    lists:
+      - name: "Science & Math"
+        items:
+          - title: "Chaos"
+            by: "James Gleick"
+            cover: /images/shelf/chaos.jpg
+            pick: true
+          - title: "The Man Who Bent Light: Father of Fibre Optics"
+            by: "Narinder Singh Kapany"
+            cover: /images/shelf/man-who-bent-light.jpg
+          - title: "Richard Feynman: A Life in Science"
+            by: "John & Mary Gribbin"
+            cover: /images/shelf/feynman.jpg
+
+      - name: "Non-Fiction"
+        items:
+          - title: "Vikram Sarabhai: A Life"
+            by: "Amrita Shah"
+            cover: /images/shelf/vikram-sarabhai.jpg
+            note: /sarabhai/
+            pick: true
+          - title: "Incerto"
+            by: "Nassim Taleb"
+            cover: /images/shelf/antifragile.jpg
+          - title: "Zero to One"
+            by: "Peter Thiel & Blake Masters"
+            cover: /images/shelf/zero-to-one.jpg
+          - title: "Shoe Dog"
+            by: "Phil Knight"
+            cover: /images/shelf/shoe-dog.jpg
+
+      - name: "Fiction & Mythology"
+        items:
+          - title: "The Shiva Trilogy"
+            by: "Amish Tripathi"
+            cover: /images/shelf/meluha.jpg
+          - title: "The Song of Achilles"
+            by: "Madeline Miller"
+            cover: /images/shelf/achilles.webp
+            pick: true
+          - title: "Circe"
+            by: "Madeline Miller"
+            cover: /images/shelf/circe.jpg
+          - title: "The Picture of Dorian Gray"
+            by: "Oscar Wilde"
+            cover: /images/shelf/dorian-gray.jpg
+            pick: true
+          - title: "Jonathan Livingston Seagull"
+            by: "Richard Bach"
+            cover: /images/shelf/seagull.jpg
+
+  - name: "Films, Shows & Anime"
+    items:
+      - { title: "The Grand Budapest Hotel", year: "2014", by: "dir. Wes Anderson", cover: /images/shelf/grand-budapest.jpg, pick: true }
+      - { title: "Boyhood", year: "2014", by: "dir. Richard Linklater", cover: /images/shelf/boyhood.jpg }
+      - { title: "The Wonderful Story of Henry Sugar", year: "2023", by: "dir. Wes Anderson", cover: /images/shelf/henry-sugar-and-three.jpg }
+      - { title: "Silicon Valley", year: "2014", by: "cr. Mike Judge, John Altschuler & Dave Krinsky", cover: /images/shelf/silicon-valley.jpg }
+      - { title: "A Rainy Day in New York", year: "2019", by: "dir. Woody Allen", cover: /images/shelf/rainy-day.jpg }
+      - { title: "Manchester by the Sea", year: "2016", by: "dir. Kenneth Lonergan", cover: /images/shelf/manchester-by-the-sea.jpg }
+      - { title: "Dead Poets Society", year: "1989", by: "dir. Peter Weir", cover: /images/shelf/dead-poets-socity.jpg }
+      - { title: "Call Me By Your Name", year: "2017", by: "dir. Luca Guadagnino", cover: /images/shelf/cmbyn.webp }
+      - { title: "Anand", year: "1971", by: "dir. Hrishikesh Mukherjee", cover: /images/shelf/anand.jpg }
+      - { title: "The Wind Rises", year: "2013", by: "dir. Hayao Miyazaki", cover: /images/shelf/wind-rises.jpg, pick: true }
+      - { title: "The Fault in Our Stars", year: "2014", by: "dir. Josh Boone", cover: /images/shelf/fault-in-our-stars.png }
+      - { title: "Your Name", year: "2016", by: "dir. Makoto Shinkai", cover: /images/shelf/your-name.png }
+      - { title: "Suzume", year: "2022", by: "dir. Makoto Shinkai", cover: /images/shelf/suzume.jpg }
+      - { title: "Attack on Titan", year: "2013", by: "dir. Tetsurō Araki", cover: /images/shelf/aot.jpg }

@@ -1,0 +1,33 @@
+{{- /*
+  The feed: everything watched, saved and posted, as one searchable table.
+  The script fills it from the feed API. A title opens its entry; a click
+  anywhere else on the line shows it, with its picture, in the margin.
+*/}}
+<div class="feed" data-api="{{ site.Params.feedApi }}">
+  <label class="feed-find">
+    <span class="feed-prompt">Find</span>
+    <input type="search" name="q" placeholder="words, &quot;a phrase&quot;, kind:film, rating:>=4, site:…, has:image" aria-label="Search the feed" autocomplete="off" spellcheck="false" />
+  </label>
+  <p class="feed-bar">
+    <span class="feed-kinds" role="group" aria-label="Show"></span>
+    <span class="feed-status" aria-live="polite">Loading…</span>
+  </p>
+  {{- /* The table and its preview pane share a top, so they start level. */}}
+  <div class="feed-body">
+  <table class="feed-table">
+    <thead>
+      <tr>
+        <th class="feed-n" scope="col">No.</th>
+        <th class="feed-date" scope="col">Date</th>
+        <th class="feed-kind" scope="col">Kind</th>
+        <th class="feed-entry" scope="col">Entry</th>
+        <th class="feed-site" scope="col">Source</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button type="button" class="feed-more" hidden></button>
+  <div class="feed-rail"><aside class="feed-plate" aria-label="Entry"></aside></div>
+  </div>
+  <noscript><p>The feed is built in the browser from <a href="{{ site.Params.feedApi }}/feed">its source</a>.</p></noscript>
+</div>

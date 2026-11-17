@@ -1,0 +1,29 @@
+{{- /*
+  The shelf (data/shelf.yaml): each section one grid of covers with their
+  names under them. Books' categories stay in the data, unshown. The shelf
+  is pictures only, so an entry without a cover is left off (Core still
+  lists it); one with a note links to it.
+*/}}
+{{- range .sections }}
+{{- $groups := .lists | default (slice (dict "items" .items)) }}
+<h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
+<ol class="shelf-grid">
+{{- range $groups }}
+  {{- range .items }}
+  {{- if .cover }}
+  {{- $cover := partial "shelf-cover.html" . }}
+  <li class="shelf-item" id="{{ .title | anchorize }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
+    {{- with .note }}<a class="shelf-link" href="{{ . | relURL }}">{{ end }}
+    <img class="shelf-cover" src="{{ $cover.thumb }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
+    <span class="shelf-name">{{ .title }}</span>
+    {{- $meta := slice }}
+    {{- with .by }}{{ $meta = $meta | append . }}{{ end }}
+    {{- with .year }}{{ $meta = $meta | append . }}{{ end }}
+    <span class="shelf-by">{{ delimit $meta " · " }}</span>
+    {{- with .note }}<span class="shelf-note">Read the note →</span></a>{{ end }}
+  </li>
+  {{- end }}
+  {{- end }}
+{{- end }}
+</ol>
+{{- end }}

@@ -1,0 +1,11 @@
+{{- with site.Home.OutputFormats.Get "searchindex" }}
+<dialog class="palette" aria-label="Commands and search" data-index="{{ .RelPermalink }}">
+  <label class="palette-input">
+    <span class="palette-prompt" aria-hidden="true">⌘K</span>
+    <input type="text" placeholder="Search pages, jump to a section, or run a command" aria-label="Search" role="combobox" aria-controls="palette-options" aria-expanded="true" autocomplete="off" spellcheck="false" />
+  </label>
+  <ul id="palette-options" role="listbox"></ul>
+  <p class="palette-status" aria-live="polite"></p>
+  <p class="palette-keys"><span><kbd>↑</kbd><kbd>↓</kbd> move <kbd>↵</kbd> open <kbd>esc</kbd> close</span><span class="palette-count"></span></p>
+</dialog>
+{{- end }}

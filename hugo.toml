@@ -1,21 +1,26 @@
 baseURL = 'https://shubhamshah.net/'
 locale = 'en-us'
 title = '✪ Shubham Shah'
-theme = "archie"
+theme = "folio"
+enableGitInfo = true
 pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 paginate = 4
 
 [params]
-mode = "toggle"
-useCDN = false
-subtitle = ""
 description = "personal website of shubham shah"
-enableGitInfo = true
-katex = true                                     # enable KaTeX support
-showTicker = false
+repo = "https://github.com/shubhxms/shubhxms.github.io"
+born = 2003
 feedApi = "https://feed.shubhxms.workers.dev"
+# "paper": pages are a sheet on a desk, with floating reader controls.
+# "plain": pages sit on the site itself, without desk or sheet edge.
+# Readers can switch from the palette; this is the default.
+layout = "plain"
+# Section heads: "side" (names in a side column, beyond a dotted rule) or
+# "inline" (underlined, in the text).
+# Readers can switch from the palette; this is the default.
+heads = "side"
 
 [[params.social]]
 name = "GitHub"
@@ -26,6 +31,16 @@ url = "https://github.com/shubhxms/"
 name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/shubhxms/"
+
+[[params.social]]
+name = "Telegram"
+icon = "telegram"
+url = "https://telegram.me/shubhxms"
+
+[[params.social]]
+name = "Bluesky"
+icon = "bluesky"
+url = "https://bsky.app/profile/shubhamshah.net"
 
 [[menu.main]]
 name = "Now"
@@ -71,16 +86,70 @@ weight = 4
 name = "Uses"
 url = "/uses"
 weight = 8
+
+[[menu.main]]
+name = "Colophon"
+url = "/colophon"
+weight = 9
 [permalinks]
 pages = '/:title'
 
 [markup.goldmark.renderer]
 unsafe = true
+# A line break in the source is a line break on the page.
+hardWraps = true
+
+# Maths is handed to KaTeX at build time (layouts/_default/_markup/render-passthrough.html).
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]
 
 [outputFormats]
 [outputFormats.data]
 mediaType = "text/html"
 isHTML = true
 
+[outputFormats.markdown]
+mediaType = "text/markdown"
+baseName = "index"
+isPlainText = true
+rel = "alternate"
+
+[outputFormats.searchindex]
+mediaType = "application/json"
+baseName = "search"
+isPlainText = true
+notAlternative = true
+
 [outputs]
-home = ["HTML", "data"]
+home = ["HTML", "data", "searchindex"]
+page = ["HTML", "markdown"]
+
+# The project's own folders, as Hugo mounts them by default, plus the shelf
+# covers as assets too, so Core can resize them and read their colours.
+[[module.mounts]]
+source = "content"
+target = "content"
+[[module.mounts]]
+source = "static"
+target = "static"
+[[module.mounts]]
+source = "layouts"
+target = "layouts"
+[[module.mounts]]
+source = "data"
+target = "data"
+[[module.mounts]]
+source = "assets"
+target = "assets"
+[[module.mounts]]
+source = "i18n"
+target = "i18n"
+[[module.mounts]]
+source = "archetypes"
+target = "archetypes"
+[[module.mounts]]
+source = "static/images/shelf"
+target = "assets/images/shelf"

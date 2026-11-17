@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Runs the Hugo development server with live reload.
+#
+#   bin/dev              serve on http://localhost:1313
+#   PORT=1414 bin/dev    serve on another port
+#   bin/dev --disableFastRender   extra flags go to `hugo server`
+#
+# Pages render to memory, so nothing stale piles up in public/. Hugo's
+# output passes through as usual, but two things restart it from scratch,
+# and open tabs reconnect on their own:
+#   - it exits with an error (say, the config is broken mid-edit);
+#   - a rebuild hits a Go "runtime error". That is Hugo's own state gone
+#     stale (a shortened page whose old summary length it kept, for one),
+#     not a mistake in the site, and only a fresh start clears it.
+# An ordinary error, a template mistake, is shown and left alone: the
+# server stays up for the fix. Ctrl-C stops it for good.
+#
+# HUGO names another hugo binary; tests/dev.test.sh uses it for a stand-in.
+set -uo pipefail
+
+cd "$(dirname "$0")/.."
+port="${PORT:-1313}"
+hugo="${HUGO:-hugo}"
+
+# Hugo's output comes through a named pipe, so it can be read line by line
+# while Hugo runs (bash 3.2, as macOS ships, has no coproc).
+dir="$(mktemp -d)"
+pipe="$dir/hugo"
+mkfifo "$pipe"
+pid=""
+stop() {
+	[ -n "$pid" ] && kill "$pid" 2>/dev/null
+	rm -rf "$dir"
+	exit 0
+}
+trap stop INT TERM
+trap 'rm -rf "$dir"' EXIT
+
+while true; do
+	"$hugo" server \
+		--renderToMemory \
+		--bind 127.0.0.1 \
+		--port "$port" \
+		--navigateToChanged \
+		"$@" >"$pipe" 2>&1 &
+	pid=$!
+
+	crashed=""
+	while IFS= read -r line; do
+		printf '%s\n' "$line"
+		case "$line" in
+		*"runtime error"*)
+			crashed=1
+			kill "$pid" 2>/dev/null
+			;;
+		esac
+	done <"$pipe"
+
+	wait "$pid"
+	status=$?
+	pid=""
+
+	if [ -n "$crashed" ]; then
+		printf '\nbin/dev: Hugo crashed during a rebuild (its own state, not the site); starting afresh.\n\n' >&2
+		continue
+	fi
+	[ "$status" -eq 0 ] && exit 0
+	printf '\nbin/dev: hugo exited with status %s; restarting.\n\n' "$status" >&2
+	sleep 1
+done

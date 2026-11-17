@@ -1,0 +1,5 @@
+{{- /* The feed's script, for the feed table and recent lists. baseof
+       includes it once, on pages that have either. */}}
+{{- $js := resources.Get "js/feed/main.js" | js.Build (dict "targetPath" "js/feed.js" "target" "es2020" "sourceMap" (cond hugo.IsProduction "" "inline")) }}
+{{- $js = partial "asset.html" $js }}
+<script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>

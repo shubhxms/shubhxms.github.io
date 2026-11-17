@@ -1,0 +1,3 @@
+{{ define "main" }}
+{{- partial "folio.html" (dict "page" . "body" .Content "head" (partial "title-head.html" .)) }}
+{{ end }}

@@ -1,0 +1,22 @@
+{{- /* At the foot of the paper, on one line: when and why this page last
+       changed on the left; the commit and the page's sources on the right. */}}
+<footer class="colophon">
+  {{- with .GitInfo }}
+  <time datetime="{{ .AuthorDate.Format "2006-01-02" }}">{{ .AuthorDate.Format "2 Jan 2006" }}</time>
+  <q class="colophon-subject" title="{{ .Subject }}">{{ .Subject }}</q>
+  {{- else }}
+  <span class="colophon-subject"></span>
+  {{- end }}
+  <span class="colophon-actions">
+    {{- with .GitInfo }}
+    <a class="colophon-commit" href="{{ site.Params.repo }}/commit/{{ .Hash }}">{{ .AbbreviatedHash }}</a>
+    {{- end }}
+    {{- with .File }}
+    <a href="{{ site.Params.repo }}/blob/main/content/{{ .Path }}" data-palette="View source on GitHub">source</a>
+    {{- end }}
+    {{- with .OutputFormats.Get "markdown" }}
+    <a href="{{ .RelPermalink }}" data-palette="View as Markdown">.md</a>
+    {{- end }}
+    <button type="button" data-action="print">print</button>
+  </span>
+</footer>

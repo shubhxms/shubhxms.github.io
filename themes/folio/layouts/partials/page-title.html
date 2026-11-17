@@ -1,0 +1,2 @@
+{{- /* A page's title; untitled sections fall back to their name. */}}
+{{- return (.Title | default (humanize .Section)) }}

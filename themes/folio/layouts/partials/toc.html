@@ -1,0 +1,11 @@
+{{- /* The page's sections, from its h2s: [ First / Second / Third ]. */}}
+{{- $sections := partial "sections.html" . }}
+{{- if ge (len $sections) 2 }}
+<nav class="doc-toc" aria-label="Contents">
+  <ol>
+    {{- range $sections }}
+    <li><a href="#{{ .ID }}">{{ .Title | plainify | htmlUnescape }}</a></li>
+    {{- end }}
+  </ol>
+</nav>
+{{- end }}

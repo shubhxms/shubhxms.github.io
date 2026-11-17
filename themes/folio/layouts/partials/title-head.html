@@ -1,0 +1,11 @@
+{{- /*
+  The home page's header, set like a book's title page: edition, name and
+  subtitle, then the contents line. Front matter: edition (a number) and
+  subtitle.
+*/}}
+<header class="doc-head doc-head--title">
+  <p class="title-edition">{{ partial "ordinal.html" (.Params.edition | default 1) }} Edition</p>
+  <h1 class="title-name">{{ .Title }}</h1>
+  <p class="title-subtitle">{{ .Params.subtitle | markdownify }}</p>
+  {{- partial "toc.html" . }}
+</header>

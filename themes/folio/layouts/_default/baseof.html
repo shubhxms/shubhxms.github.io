@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+  {{- partial "head.html" . }}
+  <body class="{{ if .IsHome }}page-home{{ else }}page-{{ .Kind }}{{ end }}">
+    <div class="shell">
+      <main class="desk" id="main">
+        {{- block "main" . }}{{ end }}
+      </main>
+      {{- partial "sidebar.html" . }}
+    </div>
+    {{- partial "palette.html" . }}
+    {{- if or (eq .Layout "feed") (.HasShortcode "recent") (.HasShortcode "lately") }}{{ partial "feed-script.html" . }}{{ end }}
+    {{- $js := resources.Get "js/main.js" | js.Build (dict "targetPath" "js/folio.js" "target" "es2020" "sourceMap" (cond hugo.IsProduction "" "inline")) }}
+    {{- $js = partial "asset.html" $js }}
+    <script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }} defer></script>
+  </body>
+</html>

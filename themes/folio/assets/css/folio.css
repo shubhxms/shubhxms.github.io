@@ -1,0 +1,2069 @@
+/* folio: documents set as sheets of A4 paper on a desk, read like a PDF.
+   Dense, in the manner of reference works and signage: Crimson Text for
+   reading, Urbanist for headings, Space Mono for labels, numbers and
+   controls. Hairline rules, numbered sections, little wasted space. */
+
+/* ---------- Tokens ---------- */
+
+:root {
+    --desk: #eaf0f6;
+    --paper: #fcfdff;
+    --text: #000;
+    --text-secondary: #4a4f58;
+    --link: #1827a3;
+    --accent: #1827a3;
+    --border: #000;
+    --rule: #b9c0cb;
+    --callout-bg: #e9efff;
+    --selection: #fff36d;
+    --selection-text: #000;
+    --sheet-shadow: 0 1px 2px rgba(20, 30, 50, 0.1), 0 10px 28px rgba(20, 30, 50, 0.1);
+
+    /* Wider than A4 (794px at 96 dpi); print scales it down. */
+    --sheet-w: 860px;
+    --sheet-gap: 16px;
+    --pad-top: 34px;
+    --pad-bottom: 22px;
+    --pad-left: 30px;
+    --side: 76px;
+    --side-gap: 16px;
+    --text-w: 540px;
+    --gutter: 28px;
+    --note-w: 184px;
+    --bar-h: 46px;
+
+    --sidebar-width: 10rem;
+    --shell-left-padding: 5%;
+
+    --serif: "Crimson Text", Georgia, serif;
+    --mono: "Space Mono", ui-monospace, monospace;
+    --sans: "Urbanist", system-ui, sans-serif;
+}
+
+:root[data-theme="dark"] {
+    --desk: #0b0e15;
+    --paper: #191e2b;
+    --text: #f7f2e7;
+    --text-secondary: #b9b4a6;
+    --link: #ffd166;
+    --accent: #ffd166;
+    --border: #817b6d;
+    --rule: #3a4152;
+    --callout-bg: #1f2638;
+    --selection: #3656c9;
+    --selection-text: #fff;
+    --sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Base ---------- */
+
+html {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--text);
+    background: var(--desk);
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--desk);
+}
+
+:is(a[href], button, summary, [role="option"]) {
+    cursor: pointer;
+}
+
+::selection {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+a {
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+    text-decoration: none;
+}
+
+/* ---------- Shell: desk on the left, sidebar on the right ---------- */
+
+.shell {
+    display: grid;
+    grid-template-columns: minmax(min-content, 1fr) var(--sidebar-width);
+    gap: 1.25rem;
+    align-items: start;
+    min-height: 100vh;
+    padding: 18px 1.25rem 4rem var(--shell-left-padding);
+    box-sizing: border-box;
+}
+
+.desk {
+    display: flex;
+    flex-direction: column;
+    /* On a screen wider than the widest sheet, the sheet sits centred in
+       the room rather than leaving it all on one side. */
+    align-items: center;
+    min-width: 0;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+    position: sticky;
+    top: 18px;
+    width: var(--sidebar-width);
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sidebar-nav {
+    line-height: 1.22;
+}
+
+.sidebar-nav .site-title {
+    display: block;
+    margin-bottom: 2px;
+    padding: 1px 0;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Like the links under it: the whole line highlights. */
+.sidebar-nav .site-title:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+.site-title-gu {
+    display: block;
+    margin-top: 0;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+}
+
+.sidebar-links {
+    margin-top: 7px;
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+}
+
+/* Signage, not prose: plain names, the reading highlight under the
+   pointer, a star and weight for where you are. */
+.sidebar-links a {
+    display: block;
+    padding: 1px 0;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.sidebar-links a:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+.sidebar-links a.active-page {
+    font-weight: 700;
+}
+
+.sidebar-meta {
+    display: grid;
+    justify-items: end;
+    gap: 6px;
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid var(--rule);
+}
+
+.sidebar-tools {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.sidebar-search {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-secondary);
+    font: inherit;
+}
+
+.sidebar-search kbd {
+    padding: 0 3px;
+    border: 1px solid currentColor;
+    font: inherit;
+    font-size: 10px;
+}
+
+.sidebar-search:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+}
+
+.theme-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.5;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.theme-btn:hover {
+    color: var(--text);
+    opacity: 0.8;
+}
+
+.theme-btn.active {
+    color: var(--text);
+    opacity: 1;
+}
+
+.git-info {
+    margin-top: 0;
+    font-size: 10px;
+    line-height: 1.3;
+    color: var(--text-secondary);
+}
+
+.git-info a {
+    display: inline;
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.git-date {
+    display: block;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* ---------- Sheets ---------- */
+
+.folio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sheet-gap);
+    width: var(--sheet-w);
+    counter-reset: sidenote;
+}
+
+.sheet {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: var(--sheet-w);
+    /* At least one screen tall, so a short page fills the view without
+       scrolling; reader.js sets it from the window. */
+    min-height: var(--sheet-min, 0px);
+    /* Everything on the sheet is sized in ems of the reading size, which
+       reader.js sets for the sheet's width and the reader's text size. */
+    font-size: var(--type, 15px);
+    padding: var(--pad-top) 0 var(--pad-bottom) var(--pad-left);
+    background: var(--paper);
+    box-shadow: var(--sheet-shadow);
+}
+
+.sheet-body {
+    position: relative;
+    flex: 1;
+    box-sizing: content-box;
+    /* Without a side column the text takes its width too. */
+    width: calc(var(--text-w) + var(--side) + var(--side-gap) + 1px);
+    line-height: 1.3;
+    font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+/* ---------- Big header: kicker, title, summary, contents ---------- */
+
+.doc-head {
+    position: relative;
+    padding-bottom: 0.9em;
+    background: var(--paper);
+}
+
+.doc-kicker {
+    margin: 0 0 0.3em;
+    font-family: var(--mono);
+    font-size: 0.7em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.sheet-body .doc-title {
+    margin: 0 0 0.25em;
+    font-family: var(--serif);
+    font-size: 2.4em;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+}
+
+.doc-toc ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* One bracketed line, [ first / second / third ], in the big header and
+   in the compact bar alike. */
+:is(.doc-head, .doc-bar) .doc-toc ol {
+    display: inline;
+    padding: 0;
+    font-size: 1.013em;
+    font-style: italic;
+}
+
+:is(.doc-head, .doc-bar) .doc-toc ol::before,
+:is(.doc-head, .doc-bar) .doc-toc ol::after {
+    font-style: normal;
+    color: var(--text-secondary);
+}
+
+:is(.doc-head, .doc-bar) .doc-toc ol::before {
+    content: "[ ";
+}
+
+:is(.doc-head, .doc-bar) .doc-toc ol::after {
+    content: " ]";
+}
+
+:is(.doc-head, .doc-bar) .doc-toc li {
+    display: inline;
+}
+
+:is(.doc-head, .doc-bar) .doc-toc li + li::before {
+    content: " / ";
+    font-style: normal;
+    color: var(--text-secondary);
+}
+
+/* The section being read: a small square, like the list bullets. */
+.doc-toc a[aria-current="true"] {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.doc-toc a[aria-current="true"]::before {
+    content: "";
+    display: inline-block;
+    width: 0.32em;
+    height: 0.32em;
+    margin: 0 0.3em 0.15em 0;
+    background: var(--text);
+}
+
+/* The home page opens with its title page: edition, name, subtitle. */
+.sheet-body .doc-head--title .title-edition,
+.sheet-body .doc-head--title .title-subtitle {
+    margin: 0;
+    font-size: 1.75em;
+    font-style: italic;
+    line-height: 1.12;
+    text-align: left;
+}
+
+.sheet-body .doc-head--title .title-name {
+    margin: 0.05em 0 0.1em;
+    font-family: var(--serif);
+    font-size: 3.5em;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.sheet-body .doc-head--title .title-subtitle {
+    margin-bottom: 0.6em;
+}
+
+/* ---------- Compact bar: appears once the big header scrolls away ---------- */
+
+/* Sticks inside the sheet and takes no room, so showing it moves nothing. */
+.doc-bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: 0;
+    margin: calc(-1 * var(--pad-top)) 0 var(--pad-top) calc(-1 * var(--pad-left));
+}
+
+.doc-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    box-sizing: border-box;
+    height: var(--bar-h);
+    padding: 0 20px 0 var(--pad-left);
+    border-bottom: 1px solid var(--text);
+    background: var(--paper);
+    box-shadow: 0 8px 16px -14px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+}
+
+.doc-bar.is-shown .doc-bar-inner {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+}
+
+/* Animate only once the script has placed the bar, so a page never opens
+   with the bar fading out as the stylesheet arrives. */
+.doc-bar.is-ready .doc-bar-inner {
+    transition: opacity 0.18s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+}
+
+.doc-bar.is-ready.is-shown .doc-bar-inner {
+    transition: opacity 0.18s ease, transform 0.22s ease;
+}
+
+.doc-bar-title {
+    flex: none;
+    max-width: 40%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--serif);
+    font-size: 1.387em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.doc-bar .doc-toc {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    font-size: 0.96em;
+}
+
+.doc-bar .doc-toc::-webkit-scrollbar {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .doc-bar.is-ready .doc-bar-inner,
+    .doc-bar.is-ready.is-shown .doc-bar-inner {
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ---------- Document typography ---------- */
+
+.sheet-body p {
+    margin: 0 0 0.4em;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+.sheet-body :is(h2, h3, h4) {
+    font-family: var(--sans);
+    font-style: normal;
+    line-height: 1.2;
+}
+
+/* Jumping to a section stops below the compact bar. */
+.sheet-body > :is(h2, h3) {
+    scroll-margin-top: calc(var(--bar-h) + 14px);
+}
+
+/* A section head, underlined in the text. With data-heads="side", a page's
+   own sections hang their names in a side column instead (below). */
+.sheet-body h2 {
+    margin: 1.05em 0 0.35em;
+    padding: 0 0 0.1em;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.195em;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+}
+
+.sheet-body h3 {
+    margin: 0.85em 0 0.2em;
+    font-size: 1.045em;
+    font-weight: 700;
+}
+
+.sheet-body h4 {
+    margin: 0.7em 0 0.15em;
+    font-size: 0.875em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.sheet-body > :first-child {
+    margin-top: 0;
+}
+
+.sheet-body :is(ul, ol) {
+    margin: 0.15em 0 0.4em;
+    padding-left: 1.3em;
+}
+
+.sheet-body li {
+    margin: 0;
+}
+
+.sheet-body li p {
+    margin: 0;
+}
+
+.sheet-body ul {
+    list-style: none;
+}
+
+.sheet-body ul > li {
+    position: relative;
+}
+
+.sheet-body ul > li::before {
+    content: "";
+    position: absolute;
+    top: 0.62em;
+    left: -0.95em;
+    width: 0.3em;
+    height: 0.3em;
+    background: var(--text);
+}
+
+.sheet-body ul ul > li::before {
+    background: none;
+    box-shadow: inset 0 0 0 1px var(--text);
+}
+
+.sheet-body ul ul ul > li::before {
+    top: 0.72em;
+    height: 1px;
+    width: 0.4em;
+    box-shadow: none;
+    background: var(--text);
+}
+
+.sheet-body blockquote {
+    margin: 0.7rem 0;
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--rule);
+    font-style: italic;
+}
+
+.sheet-body :is(code, kbd, samp) {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.8em;
+}
+
+.sheet-body pre {
+    margin: 0.7rem 0;
+    padding: 0.55rem 0.75rem;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    background: var(--callout-bg);
+    font-size: 0.833em;
+    line-height: 1.4;
+}
+
+.sheet-body pre code {
+    font-size: inherit;
+}
+
+.sheet-body img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tables ruled like a reference work's: top, head and bottom rules. */
+.sheet-body table {
+    width: 100%;
+    margin: 0.7rem 0;
+    border-collapse: collapse;
+    border-top: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.9em;
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+.sheet-body th {
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans);
+    font-size: 0.85em;
+    font-weight: 700;
+    text-align: left;
+}
+
+.sheet-body :is(th, td) {
+    padding: 0.2rem 0.6rem 0.2rem 0;
+    vertical-align: baseline;
+}
+
+.sheet-body .katex {
+    font-size: 1.04em;
+}
+
+.sheet-body .katex-display {
+    margin: 0.7rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Figures span the text column; their captions sit in the margin.
+   Margin figures are excluded: they float out of the column instead. */
+.sheet-body figure:not(.marginfigure) {
+    position: relative;
+    margin: 0.8rem 0;
+}
+
+.sheet-body figure:not(.marginfigure) img {
+    display: block;
+    width: 100%;
+    max-height: 340px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+/* Under the image: pinned into the margin, a caption could land on a
+   sidenote there. */
+.sheet-body figure:not(.marginfigure) figcaption {
+    margin-top: 0.3em;
+}
+
+.sheet-body figcaption,
+.sheet-body figcaption p {
+    margin: 0;
+    font-size: 0.8em;
+    font-style: italic;
+    line-height: 1.32;
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.callout {
+    margin: 0.7rem 0;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--text);
+    background: var(--callout-bg);
+    text-align: left;
+}
+
+.callout::before {
+    content: "NOTE";
+    margin-right: 0.6em;
+    font-family: var(--mono);
+    font-size: 0.7em;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+}
+
+hr {
+    margin: 1rem 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+}
+
+.divider-main,
+.divider-minor {
+    position: relative;
+    overflow: visible;
+    border: 0;
+    text-align: center;
+}
+
+.divider-main::before,
+.divider-minor::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--border);
+}
+
+.divider-minor::before {
+    left: 20%;
+    right: 20%;
+}
+
+.divider-main::after,
+.divider-minor::after {
+    position: relative;
+    padding: 0 0.6em;
+    background: var(--paper);
+    line-height: 1;
+}
+
+.divider-main::after {
+    content: "🂡";
+    font-size: 0.8em;
+    color: var(--accent);
+}
+
+.divider-minor::after {
+    content: "·";
+    color: var(--text-secondary);
+}
+
+/* Markdown footnotes: small, ruled off, at the foot of the text. */
+.sheet-body .footnotes {
+    margin-top: 1.4rem;
+    font-size: 0.867em;
+    line-height: 1.35;
+}
+
+.sheet-body .footnotes hr {
+    width: 30%;
+    margin: 0 0 0.5rem;
+}
+
+/* ---------- Marginalia ---------- */
+
+.sn-ref {
+    counter-increment: sidenote;
+}
+
+.sn-ref::after {
+    content: counter(sidenote);
+    position: relative;
+    top: -0.45em;
+    margin-left: 0.05em;
+    font-family: var(--mono);
+    font-size: 0.62em;
+    line-height: 0;
+    color: var(--accent);
+}
+
+.sidenote,
+.marginnote,
+.marginfigure {
+    float: right;
+    clear: right;
+    width: var(--note-w);
+    margin: 0.15rem calc(-1 * (var(--note-w) + var(--gutter))) 0.6rem 0;
+    font-size: 0.8em;
+    font-style: normal;
+    line-height: 1.32;
+    text-align: left;
+    text-indent: 0;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    color: var(--text);
+}
+
+.sidenote::before {
+    content: counter(sidenote) " ";
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--accent);
+}
+
+.note-para {
+    display: block;
+}
+
+/* The first paragraph runs on from the note's number. */
+.note-para:first-child {
+    display: inline;
+}
+
+.note-para + .note-para {
+    margin-top: 0.35em;
+}
+
+.sheet-body .marginfigure img {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border);
+}
+
+.sheet-body .marginfigure figcaption {
+    margin-top: 0.25rem;
+}
+
+/* ---------- Lists of pages, shelf strip ---------- */
+
+/* An archive: a year, then its entries as rows of date | title, length,
+   abstract. */
+.sheet-body .archive-year {
+    margin-top: 1.4em;
+    font-family: var(--mono);
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.sheet-body .archive-list {
+    margin: 0.3em 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sheet-body .archive-entry {
+    display: grid;
+    grid-template-columns: 4.6em 1fr;
+    gap: 0 0.6em;
+    margin: 0;
+    padding: 0.45em 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.sheet-body .archive-entry::before {
+    content: none;
+}
+
+.archive-date {
+    padding-top: 0.3em;
+    font-family: var(--mono);
+    font-size: 0.72em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+}
+
+.sheet-body .archive-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 0.8em;
+    margin: 0;
+    text-align: left;
+}
+
+.archive-title {
+    font-weight: 600;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+}
+
+.archive-meta {
+    flex-basis: 100%;
+    font-family: var(--mono);
+    font-size: 0.68em;
+    white-space: nowrap;
+    color: var(--text-secondary);
+}
+
+.sheet-body .archive-abstract {
+    margin: 0.1em 0 0;
+    font-size: 0.92em;
+    font-style: italic;
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.shelf-strip {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0.7rem 0;
+}
+
+.shelf-strip a:hover {
+    background: none;
+}
+
+.shelf-strip img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+/* A page's header picture: a short band across the text, not a poster. */
+.hero-img img {
+    display: block;
+    width: 100%;
+    height: 9em;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+/* ---------- Colophon: one line at the foot of the paper ---------- */
+
+.colophon {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    width: calc(var(--side) + var(--side-gap) + 1px + var(--text-w) + var(--gutter) + var(--note-w));
+    margin-top: 1.1rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.7em;
+    line-height: 1.4;
+    white-space: nowrap;
+    color: var(--text-secondary);
+}
+
+.colophon-subject {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+}
+
+.colophon-actions {
+    display: flex;
+    flex: none;
+    gap: 0.9rem;
+}
+
+.colophon button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--link);
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.colophon button:hover {
+    background: var(--selection);
+    color: var(--selection-text);
+    text-decoration: none;
+}
+
+/* ---------- Feed: a searchable index table ----------
+   Set like a parts catalogue: mono labels and numbers, hairline rules,
+   month bands, the entry in serif. Pictures stay out of the table; the
+   plate in the margin shows the entry under the pointer, with its image. */
+
+.feed {
+    position: relative;
+}
+
+.feed-find {
+    display: flex;
+    align-items: stretch;
+    margin: 0 0 0.4em;
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.78em;
+}
+
+.feed-prompt {
+    display: flex;
+    align-items: center;
+    padding: 0 0.8em;
+    background: var(--text);
+    color: var(--paper);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.feed-find input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.55em 0.7em;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+}
+
+.sheet-body .feed-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.3em 1em;
+    margin: 0 0 0.6em;
+    font-family: var(--mono);
+    font-size: 0.7em;
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.feed-kinds {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.feed-kinds button {
+    padding: 0.15em 0.6em;
+    border: 1px solid var(--rule);
+    border-left-width: 0;
+    background: none;
+    color: var(--text);
+    font: inherit;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.feed-kinds button:first-child {
+    border-left-width: 1px;
+}
+
+.feed-kinds button[aria-pressed="true"] {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--paper);
+}
+
+.feed-status {
+    align-self: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.sheet-body .feed-table {
+    table-layout: fixed;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.86em;
+}
+
+.sheet-body .feed-table :is(th, td) {
+    padding: 0.18em 0.4em;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+
+.sheet-body .feed-table thead th {
+    padding-top: 0.35em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.feed-table .feed-n {
+    width: 3.2em;
+    padding-left: 0;
+    text-align: right;
+}
+
+.feed-table .feed-date {
+    width: 4.6em;
+}
+
+.feed-table .feed-kind {
+    width: 3.4em;
+}
+
+.feed-table .feed-site {
+    width: 9.5em;
+    padding-right: 0;
+}
+
+.feed-table td:is(.feed-n, .feed-date, .feed-kind, .feed-site) {
+    font-family: var(--mono);
+    font-size: 0.74em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.feed-table td.feed-site {
+    text-transform: none;
+}
+
+.feed-extra,
+.feed-pic {
+    font-family: var(--mono);
+    font-size: 0.72em;
+    color: var(--text-secondary);
+}
+
+.sheet-body .feed-month th {
+    padding: 0.7em 0 0.15em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.feed-month-n {
+    float: right;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* The title opens the entry; the rest of the line shows it in the pane.
+   Under the pointer a line takes the callout's blue; the one shown, the
+   selection yellow. */
+.feed-row {
+    cursor: pointer;
+}
+
+.feed-row:is(:hover, :focus-visible) {
+    outline: none;
+    background: var(--callout-bg);
+}
+
+.feed-row.is-shown {
+    background: var(--selection);
+}
+
+.feed-row.is-shown td {
+    color: var(--selection-text);
+}
+
+/* A title in a line keeps its look under the pointer: the line's own
+   highlight is enough. */
+.feed-row a:hover {
+    background: none;
+    color: var(--link);
+    text-decoration: underline;
+}
+
+.feed-more {
+    display: block;
+    width: 100%;
+    margin-top: 0.5em;
+    padding: 0.4em;
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.feed-more:hover {
+    background: var(--text);
+    color: var(--paper);
+}
+
+/* The plate rides down the margin beside the table. */
+.feed-body {
+    position: relative;
+}
+
+.feed-rail {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% + var(--gutter));
+    width: var(--note-w);
+}
+
+.feed-plate {
+    position: sticky;
+    top: calc(var(--bar-h) + 16px);
+    font-size: 0.8em;
+    line-height: 1.3;
+}
+
+.sheet-body .feed-plate p {
+    margin: 0 0 0.4em;
+    text-align: left;
+}
+
+/* Ruled above and below like the table's head, level with it. */
+.sheet-body .feed-plate-kicker {
+    padding: 0.35em 0 0.3em;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.82em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.feed-plate-img {
+    display: block;
+    width: 100%;
+    max-height: 16em;
+    margin: 0 0 0.5em;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    background: var(--rule);
+}
+
+/* Posters keep their own proportions. */
+.feed-plate-img--film {
+    width: 62%;
+    max-height: none;
+    object-fit: contain;
+}
+
+.feed-plate-title {
+    display: block;
+    margin-bottom: 0.3em;
+    font-size: 1.15em;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.feed-plate-open {
+    display: inline-block;
+    margin-top: 0.2em;
+    font-family: var(--mono);
+    font-size: 0.82em;
+}
+
+.sheet-body .feed-plate-extra {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    color: var(--text-secondary);
+}
+
+.sheet-body .feed-plate-text {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    white-space: pre-line;
+}
+
+.feed-syntax {
+    margin: 0.5em 0 0;
+}
+
+.feed-syntax dt {
+    font-family: var(--mono);
+    font-size: 0.85em;
+}
+
+.feed-syntax dd {
+    margin: 0 0 0.35em;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* The home page's recent list: the same rows, without number or source. */
+.feed-recent .feed-table :is(.feed-n, .feed-site) {
+    display: none;
+}
+
+.sheet-body .feed-recent-more {
+    margin-top: 0.3em;
+    font-size: 0.9em;
+}
+
+/* ---------- Lately: the feed's newest, then the shelf's picks ---------- */
+
+.lately {
+    display: grid;
+    gap: 1em;
+    margin: 0.5em 0 0.6em;
+}
+
+.sheet-body .lately-kicker {
+    margin: 0 0 0.3em;
+    padding-bottom: 0.25em;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.lately .feed-table {
+    border-top: 0;
+}
+
+.lately .shelf-strip {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin: 0.35em 0 0;
+}
+
+.sheet-body .lately-more {
+    margin: 0.35em 0 0;
+    font-size: 0.88em;
+    text-align: left;
+}
+
+/* ---------- Shelf: covers in a grid, names under them ----------
+   Four to a row across text and margin, names in two lines at most. A
+   cover with a note links to it. */
+
+.sheet-body ol.shelf-grid {
+    border-top: 1px solid var(--border);
+    padding-top: 0.6em !important;
+}
+
+.sheet-body ol.shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1em var(--gutter);
+    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
+    margin: 0.4em 0 0.9em;
+    padding: 0;
+    list-style: none;
+}
+
+.sheet-body .shelf-item {
+    margin: 0;
+    font-size: 0.86em;
+    line-height: 1.22;
+    scroll-margin-top: 5em;
+}
+
+.sheet-body .shelf-item::before {
+    content: none;
+}
+
+.sheet-body .shelf-item:target .shelf-cover {
+    outline: 3px solid var(--selection);
+    outline-offset: 2px;
+}
+
+.shelf-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.shelf-cover {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    margin-bottom: 0.35em;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    box-shadow: 2px 2px 0 var(--rule);
+}
+
+.shelf-link:hover .shelf-cover {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+}
+
+.shelf-name {
+    font-weight: 700;
+}
+
+.shelf-by {
+    -webkit-line-clamp: 1;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.shelf-note {
+    display: block;
+    margin-top: 0.15em;
+    color: var(--link);
+    text-decoration: underline;
+}
+
+/* Printer's marks for a side column that would stand empty at the top of
+   a page: a registration mark and full, half and empty tone dots, small
+   and in a row, as in a newspaper's margin. Drawn, not set in type, so
+   all four are the same size whatever font is at hand. Shown only beside
+   the text, in side mode. */
+.card-corner {
+    display: none;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.pip {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 0.62em;
+    height: 0.62em;
+    border: 1px solid var(--text);
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.pip + .pip {
+    margin-left: 0.4em;
+}
+
+.pip--full {
+    background: var(--text);
+}
+
+.pip--half {
+    background: linear-gradient(90deg, var(--text) 50%, transparent 50%);
+}
+
+/* Crosshairs through a ring. */
+.pip--reg {
+    background:
+        linear-gradient(var(--text), var(--text)) center / 1px 100% no-repeat,
+        linear-gradient(var(--text), var(--text)) center / 100% 1px no-repeat;
+}
+
+/* ---------- Subscribe: the newsletter sign-up ---------- */
+
+.subscribe {
+    margin: 0.8em 0 1.2em;
+}
+
+.sheet-body .subscribe-lede {
+    margin-bottom: 0.35em;
+    text-align: left;
+}
+
+.subscribe-field {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.78em;
+}
+
+.subscribe-prompt {
+    display: flex;
+    align-items: center;
+    padding: 0 0.8em;
+    background: var(--text);
+    color: var(--paper);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.subscribe input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.55em 0.7em;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+}
+
+.subscribe button {
+    padding: 0 1em;
+    border: 0;
+    border-left: 1px solid var(--border);
+    background: none;
+    color: var(--text);
+    font: inherit;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.subscribe button:hover {
+    background: var(--text);
+    color: var(--paper);
+}
+
+/* ---------- Raised cap ----------
+   A script initial standing on the first line and rising above it, opening
+   the first paragraph of pages that set dropcap. */
+
+.sheet--dropcap .sheet-body > p:first-of-type::first-letter {
+    margin-right: 0.04em;
+    font-family: "Pinyon Script", var(--serif);
+    font-size: 3.1em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--text);
+}
+
+/* The first line makes room above for the initial. */
+.sheet--dropcap .sheet-body > p:first-of-type {
+    margin-top: 0.5em;
+}
+
+/* ---------- Section heads in a side column ----------
+   data-heads="side": every page keeps a side column beyond a dotted rule,
+   so text starts at the same place on every page. A page's own sections
+   (top-level h2s) set their names small there, beside the section's first
+   line. Headings
+   nested in other blocks (an archive's years) and phones keep underlined
+   heads. */
+
+@media print, screen and (min-width: 801px) {
+    :root[data-heads="side"] .sheet-body {
+        width: var(--text-w);
+        margin-left: var(--side);
+        padding-left: var(--side-gap);
+        border-left: 1px dotted var(--rule);
+    }
+
+    /* The header spans side column and text, over the dotted rule. */
+    :root[data-heads="side"] .doc-head {
+        margin-left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+    }
+
+    /* Hangs in the side column where it falls, beside the opening text. */
+    /* The h2 takes no height, so the text starts right under the space
+       above; the name is shifted down so its first line sits on the text's
+       first line. */
+    :root[data-heads="side"] .card-corner {
+        display: block;
+        position: relative;
+        left: calc(-1 * (var(--side) + var(--side-gap) + 1px));
+        top: 0.2em;
+        height: 0;
+    }
+
+    :root[data-heads="side"] .sheet-body > h2 {
+        position: relative;
+        top: 1em;
+        box-sizing: border-box;
+        width: var(--side);
+        height: 0;
+        margin: 1.6em 0 0.65em calc(-1 * (var(--side) + var(--side-gap) + 1px));
+        padding: 0 10px 0 0;
+        border: 0;
+        font-family: var(--mono);
+        font-size: 0.68em;
+        line-height: 1.3;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+    }
+}
+
+/* ---------- Plain layout ----------
+   The page sits on the site itself: no desk and no sheet edge; content and
+   sidebar sit together, centred as one unit. Everything else is shared, so
+   switching back is one attribute. */
+
+:root[data-layout="plain"] {
+    --desk: var(--paper);
+    --sheet-shadow: none;
+}
+
+:root[data-layout="plain"] .shell {
+    max-width: calc(1180px + var(--sidebar-width) + 3.75rem);
+    margin: 0 auto;
+    padding-left: 1.25rem;
+}
+
+:root[data-layout="plain"] .sheet {
+    padding-top: 22px;
+}
+
+:root[data-layout="plain"] .doc-bar-inner {
+    box-shadow: none;
+}
+
+/* ---------- Floating controls: the palette ----------
+   Set like signage: black-ruled on paper, with a hard offset shadow. */
+
+.palette {
+    border: 1px solid var(--border);
+    background: var(--paper);
+    color: var(--text);
+    box-shadow: 3px 3px 0 var(--border);
+    font-family: var(--mono);
+}
+
+/* The palette: a directory. Group | entry (and a quote) | key. */
+.palette {
+    width: min(640px, calc(100vw - 32px));
+    max-height: 72vh;
+    margin-top: 12vh;
+    padding: 0;
+    box-shadow: 5px 5px 0 var(--border);
+    font-size: 12px;
+}
+
+.palette::backdrop {
+    background: rgba(8, 12, 20, 0.28);
+}
+
+.palette-input {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--border);
+}
+
+/* As wide as the group column below, so its edge continues that rule. */
+.palette-prompt {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 6.5em;
+    background: var(--text);
+    color: var(--paper);
+}
+
+.palette input {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+}
+
+.palette input::placeholder {
+    color: var(--text-secondary);
+}
+
+.palette ul {
+    max-height: 52vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.palette li {
+    display: grid;
+    grid-template-columns: 6.5em minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0 10px;
+    padding: 1px 12px 1px 0;
+    cursor: default;
+}
+
+.palette li.is-first {
+    border-top: 1px solid var(--rule);
+}
+
+.palette li.is-first:first-child {
+    border-top: 0;
+}
+
+.palette-group {
+    align-self: stretch;
+    padding: 4px 0 0 12px;
+    border-right: 1px solid var(--rule);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.palette-main {
+    min-width: 0;
+    padding: 2px 0;
+}
+
+.palette-label {
+    display: block;
+    overflow: hidden;
+    font-family: var(--serif);
+    font-size: 14.5px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.palette mark {
+    background: none;
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+}
+
+.palette-snippet {
+    display: block;
+    overflow: hidden;
+    font-family: var(--serif);
+    font-size: 12.5px;
+    font-style: italic;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-secondary);
+}
+
+.palette-meta {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.palette kbd,
+.palette-meta kbd {
+    display: inline-block;
+    min-width: 1.4em;
+    padding: 1px 3px;
+    border: 1px solid currentColor;
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.palette li[aria-selected="true"] .palette-main,
+.palette li[aria-selected="true"] .palette-meta {
+    color: var(--paper);
+}
+
+.palette li[aria-selected="true"] {
+    background: linear-gradient(to right, transparent 6.5em, var(--text) 6.5em);
+}
+
+.palette li[aria-selected="true"] .palette-snippet {
+    color: var(--paper);
+    opacity: 0.75;
+}
+
+.palette-status {
+    margin: 0;
+    padding: 10px 12px;
+    color: var(--text-secondary);
+}
+
+.palette-status:empty {
+    display: none;
+}
+
+.palette-keys {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 5px 12px;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.palette-keys kbd {
+    margin: 0 2px 0 6px;
+}
+
+.palette-keys kbd:first-child {
+    margin-left: 0;
+}
+
+
+/* ---------- Narrow screens: the paper fills the width, notes inline ---------- */
+
+@media screen and (max-width: 800px) {
+
+    .feed-rail,
+    .feed-table :is(.feed-site, .feed-n) {
+        display: none;
+    }
+
+    .shelf-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .shell {
+        display: block;
+        padding: 0;
+    }
+
+    /* The sidebar becomes a masthead: name and tools on one line, the
+       pages on the next, all set across the top of the screen. */
+    .shell {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Flex items grow to their widest child unless told otherwise. */
+    .desk {
+        min-width: 0;
+    }
+
+    /* The shelf on a phone: three to a row. */
+    .sheet-body ol.shelf-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8em 0.6em;
+        width: auto;
+    }
+
+    .sidebar {
+        position: static;
+        order: -1;
+        width: auto;
+        padding: 14px 18px 0;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .sidebar-nav {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: baseline;
+        padding-bottom: 9px;
+        border-bottom: 1px solid var(--text);
+    }
+
+    .sidebar-nav .site-title {
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+    }
+
+    .site-title-gu {
+        display: inline;
+        margin-left: 6px;
+    }
+
+    .sidebar-meta {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .sidebar-tools {
+        gap: 14px;
+    }
+
+    .theme-btn {
+        font-size: 16px;
+    }
+
+    .sidebar .git-info {
+        display: none;
+    }
+
+    .sidebar-links {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px 11px;
+        margin-top: 8px;
+        padding-top: 0;
+        border: 0;
+    }
+
+    .sidebar-links a {
+        padding: 2px 0;
+    }
+
+    .sidebar-links a.active-page {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+    }
+
+    /* The bar names the page; its contents line doesn't fit a phone. */
+    .doc-bar .doc-toc {
+        display: none;
+    }
+
+    .doc-bar-inner {
+        overflow: hidden;
+    }
+
+    .doc-bar-title {
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        font-size: 1.15em;
+    }
+
+    /* The colophon on two lines: why it changed, then where it's from. */
+    .colophon {
+        flex-wrap: wrap;
+        gap: 0.2rem 0.8rem;
+        padding-bottom: 32px;
+    }
+
+    .colophon-subject {
+        flex-basis: 60%;
+    }
+
+    .colophon-actions {
+        flex-basis: 100%;
+    }
+
+    /* The feed: each entry on two lines at most, date over kind beside it. */
+    .sheet-body .feed-table,
+    .feed-table tbody {
+        display: block;
+    }
+
+    .feed-table thead {
+        display: none;
+    }
+
+    .sheet-body .feed-month,
+    .sheet-body .feed-month th {
+        display: block;
+    }
+
+    .feed-table .feed-row {
+        display: grid;
+        grid-template-columns: 4.4em minmax(0, 1fr);
+        border-bottom: 1px solid var(--rule);
+    }
+
+    .sheet-body .feed-table .feed-row td {
+        border: 0;
+        width: auto;
+        padding: 0.1em 0;
+    }
+
+    .feed-table .feed-date {
+        grid-row: 1;
+        padding-top: 0.45em !important;
+    }
+
+    .feed-table .feed-kind {
+        grid-column: 1;
+        grid-row: 2;
+        padding-bottom: 0.4em !important;
+    }
+
+    .sheet-body .feed-table td.feed-entry {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        align-self: center;
+        display: -webkit-box;
+        padding: 0.35em 0 !important;
+        white-space: normal;
+        line-height: 1.3;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    /* No measured sheet on phones: the page is the screen's width. (Auto
+       would let it, a flex item, grow to fit its widest line.) */
+    .folio {
+        width: 100%;
+        min-width: 0;
+        gap: 0;
+    }
+
+    .sheet {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        padding: 28px 18px 24px;
+        box-shadow: none;
+    }
+
+    .sheet-body {
+        width: auto;
+    }
+
+    .doc-bar {
+        margin: -28px -18px 28px;
+    }
+
+    .doc-bar-inner {
+        padding: 0 18px;
+    }
+
+    .colophon {
+        width: auto;
+        padding-bottom: 72px;
+    }
+
+    .sheet-body .doc-head--title .title-name {
+        font-size: 2.6em;
+    }
+
+    .sheet-body .doc-head--title :is(.title-edition, .title-subtitle) {
+        font-size: 1.4em;
+    }
+
+    .sidenote,
+    .marginnote,
+    .marginfigure {
+        float: none;
+        display: block;
+        width: auto;
+        margin: 0.4rem 0 0.6rem;
+        padding-left: 0.7rem;
+        border-left: 2px solid var(--accent);
+    }
+
+    .sheet-body .marginfigure img {
+        max-width: 60%;
+    }
+
+    .sheet-body figure:not(.marginfigure) figcaption {
+        position: static;
+        width: auto;
+        margin-top: 0.3rem;
+    }
+
+}
+
+/* ---------- Print: the paper, and nothing around it ---------- */
+
+@page {
+    size: A4;
+    margin: 14mm 0;
+}
+
+@media print {
+    :root,
+    :root[data-theme="dark"] {
+        --desk: #fff;
+        --paper: #fff;
+        --text: #000;
+        --text-secondary: #333;
+        --link: #000;
+        --accent: #000;
+        --border: #000;
+        --rule: #999;
+        --callout-bg: #f2f2f2;
+    }
+
+    .sidebar,
+    .doc-bar,
+    .palette,
+    .colophon-actions {
+        display: none !important;
+    }
+
+    .shell {
+        display: block;
+        padding: 0;
+    }
+
+    /* Print sets its own A4 measurements, whatever the window was. */
+    .folio {
+        gap: 0;
+        --sheet-w: 794px !important;
+        --pad-left: 52px !important;
+        --text-w: 430px !important;
+        --side: 70px !important;
+        --side-gap: 14px !important;
+        --gutter: 24px !important;
+        --note-w: 200px !important;
+        --type: 14px !important;
+    }
+
+    .sheet {
+        min-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        box-shadow: none;
+    }
+
+    .sheet-body > h2 {
+        break-after: avoid;
+    }
+}
