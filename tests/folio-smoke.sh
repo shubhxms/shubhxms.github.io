@@ -22,6 +22,7 @@ for page in index.html now/index.html notes/index.html fixture-typesetting/index
 	lacks "$page" 'class="reader"'
 	lacks "$page" 'class="mobile-menu"'
 	has "$page" '<a class="site-title" href="/">'
+	has "$page" '<figure class="sidebar-art" aria-hidden="true" data-art="'
 	has "$page" '<div class="sidebar-tools">'
 	has "$page" '<dialog class="palette"'
 	has "$page" '/js/folio.'
@@ -201,6 +202,14 @@ lacks uses/index.html 'sheet--dropcap'
 has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.com/api/v1/free?nojs=true" method="post"'
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
+
+# The sidebar carries one of three line drawings of Ahmedabad (a pol
+# house, a chai stall, Kahn's IIM), chosen by the page's address, so a
+# page keeps its own and the site shows all three.
+for art in pol chai kahn; do
+	grep -rlq "data-art=\"$art\"" "$OUT" --include='*.html' || fail "no page shows the $art drawing"
+done
+grep -q 'stroke="currentColor"' "$ROOT/themes/folio/assets/art/pol.svg" || fail 'drawings should take the theme ink'
 
 # Shelf: the visual one. Books and films from data/shelf.yaml as grids of
 # covers with their names under them, one grid a section. A cover without

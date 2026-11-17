@@ -21,5 +21,12 @@
       </div>
       {{- end }}
     </div>
+    {{- /* One of three line drawings of Ahmedabad (assets/art, drawn by
+           draw.py), chosen by the page's address: each page keeps its own. */}}
+    {{- $arts := slice "pol" "chai" "kahn" }}
+    {{- $art := index $arts (mod (hash.FNV32a .RelPermalink) (len $arts)) }}
+    <figure class="sidebar-art" aria-hidden="true" data-art="{{ $art }}">
+      {{- (resources.Get (printf "art/%s.svg" $art)).Content | safeHTML -}}
+    </figure>
   </nav>
 </aside>

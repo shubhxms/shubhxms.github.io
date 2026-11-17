@@ -240,6 +240,18 @@ a:hover {
     opacity: 1;
 }
 
+/* A line drawing of Ahmedabad under the sidebar, in its quiet ink. */
+.sidebar-art {
+    margin: 18px 0 0;
+    color: var(--text-secondary);
+}
+
+.sidebar-art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .git-info {
     margin-top: 0;
     font-size: 10px;
@@ -1877,7 +1889,8 @@ hr {
         font-size: 16px;
     }
 
-    .sidebar .git-info {
+    .sidebar .git-info,
+    .sidebar-art {
         display: none;
     }
 
