@@ -35,24 +35,24 @@ likes:
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
 
-I'm **Shubham**, a {{< age >}}-year-old technology enthusiast living and working in [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
+Hi, I'm **Shubham**. I'm {{< age >}} and I live in [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
 
-I have varied interests, but spend most of my time playing with [computers](/images/i-love-computers-it.gif), trying to make sense of the world using state machines, stories, and science.
+I'm into a lot of things, but mostly I play with [computers](/images/i-love-computers-it.gif) and try to make sense of the world with state machines, stories and science.
 
 ## Now
 
-On a stretch of [unstructured time](/now), learning about the things I've been curious about, and open to interesting work and collaboration. Outside that, I'm reading *The Information* by James Gleick.
+I'm taking some [unstructured time](/now) to learn whatever I've been curious about. I'm also open to interesting work, so do reach out. Reading *The Information* by James Gleick right now.
 
 ## Life and <del>lies</del> stuff
 
-I graduated in 2025 from [Ahmedabad University](https://ahduni.edu.in) with a bachelor's degree in Computer Science and a minor in Mathematics. Since then I've shipped early-stage software at two places:
+I finished a CS degree (with a maths minor) at [Ahmedabad University](https://ahduni.edu.in) in 2025. Since then I've built software at two early-stage places:
 
-- [Dip](https://dipapp.in), a social media startup: built its REST API, integrated payments and a ledger, and shipped a booking system using custom locks.
-- An ERP for a dealer of earth-mover spare parts: fixed critical bugs on-site, streamlined workflows, and built a task-management system.
+- [Dip](https://dipapp.in), a social media startup. I built the REST API, payments and a ledger, and a booking system with custom locks.
+- An ERP for a dealer of earth-mover spare parts. I fixed bugs on-site, cleaned up how they worked, and built them a task manager.
 
 ## Contact
 
-I love receiving correspondence and usually reply within a few days.
+Say hi! I usually reply within a few days.
 
 - **Email:** hey@[domain]
 - **Twitter:** [@shubhxms](https://twitter.com/shubhxms)
@@ -66,6 +66,6 @@ I love receiving correspondence and usually reply within a few days.
 
 ## Lately
 
-What I've been reading, watching and keeping, as it happens.
+What I've been reading and watching lately.
 
 {{< lately 6 >}}

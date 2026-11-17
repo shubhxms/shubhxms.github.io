@@ -1,13 +1,13 @@
 ---
 title: "Now"
 url: /now
-tldr: What am I upto?
+tldr: What I'm up to.
 ---
 
 
-I have arranged for a period of [unstructured](https://twitter.com/shubhxms/status/2037957507810009374) [time](https://twitter.com/shubhxms/status/1873488602375872953) for myself and am primarily spending it learning about stuff I have been curious about!
+I've given myself some [unstructured](https://twitter.com/shubhxms/status/2037957507810009374) [time](https://twitter.com/shubhxms/status/1873488602375872953), and I'm mostly spending it learning about stuff I've been curious about!
 
-You have the rare chance to hire me while I am off the market. :). I remain open to interesting work/collaboration opportunities.
+You have the rare chance to hire me while I'm off the market :) I'm open to interesting work and collaborations.
 
 Outside that, I'm reading <em>The Information</em> by James Gleick.
 

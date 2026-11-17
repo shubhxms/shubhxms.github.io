@@ -9,7 +9,7 @@ pygmentscodefencesguesssyntax = true
 paginate = 4
 
 [params]
-description = "personal website of shubham shah"
+description = "Shubham Shah: notes, things I like, and what I'm up to."
 repo = "https://github.com/shubhxms/shubhxms.github.io"
 born = 2003
 feedApi = "https://feed.shubhxms.workers.dev"

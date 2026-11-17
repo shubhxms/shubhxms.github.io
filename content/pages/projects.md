@@ -3,11 +3,11 @@ title: "Projects"
 url: /projects
 aliases: [/craft]
 description: "projects"
-tldr: "My adventures."
+tldr: "Things I've built."
 draft: false
 ---
 
-{{<callout text="NOTE: This page is severely outdated. An update is coming soon.">}}
+{{<callout text="This page is pretty out of date. I'll update it soon (promise).">}}
 
 ## Academic
 - Autonomous Grid Exploration Vehicle
