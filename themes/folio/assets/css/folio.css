@@ -1299,32 +1299,60 @@ hr {
 }
 
 /* ---------- Shelf: covers in a grid, names under them ----------
-   Five to a row across text and margin; a cover without an image is set
+   Four to a row across text and margin, names in two lines at most; a cover without an image is set
    in type on one the same size. A cover with a note links to it. */
 
-.sheet-body .shelf-category {
-    width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin: 0.9em 0 0.4em;
-    padding-bottom: 0.2em;
-    border-bottom: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: 0.7em;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-align: left;
-    text-transform: uppercase;
+.sheet-body ol.shelf-grid {
+    border-top: 1px solid var(--border);
+    padding-top: 0.6em !important;
 }
 
-.sheet-body h2 + .shelf-category {
-    margin-top: 0.2em;
+/* A category: a divider card the size of a cover, as in a card catalogue:
+   its name large, and how many follow. */
+.sheet-body .shelf-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    aspect-ratio: 2 / 3;
+    margin: 0;
+    padding: 0.8em 0.75em 0.7em;
+    border: 1px solid var(--border);
+    border-top: 5px solid var(--text);
+    background: var(--callout-bg);
+}
+
+.sheet-body .shelf-label::before {
+    content: none;
+}
+
+.shelf-label-name {
+    font-family: var(--serif);
+    font-size: 1.55em;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.shelf-label-n {
+    padding-top: 0.4em;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.72em;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}
+
+.shelf-label-n::after {
+    content: " titles";
 }
 
 .sheet-body ol.shelf-grid {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1.1em var(--gutter);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1em var(--gutter);
     width: calc(var(--text-w) + var(--gutter) + var(--note-w));
-    margin: 0.5em 0 1.2em;
+    margin: 0.4em 0 0.9em;
     padding: 0;
     list-style: none;
 }
@@ -1332,7 +1360,7 @@ hr {
 .sheet-body .shelf-item {
     margin: 0;
     font-size: 0.86em;
-    line-height: 1.25;
+    line-height: 1.22;
     scroll-margin-top: 5em;
 }
 
@@ -1357,10 +1385,10 @@ hr {
     width: 100%;
     height: auto;
     aspect-ratio: 2 / 3;
-    margin-bottom: 0.45em;
+    margin-bottom: 0.35em;
     object-fit: cover;
     border: 1px solid var(--border);
-    box-shadow: 3px 3px 0 var(--rule);
+    box-shadow: 2px 2px 0 var(--rule);
 }
 
 .shelf-link:hover .shelf-cover {
@@ -1373,7 +1401,7 @@ hr {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0.8em 0.7em;
+    padding: 0.6em 0.5em;
     background: var(--paper);
     font-family: var(--serif);
     line-height: 1.1;
@@ -1391,13 +1419,20 @@ hr {
     color: var(--text-secondary);
 }
 
+.shelf-name,
+.shelf-by {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
 .shelf-name {
-    display: block;
     font-weight: 700;
 }
 
 .shelf-by {
-    display: block;
+    -webkit-line-clamp: 1;
     font-style: italic;
     color: var(--text-secondary);
 }
@@ -1823,14 +1858,10 @@ hr {
         min-width: 0;
     }
 
-    /* The shelf on a phone: three covers to a row. */
-    .sheet-body .shelf-category {
-        width: auto;
-    }
-
+    /* The shelf on a phone: three to a row. */
     .sheet-body ol.shelf-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1em 0.8em;
+        gap: 0.8em 0.6em;
         width: auto;
     }
 
