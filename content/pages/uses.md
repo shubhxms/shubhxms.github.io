@@ -12,7 +12,7 @@ tldr: Things, tools and services I use.
 ## Code
 - Harness: [Pi](https://pi.dev)
 - Editors: [Zed](https://zed.dev/), [VS Code](https://code.visualstudio.com/)
-- Terminal: [Ghostty](https://ghostty.org/)
+- Terminal: [Ghostty](https://ghostty.org/), [Rex](https://www.superlogical.com/updates/public-testing-beginning)
 
 ## General
 - Notes: [Anytype](https://anytype.io/)
