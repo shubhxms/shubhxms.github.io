@@ -201,21 +201,19 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# Shelf: the visual one. Books and films from data/shelf.yaml, each
-# section a dense table (title, maker, year; books by category) beside a
-# pane: at rest a wall of covers; pointing at a line or cover shows that
-# entry large; a click keeps it. Covers are 240x360 WebP thumbnails; a
-# title links only when the entry has a note.
+# Shelf: the visual one. Books and films from data/shelf.yaml as grids of
+# covers with their names under them; books by category. A cover without
+# an image is set in type. A cover links to its note, if it has one.
 C="$OUT/shelf/index.html"
-[ "$(grep -o '<tr class="shelf-row"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'the shelf should list its 30 books and films'
-[ "$(grep -o '<div class="shelf-wall">' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'books and films each get a wall of covers'
-[ "$(grep -o '<img class="shelf-thumb" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'every cover should be on its wall, as a thumbnail'
-[ "$(grep -o '<div class="shelf-peek"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'every entry should have its preview'
-[ "$(grep -o '<tr class="shelf-group">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
-has shelf/index.html '<a class="shelf-wall-item" href="#chaos" data-for="chaos" title="Chaos">'
-has shelf/index.html '<a class="shelf-title" href="/sarabhai/">Vikram Sarabhai: A Life</a>'
+[ "$(grep -o '<li class="shelf-item"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'the shelf should show its 30 books and films'
+[ "$(grep -o '<img class="shelf-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
+[ "$(grep -o 'class="shelf-cover shelf-cover--type"' "$C" | wc -l | tr -d ' ')" = 10 ] || fail 'entries without covers are set in type'
+[ "$(grep -o '<p class="shelf-category">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
+has shelf/index.html '<a class="shelf-link" href="/sarabhai/">'
+has shelf/index.html '<li class="shelf-item" id="chaos">'
 has shelf/index.html '<li><a href="#films-shows--anime">Films, Shows &amp; Anime</a></li>'
-has shelf/index.html 'In this I gather some thoughts on Vikram Sarabhai'
+lacks shelf/index.html 'shelf-wall'
+lacks shelf/index.html 'shelf-row'
 lacks shelf/index.html 'Dynomight'
 ! grep -rq 'core-' "$ROOT/themes/folio/assets" "$ROOT/themes/folio/layouts" || fail 'the shelf should not be named core anywhere'
 

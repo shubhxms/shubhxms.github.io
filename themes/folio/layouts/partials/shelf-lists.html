@@ -1,56 +1,34 @@
 {{- /*
-  The shelf (data/shelf.yaml), set like the feed. A section with covers is a
-  dense table (title, maker, year; books by category) with a pane beside
-  it in the margin. At rest the pane is a wall of the section's covers;
-  pointing at a line or a cover shows that entry large (shelf-peek.html),
-  and a click keeps it (shelf.js). A title links only when the entry has
-  a note. A section without covers (Internet) is a plain list.
+  The shelf (data/shelf.yaml): each section a grid of covers with their
+  names under them, books by category. An entry without a cover image is
+  set in type on a cover the same size; one with a note links to it.
 */}}
 {{- range .sections }}
 {{- $groups := .lists | default (slice (dict "items" .items)) }}
-{{- $entries := partial "shelf-entries.html" . }}
 <h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
-{{- if where $entries "cover" "!=" nil }}
-<div class="shelf-section">
-  <table class="shelf-table">
-    {{- range $groups }}
-    {{- $group := .name }}
-    <tbody>
-      {{- with $group }}<tr class="shelf-group"><th colspan="4" scope="rowgroup">{{ . }}</th></tr>{{ end }}
-      {{- range .items }}
-      <tr class="shelf-row" id="{{ .title | anchorize }}" tabindex="0">
-        <td class="shelf-name">
-          {{- if .note }}<a class="shelf-title" href="{{ .note | relURL }}">{{ .title }}</a>
-          {{- else }}<span class="shelf-title">{{ .title }}</span>{{ end -}}
-        </td>
-        <td class="shelf-by">{{ .by }}</td>
-        <td class="shelf-year">{{ .year }}</td>
-      </tr>
-      {{- end }}
-    </tbody>
+{{- range $groups }}
+{{- with .name }}<p class="shelf-category">{{ . }}</p>{{ end }}
+<ol class="shelf-grid">
+  {{- range .items }}
+  {{- $cover := partial "shelf-cover.html" . }}
+  <li class="shelf-item" id="{{ .title | anchorize }}">
+    {{- with .note }}<a class="shelf-link" href="{{ . | relURL }}">{{ end }}
+    {{- with $cover.thumb }}
+    <img class="shelf-cover" src="{{ . }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
+    {{- else }}
+    <span class="shelf-cover shelf-cover--type" aria-hidden="true">
+      <span class="shelf-cover-title">{{ .title }}</span>
+      <span class="shelf-cover-by">{{ .by }}</span>
+    </span>
     {{- end }}
-  </table>
-  <aside class="shelf-plate" aria-label="{{ .name }}: covers, and the entry chosen">
-    <div class="shelf-wall">
-      {{- range $entries }}
-      {{- $id := .title | anchorize }}
-      {{- $title := .title }}
-      {{- with (partial "shelf-cover.html" .).thumb }}
-      <a class="shelf-wall-item" href="#{{ $id }}" data-for="{{ $id }}" title="{{ $title }}"><img class="shelf-thumb" src="{{ . }}" alt="{{ $title }}" width="240" height="360" loading="lazy" decoding="async" /></a>
-      {{- end }}
-      {{- end }}
-    </div>
-    {{- range $groups }}
-    {{- $group := .name }}
-    {{- range .items }}{{ partial "shelf-peek.html" (dict "entry" . "group" $group) }}{{ end }}
-    {{- end }}
-  </aside>
-</div>
-{{- else }}
-<ul class="shelf-links">
-  {{- range $entries }}
-  <li><a href="{{ .url }}">{{ .title }}</a>{{ with .what }} <span class="shelf-what">{{ . }}</span>{{ end }}</li>
+    <span class="shelf-name">{{ .title }}</span>
+    {{- $meta := slice }}
+    {{- with .by }}{{ $meta = $meta | append . }}{{ end }}
+    {{- with .year }}{{ $meta = $meta | append . }}{{ end }}
+    <span class="shelf-by">{{ delimit $meta " · " }}</span>
+    {{- with .note }}<span class="shelf-note">Read the note →</span></a>{{ end }}
+  </li>
   {{- end }}
-</ul>
+</ol>
 {{- end }}
 {{- end }}
