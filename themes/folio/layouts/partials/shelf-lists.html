@@ -1,16 +1,14 @@
 {{- /*
-  The shelf (data/shelf.yaml): each section one dense grid of covers with
-  their names under them; books' categories are label tiles in the flow,
-  so no row breaks between them. An entry without a cover image is
-  set in type on a cover the same size; one with a note links to it.
+  The shelf (data/shelf.yaml): each section one grid of covers with their
+  names under them. Books' categories stay in the data, unshown. An entry
+  without a cover image is set in type on a cover the same size; one with
+  a note links to it.
 */}}
 {{- range .sections }}
 {{- $groups := .lists | default (slice (dict "items" .items)) }}
 <h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
 <ol class="shelf-grid">
 {{- range $groups }}
-  {{- $count := len .items }}
-  {{- with .name }}<li class="shelf-label" aria-hidden="true"><span class="shelf-label-name">{{ . }}</span><span class="shelf-label-n">{{ $count }}</span></li>{{ end }}
   {{- range .items }}
   {{- $cover := partial "shelf-cover.html" . }}
   <li class="shelf-item" id="{{ .title | anchorize }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">

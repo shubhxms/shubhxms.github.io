@@ -202,15 +202,14 @@ lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
 # Shelf: the visual one. Books and films from data/shelf.yaml as grids of
-# covers with their names under them; books by category. A cover without
+# covers with their names under them, one grid a section. A cover without
 # an image is set in type. A cover links to its note, if it has one.
 C="$OUT/shelf/index.html"
 [ "$(grep -o '<li class="shelf-item"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'the shelf should show its 30 books and films'
 [ "$(grep -o '<img class="shelf-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
 [ "$(grep -o 'class="shelf-cover shelf-cover--type"' "$C" | wc -l | tr -d ' ')" = 10 ] || fail 'entries without covers are set in type'
-[ "$(grep -o '<li class="shelf-label"' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories, as tiles in the flow'
-[ "$(grep -o '<ol class="shelf-grid">' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'one grid per section, so no row breaks between categories'
-has shelf/index.html '<span class="shelf-label-name">Science &amp; Math</span><span class="shelf-label-n">3</span>'
+[ "$(grep -o '<ol class="shelf-grid">' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'one grid per section'
+lacks shelf/index.html 'shelf-label'
 has shelf/index.html '<a class="shelf-link" href="/sarabhai/">'
 has shelf/index.html '<li class="shelf-item" id="chaos" title="Chaos — James Gleick">'
 lacks shelf/index.html 'class="lede"'

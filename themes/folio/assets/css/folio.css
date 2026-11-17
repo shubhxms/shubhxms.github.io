@@ -1307,46 +1307,6 @@ hr {
     padding-top: 0.6em !important;
 }
 
-/* A category: a divider card the size of a cover, as in a card catalogue:
-   its name large, and how many follow. */
-.sheet-body .shelf-label {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
-    aspect-ratio: 2 / 3;
-    margin: 0;
-    padding: 0.8em 0.75em 0.7em;
-    border: 1px solid var(--border);
-    border-top: 5px solid var(--text);
-    background: var(--callout-bg);
-}
-
-.sheet-body .shelf-label::before {
-    content: none;
-}
-
-.shelf-label-name {
-    font-family: var(--serif);
-    font-size: 1.55em;
-    font-style: italic;
-    font-weight: 700;
-    line-height: 1.05;
-}
-
-.shelf-label-n {
-    padding-top: 0.4em;
-    border-top: 1px solid var(--border);
-    font-family: var(--mono);
-    font-size: 0.72em;
-    letter-spacing: 0.08em;
-    color: var(--text-secondary);
-}
-
-.shelf-label-n::after {
-    content: " titles";
-}
-
 .sheet-body ol.shelf-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
