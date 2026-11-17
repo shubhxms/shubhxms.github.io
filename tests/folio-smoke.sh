@@ -192,6 +192,12 @@ has now/index.html '<span class="pip pip--reg"></span><span class="pip pip--full
 lacks core/index.html 'class="card-corner"' # opens with a comment, then a head
 ! grep -q -- '--spade' "$CSS" || fail 'the old spade mask should be gone'
 lacks contact/index.html 'class="ornament'
+
+# The colophon: how the site is made and what it borrows from, linked from
+# the sidebar on every page.
+has colophon/index.html '<h1 class="doc-title">Colophon</h1>'
+has colophon/index.html 'href="https://usgraphics.com/"'
+has index.html 'href="/colophon"'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
