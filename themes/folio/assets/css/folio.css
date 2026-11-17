@@ -1306,8 +1306,8 @@ hr {
 }
 
 /* ---------- Shelf: covers in a grid, names under them ----------
-   Four to a row across text and margin, names in two lines at most; a cover without an image is set
-   in type on one the same size. A cover with a note links to it. */
+   Four to a row across text and margin, names in two lines at most. A
+   cover with a note links to it. */
 
 .sheet-body ol.shelf-grid {
     border-top: 1px solid var(--border);
@@ -1361,37 +1361,6 @@ hr {
 .shelf-link:hover .shelf-cover {
     outline: 2px solid var(--text);
     outline-offset: 2px;
-}
-
-/* Without an image: title and maker, set like a plain typographic cover. */
-.shelf-cover--type {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.6em 0.5em;
-    background: var(--paper);
-    font-family: var(--serif);
-    line-height: 1.1;
-}
-
-.shelf-cover-title {
-    font-size: 1.15em;
-    overflow-wrap: anywhere;
-}
-
-.shelf-cover-by {
-    padding-top: 0.35em;
-    border-top: 1px solid var(--rule);
-    font-size: 0.8em;
-    color: var(--text-secondary);
-}
-
-.shelf-name,
-.shelf-by {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
 }
 
 .shelf-name {

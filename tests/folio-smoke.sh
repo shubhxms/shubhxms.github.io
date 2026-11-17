@@ -169,7 +169,7 @@ lacks now/index.html '/js/feed'
 # The home page sets the feed's latest entries and the shelf's picks side
 # by side, and no longer carries the stepwell photograph.
 has index.html '<div class="lately">'
-has index.html '>24 more on the Shelf →</a>'
+has index.html '>20 more on the Shelf →</a>'
 has index.html '>See all →</a>'
 lacks index.html 'Telegram channel'
 has feed/index.html '<div class="feed-body">'
@@ -216,9 +216,12 @@ grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || f
 # covers with their names under them, one grid a section. A cover without
 # an image is set in type. A cover links to its note, if it has one.
 C="$OUT/shelf/index.html"
-[ "$(grep -o '<li class="shelf-item"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'the shelf should show its 30 books and films'
-[ "$(grep -o '<img class="shelf-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
-[ "$(grep -o 'class="shelf-cover shelf-cover--type"' "$C" | wc -l | tr -d ' ')" = 10 ] || fail 'entries without covers are set in type'
+[ "$(grep -o '<li class="shelf-item"' "$C" | wc -l | tr -d ' ')" = 26 ] || fail 'the shelf should show its 26 books and films'
+[ "$(grep -o '<img class="shelf-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 26 ] || fail 'covers should be resized thumbnails'
+# The shelf is pictures only: an entry without a cover is left off it.
+lacks shelf/index.html 'shelf-cover--type'
+! grep -q 'shelf-cover--type' "$CSS" || fail 'no typeset covers any more'
+grep -q '{{- if .cover }}' "$ROOT/themes/folio/layouts/partials/shelf-lists.html" || fail 'the shelf should skip entries without a cover'
 [ "$(grep -o '<ol class="shelf-grid">' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'one grid per section'
 lacks shelf/index.html 'shelf-label'
 has shelf/index.html '<a class="shelf-link" href="/sarabhai/">'
