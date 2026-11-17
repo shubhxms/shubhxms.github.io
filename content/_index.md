@@ -35,7 +35,7 @@ likes:
 
 {{< marginfigure src="/images/me_bw.jpg" alt="Shubham as a child" caption="Me, age six." >}}
 
-I'm **Shubham**, a {{< age >}}-year-old technology enthusiast living and working in [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).{{< sidenote >}}TEST NOTE. Ahmedabad was India's first UNESCO World Heritage City, named in 2017.{{< /sidenote >}}
+I'm **Shubham**, a {{< age >}}-year-old technology enthusiast living and working in [Ahmedabad](https://en.wikipedia.org/wiki/Ahmedabad).
 
 I have varied interests, but spend most of my time playing with [computers](/images/i-love-computers-it.gif), trying to make sense of the world using state machines, stories, and science.
 
@@ -48,7 +48,7 @@ On a stretch of [unstructured time](/now), learning about the things I've been c
 I graduated in 2025 from [Ahmedabad University](https://ahduni.edu.in) with a bachelor's degree in Computer Science and a minor in Mathematics. Since then I've shipped early-stage software at two places:
 
 - [Dip](https://dipapp.in), a social media startup: built its REST API, integrated payments and a ledger, and shipped a booking system using custom locks.
-- An ERP for a dealer of earth-mover spare parts: fixed critical bugs on-site, streamlined workflows, and built a task-management system.{{< marginnote >}}TEST NOTE. An unnumbered margin note, set beside the line it belongs to.{{< /marginnote >}}
+- An ERP for a dealer of earth-mover spare parts: fixed critical bugs on-site, streamlined workflows, and built a task-management system.
 
 ## Contact
 
