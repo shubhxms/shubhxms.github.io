@@ -83,11 +83,11 @@ export function stars(rating) {
   return '★'.repeat(Math.floor(rating)) + (rating % 1 ? '½' : '');
 }
 
-// A table row: the title links to the entry, and its link covers the row;
-// pointing at the row shows it in the plate.
+// A table row: the title links to the entry.
 function row(e) {
   const tr = el('tr', `feed-row feed-row--${e.kind}`);
   tr.dataset.id = e.id;
+  tr.tabIndex = 0;
   tr.append(el('td', 'feed-n', String(e.n)));
   tr.append(el('td', 'feed-date', dayMonth(e.date)));
   tr.append(el('td', 'feed-kind', KIND_LABEL[e.kind] || e.kind));
@@ -121,9 +121,10 @@ function feedPage(root) {
   let all = [];
   let shown = [];
   let limit = PAGE;
+  let current = null;
   const byId = new Map();
 
-  // The plate: the entry under the pointer, else a key to the search syntax.
+  // The plate: the entry chosen, else a key to the search syntax.
   function showPlate(e) {
     plate.replaceChildren();
     if (!e) {
@@ -198,7 +199,8 @@ function feedPage(root) {
     more.hidden = rest <= 0;
     more.textContent = `${Math.min(PAGE, rest)} more of ${rest}`;
     markKinds();
-    showPlate(null);
+    if (current && !shown.includes(current)) current = null;
+    showPlate(current);
   }
 
   // Kind buttons write their filter into the query, so the box always says
@@ -253,15 +255,40 @@ function feedPage(root) {
     draw();
   });
 
-  // Pointer or keyboard over a row shows it in the plate.
+  // A click on a line, anywhere but its title, shows the entry in the
+  // plate; on a phone, where there is no plate, it opens the entry.
   const rowOf = (target) => target.closest && target.closest('.feed-row');
-  const show = (event) => {
+  function choose(tr) {
+    if (!plate.offsetParent) {
+      tr.querySelector('a').click();
+      return;
+    }
+    current = byId.get(tr.dataset.id);
+    body.querySelectorAll('.is-shown').forEach((r) => r.classList.remove('is-shown'));
+    tr.classList.add('is-shown');
+    showPlate(current);
+  }
+  body.addEventListener('click', (event) => {
     const tr = rowOf(event.target);
-    if (tr) showPlate(byId.get(tr.dataset.id));
-  };
-  body.addEventListener('mouseover', show);
-  body.addEventListener('focusin', show);
-  body.addEventListener('mouseleave', () => showPlate(null));
+    if (tr && !event.target.closest('a')) choose(tr);
+  });
+  // Lines take the keyboard too: up and down move, Enter or space shows.
+  body.addEventListener('keydown', (event) => {
+    const tr = rowOf(event.target);
+    if (!tr || event.target !== tr) return;
+    const step = { ArrowDown: 'nextElementSibling', ArrowUp: 'previousElementSibling' }[event.key];
+    if (step) {
+      let next = tr[step];
+      while (next && !next.classList.contains('feed-row')) next = next[step];
+      if (next) {
+        event.preventDefault();
+        next.focus();
+      }
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      choose(tr);
+    }
+  });
 
   load(root.dataset.api, (entries) => {
     all = entries;
@@ -284,6 +311,11 @@ function recentList(root) {
     body.replaceChildren(...latest.map(row));
   }, () => {
     root.hidden = true;
+  });
+  // No pane here: a click anywhere on a line opens its entry.
+  body.addEventListener('click', (event) => {
+    const tr = event.target.closest('.feed-row');
+    if (tr && !event.target.closest('a')) tr.querySelector('a').click();
   });
 }
 

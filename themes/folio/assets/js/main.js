@@ -2,6 +2,7 @@
 import { createReader, bindActions, bindBar, bindContents, bindKeys } from './reader.js';
 import { createPalette } from './palette.js';
 import { store } from './storage.js';
+import { bindCore } from './core.js';
 
 // Wide screens size the paper to the window; narrow screens show it as it is.
 const wide = window.matchMedia('(min-width: 801px)');
@@ -44,19 +45,9 @@ function startReader(folio, actions) {
   document.fonts?.ready.then(() => wide.matches && reader.layout());
 
   // Laying out moves everything, so return to a linked #fragment afterwards.
-  const target = linked();
+  const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
   if (target) target.scrollIntoView({ block: 'start' });
 }
-
-// The element the URL's #fragment names. A linked <details> (a book in
-// Core's stacks) opens.
-function linked() {
-  const id = window.location.hash && decodeURIComponent(window.location.hash.slice(1));
-  const target = id && document.getElementById(id);
-  if (target instanceof HTMLDetailsElement) target.open = true;
-  return target;
-}
-window.addEventListener('hashchange', linked);
 
 function start() {
   const actions = {
@@ -77,6 +68,7 @@ function start() {
   if (palette) actions.palette = palette.open;
 
   bindActions(document, actions);
+  bindCore(document);
   bindKeys(actions, () => palette?.open());
   markTheme();
 }

@@ -1,0 +1,33 @@
+{{- /*
+  One Core entry, large, for the preview pane: its cover (or title and
+  maker on a plate the same size), category and year, title, maker, and
+  for an entry with a note, the note's summary and a link to it.
+    entry – the entry; group – its category, if any
+*/}}
+{{- $e := .entry }}
+{{- $cover := partial "core-cover.html" $e }}
+{{- $note := false }}
+{{- with $e.note }}
+{{- $note = index (where site.RegularPages "RelPermalink" .) 0 }}
+{{- if not $note }}{{ errorf "core: note %q is not a page on this site" . }}{{ end }}
+{{- end }}
+<div class="core-peek" data-for="{{ $e.title | anchorize }}">
+  {{- $meta := slice }}
+  {{- with .group }}{{ $meta = $meta | append . }}{{ end }}
+  {{- with $e.year }}{{ $meta = $meta | append . }}{{ end }}
+  <p class="core-peek-kicker">{{ delimit $meta " · " | default "&nbsp;" | safeHTML }}</p>
+  {{- with $cover.thumb }}
+  <img class="core-cover" src="{{ . }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
+  {{- else }}
+  <span class="core-cover core-cover--type" aria-hidden="true">
+    <span class="core-cover-title">{{ $e.title }}</span>
+    <span class="core-cover-by">{{ $e.by }}</span>
+  </span>
+  {{- end }}
+  <p class="core-peek-title">{{ $e.title }}</p>
+  {{- with $e.by }}<p class="core-peek-by">{{ . }}</p>{{ end }}
+  {{- with $note }}
+  <p class="core-peek-blurb">{{ .Params.tldr | default .Summary | plainify | truncate 220 }}</p>
+  <p class="core-peek-more"><a href="{{ .RelPermalink }}">Read the note →</a></p>
+  {{- end }}
+</div>

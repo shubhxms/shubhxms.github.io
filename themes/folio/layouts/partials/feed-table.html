@@ -1,7 +1,7 @@
 {{- /*
   The feed: everything watched, saved and posted, as one searchable table.
-  The script fills it from the feed API; a plate in the margin shows the
-  entry under the pointer, with its picture.
+  The script fills it from the feed API. A title opens its entry; a click
+  anywhere else on the line shows it, with its picture, in the margin.
 */}}
 <div class="feed" data-api="{{ site.Params.feedApi }}">
   <label class="feed-find">
@@ -12,6 +12,8 @@
     <span class="feed-kinds" role="group" aria-label="Show"></span>
     <span class="feed-status" aria-live="polite">Loading…</span>
   </p>
+  {{- /* The table and its preview pane share a top, so they start level. */}}
+  <div class="feed-body">
   <table class="feed-table">
     <thead>
       <tr>
@@ -26,5 +28,6 @@
   </table>
   <button type="button" class="feed-more" hidden></button>
   <div class="feed-rail"><aside class="feed-plate" aria-label="Entry"></aside></div>
+  </div>
   <noscript><p>The feed is built in the browser from <a href="{{ site.Params.feedApi }}/feed">its source</a>.</p></noscript>
 </div>

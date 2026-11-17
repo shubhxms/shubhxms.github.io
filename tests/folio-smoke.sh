@@ -161,6 +161,10 @@ lacks now/index.html '/js/feed'
 # The home page sets the feed's latest entries and the shelf's picks side
 # by side, and no longer carries the stepwell photograph.
 has index.html '<div class="lately">'
+has index.html '>24 more on Core →</a>'
+has index.html '>See all →</a>'
+lacks index.html 'Telegram channel'
+has feed/index.html '<div class="feed-body">'
 lacks index.html 'home-header.jpg'
 has index.html 'class="feed-recent"'
 grep -Eq '<script src="/js/feed(\.min\.[0-9a-f]+)?\.js"' "$OUT/index.html" || fail 'the home page should load the feed script for its recent list'
@@ -189,21 +193,19 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# Core: each list a stack of books lying flat; every line is a spine,
-# coloured from its cover (Hugo reads the dominant colour), with title and
-# maker across it, and opens to show the cover (a 240x360 thumbnail; a
-# type-set plate without one) and the note. No separate shelf or table.
+# Core: practical, like the feed. Each section a table (cover thumbnail,
+# title, maker, year; books by category) with a preview pane beside it in
+# the margin; a click on a row shows it there. Covers are 240x360 WebP
+# thumbnails; a title links only when the entry has a note.
 C="$OUT/core/index.html"
-[ "$(grep -o '<details class="core-book"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'core should stack its 30 books and films'
-[ "$(grep -o '<summary class="core-spine[^"]*" style="[^"]*--c: #[0-9a-f]\{6\}' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'spines with covers take their colour'
-[ "$(grep -o '<img class="core-cover" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
-[ "$(grep -o 'class="core-cover core-cover--type"' "$C" | wc -l | tr -d ' ')" = 10 ] || fail 'entries without covers get a plate'
-[ "$(grep -o '<p class="core-category">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
-lacks core/index.html 'core-shelf'
-lacks core/index.html 'core-table'
-has core/index.html '<details class="core-book" id="vikram-sarabhai-a-life">'
+[ "$(grep -o '<tr class="core-row"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'core should list its 30 books and films'
+[ "$(grep -o '<img class="core-thumb" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
+[ "$(grep -o '<aside class="core-plate"' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'books and films each get a preview pane'
+[ "$(grep -o '<tr class="core-group">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
+has core/index.html '<a class="core-title" href="/sarabhai/">Vikram Sarabhai: A Life</a>'
+lacks core/index.html 'core-stack'
 has core/index.html '<li><a href="#films-shows--anime">Films, Shows &amp; Anime</a></li>'
-has core/index.html '<p class="core-blurb">In this I gather some thoughts on Vikram Sarabhai'
+has core/index.html 'In this I gather some thoughts on Vikram Sarabhai'
 has core/index.html '<a href="https://dynomight.substack.com/">Dynomight</a>'
 lacks index.html 'src="/images/shelf/chaos.jpg"'
 grep -q 'url=https://shubhamshah.net/core/' "$OUT/shelf/index.html" || fail '/shelf should lead to /core/'
