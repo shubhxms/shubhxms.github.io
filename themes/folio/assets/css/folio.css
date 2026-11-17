@@ -1306,7 +1306,8 @@ hr {
 
 .core-section {
     display: grid;
-    grid-template-columns: var(--text-w) var(--note-w);
+    /* The covers take half again the margin's width, from the table. */
+    grid-template-columns: minmax(0, 1fr) calc(var(--note-w) * 1.5);
     gap: 0 var(--gutter);
     align-items: start;
     width: calc(var(--text-w) + var(--gutter) + var(--note-w));
@@ -1363,7 +1364,7 @@ hr {
 }
 
 .sheet-body td.core-by {
-    width: 38%;
+    width: 40%;
     font-style: italic;
     color: var(--text-secondary);
 }
@@ -1445,7 +1446,7 @@ hr {
 .core-cover {
     display: block;
     box-sizing: border-box;
-    width: 62%;
+    width: 72%;
     height: auto;
     aspect-ratio: 2 / 3;
     margin: 0.6em 0;
