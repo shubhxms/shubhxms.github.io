@@ -1,6 +1,6 @@
 ---
 title: "Shelf"
 url: /shelf
-tldr: My favourite books and films.
+tldr: Books and films, by their covers.
 layout: shelf
 ---

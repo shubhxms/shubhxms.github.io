@@ -1,7 +1,7 @@
 ---
 title: "Feed"
 url: /feed
-tldr: Everything I watch, read and save, as it happens. It updates itself.
+tldr: What I'm watching, reading, and dropping — a unified activity wall. Auto-updated.
 layout: feed
 wide: true
 aliases: ["/stream"]
