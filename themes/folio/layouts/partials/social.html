@@ -1,0 +1,28 @@
+{{- /* Link previews (Open Graph, X/Twitter): title, summary and a card
+       drawn for the page (og-image.html), shown large. */ -}}
+{{- $description := partial "description.html" . }}
+{{- $card := partial "og-image.html" . }}
+{{- $title := cond .IsHome (.Title | plainify) (printf "%s · Shubham Shah" (.Title | plainify)) }}
+<meta property="og:site_name" content="Shubham Shah" />
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="{{ $card.Permalink }}" />
+<meta property="og:image:width" content="{{ $card.Width }}" />
+<meta property="og:image:height" content="{{ $card.Height }}" />
+<meta property="og:image:alt" content="{{ $title }}: {{ $description }}" />
+{{- if and .IsPage (eq .Section "notes") }}
+<meta property="og:type" content="article" />
+{{- with .Date }}<meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />{{ end }}
+{{- with .Lastmod }}<meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}" />{{ end }}
+{{- range .Params.tags }}<meta property="article:tag" content="{{ . }}" />{{ end }}
+{{- else }}
+<meta property="og:type" content="website" />
+{{- end }}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@shubhxms" />
+<meta name="twitter:title" content="{{ $title }}" />
+<meta name="twitter:description" content="{{ $description }}" />
+<meta name="twitter:image" content="{{ $card.Permalink }}" />
+<link rel="canonical" href="{{ .Permalink }}" />

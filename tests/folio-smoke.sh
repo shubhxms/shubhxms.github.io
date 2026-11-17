@@ -276,4 +276,18 @@ grep -q ':root\[data-layout="plain"\] .shell { padding: 0; } /\* phone \*/' "$CS
 # Ragged right on a phone: justified text leaves rivers in a narrow column.
 grep -q 'text-align: left; /\* phone \*/' "$CSS" || fail 'phone text should be ragged right'
 
+# Link previews: every page has a description and its own 1200x630 card
+# (its title drawn on the site's paper), shown large on X/Twitter.
+for page in index.html sarabhai/index.html now/index.html notes/index.html; do
+	grep -Eq '<meta property="og:image" content="https?://[^"]+/og/[^"]+\.png"' "$OUT/$page" || fail "$page should have a preview card"
+	has "$page" '<meta property="og:image:width" content="1200"'
+	has "$page" '<meta property="og:image:height" content="630"'
+	has "$page" '<meta name="twitter:card" content="summary_large_image"'
+	grep -Eq '<meta property="og:description" content="[^"]+"' "$OUT/$page" || fail "$page should have a preview description"
+done
+has index.html '<meta name="twitter:site" content="@shubhxms"'
+[ "$(grep -o '<meta property="og:image" content="[^"]*"' "$OUT/index.html")" != "$(grep -o '<meta property="og:image" content="[^"]*"' "$OUT/sarabhai/index.html")" ] || fail 'each page should get its own card'
+lacks index.html 'content="personal website of shubham shah"'
+[ "$(grep -c 'twitter:card' "$OUT/index.html")" = 1 ] || fail 'one twitter:card'
+
 printf 'folio smoke tests passed\n'

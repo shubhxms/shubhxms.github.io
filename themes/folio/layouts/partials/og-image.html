@@ -1,0 +1,31 @@
+{{- /*
+  A page's link-preview card: the site's blank card (assets/og/base.png,
+  drawn by make-base.py) with the site name, the page's title and its
+  summary written on in the site's own faces. Returns the image.
+*/ -}}
+{{- $base := resources.Get "og/base.png" }}
+{{- $mono := resources.Get "og/SpaceMono-Bold.ttf" }}
+{{- $bold := resources.Get "og/CrimsonText-Bold.ttf" }}
+{{- $italic := resources.Get "og/CrimsonText-Italic.ttf" }}
+{{- $ink := "#000000" }}
+{{- $grey := "#4a4f58" }}
+
+{{- $label := "SHUBHAMSHAH.NET" }}
+{{- with .Section }}{{ $label = printf "%s / %s" $label (upper .) }}{{ end }}
+{{- $title := .Title | plainify | htmlUnescape }}
+{{- $line := partial "description.html" . }}
+{{- if .IsHome }}{{ $line = replace (.Params.subtitle | default "") "<br>" " " | plainify | htmlUnescape }}{{ end }}
+
+{{- /* About 26 characters fit on a line of the title, and it gets two
+       at most; the summary follows a line's height below. (truncate
+       escapes HTML, so unescape after it.) */}}
+{{- $title = truncate 52 $title | htmlUnescape }}
+{{- $line = truncate 110 $line | htmlUnescape }}
+{{- $lines := cond (gt (len $title) 26) 2 1 }}
+{{- $lineY := add 150 (mul $lines 92) 40 }}
+{{- $filters := slice
+  (images.Text $label (dict "font" $mono "size" 22 "color" $ink "x" 72 "y" 66))
+  (images.Text $title (dict "font" $bold "size" 78 "color" $ink "x" 72 "y" 150 "linespacing" 6))
+  (images.Text $line (dict "font" $italic "size" 36 "color" $grey "x" 72 "y" $lineY "linespacing" 8))
+}}
+{{- return ($base | images.Filter $filters) }}

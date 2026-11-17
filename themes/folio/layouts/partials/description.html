@@ -1,0 +1,8 @@
+{{- /* A page's one-line summary, for search results and link previews:
+       its description, else its tldr, else (home) its subtitle, else the
+       site's. Plain text. */ -}}
+{{- $d := .Description }}
+{{- if not $d }}{{ $d = .Params.tldr }}{{ end }}
+{{- if and (not $d) .IsHome }}{{ $d = replace (.Params.subtitle | default "") "<br>" " " }}{{ end }}
+{{- if not $d }}{{ $d = site.Params.description }}{{ end }}
+{{- return ($d | plainify | htmlUnescape | strings.TrimSpace) }}
