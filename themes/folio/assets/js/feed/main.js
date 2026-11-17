@@ -124,7 +124,8 @@ function feedPage(root) {
   let current = null;
   const byId = new Map();
 
-  // The plate: the entry chosen, else a key to the search syntax.
+  // The plate: the entry under the pointer, else the one chosen, else a key
+  // to the search syntax.
   function showPlate(e) {
     plate.replaceChildren();
     if (!e) {
@@ -272,6 +273,13 @@ function feedPage(root) {
     const tr = rowOf(event.target);
     if (tr && !event.target.closest('a')) choose(tr);
   });
+  // Pointing at a line previews it; leaving the table goes back to the
+  // line chosen, if any.
+  body.addEventListener('mouseover', (event) => {
+    const tr = rowOf(event.target);
+    if (tr) showPlate(byId.get(tr.dataset.id));
+  });
+  body.addEventListener('mouseleave', () => showPlate(current));
   // Lines take the keyboard too: up and down move, Enter or space shows.
   body.addEventListener('keydown', (event) => {
     const tr = rowOf(event.target);

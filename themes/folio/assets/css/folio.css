@@ -1299,9 +1299,10 @@ hr {
 }
 
 /* ---------- Core: tables with a preview pane, like the feed ----------
-   Each section is a table (thumbnail, title, maker, year) and, beside it
-   in the margin, a pane that shows the chosen line large (core.js); with
-   none chosen, the first. The pane sticks while its table scrolls by. */
+   Each section is a dense table (title, maker, year) and, beside it in
+   the margin, a pane: at rest a wall of the section's covers; pointing at
+   a line or cover shows that entry large, a click keeps it (core.js). The
+   pane sticks while its table scrolls by. */
 
 .core-section {
     display: grid;
@@ -1320,9 +1321,9 @@ hr {
 }
 
 .sheet-body .core-table td {
-    padding: 0.2em 0.6em 0.2em 0;
+    padding: 0.18em 0.6em 0.18em 0;
     border-bottom: 1px solid var(--rule);
-    vertical-align: middle;
+    vertical-align: baseline;
 }
 
 .sheet-body .core-group th {
@@ -1349,31 +1350,12 @@ hr {
     background: var(--callout-bg);
 }
 
-.core-row.is-shown {
+.core-row.is-chosen {
     background: var(--selection);
 }
 
-.core-row.is-shown td {
+.core-row.is-chosen td {
     color: var(--selection-text);
-}
-
-.sheet-body td.core-pic {
-    width: 1.6em;
-    padding-right: 0.7em;
-}
-
-.core-thumb {
-    display: block;
-    box-sizing: border-box;
-    width: 1.6em;
-    height: 2.4em;
-    object-fit: cover;
-    border: 1px solid var(--border);
-}
-
-.core-thumb--none {
-    border-style: dashed;
-    border-color: var(--rule);
 }
 
 .core-title {
@@ -1403,12 +1385,44 @@ hr {
     line-height: 1.3;
 }
 
+/* At rest: the section's covers, three to a row, each leading to its
+   line. */
+.core-wall {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    padding-top: 0.45em;
+    border-top: 1px solid var(--border);
+}
+
+.core-plate.is-peeking .core-wall {
+    display: none;
+}
+
+.core-wall-item {
+    display: block;
+}
+
+.core-thumb {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+.core-wall-item:is(:hover, :focus-visible) .core-thumb {
+    outline: 2px solid var(--text);
+    outline-offset: 1px;
+}
+
 .core-peek {
     display: none;
 }
 
-.core-peek.is-shown,
-.core-plate:not(:has(.is-shown)) .core-peek:first-child {
+.core-peek.is-shown {
     display: block;
 }
 
@@ -1897,13 +1911,30 @@ hr {
         min-width: 0;
     }
 
-    /* Core on a phone: the table alone, maker under title, no pane. */
+    /* Core on a phone: the covers as a strip above the table; a line
+       opens its note. */
     .core-section {
-        display: block;
+        display: flex;
+        flex-direction: column;
         width: auto;
     }
 
     .core-plate {
+        position: static;
+        order: -1;
+        margin-bottom: 0.6em;
+    }
+
+    .core-wall {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        border-top: 0;
+    }
+
+    .core-plate.is-peeking .core-wall {
+        display: grid;
+    }
+
+    .core-peek.is-shown {
         display: none;
     }
 

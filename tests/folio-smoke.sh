@@ -200,15 +200,19 @@ has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.
 lacks notes/index.html 'substack.com/embed'
 grep -q 'sheet--dropcap .sheet-body > p:first-of-type::first-letter' "$CSS" || fail 'raised cap rule missing'
 
-# Core: practical, like the feed. Each section a table (cover thumbnail,
-# title, maker, year; books by category) with a preview pane beside it in
-# the margin; a click on a row shows it there. Covers are 240x360 WebP
-# thumbnails; a title links only when the entry has a note.
+# Core: practical, like the feed. Each section a dense table (title,
+# maker, year; books by category) and beside it a pane: at rest, a wall of
+# the section's covers; pointing at a line or cover shows that entry
+# large; a click keeps it. Covers are 240x360 WebP thumbnails; a title
+# links only when the entry has a note.
 C="$OUT/core/index.html"
 [ "$(grep -o '<tr class="core-row"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'core should list its 30 books and films'
-[ "$(grep -o '<img class="core-thumb" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'covers should be resized thumbnails'
-[ "$(grep -o '<aside class="core-plate"' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'books and films each get a preview pane'
+[ "$(grep -o '<div class="core-wall">' "$C" | wc -l | tr -d ' ')" = 2 ] || fail 'books and films each get a wall of covers'
+[ "$(grep -o '<img class="core-thumb" src="/images/shelf/[^"]*_hu_[^"]*\.webp"' "$C" | wc -l | tr -d ' ')" = 20 ] || fail 'every cover should be on its wall, as a thumbnail'
+[ "$(grep -o '<div class="core-peek"' "$C" | wc -l | tr -d ' ')" = 30 ] || fail 'every entry should have its preview'
 [ "$(grep -o '<tr class="core-group">' "$C" | wc -l | tr -d ' ')" = 3 ] || fail 'books keep their three categories'
+lacks core/index.html 'core-pic'
+has core/index.html '<a class="core-wall-item" href="#chaos" data-for="chaos" title="Chaos">'
 has core/index.html '<a class="core-title" href="/sarabhai/">Vikram Sarabhai: A Life</a>'
 lacks core/index.html 'core-stack'
 has core/index.html '<li><a href="#films-shows--anime">Films, Shows &amp; Anime</a></li>'

@@ -1,10 +1,10 @@
 {{- /*
   Core (data/core.yaml), set like the feed. A section with covers is a
-  table (cover thumbnail, title, maker, year; books by category) with a
-  preview pane beside it in the margin: a click on a line shows that
-  entry there, large (core-peek.html); before any, the first. A title
-  links only when the entry has a note. A section without covers
-  (Internet) is a plain list.
+  dense table (title, maker, year; books by category) with a pane beside
+  it in the margin. At rest the pane is a wall of the section's covers;
+  pointing at a line or a cover shows that entry large (core-peek.html),
+  and a click keeps it (core.js). A title links only when the entry has
+  a note. A section without covers (Internet) is a plain list.
 */}}
 {{- range .sections }}
 {{- $groups := .lists | default (slice (dict "items" .items)) }}
@@ -18,12 +18,7 @@
     <tbody>
       {{- with $group }}<tr class="core-group"><th colspan="4" scope="rowgroup">{{ . }}</th></tr>{{ end }}
       {{- range .items }}
-      {{- $cover := partial "core-cover.html" . }}
       <tr class="core-row" id="{{ .title | anchorize }}" tabindex="0">
-        <td class="core-pic">
-          {{- with $cover.thumb }}<img class="core-thumb" src="{{ . }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
-          {{- else }}<span class="core-thumb core-thumb--none" aria-hidden="true"></span>{{ end -}}
-        </td>
         <td class="core-name">
           {{- if .note }}<a class="core-title" href="{{ .note | relURL }}">{{ .title }}</a>
           {{- else }}<span class="core-title">{{ .title }}</span>{{ end -}}
@@ -35,7 +30,16 @@
     </tbody>
     {{- end }}
   </table>
-  <aside class="core-plate" aria-label="{{ .name }}: the chosen entry">
+  <aside class="core-plate" aria-label="{{ .name }}: covers, and the entry chosen">
+    <div class="core-wall">
+      {{- range $entries }}
+      {{- $id := .title | anchorize }}
+      {{- $title := .title }}
+      {{- with (partial "core-cover.html" .).thumb }}
+      <a class="core-wall-item" href="#{{ $id }}" data-for="{{ $id }}" title="{{ $title }}"><img class="core-thumb" src="{{ . }}" alt="{{ $title }}" width="240" height="360" loading="lazy" decoding="async" /></a>
+      {{- end }}
+      {{- end }}
+    </div>
     {{- range $groups }}
     {{- $group := .name }}
     {{- range .items }}{{ partial "core-peek.html" (dict "entry" . "group" $group) }}{{ end }}
