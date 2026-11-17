@@ -1411,8 +1411,8 @@ hr {
 }
 
 /* Printer's marks for a side column that would stand empty at the top of
-   a page: an ace and the four suits, small and in a row, each in one
-   process ink like the colour dots in a newspaper's margin. Shown only
+   a page: an ace and the four suits, small and in a row, in black like
+   the dots in a newspaper's margin. Shown only
    beside the text, in side mode. */
 .card-corner {
     display: none;
@@ -1421,16 +1421,12 @@ hr {
     font-weight: 700;
     line-height: 1;
     white-space: nowrap;
+    color: var(--text);
 }
 
 .pip + .pip {
     margin-left: 0.3em;
 }
-
-.pip--k { color: var(--text); }
-.pip--c { color: rgb(0 160 225); }
-.pip--m { color: rgb(230 0 125); }
-.pip--y { color: rgb(235 185 0); }
 
 /* ---------- Subscribe: the newsletter sign-up ---------- */
 

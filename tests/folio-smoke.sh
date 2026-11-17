@@ -187,7 +187,8 @@ grep -q ':root\[data-heads="side"\] .sheet-body > h2 {' "$CSS" || fail 'side hea
 # marks (an ace, then the four suits, paan first) in the empty side
 # column; one that opens with a head would not.
 has now/index.html '<span class="card-corner" aria-hidden="true">'
-has now/index.html '<span class="pip pip--k">A</span><span class="pip pip--m">♥︎</span><span class="pip pip--c">♠︎</span><span class="pip pip--y">♦︎</span><span class="pip pip--k">♣︎</span>'
+has now/index.html '<span class="pip">A</span><span class="pip">♥︎</span><span class="pip">♠︎</span><span class="pip">♦︎</span><span class="pip">♣︎</span>'
+! grep -q 'pip--' "$CSS" || fail 'the marks are black and white, no inks'
 lacks core/index.html 'class="card-corner"' # opens with a comment, then a head
 ! grep -q -- '--spade' "$CSS" || fail 'the old spade mask should be gone'
 lacks contact/index.html 'class="ornament'
