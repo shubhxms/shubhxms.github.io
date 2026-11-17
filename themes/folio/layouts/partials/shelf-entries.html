@@ -1,4 +1,4 @@
-{{- /* A Core section's entries, flat: its items, or its lists' items. */}}
+{{- /* A shelf section's entries, flat: its items, or its lists' items. */}}
 {{- $entries := slice }}
 {{- range .lists }}{{ $entries = $entries | append .items }}{{ end }}
 {{- with .items }}{{ $entries = $entries | append . }}{{ end }}

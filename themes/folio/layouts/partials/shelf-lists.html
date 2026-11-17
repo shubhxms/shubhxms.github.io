@@ -1,0 +1,56 @@
+{{- /*
+  The shelf (data/shelf.yaml), set like the feed. A section with covers is a
+  dense table (title, maker, year; books by category) with a pane beside
+  it in the margin. At rest the pane is a wall of the section's covers;
+  pointing at a line or a cover shows that entry large (shelf-peek.html),
+  and a click keeps it (shelf.js). A title links only when the entry has
+  a note. A section without covers (Internet) is a plain list.
+*/}}
+{{- range .sections }}
+{{- $groups := .lists | default (slice (dict "items" .items)) }}
+{{- $entries := partial "shelf-entries.html" . }}
+<h2 id="{{ .name | anchorize }}">{{ .name }}</h2>
+{{- if where $entries "cover" "!=" nil }}
+<div class="shelf-section">
+  <table class="shelf-table">
+    {{- range $groups }}
+    {{- $group := .name }}
+    <tbody>
+      {{- with $group }}<tr class="shelf-group"><th colspan="4" scope="rowgroup">{{ . }}</th></tr>{{ end }}
+      {{- range .items }}
+      <tr class="shelf-row" id="{{ .title | anchorize }}" tabindex="0">
+        <td class="shelf-name">
+          {{- if .note }}<a class="shelf-title" href="{{ .note | relURL }}">{{ .title }}</a>
+          {{- else }}<span class="shelf-title">{{ .title }}</span>{{ end -}}
+        </td>
+        <td class="shelf-by">{{ .by }}</td>
+        <td class="shelf-year">{{ .year }}</td>
+      </tr>
+      {{- end }}
+    </tbody>
+    {{- end }}
+  </table>
+  <aside class="shelf-plate" aria-label="{{ .name }}: covers, and the entry chosen">
+    <div class="shelf-wall">
+      {{- range $entries }}
+      {{- $id := .title | anchorize }}
+      {{- $title := .title }}
+      {{- with (partial "shelf-cover.html" .).thumb }}
+      <a class="shelf-wall-item" href="#{{ $id }}" data-for="{{ $id }}" title="{{ $title }}"><img class="shelf-thumb" src="{{ . }}" alt="{{ $title }}" width="240" height="360" loading="lazy" decoding="async" /></a>
+      {{- end }}
+      {{- end }}
+    </div>
+    {{- range $groups }}
+    {{- $group := .name }}
+    {{- range .items }}{{ partial "shelf-peek.html" (dict "entry" . "group" $group) }}{{ end }}
+    {{- end }}
+  </aside>
+</div>
+{{- else }}
+<ul class="shelf-links">
+  {{- range $entries }}
+  <li><a href="{{ .url }}">{{ .title }}</a>{{ with .what }} <span class="shelf-what">{{ . }}</span>{{ end }}</li>
+  {{- end }}
+</ul>
+{{- end }}
+{{- end }}

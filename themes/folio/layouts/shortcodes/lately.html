@@ -1,13 +1,13 @@
 {{- /*
   The home page's "lately": the feed's newest entries, then the shelf's
-  picks (pick: true in data/core.yaml), each with a way to the rest.
+  picks (pick: true in data/shelf.yaml), each with a way to the rest.
   {{< lately 6 >}}
 */}}
 {{- $count := .Get 0 | default 6 }}
 {{- $picks := slice }}
 {{- $shelved := 0 }}
-{{- range site.Data.core.sections }}
-{{- range partial "core-entries.html" . }}
+{{- range site.Data.shelf.sections }}
+{{- range partial "shelf-entries.html" . }}
 {{- if or .cover .year .by }}{{ $shelved = add $shelved 1 }}{{ end }}
 {{- if .pick }}{{ $picks = $picks | append . }}{{ end }}
 {{- end }}
@@ -26,11 +26,11 @@
     <p class="lately-kicker">On the shelf</p>
     <div class="shelf-strip">
       {{- range $picks }}
-      <a class="shelf-pick" href="{{ .note | default (printf "core/#%s" (anchorize .title)) | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
-        <img src="{{ (partial "core-cover.html" .).thumb }}" alt="{{ .title }}" width="240" height="360" decoding="async" />
+      <a class="shelf-pick" href="{{ .note | default (printf "shelf/#%s" (anchorize .title)) | relURL }}" title="{{ .title }}{{ with .by }} — {{ . }}{{ end }}{{ with .year }} ({{ . }}){{ end }}">
+        <img src="{{ (partial "shelf-cover.html" .).thumb }}" alt="{{ .title }}" width="240" height="360" decoding="async" />
       </a>
       {{- end }}
     </div>
-    <p class="lately-more"><a href="{{ "core/" | relURL }}">{{ sub $shelved (len $picks) }} more on Core →</a></p>
+    <p class="lately-more"><a href="{{ "shelf/" | relURL }}">{{ sub $shelved (len $picks) }} more on the Shelf →</a></p>
   </section>
 </div>

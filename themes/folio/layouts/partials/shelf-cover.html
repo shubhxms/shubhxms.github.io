@@ -10,7 +10,7 @@
 {{- $colour := index .Colors 0 }}
 {{- $out = dict "thumb" $thumb.RelPermalink "colour" $colour.ColorHex "light" (lt $colour.Luminance 0.45) }}
 {{- else }}
-{{- errorf "core: cover %q is not under static/images/shelf" . }}
+{{- errorf "shelf: cover %q is not under static/images/shelf" . }}
 {{- end }}
 {{- end }}
 {{- return $out }}

@@ -1298,13 +1298,13 @@ hr {
     text-align: left;
 }
 
-/* ---------- Core: tables with a preview pane, like the feed ----------
+/* ---------- Shelf: tables with a preview pane, like the feed ----------
    Each section is a dense table (title, maker, year) and, beside it in
    the margin, a pane: at rest a wall of the section's covers; pointing at
-   a line or cover shows that entry large, a click keeps it (core.js). The
+   a line or cover shows that entry large, a click keeps it (shelf.js). The
    pane sticks while its table scrolls by. */
 
-.core-section {
+.shelf-section {
     display: grid;
     /* The covers take half again the margin's width, from the table. */
     grid-template-columns: minmax(0, 1fr) calc(var(--note-w) * 1.5);
@@ -1314,20 +1314,20 @@ hr {
     margin: 0.3em 0 1em;
 }
 
-.sheet-body table.core-table {
+.sheet-body table.shelf-table {
     margin: 0;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     font-size: 0.9em;
 }
 
-.sheet-body .core-table td {
+.sheet-body .shelf-table td {
     padding: 0.18em 0.6em 0.18em 0;
     border-bottom: 1px solid var(--rule);
     vertical-align: baseline;
 }
 
-.sheet-body .core-group th {
+.sheet-body .shelf-group th {
     padding: 0.7em 0 0.15em;
     border-bottom: 1px solid var(--border);
     font-family: var(--mono);
@@ -1338,38 +1338,38 @@ hr {
     text-transform: uppercase;
 }
 
-.sheet-body .core-table tbody:first-child .core-group th {
+.sheet-body .shelf-table tbody:first-child .shelf-group th {
     padding-top: 0.35em;
 }
 
-.core-row {
+.shelf-row {
     cursor: pointer;
 }
 
-.core-row:is(:hover, :focus-visible) {
+.shelf-row:is(:hover, :focus-visible) {
     outline: none;
     background: var(--callout-bg);
 }
 
-.core-row.is-chosen {
+.shelf-row.is-chosen {
     background: var(--selection);
 }
 
-.core-row.is-chosen td {
+.shelf-row.is-chosen td {
     color: var(--selection-text);
 }
 
-.core-title {
+.shelf-title {
     font-weight: 600;
 }
 
-.sheet-body td.core-by {
+.sheet-body td.shelf-by {
     width: 40%;
     font-style: italic;
     color: var(--text-secondary);
 }
 
-.sheet-body td.core-year {
+.sheet-body td.shelf-year {
     width: 3em;
     padding-right: 0;
     font-family: var(--mono);
@@ -1379,7 +1379,7 @@ hr {
 }
 
 /* The pane. */
-.core-plate {
+.shelf-plate {
     position: sticky;
     top: calc(var(--bar-h) + 16px);
     font-size: 0.8em;
@@ -1388,7 +1388,7 @@ hr {
 
 /* At rest: the section's covers, three to a row, each leading to its
    line. */
-.core-wall {
+.shelf-wall {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 5px;
@@ -1396,15 +1396,15 @@ hr {
     border-top: 1px solid var(--border);
 }
 
-.core-plate.is-peeking .core-wall {
+.shelf-plate.is-peeking .shelf-wall {
     display: none;
 }
 
-.core-wall-item {
+.shelf-wall-item {
     display: block;
 }
 
-.core-thumb {
+.shelf-thumb {
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -1414,25 +1414,25 @@ hr {
     border: 1px solid var(--border);
 }
 
-.core-wall-item:is(:hover, :focus-visible) .core-thumb {
+.shelf-wall-item:is(:hover, :focus-visible) .shelf-thumb {
     outline: 2px solid var(--text);
     outline-offset: 1px;
 }
 
-.core-peek {
+.shelf-peek {
     display: none;
 }
 
-.core-peek.is-shown {
+.shelf-peek.is-shown {
     display: block;
 }
 
-.sheet-body .core-peek p {
+.sheet-body .shelf-peek p {
     margin: 0 0 0.35em;
     text-align: left;
 }
 
-.sheet-body .core-peek-kicker {
+.sheet-body .shelf-peek-kicker {
     padding: 0.35em 0 0.3em;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
@@ -1443,7 +1443,7 @@ hr {
     color: var(--text-secondary);
 }
 
-.core-cover {
+.shelf-cover {
     display: block;
     box-sizing: border-box;
     width: 72%;
@@ -1456,7 +1456,7 @@ hr {
 }
 
 /* Without a cover: its title and maker, set like a plain typographic one. */
-.core-cover--type {
+.shelf-cover--type {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1466,31 +1466,31 @@ hr {
     line-height: 1.1;
 }
 
-.core-cover-title {
+.shelf-cover-title {
     font-size: 1.1em;
     overflow-wrap: anywhere;
 }
 
-.core-cover-by {
+.shelf-cover-by {
     padding-top: 0.3em;
     border-top: 1px solid var(--rule);
     font-size: 0.8em;
     color: var(--text-secondary);
 }
 
-.sheet-body .core-peek-title {
+.sheet-body .shelf-peek-title {
     font-size: 1.25em;
     font-weight: 700;
     line-height: 1.15;
 }
 
-.sheet-body .core-peek-by {
+.sheet-body .shelf-peek-by {
     font-style: italic;
     color: var(--text-secondary);
 }
 
 /* The internet: no covers, so a plain list, kind after name. */
-.core-what {
+.shelf-what {
     font-family: var(--mono);
     font-size: 0.68em;
     letter-spacing: 0.04em;
@@ -1912,34 +1912,34 @@ hr {
         min-width: 0;
     }
 
-    /* Core on a phone: the covers as a strip above the table; a line
+    /* The shelf on a phone: the covers as a strip above the table; a line
        opens its note. */
-    .core-section {
+    .shelf-section {
         display: flex;
         flex-direction: column;
         width: auto;
     }
 
-    .core-plate {
+    .shelf-plate {
         position: static;
         order: -1;
         margin-bottom: 0.6em;
     }
 
-    .core-wall {
+    .shelf-wall {
         grid-template-columns: repeat(6, minmax(0, 1fr));
         border-top: 0;
     }
 
-    .core-plate.is-peeking .core-wall {
+    .shelf-plate.is-peeking .shelf-wall {
         display: grid;
     }
 
-    .core-peek.is-shown {
+    .shelf-peek.is-shown {
         display: none;
     }
 
-    .sheet-body td.core-by {
+    .sheet-body td.shelf-by {
         display: none;
     }
 

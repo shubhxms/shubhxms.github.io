@@ -1,0 +1,33 @@
+{{- /*
+  One shelf entry, large, for the preview pane: its cover (or title and
+  maker on a plate the same size), category and year, title, maker, and
+  for an entry with a note, the note's summary and a link to it.
+    entry – the entry; group – its category, if any
+*/}}
+{{- $e := .entry }}
+{{- $cover := partial "shelf-cover.html" $e }}
+{{- $note := false }}
+{{- with $e.note }}
+{{- $note = index (where site.RegularPages "RelPermalink" .) 0 }}
+{{- if not $note }}{{ errorf "shelf: note %q is not a page on this site" . }}{{ end }}
+{{- end }}
+<div class="shelf-peek" data-for="{{ $e.title | anchorize }}">
+  {{- $meta := slice }}
+  {{- with .group }}{{ $meta = $meta | append . }}{{ end }}
+  {{- with $e.year }}{{ $meta = $meta | append . }}{{ end }}
+  <p class="shelf-peek-kicker">{{ delimit $meta " · " | default "&nbsp;" | safeHTML }}</p>
+  {{- with $cover.thumb }}
+  <img class="shelf-cover" src="{{ . }}" alt="" width="240" height="360" loading="lazy" decoding="async" />
+  {{- else }}
+  <span class="shelf-cover shelf-cover--type" aria-hidden="true">
+    <span class="shelf-cover-title">{{ $e.title }}</span>
+    <span class="shelf-cover-by">{{ $e.by }}</span>
+  </span>
+  {{- end }}
+  <p class="shelf-peek-title">{{ $e.title }}</p>
+  {{- with $e.by }}<p class="shelf-peek-by">{{ . }}</p>{{ end }}
+  {{- with $note }}
+  <p class="shelf-peek-blurb">{{ .Params.tldr | default .Summary | plainify | truncate 220 }}</p>
+  <p class="shelf-peek-more"><a href="{{ .RelPermalink }}">Read the note →</a></p>
+  {{- end }}
+</div>

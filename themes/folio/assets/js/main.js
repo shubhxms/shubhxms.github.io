@@ -2,7 +2,7 @@
 import { createReader, bindActions, bindBar, bindContents, bindKeys } from './reader.js';
 import { createPalette } from './palette.js';
 import { store } from './storage.js';
-import { bindCore } from './core.js';
+import { bindShelf } from './shelf.js';
 
 // Wide screens size the paper to the window; narrow screens show it as it is.
 const wide = window.matchMedia('(min-width: 801px)');
@@ -56,7 +56,7 @@ function start() {
   if (palette) actions.palette = palette.open;
 
   bindActions(document, actions);
-  bindCore(document);
+  bindShelf(document);
   bindKeys(actions, () => palette?.open());
   markTheme();
 }
