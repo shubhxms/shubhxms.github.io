@@ -20,6 +20,17 @@ function setTheme(mode) {
   markTheme();
 }
 
+// The phone masthead's Menu button shows and hides the pages.
+function toggleMenu() {
+  const nav = document.querySelector('.sidebar-nav');
+  const button = nav?.querySelector('[data-action="menu"]');
+  if (!nav || !button) return;
+  const open = nav.dataset.menu !== 'open';
+  nav.dataset.menu = open ? 'open' : 'closed';
+  button.setAttribute('aria-expanded', String(open));
+  button.textContent = open ? 'Close' : 'Menu';
+}
+
 function startReader(folio, actions) {
   const reader = createReader(folio);
   Object.assign(actions, reader.actions);
@@ -45,6 +56,7 @@ function start() {
     print: () => window.print(),
     'theme-light': () => setTheme('light'),
     'theme-dark': () => setTheme('dark'),
+    menu: toggleMenu,
   };
 
   const folio = document.querySelector('.folio');

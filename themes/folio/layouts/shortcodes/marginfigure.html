@@ -1,6 +1,7 @@
-{{- /* An image in the margin: {{< marginfigure src="…" alt="…" caption="…" >}} */ -}}
+{{- /* An image in the margin: {{< marginfigure src="…" alt="…" caption="…" >}}
+       Shown about 200px wide, so a 600px copy is sharp on any screen. */ -}}
 <figure class="marginfigure">
-  <img src="{{ .Get "src" }}" alt="{{ .Get "alt" | default (.Get "caption" | plainify) }}" />
+  <img src="{{ partial "fit-image.html" (dict "src" (.Get "src") "width" 600) }}" alt="{{ .Get "alt" | default (.Get "caption" | plainify) }}" />
   {{- with .Get "caption" }}
   <figcaption>{{ . | markdownify }}</figcaption>
   {{- end }}

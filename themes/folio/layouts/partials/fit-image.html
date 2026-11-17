@@ -1,0 +1,22 @@
+{{- /*
+  A site image at the size it is shown, as WebP: (dict "src" "/images/…"
+  "width" 600) gives the URL of a copy at most that wide (never enlarged).
+  An image that isn't under static/images (an outside URL), or a GIF
+  (which would lose its animation), comes back as it was.
+*/ -}}
+{{- $src := .src }}
+{{- $out := $src }}
+{{- if and (hasPrefix $src "/images/") (not (hasSuffix (lower $src) ".gif")) }}
+  {{- with resources.Get (strings.TrimPrefix "/" $src) }}
+    {{- $img := . }}
+    {{- if gt $img.Width $.width }}
+      {{- $img = $img.Resize (printf "%dx webp q80" $.width) }}
+    {{- else }}
+      {{- $img = $img.Process "webp q80" }}
+    {{- end }}
+    {{- $out = $img.RelPermalink }}
+  {{- else }}
+    {{- errorf "fit-image: %q is not under static/images" $src }}
+  {{- end }}
+{{- end }}
+{{- return $out }}

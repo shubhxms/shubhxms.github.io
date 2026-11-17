@@ -6,9 +6,7 @@ cascade:
   stats: true
   dropcap: true
 ---
- <div class="hero-img">
-  <img src="/images/notes-header.jpeg" alt="typewriter for sale at ravivari bazaar in ahmedabad" style="object-position: center 85%;">
-</div> 
+{{< hero src="/images/notes-header.jpeg" alt="typewriter for sale at ravivari bazaar in ahmedabad" position="center 85%" >}}
 
 {{< subscribe "shubhxms" >}}
 

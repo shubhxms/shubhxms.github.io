@@ -1,0 +1,6 @@
+{{- /* A wide, short photo across the top of a page:
+       {{< hero src="…" alt="…" position="center 85%" >}}
+       position picks which part shows in the crop (CSS object-position). */ -}}
+<div class="hero-img">
+  <img src="{{ partial "fit-image.html" (dict "src" (.Get "src") "width" 1200) }}" alt="{{ .Get "alt" }}"{{ with .Get "position" }} style="object-position: {{ . | safeCSS }};"{{ end }} fetchpriority="high" decoding="async" />
+</div>

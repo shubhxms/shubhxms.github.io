@@ -20,5 +20,5 @@ target = "data"
 source = "assets"
 target = "assets"
 [[module.mounts]]
-source = "static/images/shelf"
-target = "assets/images/shelf"
+source = "static/images"
+target = "assets/images"

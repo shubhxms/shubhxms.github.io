@@ -26,14 +26,12 @@
     })(document.currentScript);
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Urbanist:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  {{- if .Params.dropcap }}
-  {{- /* A script initial: only the capitals, only where a page has one. */}}
-  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&amp;text=ABCDEFGHIJKLMNOPQRSTUVWXYZ&amp;display=swap" rel="stylesheet" />
-  {{- end }}
-  {{- $css := partial "asset.html" (resources.Get "css/folio.css") }}
+  {{- /* Fonts are the site's own (css/fonts.css, static/fonts), so no
+         other server stands before the first words. The text and the
+         sidebar's faces are fetched at once; the rest as pages use them. */}}
+  <link rel="preload" href="/fonts/crimson-text-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/space-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+  {{- $css := partial "asset.html" (slice (resources.Get "css/fonts.css") (resources.Get "css/folio.css") | resources.Concat "css/folio.css") }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }} />
 
   {{- /* The passthrough render hook marks pages with maths while rendering
