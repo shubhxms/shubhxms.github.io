@@ -202,11 +202,11 @@ has index.html 'href="/colophon"'
 ! grep -Fq '.sheet:not(.sheet--flat)' "$CSS" || fail 'the side column should not depend on sections'
 ! grep -Fq 'side-bare' "$CSS" || fail 'side-bare is gone: side heads have no rule across'
 
-# Raised caps: a script initial on pages that set dropcap (notes cascade it),
-# with the font loaded only there, and only its capitals.
+# Raised caps: a script initial on pages that set dropcap (notes cascade it).
+# Its font holds only the capitals, and a browser fetches it only where a
+# drop cap uses it.
 has sarabhai/index.html 'sheet--dropcap'
-has sarabhai/index.html 'family=Pinyon+Script'
-lacks uses/index.html 'Pinyon'
+grep -q 'pinyon-script-caps.woff2' "$OUT"/css/folio*.css || fail 'the drop cap face should be declared'
 lacks uses/index.html 'sheet--dropcap'
 # Notes take sign-ups with the site's own form, posting to Substack.
 has notes/index.html '<form class="subscribe" action="https://shubhxms.substack.com/api/v1/free?nojs=true" method="post"'
@@ -243,5 +243,25 @@ has index.html '<a href="/shelf">Shelf</a>'
 has index.html '<a href="/core">Core</a>'
 [ "$(grep -o '<a class="shelf-pick' "$OUT/index.html" | wc -l | tr -d ' ')" = 6 ] || fail 'the home page should show the six picks'
 has index.html '<p class="likes">state machines · science'
+
+# Speed. Photos are resized to the size they're shown at, as WebP; the
+# originals never ship to a reader.
+grep -Eq '<img src="/images/me_bw_hu_[^"]+\.webp"' "$OUT/index.html" || fail 'the margin photo should be a resized webp'
+lacks index.html 'src="/images/me_bw.jpg"'
+grep -Eq '<img src="/images/notes-header_hu_[^"]+\.webp"' "$OUT/notes/index.html" || fail 'the notes header should be a resized webp'
+lacks notes/index.html 'src="/images/notes-header.jpeg"'
+grep -Eq '<img src="/images/notes/sarabhai_crater_hu_[^"]+\.webp"' "$OUT/sarabhai/index.html" || fail 'images in notes should be resized webp'
+# Fonts come from the site itself, the text faces preloaded, so no other
+# server stands between a reader and the first words.
+lacks index.html 'fonts.googleapis.com'
+lacks index.html 'fonts.gstatic.com'
+grep -Eq '<link rel="preload" href="/fonts/crimson-text-400-latin\.woff2" as="font" type="font/woff2" crossorigin' "$OUT/index.html" || fail 'the body face should be preloaded'
+grep -q '/fonts/crimson-text-400-latin.woff2' "$OUT"/css/folio*.css || fail 'the stylesheet should declare the self-hosted faces'
+[ -s "$OUT/fonts/crimson-text-400-latin.woff2" ] || fail 'the font files should ship with the site'
+# The deploy builds with garbage collection and runs these tests first.
+W="$ROOT/.github/workflows/hugo.yml"
+grep -q -- '--gc' "$W" || fail 'the deploy should build with --gc'
+grep -q 'tests/folio-smoke.sh' "$W" || fail 'the deploy should run the smoke tests'
+grep -q 'node --test' "$W" || fail 'the deploy should run the unit tests'
 
 printf 'folio smoke tests passed\n'
