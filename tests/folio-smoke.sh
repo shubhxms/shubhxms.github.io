@@ -264,4 +264,16 @@ grep -q -- '--gc' "$W" || fail 'the deploy should build with --gc'
 grep -q 'tests/folio-smoke.sh' "$W" || fail 'the deploy should run the smoke tests'
 grep -q 'node --test' "$W" || fail 'the deploy should run the unit tests'
 
+# On a phone: the masthead folds its pages behind a Menu button (shown
+# open without the script), and the sticky bar keeps the contents line,
+# on its own row, scrolled sideways.
+has index.html '<button class="sidebar-menu-btn" type="button" data-action="menu" aria-expanded="false" aria-controls="site-links">Menu</button>'
+has index.html '<div class="sidebar-links" id="site-links">'
+grep -q '.sidebar-nav\[data-menu="closed"\] .sidebar-links' "$CSS" || fail 'a closed menu should hide the pages on a phone'
+grep -q 'dataset.menu' "$ROOT/themes/folio/assets/js/main.js" || fail 'the script should open and close the menu'
+grep -q ':root\[data-layout="plain"\] .shell { padding: 0; } /\* phone \*/' "$CSS" || fail 'the plain layout must not indent a phone page on one side'
+! grep -q "its contents line doesn't fit a phone" "$CSS" || fail 'the bar should keep its contents line on a phone'
+# Ragged right on a phone: justified text leaves rivers in a narrow column.
+grep -q 'text-align: left; /\* phone \*/' "$CSS" || fail 'phone text should be ragged right'
+
 printf 'folio smoke tests passed\n'

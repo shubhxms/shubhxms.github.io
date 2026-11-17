@@ -1,8 +1,11 @@
 {{- $current := strings.TrimSuffix "/" .RelPermalink }}
 <aside class="sidebar">
-  <nav class="sidebar-nav" aria-label="Site">
+  {{- /* On a phone the pages fold behind Menu; data-menu says whether they
+         show. Without the script they always do (the noscript style). */}}
+  <noscript><style>.sidebar-nav[data-menu] .sidebar-links { display: flex !important; } .sidebar-menu-btn { display: none !important; }</style></noscript>
+  <nav class="sidebar-nav" aria-label="Site" data-menu="closed">
     <a class="site-title" href="{{ site.Home.RelPermalink }}">{{ site.Title }}<span class="site-title-gu" lang="gu">શુભમ શાહ</span></a>
-    <div class="sidebar-links">
+    <div class="sidebar-links" id="site-links">
       {{- range site.Menus.main }}
       {{- $active := eq $current (strings.TrimSuffix "/" .URL) }}
       <a href="{{ .URL }}"{{ if $active }} class="active-page" aria-current="page"{{ end }}>{{ if $active }}★ {{ end }}{{ .Name }}</a>
@@ -13,6 +16,7 @@
         <button class="theme-btn" type="button" data-action="theme-light" title="Light theme" aria-label="Light theme">☀</button>
         <button class="theme-btn" type="button" data-action="theme-dark" title="Dark theme" aria-label="Dark theme">☽</button>
         <button class="sidebar-search" type="button" data-action="palette" title="Search and commands" aria-label="Search and commands"><kbd>⌘K</kbd></button>
+        <button class="sidebar-menu-btn" type="button" data-action="menu" aria-expanded="false" aria-controls="site-links">Menu</button>
       </div>
       {{- with .GitInfo }}
       <div class="git-info">

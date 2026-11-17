@@ -216,6 +216,11 @@ a:hover {
     color: var(--selection-text);
 }
 
+/* Only a phone's masthead folds its pages behind a button. */
+.sidebar-menu-btn {
+    display: none;
+}
+
 .theme-btn {
     padding: 0;
     border: 0;
@@ -1762,6 +1767,11 @@ hr {
 
 @media screen and (max-width: 800px) {
 
+    /* The sticky bar holds two rows on a phone: name, then contents. */
+    :root {
+        --bar-h: 58px;
+    }
+
     .feed-rail,
     .feed-table :is(.feed-site, .feed-n) {
         display: none;
@@ -1775,6 +1785,10 @@ hr {
         display: block;
         padding: 0;
     }
+
+    /* The plain layout's left padding would otherwise win, and set the
+       page 20px off centre. */
+    :root[data-layout="plain"] .shell { padding: 0; } /* phone */
 
     /* The sidebar becomes a masthead: name and tools on one line, the
        pages on the next, all set across the top of the screen. */
@@ -1844,18 +1858,47 @@ hr {
         display: none;
     }
 
+    /* The pages, behind Menu: a grid of three, each a full tap target. */
     .sidebar-links {
         grid-column: 1 / -1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2px 11px;
-        margin-top: 8px;
-        padding-top: 0;
-        border: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0 12px;
+        margin-top: 10px;
+        padding-top: 4px;
+        border-top: 1px solid var(--rule);
+    }
+
+    .sidebar-nav[data-menu="closed"] .sidebar-links {
+        display: none;
     }
 
     .sidebar-links a {
-        padding: 2px 0;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 14px;
+    }
+
+    .sidebar-menu-btn {
+        display: inline-block;
+        padding: 2px 7px;
+        border: 1px solid var(--text);
+        background: none;
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .sidebar-nav[data-menu="open"] .sidebar-menu-btn {
+        background: var(--text);
+        color: var(--paper);
+    }
+
+    /* Ragged right: justified text leaves rivers in a narrow column. */
+    .sheet-body :is(p, li) {
+        text-align: left; /* phone */
     }
 
     .sidebar-links a.active-page {
@@ -1864,20 +1907,28 @@ hr {
         text-underline-offset: 3px;
     }
 
-    /* The bar names the page; its contents line doesn't fit a phone. */
-    .doc-bar .doc-toc {
-        display: none;
-    }
-
+    /* The bar on a phone: the page's name, and under it the contents
+       line, scrolled sideways to the section being read. */
     .doc-bar-inner {
+        flex-wrap: wrap;
+        align-content: center;
+        row-gap: 1px;
+        height: var(--bar-h);
         overflow: hidden;
     }
 
     .doc-bar-title {
-        flex: 1;
+        flex: 1 0 100%;
         min-width: 0;
         max-width: none;
-        font-size: 1.15em;
+        font-size: 1.1em;
+        line-height: 1.2;
+    }
+
+    .doc-bar .doc-toc {
+        flex: 1 0 100%;
+        font-size: 0.88em;
+        line-height: 1.3;
     }
 
     /* The colophon on two lines: why it changed, then where it's from. */
@@ -1938,11 +1989,15 @@ hr {
         grid-row: 1 / 3;
         align-self: center;
         display: -webkit-box;
-        padding: 0.35em 0 !important;
+        /* Margin, not padding: a clamped third line would show in the
+           padding, which the clip includes. */
+        margin: 0.35em 0;
+        padding: 0 !important;
         white-space: normal;
         line-height: 1.3;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+        overflow: hidden;
     }
 
     /* No measured sheet on phones: the page is the screen's width. (Auto
